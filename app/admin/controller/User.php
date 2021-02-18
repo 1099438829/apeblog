@@ -49,16 +49,4 @@ class User extends AuthController
         ]);
         return app("json")->layui(aModel::systemPage($where));
     }
-
-    /**
-     * 用户回收站
-     * @return string
-     * @throws \Exception
-     * @author 李玉坤
-     * @date 2021-02-16 13:26
-     */
-    public function recovery()
-    {
-        return $this->fetch();
-    }
 }
