@@ -5,22 +5,14 @@
 
 ## 主要特性
 
-### 开源无加密
 源码开源无加密
-### TP6框架
+TP6框架
 使用最新的 ThinkPHP 6.0框架开发
-### 标准接口
-标准接口、前后端分离，二次开发更方便
-### 无缝事件机制
-行为扩展更方便，方便二次开发
-### 后台快速生成表单
-后台应用form-builder 无需写页面快速增删改查
-### 强大的后台权限管理
-后台多种角色、多重身份权限管理，权限可以控制到每一步操作
-
-#### 软件架构
-软件架构说明
-
+标准接口
+标准接口、主题机制、二次开发更方便
+无缝事件机制 行为扩展更方便，方便二次开发
+后台快速生成表单后台应用form-builder 无需写页面快速增删改查
+强大的后台权限管理、后台多种角色、多重身份权限管理，权限可以控制到每一步操作
 
 #### 安装教程
 
@@ -75,7 +67,10 @@ chmod -R 777  public/upload
 chmod -R 777  runtime
 ~~~
 
-5.后台登录：
+5.访问：
+http://域名
+
+6.后台登录：
 http://域名/admin
 
 默认账号：admin 密码：123456
@@ -83,16 +78,8 @@ http://域名/admin
 
 #### 使用说明
 
-1.  运行环境要求PHP7.1+。
-2.  xxxx
-3.  xxxx
-
-
-#### 特技
-
-
-> 运行环境要求PHP7.1+。
-
+> 运行环境要求PHP7.1+。  
+> 开启Redis扩展
 
 
 ## 特别感谢
@@ -100,6 +87,9 @@ http://域名/admin
 [笔下光年 / Light Year Admin   一个基于Bootstrap v3.3.7的后台HTML模板。](https://gitee.com/yinqi/Light-Year-Admin-Template) 
 
 [xaboy / form-builder PHP表单生成器，使用PHP快速生成现代化的form表单。](https://gitee.com/xaboy/form-builder) 
+
+[cfn / PaiAdmin   PaiAdmin 派后台管理系统](https://gitee.com/leapy/pai) 
+   
 
 ## 文档
 
