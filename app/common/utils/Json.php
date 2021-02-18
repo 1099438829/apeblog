@@ -1,13 +1,13 @@
 <?php
 
 
-namespace learn\utils;
+namespace app\common\utils;
 
 use think\Response;
 
 /**
  * Class Json
- * @package learn\utils
+ * @package app\common\utils
  */
 class Json
 {

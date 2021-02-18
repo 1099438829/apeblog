@@ -6,10 +6,10 @@ namespace app\admin\controller;
 use app\admin\model\Attachment;
 use app\admin\model\AttachmentCategory;
 use FormBuilder\Factory\Elm;
-use learn\services\FormBuilderService as Form;
-use learn\services\storage\QcloudCoService;
-use learn\services\UtilService as Util;
-use learn\utils\Json;
+use app\admin\services\FormBuilderService as Form;
+use app\admin\services\storage\QcloudCoService;
+use app\admin\services\UtilService as Util;
+use app\common\utils\Json;
 
 /**
  * Class Images

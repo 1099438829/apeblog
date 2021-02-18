@@ -1,14 +1,14 @@
 <?php
 
 
-namespace learn\interfaces;
+namespace app\common\interfaces;
 
 
 use app\Request;
 
 /**
  * Interface MiddlewareInterface
- * @package learn\interfaces
+ * @package app\common\interfaces
  */
 interface MiddlewareInterface
 {

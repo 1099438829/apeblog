@@ -5,9 +5,9 @@ namespace app\admin\controller;
 use app\admin\model\Admin as aModel;
 use app\admin\model\AdminRole as rModel;
 use app\Request;
-use learn\services\UtilService as Util;
+use app\admin\services\UtilService as Util;
 use FormBuilder\Factory\Elm;
-use learn\services\FormBuilderService as Form;
+use app\admin\services\FormBuilderService as Form;
 use think\facade\Route as Url;
 
 /**

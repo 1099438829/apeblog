@@ -6,8 +6,8 @@ use app\admin\model\DocumentCategory as aModel;
 use app\Request;
 use FormBuilder\Exception\FormBuilderException;
 use FormBuilder\Factory\Elm;
-use learn\services\FormBuilderService as Form;
-use learn\services\UtilService as Util;
+use app\admin\services\FormBuilderService as Form;
+use app\admin\services\UtilService as Util;
 use think\facade\Route as Url;
 
 /**

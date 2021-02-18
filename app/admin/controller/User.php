@@ -2,9 +2,9 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\Document as aModel;
+use app\admin\model\User as aModel;
 use app\Request;
-use learn\services\UtilService as Util;
+use app\admin\services\UtilService as Util;
 
 /**
  * Class User
@@ -39,11 +39,10 @@ class User extends AuthController
     public function lst(Request $request)
     {
         $where = Util::postMore([
-            ['status',''],
+            ['name',''],
             ['tel',''],
             ['start_time',''],
             ['end_time',''],
-            ['role_id',''],
             ['status',''],
             ['page',1],
             ['limit',20],

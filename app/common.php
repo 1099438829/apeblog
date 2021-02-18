@@ -15,7 +15,7 @@ if (!function_exists('system_config_more'))
     {
         $systemConfig = cache('systemConfig');
         if (empty($systemConfig)){
-            $systemConfig = \app\admin\model\system\SystemConfig::getSystemConfigValues();
+            $systemConfig = \app\admin\model\SystemConfig::getSystemConfigValues();
             cache('systemConfig',$systemConfig);
         }
         $data = [];
@@ -75,7 +75,7 @@ if (!function_exists('system_config'))
     {
         $systemConfig = cache('systemConfig');
         if (empty($systemConfig)){
-            $systemConfig = \app\admin\model\system\SystemConfig::getSystemConfigValues();
+            $systemConfig = \app\admin\model\SystemConfig::getSystemConfigValues();
             cache('systemConfig',$systemConfig);
         }
         return $systemConfig[$formName]??'';

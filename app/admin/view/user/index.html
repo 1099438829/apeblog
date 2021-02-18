@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <title>登录页面 - {:system_config("title")}后台管理系统</title>
+    <title>用户管理 - {:system_config("title")}后台管理系统</title>
     {include file="public/header" /}
 </head>
 <body>
@@ -76,19 +76,11 @@
         pagination: true,                    // 是否显示分页
         sortOrder: "asc",                    // 排序方式
         queryParams: function(params) {
-            var add_time = new Array();
-            $("input[name='add_time']").each(function(){
-                add_time.push($(this).val());
-            });
-            var temp = {
-                is_read: $('#is_read option:selected').val(),
-                type: $('#type option:selected').val(),
-                add_time: add_time,
-                limit: params.limit,         // 每页数据量
-                page: (params.offset / params.limit) + 1,
-            };
+            let temp = toArrayList($(".searchForm").serializeArray());
+            temp['limit'] = params.limit;
+            temp['page'] = (params.offset / params.limit) + 1;
             return temp;
-        },                                   // 传递参数
+        },                               // 传递参数
         sidePagination: "server",            // 分页方式：client客户端分页，server服务端分页
         pageNumber: 1,                       // 初始化加载第一页，默认第一页
         pageSize: 10,                        // 每页的记录行数
@@ -99,7 +91,7 @@
             field: 'id',
             title: '留言ID',
         }, {
-            field: 'name',
+            field: 'truename',
             title: '用户昵称'
         }, {
             field: 'tel',
@@ -108,30 +100,27 @@
             field: 'email',
             title: '邮箱'
         }, {
-            field: 'type',
-            title: '留言来源'
-        }, {
-            field: 'content',
-            title: '内容',
-        }, {
             field: 'ip',
             title: 'ip',
         }, {
-            field: 'user_agent',
-            title: 'UserAgent',
+            field: 'is_admin',
+            title: '管理员',
+            formatter: function (value, row, index) {
+                return value?'是':'否';
+            }
         }, {
-            field: 'add_time',
+            field: 'create_time',
             title: '创建时间',
         }, {
-            field: 'is_read',
-            title: '是否已读',
+            field: 'status',
+            title: '状态',
             formatter: function (value, row, index) {
                 if (value == 0) {
                     is_checked = '';
                 } else if (value == 1){
                     is_checked = 'checked="checked"';
                 }
-                var field = "is_read";
+                var field = "status";
                 result = '<label class="lyear-switch switch-primary switch-solid lyear-status"><input type="checkbox" '+ is_checked +'><span  onClick="updateStatus('+ row.id +', '+ value +', \''+ field +'\')"></span></label>';
                 return result;
             },

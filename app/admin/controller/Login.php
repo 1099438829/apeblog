@@ -5,7 +5,7 @@ namespace app\admin\controller;
 
 use app\admin\model\Admin;
 use app\admin\model\Admin as adminModel;
-use learn\services\UtilService as Util;
+use app\admin\services\UtilService as Util;
 
 class Login extends AuthController
 {

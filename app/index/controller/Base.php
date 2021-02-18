@@ -6,7 +6,7 @@ use app\BaseController;
 use think\facade\Config;
 use think\facade\Db;
 use think\facade\View;
-use app\admin\model\system\SystemConfig;
+use app\admin\model\SystemConfig;
 
 /**
  * 控制器基础类

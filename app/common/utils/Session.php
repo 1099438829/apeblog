@@ -1,7 +1,7 @@
 <?php
 
 
-namespace learn\utils;
+namespace app\common\utils;
 
 use think\facade\Session as systemSession;
 

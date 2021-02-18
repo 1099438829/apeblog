@@ -1,14 +1,14 @@
 <?php
 
 
-namespace learn\subscribes;
+namespace app\admin\subscribes;
 
 use app\admin\model\AdminLog;
 
 /**
  * 操作员日志记录
  * Class AdminSubscribe
- * @package learn\subscribes
+ * @package app\common\subscribes
  */
 class AdminSubscribe
 {

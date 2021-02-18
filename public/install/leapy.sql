@@ -305,7 +305,7 @@ CREATE TABLE `lea_system_config`  (
 -- ----------------------------
 -- Records of lea_system_config
 -- ----------------------------
-INSERT INTO `lea_system_config` VALUES (1, 1, '网站标题', 'title', 'text', 'input', 0, '', '派后台管理系统', 'systemConfig(\"title\")', 90, 1, 1, '1', '1582792265', '1', '1583855342');
+INSERT INTO `lea_system_config` VALUES (1, 1, '网站标题', 'title', 'text', 'input', 0, '', '派后台管理系统', 'system_config(\"title\")', 90, 1, 1, '1', '1582792265', '1', '1583855342');
 INSERT INTO `lea_system_config` VALUES (2, 1, '网站图标', 'favicon', 'file', 'input', 0, '', 'http://file.cos.leapy.cn/image/20200509/898b720200509204528197.jpg', '', 89, 1, 1, '1', '1582793160', NULL, NULL);
 INSERT INTO `lea_system_config` VALUES (3, 1, '站点关键词', 'keywords', 'text', 'input', 0, '', '派后台管理系统', '', 88, 1, 1, '1', '1582793221', NULL, NULL);
 INSERT INTO `lea_system_config` VALUES (4, 1, '站点描述', 'description', 'text', 'input', 0, '', '派后台管理系统', '', 87, 1, 1, '1', '1582793248', NULL, NULL);

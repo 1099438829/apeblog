@@ -1,12 +1,12 @@
 <?php
 
 
-namespace learn\utils;
+namespace app\common\utils;
 
 /**
  * 宝塔邮件发送
  * Class Mail
- * @package learn\utils
+ * @package app\common\utils
  */
 class Mail
 {

@@ -5,7 +5,7 @@ namespace app\admin\controller;
 use app\admin\model\AdminAuth;
 use app\admin\model\AdminNotify;
 use app\Request;
-use learn\services\UtilService as Util;
+use app\admin\services\UtilService as Util;
 
 class Index extends AuthController
 {

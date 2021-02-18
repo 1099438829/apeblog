@@ -4,7 +4,7 @@ namespace app\admin\controller;
 
 use   app\admin\model\MessageForm as aModel;
 use app\Request;
-use learn\services\UtilService as Util;
+use app\admin\services\UtilService as Util;
 
 /**
  * Class Message

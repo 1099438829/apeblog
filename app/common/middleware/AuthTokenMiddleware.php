@@ -1,18 +1,18 @@
 <?php
 
 
-namespace learn\middleware;
+namespace app\common\middleware;
 
 
-use app\api\model\user\User;
+use app\admin\model\User;
 use app\Request;
-use learn\exceptions\AuthException;
-use learn\interfaces\MiddlewareInterface;
+use app\common\exceptions\AuthException;
+use app\common\interfaces\MiddlewareInterface;
 
 /**
  * token验证
  * Class AuthTokenMiddleware
- * @package learn\middleware
+ * @package app\common\middleware
  */
 class AuthTokenMiddleware implements MiddlewareInterface
 {

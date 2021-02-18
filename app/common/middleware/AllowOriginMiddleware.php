@@ -1,11 +1,11 @@
 <?php
 
 
-namespace learn\middleware;
+namespace app\common\middleware;
 
 
 use app\Request;
-use learn\interfaces\MiddlewareInterface;
+use app\common\interfaces\MiddlewareInterface;
 use think\Response;
 
 /**

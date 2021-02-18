@@ -6,7 +6,7 @@ use app\admin\model\Document;
 use app\admin\model\DocumentArticle;
 use app\admin\model\DocumentProduct;
 use app\Request;
-use learn\services\UtilService as Util;
+use app\admin\services\UtilService as Util;
 
 /**
  * Class Article

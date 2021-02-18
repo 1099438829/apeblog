@@ -1,12 +1,12 @@
 <?php
 
 
-namespace learn\utils;
+namespace app\common\utils;
 
 use Firebase\JWT\JWT as jt;
 /**
  * Class Jwt
- * @package learn\utils
+ * @package app\common\utils
  */
 class Jwt
 {

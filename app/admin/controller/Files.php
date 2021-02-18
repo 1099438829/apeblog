@@ -4,8 +4,8 @@ namespace app\admin\controller;
 
 
 use app\admin\model\Attachment;
-use learn\services\storage\QcloudCoService;
-use learn\services\UtilService as Util;
+use app\admin\services\storage\QcloudCoService;
+use app\admin\services\UtilService as Util;
 use think\facade\Filesystem;
 
 class Files extends AuthController

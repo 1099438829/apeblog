@@ -1,5 +1,5 @@
 <?php
-namespace app\http\validates\user;
+namespace app\common\validate;
 
 
 use think\Validate;

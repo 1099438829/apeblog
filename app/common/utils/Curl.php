@@ -1,11 +1,11 @@
 <?php
 
 
-namespace learn\utils;
+namespace app\common\utils;
 
 /**
  * Class Curl
- * @package learn\utils
+ * @package app\common\utils
  */
 class Curl
 {

@@ -1,13 +1,13 @@
 <?php
 
 
-namespace learn\exceptions;
+namespace app\common\exceptions;
 
 use Throwable;
 
 /**
  * Class AuthException
- * @package learn\exceptions
+ * @package app\common\exceptions
  */
 class AuthException extends \Exception
 {

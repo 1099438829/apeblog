@@ -6,8 +6,7 @@
  */
 
 namespace app\admin\controller;
-
-use learn\basic\admin\BaseController;
+use app\BaseController;
 
 
 class SystemBasic extends BaseController

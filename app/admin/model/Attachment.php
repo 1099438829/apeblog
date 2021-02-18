@@ -5,7 +5,7 @@ namespace app\admin\model;
 
 
 use app\admin\model\BaseModel;
-use app\admin\model\system\SystemConfig;
+use app\admin\model\SystemConfig;
 
 /**
  * Class attachment
