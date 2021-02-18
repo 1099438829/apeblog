@@ -1,0 +1,47 @@
+<header class="header_area">
+		<div class="main_menu">
+			<nav class="navbar navbar-expand-lg navbar-light">
+				<div class="container">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<a class="navbar-brand logo_h" href="/"><img src="/template/default/img/logo.png" alt=""></a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+						<ul class="nav navbar-nav menu_nav justify-content-center">
+							
+							<li class="nav-item {:IsActiveNav($cid)?'active':''}"><a class="nav-link" href="/">首页</a></li>
+							{zz:channel type="top"}
+								<li class="nav-item {if $field['child']} submenu dropdown{/if} {:IsActiveNav($cid,$field['id'])?'active':''}">
+										{if $field['child']}
+											<a href="{$field['url']}" class="nav-link">
+										{else /}
+											<a class="nav-link" href="{$field['url']}">
+										{/if}      
+												{$field['title']}
+									</a>
+										
+										{if $field['child']}
+											<ul class="dropdown-menu">
+												{zz:channel type="son" typeid="$field['id']" void="vo"}
+												<li class="nav-item {:IsActiveNav($cid,$vo['id'])?'active':''}">
+													<a class="nav-link" href="{$vo['url']}" {if $vo['link_str']} target="_blank"{/if}>
+														{$vo['title']}</a></li>
+												 {/zz:channel}
+											</ul>
+										{/if}   
+								</li>
+							{/zz:channel}
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li class="nav-item"><a href="http://www.hulaxz.com/" target="_blank" class="primary_btn text-uppercase">更多模板</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</header>

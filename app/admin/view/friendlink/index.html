@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <title>友情链接管理 - {:system_config("title")}后台管理系统</title>
+    {include file="public/header" /}
+</head>
+<body>
+<div class="container-fluid p-t-15">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header"><h4>搜索</h4></div>
+                <div class="card-body">
+                    <form class="form-inline searchForm" onsubmit="return false;">
+                        <div class="form-group">
+                            <label for="name">操作人</label>
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="请输入操作人名称，ID">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ip">来访IP</label>
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="ip" name="ip" placeholder="IP地址">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="start_time">操作时间</label>
+                            <div class="input-group">
+                                <input class="form-control js-datetimepicker" type="text" id="start_time" name="start_time" autocomplete="off" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD" placeholder="开始时间">
+                                <span class="input-group-addon">~</span>
+                                <input class="form-control js-datetimepicker" type="text" id="end_time" name="end_time" autocomplete="off" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD" placeholder="结束时间">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success" style="margin: -10px 0 0 10px;" id="search">搜索</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-toolbar clearfix">
+                    <div class="toolbar-btn-action">
+                        <a class="btn btn-warning" href="#!" onclick="delSelect()"><i class="mdi mdi-window-close"></i> 删除</a>
+                        <a class="btn btn-danger" href="#!" onclick="delAll()"><i class="mdi mdi-window-close"></i> 全部删除</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table id="tb_departments"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="public/footer"/}
+<script type="text/javascript">
+    $('#tb_departments').bootstrapTable({
+        classes: 'table table-bordered table-hover table-striped',
+        url: '/admin/friendlink/Lst',
+        method: 'post',
+        dataType : 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
+        uniqueId: 'id',
+        idField: 'id',             // 每行的唯一标识字段
+        toolbar: '#toolbar',       // 工具按钮容器
+        showColumns: false,         // 是否显示所有的列
+        showRefresh: false,         // 是否显示刷新按钮
+        responseHandler: function (res) {
+            return {
+                "total": res.count,
+                "rows": res.data,
+            };
+        },
+        pagination: true,
+        queryParams: function(params) {
+            let temp = toArrayList($(".searchForm").serializeArray());
+            temp['limit'] = params.limit;
+            temp['page'] = (params.offset / params.limit) + 1;
+            return temp;
+        },
+        sidePagination: "server",
+        pageNumber: 1,
+        pageSize: 10,
+        pageList: [10, 20, 50, 100],
+        columns: [{
+            checkbox: true,    // 是否显示复选框
+        },{
+            field: 'id',
+            title: '序号'
+        },{
+            field: 'title',
+            title: '链接名称'
+        }, {
+            field: 'url',
+            title: '链接地址',
+        }, {
+            field: 'sort',
+            title: '排序',
+            editable: {
+                type: 'text',
+                emptytext:'',
+                highlight: false,
+                mode:'inline'
+            }
+        }, {
+            field: 'create_time',
+            title: '创建时间',
+        }, {
+            field: 'create_time',
+            title: '更新时间',
+        },{
+            field: 'status',
+            title: '状态',
+            formatter: function (value, row, index) {
+                if (value == 0) {
+                    is_checked = '';
+                } else if (value == 1){
+                    is_checked = 'checked="checked"';
+                }
+                var field = "status";
+                result = '<label class="lyear-switch switch-primary switch-solid lyear-status"><input type="checkbox" '+ is_checked +'><span  onClick="updateStatus('+ row.id +', '+ value +', \''+ field +'\')"></span></label>';
+                return result;
+            },
+        }, {
+            field: 'operate',
+            title: '操作',
+            formatter:function (value,row,index) {
+                let html = '<a type="button" class="btn-edit btn btn-xs btn-default m-r-5" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a> \n' +
+                    '<a class="btn btn-xs btn-default btn-del" href="#!" title="删除" data-toggle="tooltip" onclick="delOne('+row.id+')"><i class="mdi mdi-window-close"></i></a>';
+                return html;
+            }
+        }],
+        onEditableSave: function (field, row) {
+            $.ajax({
+                type: "post",
+                url: "/admin/friendlink/update",
+                data: row,
+                success: function (res) {
+                    if (res.code == 200 || res.status == 200) {
+                        parent.lightyear.notify('操作成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                    } else{
+                        parent.lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                    }
+                },
+                complete: function () {
+                }
+            });
+        },
+        onLoadSuccess: function(data){
+            $("[data-toggle='tooltip']").tooltip();
+        }
+    });
+
+    //搜索
+    $("#search").click(function () {
+        let start_time = $('#start_time').val();
+        let end_time = $('#end_time').val();
+        if(start_time && end_time && start_time > end_time ){
+            alert('开始时间不能大于结束时间');
+            return false;
+        }
+        $("#tb_departments").bootstrapTable('refresh',{query:{page:1},pageNumber:1});
+    });
+
+
+    function updateStatus(id, value,field) {
+        var newstate = (value == 1) ? 0 : 1; // 发送参数值跟当前参数值相反
+        $.ajax({
+            type: "post",
+            url: "/admin/friendlink/field?id="+id,
+            data: {field: field, value: newstate},
+            dataType: 'json',
+            success: function (res) {
+                if (res.status == 200) {parent.lightyear.notify('修改成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');$(".tree-table").bootstrapTable('refresh');}
+                else parent.lightyear.notify('修改失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+            },
+            error: function () {
+                parent.lightyear.notify('修改失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+            }
+        });
+    }
+
+    function delOne(id) {
+        $.confirm({
+            title: '重要提醒!',
+            content: '删除后将不可恢复，请谨慎操作!',
+            backgroundDismiss: true,
+            buttons: {
+                ok: {
+                    text: '确认',
+                    btnClass: 'btn-danger',
+                    action: function () {
+                        $.post("/admin/admin_log/del",data={id:id},function (res) {
+                            if (res.status == 200 || res.code == 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                            location.reload();
+                        })
+                    }
+                },
+                cancel: {
+                    text: '取消',
+                    btnClass: 'btn-primary'
+                }
+            }
+        });
+    }
+    function delAll() {
+        $.confirm({
+            title: '重要提醒!',
+            content: '清空后将不可恢复，请谨慎操作!',
+            backgroundDismiss: true,
+            buttons: {
+                ok: {
+                    text: '确认',
+                    btnClass: 'btn-danger',
+                    action: function () {
+                        $.post("/admin/admin_log/empty",data={},function (res) {
+                            if (res.status == 200 || res.code == 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                            location.reload();
+                        })
+                    }
+                },
+                cancel: {
+                    text: '取消',
+                    btnClass: 'btn-primary'
+                }
+            }
+        });
+    }
+
+    function delSelect() {
+        var checkID = "";
+        var selectedItem = $('#tb_departments').bootstrapTable('getSelections');
+        if (selectedItem=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        for (var i = 0 ; i<  selectedItem.length; i++)
+        {
+            checkID += selectedItem[i]['id']+",";
+        }
+        if (checkID=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        $.confirm({
+            title: '重要提醒!',
+            content: '选中项删除后将不可恢复，请谨慎操作!',
+            backgroundDismiss: true,
+            buttons: {
+                ok: {
+                    text: '确认',
+                    btnClass: 'btn-danger',
+                    action: function () {
+                        $.post("/admin/admin_log/del",data={id:checkID},function (res) {
+                            if (res.status == 200 || res.code == 200) { lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
+                            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        })
+                    }
+                },
+                cancel: {
+                    text: '取消',
+                    btnClass: 'btn-primary'
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

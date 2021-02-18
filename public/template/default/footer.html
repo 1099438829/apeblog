@@ -1,0 +1,48 @@
+<footer class="footer_area">
+		<div class="container">
+			<div class="row footer_inner">
+				<div class="col-lg-5 col-sm-6">
+					<aside class="f_widget ab_widget">
+						<div class="f_title">
+							<h3>关于我们</h3>
+						</div>
+						<p> {:cn_substr(html2text(get_type_content(86)),80)}...</p>
+						<p>{:systemConfig("copyright")}</p>
+					</aside>
+				</div>
+				<div class="col-lg-5 col-sm-6">
+					<aside class="f_widget news_widget">
+						<div class="f_title">
+							<h3>搜索</h3>
+						</div>
+						<p>您想找什么?</p>
+						<div id="mc_embed_signup">
+							<form action="{:url('Article/search')}" class="subscribe_form relative">
+								<div class="input-group d-flex flex-row">
+									<input  type="text" name="kw" placeholder="请输入关键字" onfocus="this.placeholder = ''" onblur="this.placeholder = '请输入关键字 '"
+									 required="">
+									<button class="btn sub-btn">
+										<span class="lnr lnr-arrow-right"></span>
+									</button>
+								</div>
+							</form>
+						</div>
+					</aside>
+				</div>
+				<div class="col-lg-2">
+					<aside class="f_widget social_widget">
+						<div class="f_title">
+							<h3>联系我们</h3>
+						</div>
+						<p>Let us be social</p>
+						<ul class="list">
+							<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+							<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+							<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+							<li><a href="#"><i class="fa fa-behance"></i></a></li>
+						</ul>
+					</aside>
+				</div>
+			</div>
+		</div>
+	</footer>

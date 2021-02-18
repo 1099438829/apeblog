@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>缓存清理 - {:system_config("title")}后台管理系统</title>
+    <link rel="icon" href="{:system_config("favicon")}" type="image/ico">
+    <meta name="keywords" content="{:system_config("keywords")}">
+    <meta name="description" content="{:system_config("description")}">
+    <meta name="author" content="{:system_config("author")}">
+    <link href="__ADMIN_PATH__css/bootstrap.min.css" rel="stylesheet">
+    <link href="__ADMIN_PATH__css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="__ADMIN_PATH__css/style.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.css">
+    <style>
+        body{
+            background-color: #fff;
+        }
+        .error-page {
+            height: 100%;
+            position: fixed;
+            width: 100%;
+        }
+        .error-body {
+            padding-top: 5%;
+        }
+        .error-body h1 {
+            font-weight: 700;
+            text-shadow: 1px 1px 0 #f5f6fa, 2px 2px 0 #33cabb;
+            line-height: 210px;
+            color: #33cabb;
+        }
+        .error-body h4 {
+            margin: 30px 0px;
+        }
+    </style>
+</head>
+<body>
+<section class="error-page">
+    <div class="error-box">
+        <div class="error-body text-center">
+            <h1>缓存清理</h1>
+            <a  class="btn btn-primary" href="javascript:void(0)" onclick="clearCache()"><i class="mdi mdi-delete"></i> 清空缓存</a></li>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
+<!--消息提示-->
+<script src="__ADMIN_PATH__js/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/lightyear.js"></script>
+<script src="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.js"></script>
+<script>
+    function clearCache() {
+        $.alert({
+            title: '系统提示',
+            content: '即将进行清理缓存操作',
+            buttons: {
+                confirm: {
+                    text: '确认',
+                    btnClass: 'btn-primary',
+                    action: function(){
+                        $.post(url="/admin/system_config/clearCache",[],function (res) {
+                            //if (!Array.isArray(res)) res = jQuery.parseJSON(res);
+                            if (res.status === 200 || res.code === 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        });
+                    }
+                },
+                cancel: {
+                    text: '取消'
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>
