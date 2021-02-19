@@ -14,6 +14,9 @@ use app\admin\model\BaseModel;
  */
 class DocumentCategory extends BaseModel
 {
+    // 开启自动写入时间戳字段
+    protected $autoWriteTimestamp = 'datetime';
+
     /**
      * 列表
      * @param $where

@@ -37,8 +37,10 @@ class FriendLink extends AuthController
     public function lst(Request $request)
     {
         $where = Util::postMore([
-            ['name',''],
+            ['title',''],
             ['status',''],
+            ['start_time',''],
+            ['end_time',''],
             ['page',1],
             ['limit',20],
         ]);

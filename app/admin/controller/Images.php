@@ -103,13 +103,11 @@ class Images extends AuthController
         if ($id == "")
         {
             $data['create_user'] = $this->adminId;
-            $data['create_time'] = time();
-            $res = AttachmentCategory::insert($data);
+            $res = AttachmentCategory::save($data);
         }
         else
         {
             $data['update_user'] = $this->adminId;
-            $data['update_time'] = time();
             $res = AttachmentCategory::update($data,['id'=>$id]);
         }
         return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");

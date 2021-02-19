@@ -123,7 +123,7 @@
                 align: 'center',
                 events : {
                     'click .role-add': function (e, value, row, index) {
-                        iframe.createIframe('添加权限','/admin/admin_auth/add?pid='+row.id);
+                        iframe.createIframe('添加权限','/admin/category/add?pid='+row.id);
                     },
                     'click .role-delete': function (e, value, row, index) {
                         $.alert({
@@ -134,7 +134,7 @@
                                     text: '确认',
                                     btnClass: 'btn-primary',
                                     action: function(){
-                                        $.post(url="/admin/admin_auth/del",data={"id":row.id},function (res) {
+                                        $.post(url="/admin/category/del",data={"id":row.id},function (res) {
                                             if (res.status == 200) {parent.lightyear.notify('删除成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');$(".tree-table").bootstrapTable('refresh');}
                                             else parent.lightyear.notify('删除失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                                         });
@@ -147,7 +147,7 @@
                         });
                     },
                     'click .role-edit': function (e, value, row, index) {
-                        iframe.createIframe('修改权限','/admin/admin_auth/edit?id='+row.id)
+                        iframe.createIframe('修改权限','/admin/category/edit?id='+row.id)
                     }
                 },
                 formatter: operateFormatter
@@ -220,7 +220,7 @@
         var newstate = (value == 1) ? 0 : 1; // 发送参数值跟当前参数值相反
         $.ajax({
             type: "post",
-            url: "/admin/admin_auth/field?id="+id,
+            url: "/admin/category/field?id="+id,
             data: {field: field, value: newstate},
             dataType: 'json',
             success: function (res) {
@@ -252,7 +252,7 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/admin_auth/del",data={id:checkID},function (res) {
+                        $.post("/admin/category/del",data={id:checkID},function (res) {
                             if (res.status == 200){ lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                         })
@@ -287,14 +287,14 @@
                     action: function () {
                         if (type == 'enable')
                         {
-                            $.post("/admin/admin_auth/enabled",data={id:checkID},function (res) {
+                            $.post("/admin/category/enabled",data={id:checkID},function (res) {
                                 if (res.status == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
                                 else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
 
                             })
                         }else
                         {
-                            $.post("/admin/admin_auth/disabled",data={id:checkID},function (res) {
+                            $.post("/admin/category/disabled",data={id:checkID},function (res) {
                                 if (res.status == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
                                 else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                             })

@@ -1,17 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title>选择图片 - {:system_config("title")}后台管理系统</title>
-    <link rel="icon" href="{:system_config("favicon")}" type="image/ico">
-    <meta name="keywords" content="{:system_config("keywords")}">
-    <meta name="description" content="{:system_config("description")}">
-    <meta name="author" content="{:system_config("author")}">
-    <link rel="stylesheet" href="__ADMIN_PATH__js/bootstrap-treeview/bootstrap.min.css">
-    <link rel="stylesheet" href="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.css">
-    <link rel="stylesheet" href="__ADMIN_PATH__js/bootstrap-treeview/bootstrap-treeview.min.css">
-    <script type="text/javascript" src="__ADMIN_PATH__js/iframe.js"></script>
+    {include file="public/header" /}
     <style>
         .list-group-item{
             border: 0px !important;
@@ -185,11 +176,7 @@
     </div>
     <input id="fileUpload" type="file" name="file" style="display: none;" @change="upload" accept="image/*">
 </div>
-<script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-notify.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/lightyear.js"></script>
+{include file="public/footer"/}
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-treeview/bootstrap-treeview.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/vue/vue.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/vue-page/pageination.js"></script>

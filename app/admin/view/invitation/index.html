@@ -37,8 +37,10 @@
             <div class="card">
                 <div class="card-toolbar clearfix">
                     <div class="toolbar-btn-action">
+                        <button id="btn_add" type="button" class="btn btn-primary m-r-5" onclick="iframe.createIframe('添加用户','/admin/admin/add')">
+                            <span class="mdi mdi-plus" aria-hidden="true"></span>新增
+                        </button>
                         <a class="btn btn-warning" href="#!" onclick="delSelect()"><i class="mdi mdi-window-close"></i> 删除</a>
-                        <a class="btn btn-danger" href="#!" onclick="delAll()"><i class="mdi mdi-window-close"></i> 全部删除</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -133,30 +135,6 @@
                     btnClass: 'btn-danger',
                     action: function () {
                         $.post("/admin/admin_log/del",data={id:id},function (res) {
-                            if (res.status == 200 || res.code == 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
-                            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
-                            location.reload();
-                        })
-                    }
-                },
-                cancel: {
-                    text: '取消',
-                    btnClass: 'btn-primary'
-                }
-            }
-        });
-    }
-    function delAll() {
-        $.confirm({
-            title: '重要提醒!',
-            content: '清空后将不可恢复，请谨慎操作!',
-            backgroundDismiss: true,
-            buttons: {
-                ok: {
-                    text: '确认',
-                    btnClass: 'btn-danger',
-                    action: function () {
-                        $.post("/admin/admin_log/empty",data={},function (res) {
                             if (res.status == 200 || res.code == 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                             location.reload();

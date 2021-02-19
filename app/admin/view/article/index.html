@@ -137,65 +137,6 @@
             },
             events : {
                 'click .btn-edit': function (e, value, row, index) {
-                    var rule_name = row.rule_name.replace('{$}','xx');
-                    var content = '<form action="" class="form-inline searchForm">' +
-                        '   <div class="form-group">';
-                    if (row.rule_name.indexOf('{$}')>-1){
-                        //开始替换值
-                        //切割字符串为数组
-                        var arr = row.rule_name.split("{$}");
-                        for (i = 0; i < arr.length; i++) {
-                            content+='  <span>'+arr[i]+'</span>\n';
-                            if (i < arr.length-1){
-                                content+= '  <input class="form-control value" type="text" name="value[]" style="width: 15%;">\n';
-                            }
-                        }
-                        content +=  '</div>'
-                        '</form>';
-                    }else{
-                        $.alert('此规则不支持修改');
-                        return false;
-                    }
-                    $.confirm({
-                        title: '修改规则',
-                        content: content,
-                        buttons: {
-                            formSubmit: {
-                                text: '确定',
-                                btnClass: 'btn-primary',
-                                action: function () {
-                                    var vals = this.$content.find('form').serializeArray();
-                                    var vals = $('form').serializeArray();
-                                    var data = [];
-                                    $.each(vals, function () {
-                                        if (!this.value){
-                                            $.alert('值不能为空');
-                                            return false;
-                                        }
-                                        data.push(this.value);
-                                    });
-                                    $.post(url="/admin/pushRule/update",data={"rule_value":data.toString(),"id":row.id},function (res) {
-                                        if (res.code == 200 || res.status == 200) {
-                                            parent.lightyear.notify('操作成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
-                                            $("#tb_departments").bootstrapTable('refresh',{query:{page:1},pageNumber:1});
-                                        } else{
-                                            parent.lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
-                                        }
-                                    });
-                                }
-                            },
-                            cancel: {
-                                text: '取消'
-                            },
-                        },
-                        onContentReady: function () {
-                            var jc = this;
-                            this.$content.find('form').on('submit', function (e) {
-                                e.preventDefault();
-                                jc.$$formSubmit.trigger('click');
-                            });
-                        }
-                    });
                 }
             }
         }],
