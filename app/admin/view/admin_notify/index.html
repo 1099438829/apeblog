@@ -75,7 +75,7 @@
                             <div class="panel-heading" role="tab" id="heading{$vo.id}">
                                 <h4 class="panel-title">
                                     <a role="button" class="collapsed {if $vo.is_read == 0}active{/if}" data-toggle="collapse" data-parent="#accordion" href="#collapse{$vo.id}" aria-expanded="false" aria-controls="collapse{$vo.id}" onclick="isRead('{$vo.id}')">
-                                        {$vo.title} <span class="mytb">{$vo.add_time|date="Y-m-d H:i:s"}</span>
+                                        {$vo.title} <span class="mytb">{$vo.create_time|date="Y-m-d H:i:s"}</span>
                                     </a>
                                 </h4>
                             </div>

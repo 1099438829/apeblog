@@ -209,7 +209,7 @@ trait ModelTrait
      * @param string $ceil
      * @return array
      */
-    public static function getModelTime($where,$model=null,$prefix='add_time',$data='data',$field=' - '){
+    public static function getModelTime($where,$model=null,$prefix='create_time',$data='data',$field=' - '){
         if ($model == null) $model = new self;
         if(!isset($where[$data])) return $model;
         switch ($where[$data]){

@@ -24,13 +24,13 @@ class AdminNotify extends BaseModel
         $model = new self;
         if ($where['start_time'] != "" && $where['end_time'] != "")
         {
-            $model = $model->where("add_time","between",[strtotime($where['start_time']." 00:00:00"),strtotime($where['end_time']." 23:59:59")]);
+            $model = $model->where("create_time","between",[strtotime($where['start_time']." 00:00:00"),strtotime($where['end_time']." 23:59:59")]);
         }
         if ($where['title'] != '') $model = $model->where("title|content","like","%$where[title]%");
         if ($where['is_read'] != '') $model = $model->where("is_read",$where['is_read']);
         if ($where['aid'] != '') $model = $model->where("aid",$where['aid']);
         $model = $model->order("is_read");
-        $model = $model->order("add_time desc");
+        $model = $model->order("create_time desc");
         return $model->paginate(10)->appends($where);
     }
 
@@ -57,7 +57,7 @@ class AdminNotify extends BaseModel
         $model = new self;
         $model = $model->where("is_read",0);
         $count = self::counts($model);
-        $model = $model->order("add_time desc");
+        $model = $model->order("create_time desc");
         $model = $model->page(1,$num);
         $data = $model->select();
         if ($data) $data = $data->toArray();
