@@ -26,7 +26,7 @@ class User extends BaseModel
      */
     public static function login(string $name,string $pwd): bool
     {
-        $info = self::where("name|tel","=", $name)->find();
+        $info = self::where("username|tel","=", $name)->find();
         if (!$info) return self::setErrorInfo("登录账号不存在");
         if ($info['pwd'] != md5(md5($pwd))) return self::setErrorInfo("密码不正确！");
         if ($info['status'] == 2) return self::setErrorInfo("账号已被冻结！");
@@ -78,11 +78,12 @@ class User extends BaseModel
     public static function systemPage(array $where): array
     {
         $model = new self;
-        if ($where['name'] != '') $model = $model->where("username|nickname","like","%$where[name]%");
+        if ($where['username'] != '') $model = $model->where("username|nickname","like","%$where[name]%");
         if ($where['start_time'] != '') $model = $model->where("create_time",">",strtotime($where['start_time']." 00:00:00"));
         if ($where['end_time'] != '') $model = $model->where("create_time","<", strtotime($where['end_time']." 23:59:59"));
-        if ($where['tel'] != '') $model = $model->where("tel|mail", "like","%$where[tel]%");
+        if ($where['tel'] != '') $model = $model->where("tel|email", "like","%$where[tel]%");
         if ($where['status'] != '') $model = $model->where("status",$where['status']);
+        if ($where['is_admin'] != '') $model = $model->where("is_admin",$where['is_admin']);
         $count = self::counts($model);
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'],(int)$where['limit']);
         $data = $model->select();
