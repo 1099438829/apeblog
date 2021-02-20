@@ -36,7 +36,7 @@ class Images extends AuthController
      */
     public function category()
     {
-        return app("json")->success(AttachmentCategory::buildNodes("image",0,$this->request->param("title","")));
+        return app("json")->success(AttachmentCategory::buildNodes("images",0,$this->request->param("title","")));
     }
 
     /**
@@ -103,7 +103,7 @@ class Images extends AuthController
         if ($id == "")
         {
             $data['create_user'] = $this->adminId;
-            $res = AttachmentCategory::save($data);
+            $res = AttachmentCategory::create($data);
         }
         else
         {

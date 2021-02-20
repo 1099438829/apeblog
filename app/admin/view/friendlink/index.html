@@ -45,7 +45,7 @@
             <div class="card">
                 <div class="card-toolbar clearfix">
                     <div class="toolbar-btn-action">
-                        <button id="btn_add" type="button" class="btn btn-primary m-r-5" onclick="iframe.createIframe('添加用户','/admin/admin/add')">
+                        <button id="btn_add" type="button" class="btn btn-primary m-r-5" onclick="iframe.createIframe('添加友链','/admin/friendlink/add')">
                             <span class="mdi mdi-plus" aria-hidden="true"></span>新增
                         </button>
                         <a class="btn btn-warning" href="#!" onclick="delSelect()"><i class="mdi mdi-window-close"></i> 删除</a>
@@ -133,12 +133,17 @@
                 let html = '<a type="button" class="btn-edit btn btn-xs btn-default m-r-5" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a> \n' +
                     '<a class="btn btn-xs btn-default btn-del" href="#!" title="删除" data-toggle="tooltip" onclick="delOne('+row.id+')"><i class="mdi mdi-window-close"></i></a>';
                 return html;
+            },
+            events: {
+                'click .btn-edit': function (event, value, row, index) {
+                    iframe.createIframe('修改友链','/admin/friendlink/edit?id='+row.id)
+                },
             }
         }],
         onEditableSave: function (field, row) {
             $.ajax({
                 type: "post",
-                url: "/admin/friendlink/update",
+                url: "/admin/friendlink/save",
                 data: row,
                 success: function (res) {
                     if (res.code == 200 || res.status == 200) {
@@ -195,31 +200,7 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/admin_log/del",data={id:id},function (res) {
-                            if (res.status == 200 || res.code == 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
-                            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
-                            location.reload();
-                        })
-                    }
-                },
-                cancel: {
-                    text: '取消',
-                    btnClass: 'btn-primary'
-                }
-            }
-        });
-    }
-    function delAll() {
-        $.confirm({
-            title: '重要提醒!',
-            content: '清空后将不可恢复，请谨慎操作!',
-            backgroundDismiss: true,
-            buttons: {
-                ok: {
-                    text: '确认',
-                    btnClass: 'btn-danger',
-                    action: function () {
-                        $.post("/admin/admin_log/empty",data={},function (res) {
+                        $.post("/admin/friendlink/del",data={id:id},function (res) {
                             if (res.status == 200 || res.code == 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                             location.reload();
@@ -252,7 +233,7 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/admin_log/del",data={id:checkID},function (res) {
+                        $.post("/admin/friendlink/del",data={id:checkID},function (res) {
                             if (res.status == 200 || res.code == 200) { lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                         })

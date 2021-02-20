@@ -229,7 +229,6 @@
                         });
                         // 选中节点
                         $('#tree').on('nodeSelected', function (event, data) {
-                            console.log(data);
                             id = data.id;
                             pid = data.pid;
                             that.getImageList();
@@ -300,10 +299,11 @@
                 if (!$("#fileUpload").val()) return;
                 var formData = new FormData();
                 formData.append("file", $("#fileUpload")[0].files[0]);
+                formData.append("type",'images');
                 formData.append("cid",id);
                 $.ajax({
                     type: "POST",
-                    url: "/admin/files/image",
+                    url: "/admin/files/upload",
                     enctype: 'multipart/form-data',
                     data: formData,
                     processData: false,

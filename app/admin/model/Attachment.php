@@ -33,9 +33,8 @@ class Attachment extends BaseModel
             'mime' => $mime,
             'size' => $size,
             'storage' => $storage,
-            'upload_time' => time()
         ];
-        return self::insert($data);
+        return self::create($data);
     }
 
     /**
