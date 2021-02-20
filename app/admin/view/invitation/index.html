@@ -37,8 +37,11 @@
             <div class="card">
                 <div class="card-toolbar clearfix">
                     <div class="toolbar-btn-action">
-                        <button id="btn_add" type="button" class="btn btn-primary m-r-5" onclick="iframe.createIframe('添加用户','/admin/admin/add')">
+                        <button id="btn_add" type="button" class="btn btn-primary m-r-5">
                             <span class="mdi mdi-plus" aria-hidden="true"></span>新增
+                        </button>
+                        <button id="btn_add_multiple" type="button" class="btn btn-primary m-r-5">
+                            <span class="mdi mdi-plus" aria-hidden="true"></span>批量新增
                         </button>
                         <a class="btn btn-warning" href="#!" onclick="delSelect()"><i class="mdi mdi-window-close"></i> 删除</a>
                     </div>
@@ -124,6 +127,103 @@
         $("#tb_departments").bootstrapTable('refresh',{query:{page:1},pageNumber:1});
     });
 
+
+    //新增邀请码
+    $('body').on('click','#btn_add',function(){
+        $.confirm({
+            title: '新增邀请码',
+            content: '' +
+                '<form action="" class="formName">' +
+                '<div class="form-group">' +
+                '<input type="text" placeholder="请输入邀请码" name="code" class="name form-control" required />' +
+                '</div>' +
+                '</form>',
+            buttons: {
+                formSubmit: {
+                    text: '提交',
+                    btnClass: 'btn-primary',
+                    action: function () {
+                        var name = this.$content.find('.name').val();
+                        if(!name){
+                            $.alert('请输入邀请码');
+                            return false;
+                        }
+                        $.post(url="/admin/invitation/save",this.$content.find('form').serialize(),function (res) {
+                            if (res.code == 200 || res.status == 200) {
+                                parent.lightyear.notify('操作成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                                $("#tb_departments").bootstrapTable('refresh',{query:{page:1},pageNumber:1});
+                            } else{
+                                parent.lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: '取消'
+                },
+            },
+            onContentReady: function () {
+                var jc = this;
+                this.$content.find('form').on('submit', function (e) {
+                    e.preventDefault();
+                    jc.$$formSubmit.trigger('click');
+                });
+            }
+        });
+    });
+
+    //批量新增邀请码
+    $('body').on('click','#btn_add_multiple',function(){
+        $.confirm({
+            title: '新增邀请码',
+            content: '' +
+                '<form action="" class="searchForm">' +
+                '   <div class="form-group">\n' +
+                '        <label>邀请码前缀</label>\n' +
+                '        <input class="form-control" type="text"name="name" placeholder="请输入邀请码前缀">\n' +
+                '   </div>\n' +
+                '   <div class="form-group">\n' +
+                '       <label>生成个数</label>\n' +
+                '       <input type="text" class="form-control" name="number" placeholder="请输入要生成的个数" />\n' +
+                '   </div>\n' +
+                '</form>',
+            buttons: {
+                formSubmit: {
+                    text: '提交',
+                    btnClass: 'btn-primary',
+                    action: function () {
+                        let field = this.$content.find('form').serializeArray();
+                        for(j = 0;j < field.length; j++) {
+                            if(!field[j].value){
+                                $.alert('请检查填写！');
+                                return false;
+                            }
+                        }
+                        $.post(url="/admin/invitation/addMultiple",this.$content.find('form').serialize(),function (res) {
+                            if (res.code == 200 || res.status == 200) {
+                                parent.lightyear.notify('操作成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                                $("#tb_departments").bootstrapTable('refresh',{query:{page:1},pageNumber:1});
+                            } else{
+                                parent.lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: '取消'
+                },
+            },
+            onContentReady: function () {
+                var jc = this;
+                this.$content.find('form').on('submit', function (e) {
+                    e.preventDefault();
+                    jc.$$formSubmit.trigger('click');
+                });
+            }
+        });
+    });
+
+
     function delOne(id) {
         $.confirm({
             title: '重要提醒!',
@@ -134,7 +234,7 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/admin_log/del",data={id:id},function (res) {
+                        $.post("/admin/invitation/del",data={id:id},function (res) {
                             if (res.status == 200 || res.code == 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                             location.reload();
@@ -167,7 +267,7 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/admin_log/del",data={id:checkID},function (res) {
+                        $.post("/admin/invitation/del",data={id:checkID},function (res) {
                             if (res.status == 200 || res.code == 200) { lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                         })
