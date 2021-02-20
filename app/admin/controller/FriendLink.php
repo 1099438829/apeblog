@@ -51,7 +51,7 @@ class FriendLink extends AuthController
     }
 
     /**
-     * 添加账号
+     * 添加友链
      * @param Request $request
      * @return string
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -71,7 +71,7 @@ class FriendLink extends AuthController
     }
 
     /**
-     * 修改账号
+     * 修改友链
      * @return string
      * @throws \FormBuilder\Exception\FormBuilderException
      */
@@ -83,7 +83,7 @@ class FriendLink extends AuthController
         $form = array();
         $form[] = Elm::input('title','链接名称',$ainfo['title'])->col(10);
         $form[] = Elm::input('url','链接地址',$ainfo['url'])->col(10);
-        $form[] = Elm::frameImage('image','网站图标',Url::buildUrl('admin/images/index',array('fodder'=>'image','limit'=>1)),$ainfo['avatar'])->icon("ios-image")->width('96%')->height('440px')->col(10);
+        $form[] = Elm::frameImage('image','网站图标',Url::buildUrl('admin/images/index',array('fodder'=>'image','limit'=>1)),$ainfo['image'])->icon("ios-image")->width('96%')->height('440px')->col(10);
         $form[] = Elm::input('sort','排序',$ainfo['sort'])->col(10);
         $form[] = Elm::textarea('description','描述',$ainfo['description'])->col(10);
         $form[] = Elm::radio('status','状态',$ainfo['status'])->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(10);
@@ -117,8 +117,10 @@ class FriendLink extends AuthController
             if ($info){
                 return app("json")->fail("链接已存在");
             }
+            $data['uid'] = $this->adminId;
             $res = aModel::create($data);
         }else {
+            $data['uid'] = $this->adminId;
             $res = aModel::update($data,['id'=>$id]);
         }
         return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");

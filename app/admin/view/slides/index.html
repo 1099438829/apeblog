@@ -37,7 +37,7 @@
             <div class="card">
                 <div class="card-toolbar clearfix">
                     <div id="toolbar" class="toolbar-btn-action">
-                        <button id="btn_add" type="button" class="btn btn-primary m-r-5" onclick="iframe.createIframe('添加用户','/admin/admin/add')">
+                        <button id="btn_add" type="button" class="btn btn-primary m-r-5" onclick="iframe.createIframe('添加幻灯片','/admin/slides/add')">
                             <span class="mdi mdi-plus" aria-hidden="true"></span>新增
                         </button>
                         <a class="btn btn-warning" href="#!" onclick="delSelect()"><i class="mdi mdi-window-close"></i> 删除</a>
@@ -89,7 +89,7 @@
             title: '幻灯片名称'
         },
         {
-            field: 'pic',
+            field: 'image',
             title: '幻灯片图片',
             formatter:function (value,row,index) {
                 let html ='<img src="'+value+'" alt="" width="50px;">';
@@ -98,14 +98,40 @@
         },
         {
             field: 'url',
-            title: '幻灯片链接地址',
+            title: '链接地址',
         }, {
             field: 'create_time',
             title: '添加时间',
         }, {
             field: 'operate',
             title: '操作',
-            formatter:operateFormatter
+            formatter:operateFormatter,
+            events: {
+                'click .btn-edit': function (event, value, row, index) {
+                    iframe.createIframe('修改幻灯片','/admin/slides/edit?id='+row.id)
+                },
+                'click .btn-del': function (event, value, row, index) {
+                    $.alert({
+                        title: '系统提示',
+                        content: '删除提醒',
+                        buttons: {
+                            confirm: {
+                                text: '确认',
+                                btnClass: 'btn-primary',
+                                action: function(){
+                                    $.post(url="/admin/slides/del",data={"id":row.id},function (res) {
+                                        if (res.status == 200) {parent.lightyear.notify('删除成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');$("#tb_departments").bootstrapTable('refresh');}
+                                        else parent.lightyear.notify('删除失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                                    });
+                                }
+                            },
+                            cancel: {
+                                text: '取消'
+                            }
+                        }
+                    });
+                }
+            }
         }],
         onLoadSuccess: function(data){
             $("[data-toggle='tooltip']").tooltip();
@@ -126,9 +152,8 @@
     // 操作按钮
     function operateFormatter(value, row, index) {
         return [
-            '<a type="button" class="role-add btn btn-xs btn-default m-r-5" title="编辑" data-toggle="tooltip"><i class="mdi mdi-plus"></i></a>',
-            '<a type="button" class="role-edit btn btn-xs btn-default m-r-5" title="修改" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>',
-            '<a type="button" class="role-delete btn btn-xs btn-default" title="删除" data-toggle="tooltip"><i class="mdi mdi-delete"></i></a>'
+            '<a type="button" class="btn-edit btn btn-xs btn-default m-r-5" title="修改" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>',
+            '<a type="button" class="btn-del btn btn-xs btn-default" title="删除" data-toggle="tooltip"><i class="mdi mdi-delete"></i></a>'
         ].join('');
     }
 
@@ -142,31 +167,7 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/admin_log/del",data={id:id},function (res) {
-                            if (res.status == 200 || res.code == 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
-                            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
-                            location.reload();
-                        })
-                    }
-                },
-                cancel: {
-                    text: '取消',
-                    btnClass: 'btn-primary'
-                }
-            }
-        });
-    }
-    function delAll() {
-        $.confirm({
-            title: '重要提醒!',
-            content: '清空后将不可恢复，请谨慎操作!',
-            backgroundDismiss: true,
-            buttons: {
-                ok: {
-                    text: '确认',
-                    btnClass: 'btn-danger',
-                    action: function () {
-                        $.post("/admin/admin_log/empty",data={},function (res) {
+                        $.post("/admin/slides/del",data={id:id},function (res) {
                             if (res.status == 200 || res.code == 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                             location.reload();
@@ -199,7 +200,7 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/admin_log/del",data={id:checkID},function (res) {
+                        $.post("/admin/slides/del",data={id:checkID},function (res) {
                             if (res.status == 200 || res.code == 200) { lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                         })
