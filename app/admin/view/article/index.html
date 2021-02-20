@@ -21,14 +21,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="ip">来访IP</label>
-                            <div class="input-group">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="ip" name="ip" placeholder="IP地址">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label for="start_time">操作时间</label>
                             <div class="input-group">
                                 <input class="form-control js-datetimepicker" type="text" id="start_time" name="start_time" autocomplete="off" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD" placeholder="开始时间">
@@ -45,8 +37,8 @@
             <div class="card">
                 <div class="card-toolbar clearfix">
                     <div class="toolbar-btn-action">
+                        <a class="btn btn-primary m-r-5" href="#!" onclick="iframe.createIframe('添加文章','/admin/article/add')"><i class="mdi mdi-plus"></i> 新增</a>
                         <a class="btn btn-warning" href="#!" onclick="delSelect()"><i class="mdi mdi-window-close"></i> 删除</a>
-                        <a class="btn btn-danger" href="#!" onclick="delAll()"><i class="mdi mdi-window-close"></i> 全部删除</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -132,11 +124,12 @@
             title: '操作',
             formatter:function (value,row,index) {
                 let html ='<a class="btn btn-xs btn-default btn-del" href="#!" title="删除" data-toggle="tooltip" onclick="delOne('+row.id+')"><i class="mdi mdi-window-close"></i></a>\n' +
-                        '<a type="button" class="btn-edit btn btn-xs btn-default m-r-5" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>';
+                        '<a type="button" class="btn-edit btn btn-xs btn-default m-r-5"  onclick="iframe.createIframe(\'编辑文章\',\'/admin/article/edit?id='+row.id+'\')" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>';
                 return html;
             },
             events : {
                 'click .btn-edit': function (e, value, row, index) {
+						
                 }
             }
         }],
@@ -200,30 +193,6 @@
                     btnClass: 'btn-danger',
                     action: function () {
                         $.post("/admin/admin_log/del",data={id:id},function (res) {
-                            if (res.status == 200 || res.code == 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
-                            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
-                            location.reload();
-                        })
-                    }
-                },
-                cancel: {
-                    text: '取消',
-                    btnClass: 'btn-primary'
-                }
-            }
-        });
-    }
-    function delAll() {
-        $.confirm({
-            title: '重要提醒!',
-            content: '清空后将不可恢复，请谨慎操作!',
-            backgroundDismiss: true,
-            buttons: {
-                ok: {
-                    text: '确认',
-                    btnClass: 'btn-danger',
-                    action: function () {
-                        $.post("/admin/admin_log/empty",data={},function (res) {
                             if (res.status == 200 || res.code == 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                             location.reload();

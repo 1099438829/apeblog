@@ -2,9 +2,8 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\Document;
-use app\admin\model\DocumentArticle;
-use app\admin\model\DocumentProduct;
+use app\admin\model\Document as aModel;
+use app\admin\model\DocumentCategory as cModel;
 use app\Request;
 use app\admin\services\UtilService as Util;
 
@@ -17,7 +16,7 @@ use app\admin\services\UtilService as Util;
 class Article extends AuthController
 {
     /**
-     * 账号列表
+     * 文章管理主页
      * @return string
      * @throws \Exception
      */
@@ -46,7 +45,7 @@ class Article extends AuthController
             ['page',1],
             ['limit',20],
         ]);
-        return app("json")->layui(Document::systemPage($where));
+        return app("json")->layui(aModel::systemPage($where));
     }
 
     /**
@@ -85,7 +84,7 @@ class Article extends AuthController
                 $saveData[$key] = $value;
             }
         }
-        return Document::update($saveData,['id'=>$id]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+        return aModel::update($saveData,['id'=>$id]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 
     /**
@@ -100,7 +99,33 @@ class Article extends AuthController
         if (!$id) return app("json")->fail("参数有误，Id为空！");
         $where = Util::postMore([['field',''],['value','']]);
         if ($where['field'] == '' || $where['value'] =='') return app("json")->fail("参数有误！");
-        return Document::update([$where['field']=>$where['value']],['id'=>$id]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+        return aModel::update([$where['field']=>$where['value']],['id'=>$id]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+    }
+
+    /**
+     * 新增页
+     * @return string
+     * @throws \Exception
+     */
+    public function add()
+    {
+        $this->assign("category",cModel::selectByType(2));
+        return $this->fetch();
+    }
+
+    /**
+     * 编辑页
+     * @return string
+     * @throws \Exception
+     * @author 李玉坤
+     * @date 2021-02-20 17:00
+     */
+    public function edit(Request $request)
+    {
+        $this->assign("category",CModel::selectByType(2));
+        $this->assign("info",aModel::get($request->param(['id'])));
+        return $this->fetch();
+
     }
 
 }
