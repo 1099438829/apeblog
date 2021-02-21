@@ -109,7 +109,13 @@ class Article extends AuthController
      */
     public function add()
     {
-        $this->assign("category",cModel::selectByType(2));
+        $where = [
+            'name' => '',
+            'status' => ''
+        ];
+        $category = cModel::systemPage($where);
+        $category = get_tree_list($category);
+        $this->assign("category",$category);
         return $this->fetch();
     }
 
@@ -122,7 +128,13 @@ class Article extends AuthController
      */
     public function edit(Request $request)
     {
-        $this->assign("category",CModel::selectByType(2));
+        $where = [
+            'name' => '',
+            'status' => ''
+        ];
+        $category = cModel::systemPage($where);
+        $category = get_tree_list($category);
+        $this->assign("category",$category);
         $this->assign("info",aModel::get($request->param(['id'])));
         return $this->fetch();
 

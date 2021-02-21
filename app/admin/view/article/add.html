@@ -38,7 +38,7 @@
                                 <select name="category_id" class="form-control" id="category_id">
                                     <option value="0">请选择</option>
                                     {volist name="category" id="vo"}
-                                    <option value="{$vo.id}">{$vo.title}</option>
+                                    <option value="{$vo.id}">{$vo.html}{$vo.title}</option>
                                     {/volist}
                                 </select>
                             </div>

@@ -131,3 +131,22 @@ if (!function_exists('get_dir'))
         return $dirArray;
     }
 }
+
+if (!function_exists('get_tree_list'))
+{
+    /*无限分类*/
+    function get_tree_list(&$list,$pid=0,$level=0,$html='|—')
+    {
+        static $tree = array();
+        foreach ($list as $v) {
+            if ($v['pid'] == $pid) {
+                $v['sort'] = $level;
+                $v['html'] = str_repeat($html, $level);
+                $tree[] = $v;
+                get_tree_list($list, $v['id'], $level + 1);
+            }
+        }
+        return $tree;
+    }
+
+}
