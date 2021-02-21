@@ -51,7 +51,7 @@ class DocumentCategory extends BaseModel
         if (!empty($ids)) $model = $model->where("id","not in", $ids);
         if ($type != 0) $model = $model->where("type",$type);
         $model = $model->where("status",1);
-        $model = $model->field("id,name");
+        $model = $model->field("id,title");
         $data = $model->select();
         return $data ? $data->toArray() : [];
     }
