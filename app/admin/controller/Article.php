@@ -74,10 +74,11 @@ class Article extends AuthController
             ['link_str',''],
             ['cover_path',''],
             ['display',1],
-            ['tag',''],
+            ['tags',''],
             ['sort',''],
             ['status',1],
         ]);
+
         if ($data['title'] == "") return app("json")->fail("文章名称不能为空");
         if ($data['category_id'] == "") return app("json")->fail("栏目分类不能为空");
         if ($data['cover_path'] == "") return app("json")->fail("主图不能为空");
@@ -87,6 +88,10 @@ class Article extends AuthController
             $content = $data['content'];
             unset($data['content']);
         }
+        if ($data['is_recommend']) $data['is_recommend'] = 1;
+        if ($data['is_hot']) $data['is_hot'] = 1;
+        if ($data['display']) $data['display'] = 1;
+        if ($data['is_top']) $data['is_top'] = 1;
         if ($id=="")
         {
             $data['writer'] =  $data['writer']?:$this->adminInfo['nickname'];
@@ -96,7 +101,7 @@ class Article extends AuthController
                     'id' => $id,
                     'content' => $content
                 ];
-                $res = DocumentArticle::save($updateData);
+                $res = DocumentArticle::insert($updateData);
             }
         }else
         {
