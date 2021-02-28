@@ -196,20 +196,26 @@
             processData: false,
             contentType: false,
             success: function (res) {
-                $("#"+inputName).val(res.data.filePath);
-                let html =' <figure>\n' +
-                    '         <img src="'+res.data.filePath+'" alt="'+res.data.name+'">\n' +
-                    '         <figcaption>\n' +
-                   '             <a class="btn btn-round btn-square btn-danger btn-image-delete" href="#!"><i class="mdi mdi-delete"></i></a>\n' +
-                    '         </figcaption>\n' +
-                    '       </figure>';
-                $('#pic-image').html(html);
-                $('#pic-image').show().next('li').hide();
+                if (res.code == 200){
+                    $("#"+inputName).val(res.data.filePath);
+                    let html =' <figure>\n' +
+                        '         <img src="'+res.data.filePath+'" alt="'+res.data.name+'">\n' +
+                        '         <figcaption>\n' +
+                        '             <a class="btn btn-round btn-square btn-danger btn-image-delete" href="#!"><i class="mdi mdi-delete"></i></a>\n' +
+                        '         </figcaption>\n' +
+                        '       </figure>';
+                    $('#pic-image').html(html);
+                    $('#pic-image').show().next('li').hide();
+                }else{
+                    lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                    return false;
+                }
             }
         });
     }
     $(".add-form").submit(function () {
         let Arr = $('.add-form').serializeArray();
+        let checkResult = true;
         $.each(Arr,function (index,item) {
             try {
                 switch (item.name) {
@@ -239,7 +245,7 @@
         if (!checkResult) {
             return false;
         }
-        $.post(url="/admin/cms.cms_article/save",$('.add-form').serialize(),function (res) {
+        $.post(url="/admin/article/save",$('.add-form').serialize(),function (res) {
             if (res.code == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');setTimeout(function () {parent.location.reload()},2000)}
             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
         });

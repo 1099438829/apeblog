@@ -4,6 +4,7 @@ namespace app\admin\controller;
 
 use app\admin\model\Document as aModel;
 use app\admin\model\DocumentCategory as cModel;
+use app\admin\model\DocumentArticle;
 use app\Request;
 use app\admin\services\UtilService as Util;
 
@@ -65,6 +66,7 @@ class Article extends AuthController
             ['type','article'],
             ['abstract',''],
             ['keywords',''],
+            ['content',''],
             ['description',''],
             ['is_recommend',0],
             ['is_top',0],
@@ -81,15 +83,30 @@ class Article extends AuthController
         if ($data['cover_path'] == "") return app("json")->fail("主图不能为空");
         $data['writer'] =  $data['writer']?:$this->adminInfo['nickname'];
         $data['uid'] = $this->adminId;
+        if (!empty($data['content'])){
+            $content = $data['content'];
+            unset($data['content']);
+        }
         if ($id=="")
         {
             $data['writer'] =  $data['writer']?:$this->adminInfo['nickname'];
-            $res = aModel::save($data);
+            $id = aModel::insertGetId($data);
+            if (!empty($content)){
+                $updateData = [
+                    'id' => $id,
+                    'content' => $content
+                ];
+                $res = DocumentArticle::save($updateData);
+            }
         }else
         {
             $ainfo = aModel::get($id);
             if (!$ainfo)return app("json")->fail("数据不存在");
             $res = aModel::where('id',$id)->save($data);
+            if (!empty($content)){
+                //更新文档
+                $res = DocumentArticle::where('id',$id)->save(['content'=>$content]);
+            }
         }
         return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
     }
