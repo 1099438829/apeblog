@@ -49,43 +49,51 @@ class Article extends AuthController
     }
 
     /**
-     * 更新
-     * @param Request $request
+     * 保存
+     * @param string $id
      * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      * @author 李玉坤
-     * @date 2021-02-16 21:15
+     * @date 2021-02-28 22:43
      */
-    public function update(Request $request)
+    public function save($id="")
     {
         $data = Util::postMore([
             ['id',''],
+            ['writer',''],
             ['title',''],
             ['category_id',''],
+            ['type','article'],
+            ['abstract',''],
             ['keywords',''],
             ['description',''],
-            ['type','article'],
             ['is_recommend',0],
             ['is_top',0],
+            ['is_hot',0],
             ['link_str',''],
             ['cover_path',''],
             ['display',1],
+            ['tag',''],
             ['sort',''],
             ['status',1],
         ]);
-        if ($data['id'] == '') return app("json")->fail("参数有误，Id为空！");
-        $id = $data['id'];
-        unset($data['id']);
-        $saveData = [];
-        foreach ($data as $key=>$value){
-            if ($value !== ''){
-                $saveData[$key] = $value;
-            }
+        if ($data['title'] == "") return app("json")->fail("文章名称不能为空");
+        if ($data['category_id'] == "") return app("json")->fail("栏目分类不能为空");
+        if ($data['cover_path'] == "") return app("json")->fail("主图不能为空");
+        $data['writer'] =  $data['writer']?:$this->adminInfo['nickname'];
+        $data['uid'] = $this->adminId;
+        if ($id=="")
+        {
+            $data['writer'] =  $data['writer']?:$this->adminInfo['nickname'];
+            $res = aModel::save($data);
+        }else
+        {
+            $ainfo = aModel::get($id);
+            if (!$ainfo)return app("json")->fail("数据不存在");
+            $res = aModel::where('id',$id)->save($data);
         }
-        return aModel::update($saveData,['id'=>$id]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
     }
+
 
     /**
      * 修改字段
@@ -139,5 +147,4 @@ class Article extends AuthController
         return $this->fetch();
 
     }
-
 }

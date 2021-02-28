@@ -37,7 +37,7 @@
             <div class="card">
                 <div class="card-toolbar clearfix">
                     <div class="toolbar-btn-action">
-                        <a class="btn btn-primary m-r-5" href="#!" onclick="iframe.createIframe('添加文章','/admin/article/add')"><i class="mdi mdi-plus"></i> 新增</a>
+                        <a class="btn btn-primary m-r-5" href="/admin/article/add"><i class="mdi mdi-plus"></i> 新增</a>
                         <a class="btn btn-warning" href="#!" onclick="delSelect()"><i class="mdi mdi-window-close"></i> 删除</a>
                     </div>
                 </div>
@@ -124,7 +124,7 @@
             title: '操作',
             formatter:function (value,row,index) {
                 let html ='<a class="btn btn-xs btn-default btn-del" href="#!" title="删除" data-toggle="tooltip" onclick="delOne('+row.id+')"><i class="mdi mdi-window-close"></i></a>\n' +
-                        '<a type="button" class="btn-edit btn btn-xs btn-default m-r-5"  onclick="iframe.createIframe(\'编辑文章\',\'/admin/article/edit?id='+row.id+'\')" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>';
+                        '<a type="button" class="btn-edit btn btn-xs btn-default m-r-5"  href="/admin/article/edit?id='+row.id+'" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>';
                 return html;
             },
             events : {

@@ -1,156 +1,156 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <title>CMS - 派后台管理系统</title>
-    <link rel="icon" href="__ADMIN_PATH__favicon.ico" type="image/ico">
-    <meta name="keywords" content="派后台管理系统">
-    <meta name="description" content="派后台管理系统">
-    <meta name="author" content="cfn">
-    <link href="__ADMIN_PATH__css/bootstrap.min.css" rel="stylesheet">
-    <link href="__ADMIN_PATH__css/materialdesignicons.min.css" rel="stylesheet">
-    <link href="__ADMIN_PATH__css/style.min.css" rel="stylesheet">
-    <!--select2-->
-    <link href="__ADMIN_PATH__css/select2.min.css" rel="stylesheet">
-    <!--弹出框-->
-    <link rel="stylesheet" href="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.css">
-    <!--时间选择插件-->
-    <link rel="stylesheet" href="__ADMIN_PATH__js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css">
-    <style>
-
-    </style>
+    <title>添加文章 - {:system_config("title")}后台管理系统</title>
+    {include file="public/header" /}
+    <!--标签插件-->
+    <link rel="stylesheet" href="__ADMIN_PATH__js/jquery-tags-input/jquery.tagsinput.min.css">
 </head>
 <body>
-<div class="container-fluid p-t-15">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
-                    <form action="#!" method="post" class="row" id="myForm">
-                        <div class="form-group col-md-12">
-                            <label for="title">文章名称</label>
-                            <input type="text" class="form-control" id="title" name="title" value="" placeholder="文章名称" />
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="category_id">栏目分类</label>
-                            <div class="form-controls">
-                                <select name="category_id" class="form-control" id="category_id">
-                                    <option value="0">请选择</option>
-                                    {volist name="category" id="vo"}
-                                    <option value="{$vo.id}">{$vo.html}{$vo.title}</option>
-                                    {/volist}
-                                </select>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>基本样式</h4>
+                <ul class="card-actions">
+                    <li>
+                        <button type="button" data-toggle="tooltip" title="" data-original-title="返回" onclick="javascript:history.back(-1);return false;">返 回</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <ul id="myTabs" class="nav nav-tabs" role="tablist">
+                    <li class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab">基本信息</a></li>
+                    <li><a href="#profile" role="tab" id="profile-tab" data-toggle="tab">文章设置</a></li>
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade active in" id="home">
+                        <form action="#!" method="post" class="row add-form" >
+                            <div class="form-group col-md-12">
+                                <label>文章名称</label>
+                                <input type="text" class="form-control" id="title" name="title" value="" placeholder="文章名称" />
                             </div>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="writer">作者</label>
-                            <input type="text" class="form-control" id="writer" name="writer" value="" placeholder="作者" />
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="cover_path">主图</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="cover_path" id="cover_path" value="" />
-                                <input type="file" id="fileimage" style="display: none;" onchange="upload('cover_path')"/>
-                                <div class="input-group-btn"><button class="btn btn-default" type="button" onclick="btnClick('cover_path')">上传</button></div>
+                            <div class="form-group col-md-12">
+                                <label for="category_id">栏目分类</label>
+                                <div class="form-controls">
+                                    <select name="category_id" id="category_id" class="form-control">
+                                        <option value="0">请选择</option>
+                                        {volist name="category" id="vo"}
+                                        <option value="{$vo.id}">{$vo.html}{$vo.title}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row col-md-3">
-                            <div class="col-xs-6">推荐</div>
-                            <div class="col-xs-6">
-                                <label class="lyear-switch switch-solid switch-primary">
-                                    <input type="checkbox" name="is_recommend" checked="">
-                                    <span></span>
-                                </label>
+                            <div class="form-group col-md-12">
+                                <label for="writer">作者</label>
+                                <input type="text" class="form-control" id="writer" name="writer" value="" placeholder="原作者" />
                             </div>
-                        </div>
-                        <div class="form-group row col-md-3">
-                            <div class="col-xs-6">热门</div>
-                            <div class="col-xs-6">
-                                <label class="lyear-switch switch-solid switch-primary">
-                                    <input type="checkbox" name="is_hot" checked="">
-                                    <span></span>
-                                </label>
+                            <div class="form-group col-md-12">
+                                <label>主图</label>
+                                <div class="form-controls">
+                                    <ul class="list-inline clearfix lyear-uploads-pic">
+                                        <li class="col-xs-4 col-sm-3 col-md-2" id="pic-image" style="display: none;">
+                                        </li>
+                                        <li class="col-xs-4 col-sm-3 col-md-2" id="pic-upload">
+                                            <input type="hidden" class="form-control" name="cover_path" id="cover_path" value="" />
+                                            <input type="file" id="file_cover_path" style="display: none;" onchange="upload('cover_path')"/>
+                                            <a class="pic-add" href="#!" onclick="btnClick('cover_path')" title="上传"></a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row col-md-3">
-                            <div class="col-xs-6">顶置</div>
-                            <div class="col-xs-6">
-                                <label class="lyear-switch switch-solid switch-primary">
-                                    <input type="checkbox" name="is_top" checked="">
-                                    <span></span>
-                                </label>
+                            <div class="form-group col-md-12">
+                                <label for="abstract">摘要</label>
+                                <input type="text" class="form-control"  name="abstract" id="abstract" placeholder="请输入摘要">
                             </div>
-                        </div>
-                        <div class="form-group row col-md-3">
-                            <div class="col-xs-6">显示</div>
-                            <div class="col-xs-6">
-                                <label class="lyear-switch switch-solid switch-primary">
-                                    <input type="checkbox" name="display" checked="">
-                                    <span></span>
-                                </label>
+                            <div class="form-group col-md-12">
+                                <label for="abstract">标签</label>
+                                <input class="form-control js-tags-input" type="text" name="tags" data-height="38px" placeholder="请输入标签">
                             </div>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="abstract">摘要</label>
-                            <input type="text" class="form-control"  name="abstract" id="abstract" placeholder="请输入摘要">
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="content">文章内容</label>
-                            <textarea id="content" name="content"></textarea>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="show_time">发布时间</label>
-                            <input class="form-control js-datetimepicker" type="text" id="show_time" name="show_time" placeholder="请选择具体时间" value="" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD HH:mm:ss" />
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label>状态</label>
-                            <div class="col-xs-6">
-                                <label class="lyear-switch switch-solid switch-primary">
-                                    <input type="checkbox" name="status" checked="">
-                                    <span></span>
-                                </label>
+                            <div class="form-group col-md-12">
+                                <label for="content">文章内容</label>
+                                <textarea id="content" name="content"></textarea>
                             </div>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="keywords">seo关键字</label>
-                            <input type="text" class="form-control" id="keywords" name="keywords" placeholder="请输入seo关键字">
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="description">seo描述</label>
-                            <input type="text" class="form-control" name="description" id="description"  placeholder="seo描述" >
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="link_str">外链</label>
-                            <input type="text" class="form-control" name="link_str" id="link_str" placeholder="外链">
-                        </div>
-                        <div class="form-group col-md-12">
-                            <button type="submit" class="btn btn-primary ajax-post" target-form="add-form">确 定</button>
-                        </div>
-                    </form>
+                            <div class="form-group col-md-12">
+                                <label for="show_time">发布时间</label>
+                                <input class="form-control js-datetimepicker" type="text" id="show_time" name="show_time" placeholder="请选择具体时间" value="" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD HH:mm:ss" />
+                            </div>
+                            <div class="form-group col-md-12">
+                                <button type="submit" class="btn btn-primary ajax-post" target-form="add-form">立即提交</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="profile">
+                        <form action="#!" method="post" class="row add-form">
+                            <div class="form-group row col-md-2">
+                                <div class="col-xs-6">推荐</div>
+                                <div class="col-xs-6">
+                                    <label class="lyear-switch switch-solid switch-primary">
+                                        <input type="checkbox" name="is_recommend">
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row col-md-2">
+                                <div class="col-xs-6">热门</div>
+                                <div class="col-xs-6">
+                                    <label class="lyear-switch switch-solid switch-primary">
+                                        <input type="checkbox" name="is_hot">
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row col-md-2">
+                                <div class="col-xs-6">顶置</div>
+                                <div class="col-xs-6">
+                                    <label class="lyear-switch switch-solid switch-primary">
+                                        <input type="checkbox" name="is_top">
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row col-md-2">
+                                <div class="col-xs-6">显示</div>
+                                <div class="col-xs-6">
+                                    <label class="lyear-switch switch-solid switch-primary">
+                                        <input type="checkbox" name="display" checked="">
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="abstract">排序</label>
+                                <input type="text" class="form-control"  name="sort" placeholder="请输入排序" value="99">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="link_str">外链</label>
+                                <input type="text" class="form-control" name="link_str" id="link_str" placeholder="外链">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="keywords">seo关键字</label>
+                                <input type="text" class="form-control" id="keywords" name="keywords" placeholder="请输入seo关键字">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="description">seo描述</label>
+                                <input type="text" class="form-control" name="description" id="description"  placeholder="seo描述" >
+                            </div>
+                            <div class="form-group col-md-12">
+                                <button type="submit" class="btn btn-primary ajax-post" target-form="add-form">立即提交</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/main.min.js"></script>
-<!--弹出框-->
-<script src="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.js"></script>
-<!--弹出框架-->
-<script type="text/javascript" src="__ADMIN_PATH__js/iframe.js"></script>
-<!--时间选择插件-->
-<script src="__ADMIN_PATH__js/bootstrap-datetimepicker/moment.min.js"></script>
-<script src="__ADMIN_PATH__js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
-<script src="__ADMIN_PATH__js/bootstrap-datetimepicker/locale/zh-cn.js"></script>
-<!--富文本输入框-->
-<script src="__ADMIN_PATH__js/tinymce/tinymce.min.js"></script>
-<!--通知-->
-<script src="__ADMIN_PATH__js/bootstrap-notify.min.js"></script>
+{include file="public/footer"/}
 <!--select2-->
 <script src="__ADMIN_PATH__js/select2.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/lightyear.js"></script>
+<!--富文本输入框-->
+<script src="__ADMIN_PATH__js/tinymce/tinymce.min.js"></script>
+<!--标签-->
+<script src="__ADMIN_PATH__js/jquery-tags-input/jquery.tagsinput.min.js"></script>
 <script>
     $(function () {
         $('#tag').select2();
@@ -178,7 +178,7 @@
      * @param inputName
      */
     function btnClick(inputName) {
-        $("#file"+inputName).click()
+        $("#file_"+inputName).click()
     }
     /**
      * 异步上传
@@ -187,7 +187,7 @@
     function upload(inputName) {
         var formData = new FormData();
         formData.append("type",'images');
-        formData.append("file",$("#file"+inputName)[0].files[0]);
+        formData.append("file",$("#file_"+inputName)[0].files[0]);
         $.ajax({
             type:'POST',
             url:'/admin/files/upload',
@@ -196,49 +196,60 @@
             processData: false,
             contentType: false,
             success: function (res) {
-                if (!Array.isArray(res)) res = jQuery.parseJSON(res);
                 $("#"+inputName).val(res.data.filePath);
+                let html =' <figure>\n' +
+                    '         <img src="'+res.data.filePath+'" alt="'+res.data.name+'">\n' +
+                    '         <figcaption>\n' +
+                   '             <a class="btn btn-round btn-square btn-danger btn-image-delete" href="#!"><i class="mdi mdi-delete"></i></a>\n' +
+                    '         </figcaption>\n' +
+                    '       </figure>';
+                $('#pic-image').html(html);
+                $('#pic-image').show().next('li').hide();
             }
         });
     }
-    $("#myForm").submit(function () {
-        $category_id = $('#category_id option:selected').val();
-        $content = tinymce.get('content').getContent();
-        $show_time = $('#show_time').val();
-        $title = $('#title').val();
-        $abstract = $('#abstract').val();
-        $author = $('#author').val();
-        $image = $('#image').val();
-        $is_recommend = $('input[name=is_recommend]:radio:checked').val();
-        $is_hot = $('input[name=is_hot]:radio:checked').val();
-        $is_top = $('input[name=is_top]:radio:checked').val();
-        var $tag = "";
-        $('#tag option:selected').each(function() {
-            $tag += $(this).attr("value")+",";
-        });
-        $show_time = $('#show_time').val();
-        $status = $('input[name=status]:radio:checked').val();
-        if ($category_id == 0) {lightyear.notify("栏目分类不能为空", 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');return false;}
-        if ($title == '') {lightyear.notify("文章名称不能为空", 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');return false;}
-        if ($author == '') {lightyear.notify("作者不能为空", 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');return false;}
-        $.post(url="/admin/cms.cms_article/save",data={
-            "category_id":$category_id,
-            "content":$content,
-            "show_time":$show_time,
-            "status":$status,
-            "is_recommend":$is_recommend,
-            "is_hot":$is_hot,
-            "is_top":$is_top,
-            "title":$title,
-            "image":$image,
-            "tag":$tag,
-            "author":$author,
-            "abstract":$abstract,
-        },function (res) {
+    $(".add-form").submit(function () {
+        let Arr = $('.add-form').serializeArray();
+        $.each(Arr,function (index,item) {
+            try {
+                switch (item.name) {
+                    case 'category_id':
+                        if (!item.value) {
+                            throw "栏目分类不能为空";
+                        }
+                        break;
+                    case 'title':
+                        if (!item.value) {
+                            throw "文章名称不能为空";
+                        }
+                        break;
+                    case 'cover_path':
+                        if (!item.value) {
+                            throw "主图不能为空";
+                        }
+                        break;
+                }
+            } catch (error) {
+                lightyear.notify(error, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                checkResult = false;
+                return false;
+            }
+        })
+        // 检验不通过终止执行
+        if (!checkResult) {
+            return false;
+        }
+        $.post(url="/admin/cms.cms_article/save",$('.add-form').serialize(),function (res) {
             if (res.code == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');setTimeout(function () {parent.location.reload()},2000)}
             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
         });
-        return false;
+        return true;
+    })
+
+    //删除事件
+    $('body').on('click','.btn-image-delete',function(){
+        $('#pic-image').hide().next('li').show();
+        $('#cover_path').val('');
     })
 </script>
 </body>
