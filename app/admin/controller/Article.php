@@ -95,6 +95,8 @@ class Article extends AuthController
         if ($id=="")
         {
             $data['writer'] =  $data['writer']?:$this->adminInfo['nickname'];
+            $data['create_time'] = time();
+            $data['update_time'] = time();
             $id = aModel::insertGetId($data);
             if (!empty($content)){
                 $updateData = [
