@@ -228,7 +228,7 @@ DROP TABLE IF EXISTS `ape_document`;
 CREATE TABLE `ape_document`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
-  `writer` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '作者',
+  `author` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '作者',
   `name` char(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '标识',
   `title` char(80) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '标题',
   `category_id` int(10) UNSIGNED NOT NULL COMMENT '所属分类',

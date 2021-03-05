@@ -60,7 +60,7 @@ class Article extends AuthController
     {
         $data = Util::postMore([
             ['id',''],
-            ['writer',''],
+            ['author',''],
             ['title',''],
             ['category_id',''],
             ['type','article'],
@@ -82,7 +82,7 @@ class Article extends AuthController
         if ($data['title'] == "") return app("json")->fail("文章名称不能为空");
         if ($data['category_id'] == "") return app("json")->fail("栏目分类不能为空");
         if ($data['cover_path'] == "") return app("json")->fail("主图不能为空");
-        $data['writer'] =  $data['writer']?:$this->adminInfo['nickname'];
+        $data['author'] =  $data['author']?:$this->adminInfo['nickname'];
         $data['uid'] = $this->adminId;
         if (!empty($data['content'])){
             $content = $data['content'];
@@ -94,7 +94,7 @@ class Article extends AuthController
         if ($data['is_top']) $data['is_top'] = 1;
         if ($id=="")
         {
-            $data['writer'] =  $data['writer']?:$this->adminInfo['nickname'];
+            $data['author'] =  $data['author']?:$this->adminInfo['nickname'];
             $data['create_time'] = time();
             $data['update_time'] = time();
             $id = aModel::insertGetId($data);
