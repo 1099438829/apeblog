@@ -86,8 +86,8 @@ class Article extends AuthController
         $data['uid'] = $this->adminId;
         if (!empty($data['content'])){
             $content = $data['content'];
-            unset($data['content']);
         }
+        unset($data['content']);
         if ($data['is_recommend']) $data['is_recommend'] = 1;
         if ($data['is_hot']) $data['is_hot'] = 1;
         if ($data['display']) $data['display'] = 1;
@@ -110,6 +110,7 @@ class Article extends AuthController
             $ainfo = aModel::get($id);
             if (!$ainfo)return app("json")->fail("数据不存在");
             $res = aModel::where('id',$id)->save($data);
+
             if (!empty($content)){
                 //更新文档
                 $res = DocumentArticle::where('id',$id)->save(['content'=>$content]);
@@ -166,9 +167,10 @@ class Article extends AuthController
         ];
         $category = cModel::systemPage($where);
         $category = get_tree_list($category);
+        $info = aModel::get($request->param(['id']));
+        $info->content = DocumentArticle::get($request->param(['id']))->content;
         $this->assign("category",$category);
-        $this->assign("info",aModel::get($request->param(['id'])));
+        $this->assign("info",$info);
         return $this->fetch();
-
     }
 }
