@@ -172,19 +172,9 @@
         $.each(Arr,function (index,item) {
             try {
                 switch (item.name) {
-                    case 'category_id':
-                        if (!item.value) {
-                            throw "栏目分类不能为空";
-                        }
-                        break;
                     case 'title':
                         if (!item.value) {
-                            throw "文章名称不能为空";
-                        }
-                        break;
-                    case 'cover_path':
-                        if (!item.value) {
-                            throw "主图不能为空";
+                            throw "分类名称不能为空";
                         }
                         break;
                 }

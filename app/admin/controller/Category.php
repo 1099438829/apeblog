@@ -56,9 +56,9 @@ class Category extends AuthController
     public function save($id="")
     {
         $data = Util::postMore([
-            ['name',''],
+            ['title',''],
             ['pid',0],
-            ['icon',''],
+            ['title_en',''],
             ['module',''],
             ['controller',''],
             ['action',''],
