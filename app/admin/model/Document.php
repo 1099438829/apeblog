@@ -28,6 +28,14 @@ class Document extends BaseModel
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'],(int)$where['limit']);
         $data = $model->select();
         if ($data) $data = $data->toArray();
+        $categoryList = DocumentCategory::where('id','in',array_column($data,'category_id'))->column('title','id');
+        foreach ($data as &$item){
+            if (!empty($categoryList[$item['category_id']])){
+                $item['category_title'] = $categoryList[$item['category_id']];
+            }else{
+                $item['category_title'] = '';
+            }
+        }
         return compact('data','count');
     }
 }
