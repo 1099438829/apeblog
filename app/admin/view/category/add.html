@@ -40,12 +40,12 @@
                                     <select name="pid" id="pid" class="form-control">
                                         <option value="0">请选择</option>
                                         {volist name="category" id="vo"}
-                                        <option value="{$vo.id}">{$vo.html}{$vo.title}</option>
+                                        <option value="{$vo.id}" {notempty name="pid"}{if $vo.id == $pid}selected{/if}{/notempty}>{$vo.html}{$vo.title}</option>
                                         {/volist}
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group row col-md-12">
+                            <div class="form-group col-md-12">
                                 <label for="pid">属性</label>
                                 <div class="form-controls">
                                     <select name="pid" class="form-control">
@@ -65,7 +65,7 @@
                                 <input type="text" class="form-control" name="link_str" id="link_str" placeholder="外链">
                             </div>
                             <div class="form-group col-md-12">
-                                <label for="content">文章内容</label>
+                                <label for="content">单页内容</label>
                                 <textarea id="content" name="content"></textarea>
                             </div>
                             <div class="form-group col-md-12">
@@ -75,6 +75,10 @@
                     </div>
                     <div class="tab-pane fade" id="profile">
                         <form action="#!" method="post" class="row add-form" onsubmit="return false;">
+                            <div class="form-group col-md-12">
+                                <label for="meta_title">seo标题</label>
+                                <input type="text" class="form-control" id="meta_title" name="meta_title" placeholder="请输入seo关键字">
+                            </div>
                             <div class="form-group col-md-12">
                                 <label for="keywords">seo关键字</label>
                                 <input type="text" class="form-control" id="keywords" name="keywords" placeholder="请输入seo关键字">

@@ -28,10 +28,10 @@ class DocumentCategory extends BaseModel
     {
         $model = new self;
         $model = $model->where('status','>',-1)
-            ->field('id,pid,title,sort,display')
+            ->field(['id','pid','title','sort','display'])
             ->order('sort asc,id asc');
         if (isset($where['status']) && $where['status'] != '') $model = $model->where("status",$where['status']);
-        if (isset($where['name']) && $where['name'] != '') $model = $model->where("name|id","like","%$where[name]%");
+        if (isset($where['title']) && $where['title'] != '') $model = $model->where("title|id","like","%$where[title]%");
         $data = $model->select();
         return $data->toArray() ?: [];
     }

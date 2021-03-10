@@ -105,15 +105,16 @@ class Category extends AuthController
      * @return string
      * @throws \Exception
      */
-    public function add()
+    public function add($pid ='')
     {
         $where = [
             'name' => '',
-            'status' => ''
+            'status' => '',
         ];
         $category = aModel::systemPage($where);
         $category = get_tree_list($category);
         $this->assign("category",$category);
+        $this->assign("pid",$pid);
         return $this->fetch();
     }
 
