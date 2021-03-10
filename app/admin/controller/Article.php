@@ -7,6 +7,8 @@ use app\admin\model\DocumentCategory as cModel;
 use app\admin\model\DocumentArticle;
 use app\Request;
 use app\admin\services\UtilService as Util;
+use think\Exception;
+use think\facade\Log;
 
 /**
  * Class Article
@@ -82,39 +84,44 @@ class Article extends AuthController
         if ($data['title'] == "") return app("json")->fail("文章名称不能为空");
         if ($data['category_id'] == "") return app("json")->fail("栏目分类不能为空");
         if ($data['cover_path'] == "") return app("json")->fail("主图不能为空");
-        $data['author'] =  $data['author']?:$this->adminInfo['nickname'];
-        $data['uid'] = $this->adminId;
-        if (!empty($data['content'])){
-            $content = $data['content'];
-        }
-        unset($data['content']);
-        if ($data['is_recommend']) $data['is_recommend'] = 1;
-        if ($data['is_hot']) $data['is_hot'] = 1;
-        if ($data['display']) $data['display'] = 1;
-        if ($data['is_top']) $data['is_top'] = 1;
-        if ($id=="")
-        {
+        try {
             $data['author'] =  $data['author']?:$this->adminInfo['nickname'];
-            $data['create_time'] = time();
-            $data['update_time'] = time();
-            $id = aModel::insertGetId($data);
-            if (!empty($content)){
-                $updateData = [
-                    'id' => $id,
-                    'content' => $content
-                ];
-                $res = DocumentArticle::insert($updateData);
+            $data['uid'] = $this->adminId;
+            if (!empty($data['content'])){
+                $content = $data['content'];
             }
-        }else
-        {
-            $ainfo = aModel::get($id);
-            if (!$ainfo)return app("json")->fail("数据不存在");
-            $res = aModel::where('id',$id)->save($data);
-
-            if (!empty($content)){
-                //更新文档
-                $res = DocumentArticle::where('id',$id)->save(['content'=>$content]);
+            unset($data['content']);
+            if ($data['is_recommend']) $data['is_recommend'] = 1;
+            if ($data['is_hot']) $data['is_hot'] = 1;
+            if ($data['display']) $data['display'] = 1;
+            if ($data['is_top']) $data['is_top'] = 1;
+            if ($id=="")
+            {
+                $data['author'] =  $data['author']?:$this->adminInfo['nickname'];
+                $data['create_time'] = time();
+                $data['update_time'] = time();
+                $id = aModel::insertGetId($data);
+                if (!empty($content)){
+                    $updateData = [
+                        'id' => $id,
+                        'content' => $content
+                    ];
+                    DocumentArticle::insert($updateData);
+                }
+            }else
+            {
+                $ainfo = aModel::get($id);
+                if (!$ainfo)return app("json")->fail("数据不存在");
+                aModel::where('id',$id)->save($data);
+                if (!empty($content)){
+                    //更新文档
+                    DocumentArticle::where('id',$id)->save(['content'=>$content]);
+                }
             }
+            $res = true;
+        }catch (Exception $e){
+            Log::error('文章修改失败：失败原因：'.$e->getMessage());
+            $res = false;
         }
         return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
     }
