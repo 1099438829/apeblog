@@ -143,11 +143,16 @@ class Article extends AuthController
     }
 
     /**
-     * 新增页
+     * 新增文章
+     * @param $category_id
      * @return string
-     * @throws \Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @author 李玉坤
+     * @date 2021-03-10 14:46
      */
-    public function add()
+    public function add($category_id ='')
     {
         $where = [
             'name' => '',
@@ -156,6 +161,7 @@ class Article extends AuthController
         $category = cModel::systemPage($where);
         $category = get_tree_list($category);
         $this->assign("category",$category);
+        $this->assign("category_id",$category_id);
         return $this->fetch();
     }
 

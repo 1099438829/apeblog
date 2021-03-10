@@ -41,10 +41,7 @@
                 </div>
                 <div class="card-body">
                     <div id="toolbar2" class="toolbar-btn-action">
-                        <button type="button" class="btn btn-primary m-r-5" onclick="iframe.createIframe('添加分类','/admin/admin_auth/add')"><span class="mdi mdi-plus" aria-hidden="true"></span>新增</button>
-                        <button id="btn_delete" type="button" class="btn btn-danger" onclick="del()">
-                            <span class="mdi mdi-window-close" aria-hidden="true"></span>删除
-                        </button>
+                        <a type="button" href="/admin/category/add" class="btn btn-primary m-r-5"><span class="mdi mdi-plus" aria-hidden="true"></span>新增</a>
                     </div>
                     <table id="tree-table"></table>
                 </div>
@@ -80,16 +77,17 @@
         showColumns: true,         // 是否显示所有的列
         showRefresh: true,         // 是否显示刷新按钮
         columns: [
-            {
-                field: 'check',
-                checkbox: true
-            },
+            // {
+            //     field: 'check',
+            //     checkbox: true
+            // },
             {
                 field: 'title',
                 title: '名称',
-                formatter:function (value, row, index) {
-                    return value +' ID:'+row.id;
-                }
+            },
+            {
+                field: 'id',
+                title: 'ID',
             },
             {
                 field: 'display',
@@ -115,10 +113,13 @@
                 title: '操作',
                 align: 'center',
                 events : {
-                    'click .role-add': function (e, value, row, index) {
-                        iframe.createIframe('添加子分类','/admin/category/add?pid='+row.id);
+                    'click .category-add': function (e, value, row, index) {
+                        location.href = '/admin/category/add?pid='+row.id;
                     },
-                    'click .role-delete': function (e, value, row, index) {
+                    'click .article-add': function (e, value, row, index) {
+                        location.href = '/admin/article/add?category_id='+row.id;
+                    },
+                    'click .category-delete': function (e, value, row, index) {
                         $.alert({
                             title: '系统提示',
                             content: '删除提醒',
@@ -139,7 +140,7 @@
                             }
                         });
                     },
-                    'click .role-edit': function (e, value, row, index) {
+                    'click .category-edit': function (e, value, row, index) {
                         iframe.createIframe('修改分类','/admin/category/edit?id='+row.id)
                     }
                 },
@@ -183,9 +184,10 @@
     // 操作按钮
     function operateFormatter(value, row, index) {
         return [
-            '<a type="button" class="role-add btn btn-xs btn-default m-r-5" title="编辑" data-toggle="tooltip"><i class="mdi mdi-plus"></i></a>',
-            '<a type="button" class="role-edit btn btn-xs btn-default m-r-5" title="修改" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>',
-            '<a type="button" class="role-delete btn btn-xs btn-default" title="删除" data-toggle="tooltip"><i class="mdi mdi-delete"></i></a>'
+            '<a type="button" class="category-add btn btn-xs btn-default m-r-5" title="编辑" data-toggle="tooltip"><i class="mdi mdi-plus"></i></a>',
+            '<a type="button" class="article-add btn btn-xs btn-default m-r-5" title="添加文章" data-toggle="tooltip"><i class="mdi mdi-pencil-box"></i></a>',
+            '<a type="button" class="category-edit btn btn-xs btn-default m-r-5" title="修改" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>',
+            '<a type="button" class="category-delete btn btn-xs btn-default" title="删除" data-toggle="tooltip"><i class="mdi mdi-delete"></i></a>'
         ].join('');
     }
 
@@ -227,39 +229,6 @@
             },
             error: function () {
                 parent.lightyear.notify('修改失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
-            }
-        });
-    }
-
-    // 删除
-    function del() {
-        var checkID = "";
-        var selectedItem = $treeTable.bootstrapTable('getSelections');
-        if (selectedItem=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
-        for (var i = 0 ; i<  selectedItem.length; i++)
-        {
-            checkID += selectedItem[i]['id']+",";
-        }
-        if (checkID=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
-        $.confirm({
-            title: '重要提醒!',
-            content: '选中项将全部被删除，请谨慎操作!' ,
-            backgroundDismiss: true,
-            buttons: {
-                ok: {
-                    text: '确认',
-                    btnClass: 'btn-danger',
-                    action: function () {
-                        $.post("/admin/category/del",data={id:checkID},function (res) {
-                            if (res.status == 200){ lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
-                            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
-                        })
-                    }
-                },
-                cancel: {
-                    text: '取消',
-                    btnClass: 'btn-primary'
-                }
             }
         });
     }
