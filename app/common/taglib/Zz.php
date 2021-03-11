@@ -52,7 +52,6 @@ class Zz extends TagLib{
         if(strpos($typeid,',')){
             $typeid="'$typeid'";
         }
-
         $parse = '<?php ';
         $parse .= '$__LIST__ = '."tpl_get_channel(\"$type\",$typeid,$row,\"$where\",\"$orderby\",$display);";
         $parse .= ' ?>';
