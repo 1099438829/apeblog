@@ -1,0 +1,29 @@
+{
+    "title":"默认主题",
+    "author":"MonkeyCode",
+    "demo_url":"http://default.lcm.wang/",
+    "category_type":[
+        {
+            "默认列表":"list_default.html"
+        },
+        {
+            "两排列表":"list_double.html"
+        }
+    ],
+    "article_type":[
+        {
+            "普通文章":"page.html"
+        },
+        {
+            "关于我们":"page_about.html"
+        },
+        {
+            "产品文章":"page_product.html"
+        }
+    ],
+    "info_file":"全部都是可视化的 没什么可说明的",
+    "set_file":"set.php",
+    "update_url":"http://www.lcm.wang/",
+    "preview_file":"preview.jpg",
+    "versions":"1.0"
+}

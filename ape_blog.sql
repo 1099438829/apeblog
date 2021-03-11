@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 10/03/2021 13:49:10
+ Date: 11/03/2021 18:49:18
 */
 
 SET NAMES utf8mb4;
@@ -125,7 +125,7 @@ CREATE TABLE `ape_admin_log`  (
   `user_agent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'User-Agent',
   `create_time` int(10) NOT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 274 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 303 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_admin_log
@@ -373,6 +373,35 @@ INSERT INTO `ape_admin_log` VALUES (270, 1, 'admin', 'admin', 'admin_auth', 'ind
 INSERT INTO `ape_admin_log` VALUES (271, 1, 'admin', 'admin', 'admin_auth', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615355143);
 INSERT INTO `ape_admin_log` VALUES (272, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615355254);
 INSERT INTO `ape_admin_log` VALUES (273, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615355325);
+INSERT INTO `ape_admin_log` VALUES (274, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615355437);
+INSERT INTO `ape_admin_log` VALUES (275, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615355471);
+INSERT INTO `ape_admin_log` VALUES (276, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615355804);
+INSERT INTO `ape_admin_log` VALUES (277, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615357336);
+INSERT INTO `ape_admin_log` VALUES (278, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615357414);
+INSERT INTO `ape_admin_log` VALUES (279, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615357450);
+INSERT INTO `ape_admin_log` VALUES (280, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615358019);
+INSERT INTO `ape_admin_log` VALUES (281, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615358026);
+INSERT INTO `ape_admin_log` VALUES (282, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615358032);
+INSERT INTO `ape_admin_log` VALUES (283, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615358129);
+INSERT INTO `ape_admin_log` VALUES (284, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615358559);
+INSERT INTO `ape_admin_log` VALUES (285, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615358605);
+INSERT INTO `ape_admin_log` VALUES (286, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615358623);
+INSERT INTO `ape_admin_log` VALUES (287, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615358637);
+INSERT INTO `ape_admin_log` VALUES (288, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615358651);
+INSERT INTO `ape_admin_log` VALUES (289, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615358861);
+INSERT INTO `ape_admin_log` VALUES (290, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615359164);
+INSERT INTO `ape_admin_log` VALUES (291, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615359177);
+INSERT INTO `ape_admin_log` VALUES (292, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615359189);
+INSERT INTO `ape_admin_log` VALUES (293, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615359234);
+INSERT INTO `ape_admin_log` VALUES (294, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615359357);
+INSERT INTO `ape_admin_log` VALUES (295, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615359428);
+INSERT INTO `ape_admin_log` VALUES (296, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615359429);
+INSERT INTO `ape_admin_log` VALUES (297, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615359432);
+INSERT INTO `ape_admin_log` VALUES (298, 1, 'admin', 'admin', 'login', 'login', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615429335);
+INSERT INTO `ape_admin_log` VALUES (299, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615429336);
+INSERT INTO `ape_admin_log` VALUES (300, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615429339);
+INSERT INTO `ape_admin_log` VALUES (301, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615429343);
+INSERT INTO `ape_admin_log` VALUES (302, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36', 1615429657);
 
 -- ----------------------------
 -- Table structure for ape_admin_notify
@@ -523,18 +552,19 @@ CREATE TABLE `ape_document`  (
   `author` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '作者',
   `title` char(80) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '标题',
   `category_id` int(10) UNSIGNED NOT NULL COMMENT '所属分类',
-  `abstract` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '摘要',
-  `keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '',
-  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '描述',
+  `cover_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '封面',
   `type` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'article' COMMENT '内容类型',
+  `theme` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '主题模板',
   `is_recommend` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否推荐',
   `is_top` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否置顶',
   `is_hot` tinyint(4) NULL DEFAULT 0 COMMENT '是否热门',
   `link_str` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '外链',
-  `cover_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '封面',
   `display` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '可见性',
   `view` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '浏览量',
   `tags` char(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '标识',
+  `abstract` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '摘要',
+  `keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '',
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '描述',
   `sort` int(10) NOT NULL DEFAULT 0 COMMENT '排序',
   `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
@@ -547,41 +577,41 @@ CREATE TABLE `ape_document`  (
 -- ----------------------------
 -- Records of ape_document
 -- ----------------------------
-INSERT INTO `ape_document` VALUES (121, 1, '超级管理员', '最新力作，英伦风礼物收纳盒', 84, '', '', '英伦风，源自英国维多利亚时期，以自然、优雅、含蓄、高贵为特点', 'article', 1, 1, 1, '', '/uploads/images/20210307\\4ee66c906a43fee4eba336de9b7ee41b.jpg', 1, 1, '', 99, 1572077123, 1600938232, 1);
-INSERT INTO `ape_document` VALUES (122, 1, '', '复古风格设计的Farm Fresh牛奶包装', 89, '', '牛奶,包装,设计,原生', '相对于许多在包装设计上喜欢跟上时代步伐走简约时尚的设计师来说，台湾很多设计师都比较倾向于走原生包装设计路线。在很多台湾本土产品的包装设计上，人们经常可以看到那些别有韵味充满民族风情的包装。今天为大家带来台湾设计师的食品包装设计，特别之处尽在不言中。', 'article', 0, 0, 0, '', '/uploads/20191026/572c2bdc3047a615bbdd49b05e539147.jpg', 1, 58, '', 99, 1572078882, 1594642420, -1);
-INSERT INTO `ape_document` VALUES (123, 1, '', 'Green Conut手工皂包装设计', 91, '', '', '该作品设计采用了插画形式，融入了传统徽派的黛瓦白墙元素，包装外观画面简约、画风清新。并对传统的纹样进行提炼,将手工皂的包装印染结合一身。', 'article', 0, 0, 0, '', '/uploads/20191026/b086c6fdeaa422aa4dfc56e28dc95c53.jpg', 1, 39, '', 99, 1572079072, 1591588198, -1);
-INSERT INTO `ape_document` VALUES (124, 1, '', '国潮设计来袭! 巴巴多斯朗姆酒Mount Gay包装设计', 88, '', '', '随着国潮的不断复兴冲击，消费者越来越发现，会玩的老品牌，在悠长的文化传承背景下所渗透出来的味道，让人更熟悉、更舒适、更安心。', 'article', 0, 0, 0, '', '/uploads/20191026/9cba191af0b525f69d9e596db0bb4be1.jpg', 1, 72, '', 99, 1572079258, 1592201798, -1);
-INSERT INTO `ape_document` VALUES (125, 1, '', 'On the Road to Variable图书版面设计', 90, '', '', '设计工作室 TwoPoints.net在最新一本名为On the Road to Variable（在变革的道路上）的书中，通过展示122位才华横溢的创意人作品，探索字体设计的未来。', 'article', 0, 0, 0, '', '/uploads/20191026/b9ddb8de337899c2256964a0121e23b8.jpg', 1, 99, '', 99, 1572079377, 1591620772, -1);
-INSERT INTO `ape_document` VALUES (126, 1, '', '我们的服务', 85, '', '', '', 'article', 0, 0, 0, '', '', 1, 4, '', 99, 1572081832, 1572081832, -1);
-INSERT INTO `ape_document` VALUES (127, 1, '', '需求沟通', 93, '', '', '和客户沟通需求，更好的了解客户的产品需求，对之后产品成型有更大的帮助。', 'article', 0, 0, 0, '', '', 1, 0, '', 99, 1572095904, 1572096024, -1);
-INSERT INTO `ape_document` VALUES (128, 1, '', '设计打版', 93, '', '', '和客户沟通需求，更好的了解客户的产品需求，对之后产品成型有更大的帮助', 'article', 0, 0, 0, '', '', 1, 0, '', 99, 1572095917, 1572096015, -1);
-INSERT INTO `ape_document` VALUES (129, 1, '', '成品制作', 93, '', '', '和客户沟通需求，更好的了解客户的产品需求，对之后产品成型有更大的帮助。', 'article', 0, 0, 0, '', '', 1, 0, '', 99, 1572095927, 1572096009, -1);
-INSERT INTO `ape_document` VALUES (130, 1, '', '售后服务', 93, '', '', '和客户沟通需求，更好的了解客户的产品需求，对之后产品成型有更大的帮助。', 'article', 0, 0, 0, '', '', 1, 0, '', 99, 1572095937, 1572096004, -1);
-INSERT INTO `ape_document` VALUES (131, 1, '', '产品总监', 94, '', '', '', 'article', 0, 0, 0, '', '/uploads/20191026/ce9e808324b0b14e7c1e8d5dccd02208.jpg', 1, 1, '', 99, 1572097056, 1572097056, -1);
-INSERT INTO `ape_document` VALUES (132, 1, '', '设计总监', 94, '', '', '', 'article', 0, 0, 0, '', '/uploads/20191026/71cd71f84322cb990cae8edc7bb80850.jpg', 1, 0, '', 99, 1572097071, 1572097071, -1);
-INSERT INTO `ape_document` VALUES (133, 1, '', '制作总监', 94, '', '', '', 'article', 0, 0, 0, '', '/uploads/20191026/dbd942d02c76eb0dfbb5e329f6219c60.jpg', 1, 0, '', 99, 1572097088, 1572097088, -1);
-INSERT INTO `ape_document` VALUES (134, 1, '', '复古风格设计的 Farm Fresh 牛奶包装', 87, '', '牛奶,包装', '简约时尚，比较倾向原生包装设计路线。', 'article', 0, 0, 0, '', '/uploads/20191026/53b359ce66578e6fe9e39c4ce24b3b72.jpg', 1, 2, '', 3, 1572097549, 1600938783, -1);
-INSERT INTO `ape_document` VALUES (152, 1, 'admin', '22222222222', 89, '', '111', '11', 'article', 0, 0, 0, '111', '', 0, 0, '', 99, 1600917172, 1600917256, -1);
-INSERT INTO `ape_document` VALUES (153, 1, 'admin', 'test', 84, '', '', '', 'article', 0, 0, 0, '', '', 1, 0, '', 99, 1600938816, 1600938826, -1);
-INSERT INTO `ape_document` VALUES (154, 1, 'admin', '多样的动态模板', 84, '', 'Various dynamic templates', '为了满足多场景、不同需求，系统支持通过URL传参的方式渲染指定模板文件。动态模板文件中可以使用所有模板标签，甚至可以使用php原生代码。这样做的好处，可以让你跳脱出系统本身的机制，响应自定义的数据。比如你可以在动态模板中响应一段JSON，或者响应一段html片段。', 'article', 0, 0, 0, '', '/uploads/picture/20200925/a93688a72cc898cfd08e6133f730a9e6.png', 1, 0, '', 99, 1600996312, 1601030476, 1);
-INSERT INTO `ape_document` VALUES (155, 1, 'admin', '强大的配置管理', 84, '', 'Powerful configuration management', '配置管理的强大在于，它可以创建诸如数字、字符、图片、数组、枚举等类型的配置项，通过系统的解析，显示在网站管理中。可以给客户提供可视化、点选式的动态配置功能。另外配置管理加入了作用域的概念，使得的配置缓存颗粒最小化。', 'article', 0, 0, 0, '', '/uploads/picture/20200925/4a0aa87737dc4364d61883f673d8e7f1.png', 1, 0, '', 99, 1600996370, 1601030417, 1);
-INSERT INTO `ape_document` VALUES (156, 1, 'admin', '呼啦企业网站管理系统_目录结构', 85, '', '', '因HulaCWMS是基于thinkPHP5.1开发的，所以部分目录结构可以参考thinkPHP5.1的文档', 'article', 0, 0, 0, '', '/uploads/picture/20200925/69c34ef5f53c2b77241746ebf85df86f.jpg', 1, 0, '', 99, 1600996601, 1601031442, 1);
-INSERT INTO `ape_document` VALUES (157, 1, 'admin', '关于呼啦企业网站管理系统（序言）', 85, '', '', '呼啦企业网站管理系统专注于企业、政府单位网站建设，以免费开源的方式，帮助广大站长、个人或企业开发者大大降低了开发成本和维护成本。快速锁定意向客户，培养长线营收。目前呼啦企业网站管理系统的资源下载站已制作了上百套不同行业的网站模板，欢迎下载试用。', 'article', 0, 0, 0, '', '/uploads/picture/20200925/99e9dfb06321dc9441d16209f2a7543b.jpg', 1, 1, '', 99, 1600996637, 1601031325, 1);
-INSERT INTO `ape_document` VALUES (158, 1, 'admin', 'HulaCWMS如何自助升级', 85, '', '', '下载呼啦企业网站管理系统最新版，下载地址：http://www.hulaxz.com/article/detail/id/198.html', 'article', 0, 0, 0, '', '/uploads/picture/20200925/40d05bfab8d287447ee823faf3e367f7.jpg', 1, 2, '', 99, 1600996685, 1601031107, 1);
-INSERT INTO `ape_document` VALUES (159, 1, 'admin', '5个简单的DIV+CSS建设网页操作', 85, '', '', '大家都知道用DIV+CSS的布局来设计网站便于优化，更容易被收录，比如两个同时上线的网站，拥有同样的外链，在推广2个月后，保证使用DIV+CSS布局的站点获得的排名比传统的TABLE 要好，用DIV+CSS建设该网站首先是从整体布局入手', 'article', 0, 0, 0, '', '/uploads/picture/20200925/ebfdfa96b3580dbeea1ee93c42ecabb7.jpg', 1, 2, '', 99, 1600996729, 1601031003, 1);
-INSERT INTO `ape_document` VALUES (160, 1, 'admin', '8种程序员必备的学习工具', 85, '', '', '程序员在学习过程中经常需要使用搜索引擎来检索资料，国内常用的也就是百度了。可以的话，搜索引擎首先还是推荐使用 Google，如果不能使用，可以使用以下几个作为备用', 'article', 0, 0, 0, '', '/uploads/picture/20200925/76ef90228697527b55901727272a2de7.jpg', 1, 6, '', 99, 1600996796, 1601030844, 1);
-INSERT INTO `ape_document` VALUES (161, 1, 'admin', '下载体验', 109, '', '', '快速锁定意向客户，培养长线营收。目前呼啦企业网站管理系统的资源下载站已制作了上百套不同行业的网站模板，欢迎下载试用。', 'article', 0, 0, 0, 'http://www.hulaxz.com/article/detail/id/198.html', '', 1, 0, '', 99, 1600996852, 1601031550, 1);
-INSERT INTO `ape_document` VALUES (162, 1, 'admin', '应用模板', 109, '', '', '一套数据，多套模板。呼啦资源下载站提供了上百套不同行业的网站模板，并支持一键切换，欢迎下载试用。', 'article', 0, 0, 0, 'http://www.hulaxz.com/muban/lists/cid/104.html', '', 1, 0, '', 99, 1600996912, 1601031609, 1);
-INSERT INTO `ape_document` VALUES (163, 1, 'admin', '常见问题', 109, '', '', '疑难问题一网打尽。例如：在HulaCWMS中，我们创建了许多常用的配置项，他们都可以在模板中通过{:config()}的方式调用', 'article', 0, 0, 0, 'http://www.hulaxz.com/article/lists/id/136.html', '', 1, 0, '', 99, 1600996947, 1601031671, 1);
-INSERT INTO `ape_document` VALUES (164, 1, 'admin', '网站模板化', 113, '', 'home', '呼啦资源下载站提供了上百套不同行业的网站模板，并支持一键切换，欢迎下载试用。呼啦企业网站管理系统专注于企业、政府单位网站建设，以免费开源的方式，帮助广大站长、个人或企业开发者大大降低了开发成本和维护成本。快速锁定意向客户，培养长线营收。', 'article', 0, 0, 0, '', '', 1, 0, '', 1, 1600996986, 1601031952, 1);
-INSERT INTO `ape_document` VALUES (165, 1, 'admin', '栏目分类显示', 113, '', 'profile', '采用无限级栏目分类和树状结构显示，上下级分明，便于操作。为了更友好的用户体验，我们让系统记住了栏目分类是被折叠或是被展开的状态。呼啦企业网站管理系统专注于企业、政府单位网站建设，以免费开源的方式，帮助广大站长、个人或企业开发者大大降低了开发成本和维护成本。快速锁定意向客户，培养长线营收。', 'article', 0, 0, 0, '', '', 1, 0, '', 2, 1600997018, 1601031986, 1);
-INSERT INTO `ape_document` VALUES (166, 1, 'admin', '访问统计数据', 113, '', 'contact', '呼啦企业网站建站系统更倾向于营销型网站，客户可以根据整站统计数据功能，实时了解并掌握网站被访问的统计数据，以了解公司的产品热度。呼啦企业网站管理系统专注于企业、政府单位网站建设，以免费开源的方式，帮助广大站长、个人或企业开发者大大降低了开发成本和维护成本。快速锁定意向客户，培养长线营收。', 'article', 0, 0, 0, '', '', 1, 0, '', 3, 1600997060, 1601032054, 1);
-INSERT INTO `ape_document` VALUES (167, 1, 'admin', '马化藤', 117, '', '', '因为专注所以专业，呼啦企业网站管理系统后台界面清爽美观，自适应的布局符合新时代的审美观和用户体验。本着系统就是给客户使用的设计原则，后台菜单做减法，通俗易懂。', 'article', 0, 0, 0, '', '/uploads/picture/20200925/ec6a4a303eb0c18b0977ade4a3efd7d9.png', 1, 0, '', 99, 1600997092, 1601032321, 1);
-INSERT INTO `ape_document` VALUES (168, 1, 'admin', '乔布四', 117, '', '', '因为专注所以专业，呼啦企业网站管理系统后台界面清爽美观，自适应的布局符合新时代的审美观和用户体验。本着系统就是给客户使用的设计原则，后台菜单做减法，通俗易懂。', 'article', 0, 0, 0, '', '/uploads/picture/20200925/ec6a4a303eb0c18b0977ade4a3efd7d9.png', 1, 0, '', 99, 1600997180, 1601032306, 1);
-INSERT INTO `ape_document` VALUES (169, 1, 'admin', '任正菲', 117, '', '', '因为专注所以专业，呼啦企业网站管理系统后台界面清爽美观，自适应的布局符合新时代的审美观和用户体验。本着系统就是给客户使用的设计原则，后台菜单做减法，通俗易懂。', 'article', 0, 0, 0, '', '/uploads/picture/20200925/ec6a4a303eb0c18b0977ade4a3efd7d9.png', 1, 0, '', 99, 1600997211, 1601032288, 1);
-INSERT INTO `ape_document` VALUES (170, 1, 'admin', '马芸', 117, '', '', '因为专注所以专业，呼啦企业网站管理系统后台界面清爽美观，自适应的布局符合新时代的审美观和用户体验。本着系统就是给客户使用的设计原则，后台菜单做减法，通俗易懂。', 'article', 0, 0, 0, '', '/uploads/picture/20200925/ec6a4a303eb0c18b0977ade4a3efd7d9.png', 1, 0, '', 99, 1600997231, 1610249856, 1);
-INSERT INTO `ape_document` VALUES (171, 1, '超级管理员', '特种兵之霹雳火', 107, '', '', '', 'article', 0, 0, 0, '', '/uploads/images/20210301\\5ebc6fcbee2e1f187a9d310a9a437544.png', 1, 0, '', 99, 0, 0, 1);
-INSERT INTO `ape_document` VALUES (172, 1, '超级管理员', '特种兵之霹雳火', 114, '', '', '', 'article', 0, 0, 0, '', '/uploads/images/20210301\\f6d8d7b6c4fa13723c628c2af37b8e3d.png', 1, 0, '', 99, 1614530449, 1614530449, 1);
+INSERT INTO `ape_document` VALUES (121, 1, '超级管理员', '最新力作，英伦风礼物收纳盒', 84, '/uploads/images/20210307\\4ee66c906a43fee4eba336de9b7ee41b.jpg', 'article', '', 1, 1, 1, '', 1, 1, '', '', '', '英伦风，源自英国维多利亚时期，以自然、优雅、含蓄、高贵为特点', 99, 1572077123, 1600938232, 1);
+INSERT INTO `ape_document` VALUES (122, 1, '', '复古风格设计的Farm Fresh牛奶包装', 89, '/uploads/20191026/572c2bdc3047a615bbdd49b05e539147.jpg', 'article', '', 0, 0, 0, '', 1, 58, '', '', '牛奶,包装,设计,原生', '相对于许多在包装设计上喜欢跟上时代步伐走简约时尚的设计师来说，台湾很多设计师都比较倾向于走原生包装设计路线。在很多台湾本土产品的包装设计上，人们经常可以看到那些别有韵味充满民族风情的包装。今天为大家带来台湾设计师的食品包装设计，特别之处尽在不言中。', 99, 1572078882, 1594642420, -1);
+INSERT INTO `ape_document` VALUES (123, 1, '', 'Green Conut手工皂包装设计', 91, '/uploads/20191026/b086c6fdeaa422aa4dfc56e28dc95c53.jpg', 'article', '', 0, 0, 0, '', 1, 39, '', '', '', '该作品设计采用了插画形式，融入了传统徽派的黛瓦白墙元素，包装外观画面简约、画风清新。并对传统的纹样进行提炼,将手工皂的包装印染结合一身。', 99, 1572079072, 1591588198, -1);
+INSERT INTO `ape_document` VALUES (124, 1, '', '国潮设计来袭! 巴巴多斯朗姆酒Mount Gay包装设计', 88, '/uploads/20191026/9cba191af0b525f69d9e596db0bb4be1.jpg', 'article', '', 0, 0, 0, '', 1, 72, '', '', '', '随着国潮的不断复兴冲击，消费者越来越发现，会玩的老品牌，在悠长的文化传承背景下所渗透出来的味道，让人更熟悉、更舒适、更安心。', 99, 1572079258, 1592201798, -1);
+INSERT INTO `ape_document` VALUES (125, 1, '', 'On the Road to Variable图书版面设计', 90, '/uploads/20191026/b9ddb8de337899c2256964a0121e23b8.jpg', 'article', '', 0, 0, 0, '', 1, 99, '', '', '', '设计工作室 TwoPoints.net在最新一本名为On the Road to Variable（在变革的道路上）的书中，通过展示122位才华横溢的创意人作品，探索字体设计的未来。', 99, 1572079377, 1591620772, -1);
+INSERT INTO `ape_document` VALUES (126, 1, '', '我们的服务', 85, '', 'article', '', 0, 0, 0, '', 1, 4, '', '', '', '', 99, 1572081832, 1572081832, -1);
+INSERT INTO `ape_document` VALUES (127, 1, '', '需求沟通', 93, '', 'article', '', 0, 0, 0, '', 1, 0, '', '', '', '和客户沟通需求，更好的了解客户的产品需求，对之后产品成型有更大的帮助。', 99, 1572095904, 1572096024, -1);
+INSERT INTO `ape_document` VALUES (128, 1, '', '设计打版', 93, '', 'article', '', 0, 0, 0, '', 1, 0, '', '', '', '和客户沟通需求，更好的了解客户的产品需求，对之后产品成型有更大的帮助', 99, 1572095917, 1572096015, -1);
+INSERT INTO `ape_document` VALUES (129, 1, '', '成品制作', 93, '', 'article', '', 0, 0, 0, '', 1, 0, '', '', '', '和客户沟通需求，更好的了解客户的产品需求，对之后产品成型有更大的帮助。', 99, 1572095927, 1572096009, -1);
+INSERT INTO `ape_document` VALUES (130, 1, '', '售后服务', 93, '', 'article', '', 0, 0, 0, '', 1, 0, '', '', '', '和客户沟通需求，更好的了解客户的产品需求，对之后产品成型有更大的帮助。', 99, 1572095937, 1572096004, -1);
+INSERT INTO `ape_document` VALUES (131, 1, '', '产品总监', 94, '/uploads/20191026/ce9e808324b0b14e7c1e8d5dccd02208.jpg', 'article', '', 0, 0, 0, '', 1, 1, '', '', '', '', 99, 1572097056, 1572097056, -1);
+INSERT INTO `ape_document` VALUES (132, 1, '', '设计总监', 94, '/uploads/20191026/71cd71f84322cb990cae8edc7bb80850.jpg', 'article', '', 0, 0, 0, '', 1, 0, '', '', '', '', 99, 1572097071, 1572097071, -1);
+INSERT INTO `ape_document` VALUES (133, 1, '', '制作总监', 94, '/uploads/20191026/dbd942d02c76eb0dfbb5e329f6219c60.jpg', 'article', '', 0, 0, 0, '', 1, 0, '', '', '', '', 99, 1572097088, 1572097088, -1);
+INSERT INTO `ape_document` VALUES (134, 1, '', '复古风格设计的 Farm Fresh 牛奶包装', 87, '/uploads/20191026/53b359ce66578e6fe9e39c4ce24b3b72.jpg', 'article', '', 0, 0, 0, '', 1, 2, '', '', '牛奶,包装', '简约时尚，比较倾向原生包装设计路线。', 3, 1572097549, 1600938783, -1);
+INSERT INTO `ape_document` VALUES (152, 1, 'admin', '22222222222', 89, '', 'article', '', 0, 0, 0, '111', 0, 0, '', '', '111', '11', 99, 1600917172, 1600917256, -1);
+INSERT INTO `ape_document` VALUES (153, 1, 'admin', 'test', 84, '', 'article', '', 0, 0, 0, '', 1, 0, '', '', '', '', 99, 1600938816, 1600938826, -1);
+INSERT INTO `ape_document` VALUES (154, 1, 'admin', '多样的动态模板', 84, '/uploads/picture/20200925/a93688a72cc898cfd08e6133f730a9e6.png', 'article', '', 0, 0, 0, '', 1, 0, '', '', 'Various dynamic templates', '为了满足多场景、不同需求，系统支持通过URL传参的方式渲染指定模板文件。动态模板文件中可以使用所有模板标签，甚至可以使用php原生代码。这样做的好处，可以让你跳脱出系统本身的机制，响应自定义的数据。比如你可以在动态模板中响应一段JSON，或者响应一段html片段。', 99, 1600996312, 1601030476, 1);
+INSERT INTO `ape_document` VALUES (155, 1, 'admin', '强大的配置管理', 84, '/uploads/picture/20200925/4a0aa87737dc4364d61883f673d8e7f1.png', 'article', '', 0, 0, 0, '', 1, 0, '', '', 'Powerful configuration management', '配置管理的强大在于，它可以创建诸如数字、字符、图片、数组、枚举等类型的配置项，通过系统的解析，显示在网站管理中。可以给客户提供可视化、点选式的动态配置功能。另外配置管理加入了作用域的概念，使得的配置缓存颗粒最小化。', 99, 1600996370, 1601030417, 1);
+INSERT INTO `ape_document` VALUES (156, 1, 'admin', '呼啦企业网站管理系统_目录结构', 85, '/uploads/picture/20200925/69c34ef5f53c2b77241746ebf85df86f.jpg', 'article', '', 0, 0, 0, '', 1, 0, '', '', '', '因HulaCWMS是基于thinkPHP5.1开发的，所以部分目录结构可以参考thinkPHP5.1的文档', 99, 1600996601, 1601031442, 1);
+INSERT INTO `ape_document` VALUES (157, 1, 'admin', '关于呼啦企业网站管理系统（序言）', 85, '/uploads/picture/20200925/99e9dfb06321dc9441d16209f2a7543b.jpg', 'article', '', 0, 0, 0, '', 1, 1, '', '', '', '呼啦企业网站管理系统专注于企业、政府单位网站建设，以免费开源的方式，帮助广大站长、个人或企业开发者大大降低了开发成本和维护成本。快速锁定意向客户，培养长线营收。目前呼啦企业网站管理系统的资源下载站已制作了上百套不同行业的网站模板，欢迎下载试用。', 99, 1600996637, 1601031325, 1);
+INSERT INTO `ape_document` VALUES (158, 1, 'admin', 'HulaCWMS如何自助升级', 85, '/uploads/picture/20200925/40d05bfab8d287447ee823faf3e367f7.jpg', 'article', '', 0, 0, 0, '', 1, 2, '', '', '', '下载呼啦企业网站管理系统最新版，下载地址：http://www.hulaxz.com/article/detail/id/198.html', 99, 1600996685, 1601031107, 1);
+INSERT INTO `ape_document` VALUES (159, 1, 'admin', '5个简单的DIV+CSS建设网页操作', 85, '/uploads/picture/20200925/ebfdfa96b3580dbeea1ee93c42ecabb7.jpg', 'article', '', 0, 0, 0, '', 1, 2, '', '', '', '大家都知道用DIV+CSS的布局来设计网站便于优化，更容易被收录，比如两个同时上线的网站，拥有同样的外链，在推广2个月后，保证使用DIV+CSS布局的站点获得的排名比传统的TABLE 要好，用DIV+CSS建设该网站首先是从整体布局入手', 99, 1600996729, 1601031003, 1);
+INSERT INTO `ape_document` VALUES (160, 1, 'admin', '8种程序员必备的学习工具', 85, '/uploads/picture/20200925/76ef90228697527b55901727272a2de7.jpg', 'article', '', 0, 0, 0, '', 1, 6, '', '', '', '程序员在学习过程中经常需要使用搜索引擎来检索资料，国内常用的也就是百度了。可以的话，搜索引擎首先还是推荐使用 Google，如果不能使用，可以使用以下几个作为备用', 99, 1600996796, 1601030844, 1);
+INSERT INTO `ape_document` VALUES (161, 1, 'admin', '下载体验', 109, '', 'article', '', 0, 0, 0, 'http://www.hulaxz.com/article/detail/id/198.html', 1, 0, '', '', '', '快速锁定意向客户，培养长线营收。目前呼啦企业网站管理系统的资源下载站已制作了上百套不同行业的网站模板，欢迎下载试用。', 99, 1600996852, 1601031550, 1);
+INSERT INTO `ape_document` VALUES (162, 1, 'admin', '应用模板', 109, '', 'article', '', 0, 0, 0, 'http://www.hulaxz.com/muban/lists/cid/104.html', 1, 0, '', '', '', '一套数据，多套模板。呼啦资源下载站提供了上百套不同行业的网站模板，并支持一键切换，欢迎下载试用。', 99, 1600996912, 1601031609, 1);
+INSERT INTO `ape_document` VALUES (163, 1, 'admin', '常见问题', 109, '', 'article', '', 0, 0, 0, 'http://www.hulaxz.com/article/lists/id/136.html', 1, 0, '', '', '', '疑难问题一网打尽。例如：在HulaCWMS中，我们创建了许多常用的配置项，他们都可以在模板中通过{:config()}的方式调用', 99, 1600996947, 1601031671, 1);
+INSERT INTO `ape_document` VALUES (164, 1, 'admin', '网站模板化', 113, '', 'article', '', 0, 0, 0, '', 1, 0, '', '', 'home', '呼啦资源下载站提供了上百套不同行业的网站模板，并支持一键切换，欢迎下载试用。呼啦企业网站管理系统专注于企业、政府单位网站建设，以免费开源的方式，帮助广大站长、个人或企业开发者大大降低了开发成本和维护成本。快速锁定意向客户，培养长线营收。', 1, 1600996986, 1601031952, 1);
+INSERT INTO `ape_document` VALUES (165, 1, 'admin', '栏目分类显示', 113, '', 'article', '', 0, 0, 0, '', 1, 0, '', '', 'profile', '采用无限级栏目分类和树状结构显示，上下级分明，便于操作。为了更友好的用户体验，我们让系统记住了栏目分类是被折叠或是被展开的状态。呼啦企业网站管理系统专注于企业、政府单位网站建设，以免费开源的方式，帮助广大站长、个人或企业开发者大大降低了开发成本和维护成本。快速锁定意向客户，培养长线营收。', 2, 1600997018, 1601031986, 1);
+INSERT INTO `ape_document` VALUES (166, 1, 'admin', '访问统计数据', 113, '', 'article', '', 0, 0, 0, '', 1, 0, '', '', 'contact', '呼啦企业网站建站系统更倾向于营销型网站，客户可以根据整站统计数据功能，实时了解并掌握网站被访问的统计数据，以了解公司的产品热度。呼啦企业网站管理系统专注于企业、政府单位网站建设，以免费开源的方式，帮助广大站长、个人或企业开发者大大降低了开发成本和维护成本。快速锁定意向客户，培养长线营收。', 3, 1600997060, 1601032054, 1);
+INSERT INTO `ape_document` VALUES (167, 1, 'admin', '马化藤', 117, '/uploads/picture/20200925/ec6a4a303eb0c18b0977ade4a3efd7d9.png', 'article', '', 0, 0, 0, '', 1, 0, '', '', '', '因为专注所以专业，呼啦企业网站管理系统后台界面清爽美观，自适应的布局符合新时代的审美观和用户体验。本着系统就是给客户使用的设计原则，后台菜单做减法，通俗易懂。', 99, 1600997092, 1601032321, 1);
+INSERT INTO `ape_document` VALUES (168, 1, 'admin', '乔布四', 117, '/uploads/picture/20200925/ec6a4a303eb0c18b0977ade4a3efd7d9.png', 'article', '', 0, 0, 0, '', 1, 0, '', '', '', '因为专注所以专业，呼啦企业网站管理系统后台界面清爽美观，自适应的布局符合新时代的审美观和用户体验。本着系统就是给客户使用的设计原则，后台菜单做减法，通俗易懂。', 99, 1600997180, 1601032306, 1);
+INSERT INTO `ape_document` VALUES (169, 1, 'admin', '任正菲', 117, '/uploads/picture/20200925/ec6a4a303eb0c18b0977ade4a3efd7d9.png', 'article', '', 0, 0, 0, '', 1, 0, '', '', '', '因为专注所以专业，呼啦企业网站管理系统后台界面清爽美观，自适应的布局符合新时代的审美观和用户体验。本着系统就是给客户使用的设计原则，后台菜单做减法，通俗易懂。', 99, 1600997211, 1601032288, 1);
+INSERT INTO `ape_document` VALUES (170, 1, 'admin', '马芸', 117, '/uploads/picture/20200925/ec6a4a303eb0c18b0977ade4a3efd7d9.png', 'article', '', 0, 0, 0, '', 1, 0, '', '', '', '因为专注所以专业，呼啦企业网站管理系统后台界面清爽美观，自适应的布局符合新时代的审美观和用户体验。本着系统就是给客户使用的设计原则，后台菜单做减法，通俗易懂。', 99, 1600997231, 1610249856, 1);
+INSERT INTO `ape_document` VALUES (171, 1, '超级管理员', '特种兵之霹雳火', 107, '/uploads/images/20210301\\5ebc6fcbee2e1f187a9d310a9a437544.png', 'article', '', 0, 0, 0, '', 1, 0, '', '', '', '', 99, 0, 0, 1);
+INSERT INTO `ape_document` VALUES (172, 1, '超级管理员', '特种兵之霹雳火', 114, '/uploads/images/20210301\\f6d8d7b6c4fa13723c628c2af37b8e3d.png', 'article', '', 0, 0, 0, '', 1, 0, '', '', '', '', 99, 1614530449, 1614530449, 1);
 
 -- ----------------------------
 -- Table structure for ape_document_article
@@ -638,39 +668,36 @@ CREATE TABLE `ape_document_category`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标题',
   `en_title` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标志',
+  `icon` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '分类图标',
   `type` tinyint(4) NOT NULL DEFAULT 0 COMMENT '分类类别：0列表，1单篇，2链接',
-  `pid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上级分类ID',
+  `pid` int(10) NOT NULL DEFAULT 0 COMMENT '上级分类ID',
   `sort` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '排序（同级有效）',
   `meta_title` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT 'SEO的网页标题',
-  `keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '关键字',
-  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '描述',
-  `template_index` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '频道页模板',
-  `template_lists` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '列表页模板',
-  `template_detail` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '详情页模板',
-  `link_str` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '外链',
+  `keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '关键字',
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '描述',
+  `template` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '分类模板',
+  `link_str` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '外链',
   `view` int(10) NOT NULL DEFAULT 0 COMMENT '访问数',
   `display` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '可见性',
   `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
-  `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '数据状态',
-  `icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '分类图标',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 120 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '分类表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ape_document_category
 -- ----------------------------
-INSERT INTO `ape_document_category` VALUES (84, '特色', 'Features', 1, 0, 1, '一套数据，多套模板。', '', '呼啦资源下载站提供了上百套不同行业的网站模板，并支持一键切换，欢迎下载试用。', 'features.html', '', '', '', 382, 1, 1572075448, 1600998216, 1, '');
-INSERT INTO `ape_document_category` VALUES (85, '新闻', 'News', 0, 0, 4, '', '', '', '', 'blog.html', 'single-blog.html', '', 274, 1, 1572075515, 1613724416, 1, '');
-INSERT INTO `ape_document_category` VALUES (86, '关于', 'about', 1, 0, 6, '关于呼啦企业网站管理系统', '', '呼啦企业网站管理系统专注于企业、政府单位网站建设，以免费开源的方式，帮助广大站长、个人或企业开发者大大降低了开发成本和维护成本。快速锁定意向客户，培养长线营收。目前呼啦企业网站管理系统的资源下载站已制作了上百套不同行业的网站模板，欢迎下载试用。', 'contact.html', '', '', '', 179, 1, 1572075555, 1613724418, 1, '');
-INSERT INTO `ape_document_category` VALUES (107, '产品', 'Products', 1, 0, 2, '清爽美观的产品，专注于企业网站建设。', '', '因为专注所以专业，呼啦企业网站管理系统后台界面清爽美观，自适应的布局符合新时代的审美观和用户体验。本着系统就是给客户使用的设计原则，后台菜单做减法，通俗易懂。', 'price.html', '', '', '', 41, 1, 1600950511, 1601032357, 1, '');
-INSERT INTO `ape_document_category` VALUES (113, '我们的优点', '', 0, 0, 99, '为什么选择呼啦企业网站管理系统？', '', '呼啦企业网站管理系统具有无限级栏目分类、访问统计数据、SEO友好、多媒体上传等多种优点，站在客户角度，实现了友好交互，通俗易懂，轻松上手操作。', '', '', '', '', 0, 0, 1600950569, 1601031845, 1, '');
-INSERT INTO `ape_document_category` VALUES (114, '普通版', '', 2, 107, 1, '', '00', '1、程序功能：没有限制；2、前台版权：必须保留；3、后台版权：必须保留；4、程序安装：自行负责。简单明了，轻松上手。普通版，你值得拥有！', '', '', '', 'http://www.hulaxz.com/article/detail/id/198.html', 0, 1, 1600950721, 1601030520, 1, '');
-INSERT INTO `ape_document_category` VALUES (115, '商业授权', '', 2, 107, 2, '', '68', '1、程序功能：没有限制；2、前台版权：允许去除；3、后台版权：允许去除；4、程序安装：协助安装。商业授权，避免法律纠纷，永无后顾之忧。', '', '', '', 'http://www.hulaxz.com/soft/detail/id/929.html', 0, 1, 1600950765, 1601030559, 1, '');
-INSERT INTO `ape_document_category` VALUES (116, '多语言版', '', 2, 107, 3, '', '98', '1、程序功能：没有限制；2、前台版权：允许去除；3、后台版权：允许去除；4、程序安装：协助安装。多种语言，一键转换。专门技术对接，处理程序异常。', '', '', '', 'http://www.hulaxz.com/soft/detail/id/930.html', 0, 1, 1600950893, 1601364003, 1, '');
-INSERT INTO `ape_document_category` VALUES (117, '用户评价', '', 0, 0, 99, '上帝眼中的我们', '', '呼啦企业网站管理系统专注于企业、政府单位网站建设，以免费开源的方式，帮助广大站长、个人或企业开发者大大降低了开发成本和维护成本。一套数据，多套模板。呼啦资源下载站提供了上百套不同行业的网站模板，并支持一键切换，欢迎下载试用。', '', '', '', '', 0, 0, 1600951181, 1601032130, 1, '');
-INSERT INTO `ape_document_category` VALUES (118, '产品页面', '', 1, 107, 4, '', '', '', 'price.html', '', '', '', 12, 1, 1600995517, 1601030637, -1, '');
-INSERT INTO `ape_document_category` VALUES (109, '首页展示', '', 0, 0, 99, '', '', '', '', '', '', '', 0, 0, 1600996206, 1613706659, 1, '/uploads/picture/20200925/28764c829cb169e5cfcf9851958fb7ca.png');
+INSERT INTO `ape_document_category` VALUES (84, '特色', 'Features', '', 1, 0, 1, '一套数据，多套模板。', '', '呼啦资源下载站提供了上百套不同行业的网站模板，并支持一键切换，欢迎下载试用。', 'features.html', '', 382, 0, 1572075448, 1615358715);
+INSERT INTO `ape_document_category` VALUES (85, '新闻', 'News', '', 0, 0, 4, '', '', '', '', '', 274, 1, 1572075515, 1613724416);
+INSERT INTO `ape_document_category` VALUES (86, '关于', 'about', '', 1, 0, 6, '关于呼啦企业网站管理系统', '', '呼啦企业网站管理系统专注于企业、政府单位网站建设，以免费开源的方式，帮助广大站长、个人或企业开发者大大降低了开发成本和维护成本。快速锁定意向客户，培养长线营收。目前呼啦企业网站管理系统的资源下载站已制作了上百套不同行业的网站模板，欢迎下载试用。', 'contact.html', '', 179, 1, 1572075555, 1613724418);
+INSERT INTO `ape_document_category` VALUES (107, '产品', 'Products', '', 1, 0, 2, '清爽美观的产品，专注于企业网站建设。', '', '因为专注所以专业，呼啦企业网站管理系统后台界面清爽美观，自适应的布局符合新时代的审美观和用户体验。本着系统就是给客户使用的设计原则，后台菜单做减法，通俗易懂。', 'price.html', '', 41, 1, 1600950511, 1601032357);
+INSERT INTO `ape_document_category` VALUES (113, '我们的优点', '', '', 0, 0, 99, '为什么选择呼啦企业网站管理系统？', '', '呼啦企业网站管理系统具有无限级栏目分类、访问统计数据、SEO友好、多媒体上传等多种优点，站在客户角度，实现了友好交互，通俗易懂，轻松上手操作。', '', '', 0, 0, 1600950569, 1601031845);
+INSERT INTO `ape_document_category` VALUES (114, '普通版', '', '', 2, 107, 1, '', '00', '1、程序功能：没有限制；2、前台版权：必须保留；3、后台版权：必须保留；4、程序安装：自行负责。简单明了，轻松上手。普通版，你值得拥有！', '', 'http://www.hulaxz.com/article/detail/id/198.html', 0, 1, 1600950721, 1601030520);
+INSERT INTO `ape_document_category` VALUES (115, '商业授权', '', '', 2, 107, 2, '', '68', '1、程序功能：没有限制；2、前台版权：允许去除；3、后台版权：允许去除；4、程序安装：协助安装。商业授权，避免法律纠纷，永无后顾之忧。', '', 'http://www.hulaxz.com/soft/detail/id/929.html', 0, 1, 1600950765, 1601030559);
+INSERT INTO `ape_document_category` VALUES (116, '多语言版', '', '', 2, 107, 3, '', '98', '1、程序功能：没有限制；2、前台版权：允许去除；3、后台版权：允许去除；4、程序安装：协助安装。多种语言，一键转换。专门技术对接，处理程序异常。', '', 'http://www.hulaxz.com/soft/detail/id/930.html', 0, 1, 1600950893, 1601364003);
+INSERT INTO `ape_document_category` VALUES (117, '用户评价', '', '', 0, 0, 99, '上帝眼中的我们', '', '呼啦企业网站管理系统专注于企业、政府单位网站建设，以免费开源的方式，帮助广大站长、个人或企业开发者大大降低了开发成本和维护成本。一套数据，多套模板。呼啦资源下载站提供了上百套不同行业的网站模板，并支持一键切换，欢迎下载试用。', '', '', 0, 0, 1600951181, 1601032130);
+INSERT INTO `ape_document_category` VALUES (118, '产品页面', '', '', 1, 107, 4, '', '', '', 'price.html', '', 12, 1, 1600995517, 1601030637);
+INSERT INTO `ape_document_category` VALUES (109, '首页展示', '', '/uploads/picture/20200925/28764c829cb169e5cfcf9851958fb7ca.png', 0, 0, 99, '', '', '', '', '', 0, 0, 1600996206, 1613706659);
 
 -- ----------------------------
 -- Table structure for ape_document_category_content
@@ -810,7 +837,7 @@ CREATE TABLE `ape_pv_log`  (
   `date` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '访问时间',
   `create_time` int(10) NOT NULL DEFAULT 0 COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_pv_log
@@ -821,6 +848,8 @@ INSERT INTO `ape_pv_log` VALUES (3, 16, 1, '2021-02-27', 1614414821);
 INSERT INTO `ape_pv_log` VALUES (4, 9, 5, '2021-03-05', 1614908125);
 INSERT INTO `ape_pv_log` VALUES (5, 0, 1, '2021-03-07', 1615048315);
 INSERT INTO `ape_pv_log` VALUES (6, 9, 1, '2021-03-10', 1615340063);
+INSERT INTO `ape_pv_log` VALUES (7, 9, 1, '2021-03-11', 1615427714);
+INSERT INTO `ape_pv_log` VALUES (8, 10, 7, '2021-03-11', 1615428091);
 
 -- ----------------------------
 -- Table structure for ape_slides
@@ -1003,7 +1032,7 @@ CREATE TABLE `ape_uv_log`  (
   `date` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '访问时间',
   `create_time` int(10) NOT NULL DEFAULT 0 COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_uv_log
@@ -1013,5 +1042,6 @@ INSERT INTO `ape_uv_log` VALUES (2, '127.0.0.1', 16, '2021-02-27', 1614414821);
 INSERT INTO `ape_uv_log` VALUES (3, '127.0.0.1', 9, '2021-03-05', 1614908125);
 INSERT INTO `ape_uv_log` VALUES (4, '127.0.0.1', 0, '2021-03-07', 1615048315);
 INSERT INTO `ape_uv_log` VALUES (5, '127.0.0.1', 9, '2021-03-10', 1615340063);
+INSERT INTO `ape_uv_log` VALUES (6, '127.0.0.1', 9, '2021-03-11', 1615427714);
 
 SET FOREIGN_KEY_CHECKS = 1;
