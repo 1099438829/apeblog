@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <title>主题管理 - {:system_config("title")}后台管理系统</title>
+    {include file="public/header" /}
+</head>
+<body>
+<div class="container-fluid p-t-15">
+    <div class="row">
+        {notempty name="theme_list"}
+        {volist name="theme_list" id="vo"}
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="card">
+                <div class="card-header"><h4>{$vo.title}</h4></div>
+                <div class="card-body clearfix lyear-uploads-pic">
+                    <figure>
+                    <img src="{$vo.preview_file}" alt="{$vo.title}">
+                    <figcaption class="pic-tool">
+                        {if !$vo.is_default}
+                        <a class="btn btn-round btn-square btn-primary btn-set" data-value="{$vo.dir_name}" href="#!" title="启用"><i class="mdi mdi-settings"></i></a>
+                        {/if}
+                    </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+        {/volist}
+        {else /}
+        <div class="col-md-12"><span>暂无主题</span></div>
+        {/notempty}
+    </div>
+</div>
+{include file="public/footer"/}
+<script type="text/javascript">
+    $(".btn-set").click(function () {
+        let value = $(this).data('value');
+        // 检验不通过终止执行
+        if (!value) {
+            lightyear.notify('主题值不能为空', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+            return false;
+        }
+        $.post(url="/admin/theme/change_theme",{value:value},function (res) {
+            if (res.code == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');setTimeout(function () {location.reload();},2000)}
+            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+        });
+        return true;
+    })
+</script>
+</body>
+</html>
