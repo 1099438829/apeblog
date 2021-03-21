@@ -46,26 +46,26 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-12">
-                                <label for="pid">属性</label>
+                                <label>排序</label>
+                                <input type="text" class="form-control"  name="sort" placeholder="请输入排序">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>属性</label>
                                 <div class="form-controls">
-                                    <select name="pid" class="form-control">
-                                        <option value="0">请选择</option>
+                                    <select name="type" id="type" class="form-control">
+<!--                                        <option value="0">请选择</option>-->
                                         <option value="1">列表</option>
                                         <option value="2">单页</option>
                                         <option value="3">外联</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group col-md-12">
-                                <label>排序</label>
-                                <input type="text" class="form-control"  name="sort" placeholder="请输入排序" value="99">
+                            <div class="form-group col-md-12" id="page-link-str" style="display: none">
+                                <label>外链</label>
+                                <input type="text" class="form-control" name="link_str" placeholder="外链">
                             </div>
-                            <div class="form-group col-md-12">
-                                <label for="link_str">外链</label>
-                                <input type="text" class="form-control" name="link_str" id="link_str" placeholder="外链">
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="content">单页内容</label>
+                            <div class="form-group col-md-12" id="page-content" style="display: none">
+                                <label>单页内容</label>
                                 <textarea id="content" name="content"></textarea>
                             </div>
                             <div class="form-group col-md-12">
@@ -188,7 +188,7 @@
         if (!checkResult) {
             return false;
         }
-        $.post(url="/admin/article/save",$('.add-form').serialize(),function (res) {
+        $.post(url="/admin/category/save",$('.add-form').serialize(),function (res) {
             if (res.code == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');setTimeout(function () {location.href='/admin/article/index';},2000)}
             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
         });
@@ -199,6 +199,31 @@
     $('body').on('click','.btn-image-delete',function(){
         $('#pic-image').hide().next('li').show();
         $('#cover_path').val('');
+    })
+
+    // 切换类型选择事件
+    $("body").on("change", "#type", function(){
+        let type = parseInt($(this).val());
+        switch(type){
+            case 1:
+                //普通
+                $('#page-link-str').hide().children('input').val();
+                $('#page-content').hide().children('textarea').val();
+                break;
+            case 2:
+                $('#page-content').show();
+                $('#page-link-str').hide().children('input').val();
+                break;
+            case 3:
+                //单页
+                //外联
+                $('#page-link-str').show();
+                $('#page-content').hide().children('textarea').val();
+                break;
+            default:
+                break;
+        }
+        return true;
     })
 </script>
 </body>

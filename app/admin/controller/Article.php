@@ -174,14 +174,17 @@ class Article extends AuthController
      */
     public function edit(Request $request)
     {
-        $where = [
-            'name' => '',
-            'status' => ''
-        ];
+        $where = Util::postMore([
+            ['name',''],
+            ['id','']
+        ]);
+        if ($where['id'] ==''){
+           return $this->error('数据不存在');
+        }
         $category = cModel::systemPage($where);
         $category = get_tree_list($category);
-        $info = aModel::get($request->param(['id']));
-        $info->content = DocumentArticle::get($request->param(['id']))->content;
+        $info = aModel::get($where['id']);
+        $info->content = DocumentArticle::get($where['id'])->content;
         $this->assign("category",$category);
         $this->assign("info",$info);
         return $this->fetch();
