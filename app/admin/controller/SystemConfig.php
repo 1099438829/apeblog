@@ -223,6 +223,8 @@ class SystemConfig extends AuthController
             $data['update_time'] = time();
             $res = cModel::update($data,['id'=>$id]);
         }
+        //修改完需要更新缓存
+        cache('systemConfig',null);//清除缓存
         return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
     }
 

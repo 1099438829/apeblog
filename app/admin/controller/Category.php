@@ -56,8 +56,7 @@ class Category extends AuthController
     public function save($id="")
     {
         $data = Util::postMore([
-            ['title',''],
-            ['en_title',''],
+            ['title',''],            ['en_title',''],
             ['type',''],
             ['pid',0],
             ['meta_title',''],
@@ -74,8 +73,7 @@ class Category extends AuthController
         {
             $res = aModel::insert($data);
         }else
-        {
-            $res = aModel::update($data,['id'=>$id]);
+        {            $res = aModel::update($data,['id'=>$id]);
         }
         return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
     }

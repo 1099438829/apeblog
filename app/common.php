@@ -155,6 +155,7 @@ if (!function_exists('file_cdn'))
             //是网址开头的不处理
             return $path;
         }
+        $path = str_replace(public_path(),'',$path);
         if (!(substr($path, 0,1) == '/')){
             //统一路径
             $path = '/'.$path;
