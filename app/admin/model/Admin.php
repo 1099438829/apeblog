@@ -29,7 +29,7 @@ class Admin extends BaseModel
         $info = self::where("name|tel","=", $name)->find();
         if (!$info) return self::setErrorInfo("登录账号不存在");
         if ($info['pwd'] != md5(md5($pwd))) return self::setErrorInfo("密码不正确！");
-        if ($info['status'] == 2) return self::setErrorInfo("账号已被冻结！");
+        if ($info['status'] != 1) return self::setErrorInfo("账号已被冻结！");
         self::setLoginInfo($info);
         return true;
     }
@@ -108,10 +108,11 @@ class Admin extends BaseModel
         $count = self::counts($model);
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'],(int)$where['limit']);
         $data = $model->select()->each(function ($item){
+            unset($item['pwd']);
             // 用户信息
-            $info = self::getAdminInfoById($item['create_user']);
+            $info = self::getAdminInfoById((int)$item['create_user']);
             $item['create_user'] = $info ? $info['nickname'] : $item['create_user'];
-            $item['role_id'] = AdminRole::getAuthNameById($item['role_id']);
+            $item['role_id'] = AdminRole::getAuthNameById((int)$item['role_id']);
         });
         $data = $data ? $data->toArray() : [];
         return compact("data","count");
