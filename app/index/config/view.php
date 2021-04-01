@@ -5,5 +5,6 @@
 
 return [
   // 模板路径
-    'taglib_pre_load'     =>    'app\common\taglib\Zz'
+    'taglib_pre_load'     =>    'app\common\taglib\Zz',
+    'view_path'	    =>	'./template/default/',
 ];

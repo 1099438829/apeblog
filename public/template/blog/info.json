@@ -2,23 +2,28 @@
     "title":"默认主题",
     "author":"MonkeyCode",
     "demo_url":"http://default.lcm.wang/",
-    "category_type":[
+    "category_list":[
         {
-            "默认列表":"list_default.html"
+            "name": "默认列表",
+            "template":"list_default.html"
         },
         {
-            "两排列表":"list_double.html"
+            "name": "两排列表",
+            "template":"list_double.html"
         }
     ],
-    "article_type":[
+    "article_list":[
         {
-            "普通文章":"page.html"
+            "name": "普通文章",
+            "template":"page.html"
         },
         {
-            "关于我们":"page_about.html"
+            "name": "关于我们",
+            "template":"page_about.html"
         },
         {
-            "产品文章":"page_product.html"
+            "name": "产品文章",
+            "template":"page_product.html"
         }
     ],
     "info_file":"全部都是可视化的 没什么可说明的",

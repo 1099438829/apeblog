@@ -60,6 +60,16 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group col-md-12">
+                                <label>主题风格</label>
+                                <div class="form-controls">
+                                    <select name="template" class="form-control">
+                                        {volist name="template_list" id="vo"}
+                                        <option value="{$vo.template}" {notempty name="info.template"}{if $vo.template == $info.template}selected{/if}{/notempty}>{$vo.name}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group col-md-12" id="page-link-str" {if 3!= $info.type}style="display:none;"{/if}>
                                 <label>外链</label>
                                 <input type="text" class="form-control" name="link_str" placeholder="外链" value="{$info.link_str}">
@@ -188,8 +198,8 @@
         if (!checkResult) {
             return false;
         }
-        $.post(url="/admin/category/save",$('.add-form').serialize(),function (res) {
-            if (res.code == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');setTimeout(function () {location.href='/admin/article/index';},2000)}
+        $.post(url="/admin/category/save?id={$info.id}",$('.add-form').serialize(),function (res) {
+            if (res.code == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');setTimeout(function () {parent.location.reload();},2000)}
             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
         });
         return true;
