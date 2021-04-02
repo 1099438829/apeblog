@@ -152,4 +152,22 @@ class Category extends AuthController
         $this->assign("template_list",$themeList);
         return $this->fetch();
     }
+
+    /**
+     * 删除分类
+     * @param Request $request
+     * @return mixed|void
+     * @author 李玉坤
+     * @date 2021-04-01 21:56
+     */
+    public function del(Request $request)
+    {
+        $where = Util::postMore([
+            ['id',''],
+        ]);
+        $model = new aModel();
+        $model->where('id',$where['id'])->delete();
+        $res = DocumentCategoryContent::where('id',$where['id'])->delete();
+        return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
+    }
 }
