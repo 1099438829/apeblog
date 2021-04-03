@@ -1,6 +1,6 @@
 <?php
+use \think\facade\Db;
 // 应用公共文件
-
 if (!function_exists('system_config_more'))
 {
     /**

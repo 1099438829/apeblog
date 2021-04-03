@@ -22,17 +22,15 @@ class Index extends Base
     public function index()
     {
         //判断后台统计配置是否开启 1 开启
-        if( cache('DB_CONFIG_DATA_INDEX')["WEB_TONGJI"]==1){
+        if($this->systemConfig["web_statistics"] ==1){
         //统计url
             $this->urlrecord('网站首页');
         }
         //清除可能存在的栏目分类树id
-        cache('CURR_CATEGORY_PATENT_ID',false);
+        cache('curr_category_patent_id',false);
         //模板兼容性标签
         $this->assign('id',false);
         $this->assign('cid',false);
-        //读取模板配置，获得模板后缀名
-        $view_suffix=config('view.view_suffix');
-        return $this->fetch(TPL.'index.'.$view_suffix);
+        return $this->fetch();
     }
 }

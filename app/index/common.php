@@ -521,6 +521,28 @@ function tpl_get_friend_link($type,$row){
     return $flinkListTemp;
 }
 
+if (!function_exists('web_config'))
+{
+    /**
+     * 获取系统配置值
+     * @param string $formName
+     * @return string
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @author 李玉坤
+     * @date 2021-02-14 22:41
+     */
+    function web_config(string $formName): string
+    {
+        $webConfig = cache('webConfig');
+        if (empty($webConfig)){
+            $webConfig = Db::name('system_config')->where("status",1)->fetchSql(true)->column('value', 'form_name');
+            cache('webConfig',$webConfig);
+        }
+        return $webConfig[$formName]??'';
+    }
+}
 
 /**
  * 模板-文章标签
@@ -642,7 +664,7 @@ function IsActiveNav($curr_cid=false,$cid=false)
     }
 
     //判断是否在同一栏目树下。
-    $parent_id=cache('CURR_CATEGORY_PATENT_ID');
+    $parent_id=cache('curr_category_patent_id');
 
     $parent_id=explode(',',$parent_id);
 

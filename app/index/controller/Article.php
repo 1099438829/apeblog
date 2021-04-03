@@ -9,6 +9,7 @@
 
 namespace app\index\controller;
 use think\facade\Db;
+use think\facade\Log;
 
 /**
  * 应用入口
@@ -24,7 +25,6 @@ class Article extends Base
         $id=input('id/d');
         //栏目分类标识
         $name=input('name');
-//        isActiveNav($id);
 
         if($id){
             //获取分类信息
@@ -34,7 +34,6 @@ class Article extends Base
             //接收name字段,当name不为空的时候，通过name查询分类，一般name会用于伪静态
             $dc=get_document_category_by_name($name);
         }
-
         if(!$dc){
             $this->error('栏目不存在或已删除！');
         }
@@ -43,9 +42,8 @@ class Article extends Base
 		
 		//栏目存在  增加访问量
 		Db::name('document_category')->where('id',$id)->inc('view')->update();
-
         //判断后台统计配置是否开启 1 开启
-        if(cache('DB_CONFIG_DATA_INDEX')["WEB_TONGJI"]==1){
+        if($this->systemConfig["web_statistics"] ==1){
             //统计url
             $this->urlrecord($dc['title']);
         }
@@ -81,10 +79,9 @@ class Article extends Base
         $this->assign('id',$id);
         //当前页面所属分类id
         $this->assign('cid',$id);
-
         //缓存当前页面栏目分类树ids
-        cache('CURR_CATEGORY_PATENT_ID',$dc['parent_id']?$dc['parent_id'].','.$id:$id);
-        return $this->fetch(TPL.$listTmp);
+        cache('curr_category_patent_id',$dc['parent_id']?$dc['parent_id'].','.$id:$id);
+        return $this->fetch($listTmp);
     }
 
     public function detail()
@@ -94,7 +91,6 @@ class Article extends Base
         if(!$id){
             $this->error('参数错误！');
         }
-		
         //获取该文章
         $article=Db::name('document')->where('status',1)->where('id',$id)->find();
         if(!$article){
@@ -135,18 +131,17 @@ class Article extends Base
         $this->assign('cid',$article['category_id']);
 
         //缓存当前页面栏目分类树ids
-        cache('CURR_CATEGORY_PATENT_ID',$dc['parent_id']?$dc['parent_id'].','.$article['category_id']:$article['category_id']);
+        cache('curr_category_patent_id',$dc['parent_id']?$dc['parent_id'].','.$article['category_id']:$article['category_id']);
 
 
         //设置文章的url
         $article['link_str']=aurl($article);
         //判断后台统计配置是否开启 1 开启
-        if(cache('DB_CONFIG_DATA_INDEX')["WEB_TONGJI"]==1){
+        if($this->systemConfig["web_statistics"] ==1){
                 //统计url
             $this->urlrecord($article['title']);
         }
-
-        trace('详情页模板路径：'.TPL.$detailTmp,'debug');
+        Log::info('详情页模板路径：'.TPL.$detailTmp);
         return $this->fetch(TPL.$detailTmp);
     }
 
@@ -159,18 +154,15 @@ class Article extends Base
         if(!isset($zzField['tpl'])){
             $this->error('没有指定模板文件！');
         }
-
         //将参数传递到模板页面
         $this->assign('zzField',$zzField);
-
         //模板兼容性标签
         $this->assign('id',false);
         $this->assign('cid',false);
         //读取模板配置，获得模板后缀名
-         $view_suffix=config('view.view_suffix');
-        trace('详情页模板路径：'.TPL.'content_'.$zzField['tpl'].'.'.$view_suffix,'debug');
-
-        cache('CURR_CATEGORY_PATENT_ID',false);
+        $view_suffix=config('view.view_suffix');
+        Log::info('详情页模板路径：'.TPL.'content_'.$zzField['tpl'].'.'.$view_suffix);
+        cache('curr_category_patent_id',false);
         return $this->fetch(TPL.'content_'.$zzField['tpl'].'.'.$view_suffix);
     }
 
@@ -184,24 +176,21 @@ class Article extends Base
         if(!mb_check_encoding($tag,'utf-8')){
             $tag=iconv('gbk', 'utf-8', $tag);
         }
-
         $zzField['id']='0';
-        $zzField['title']=$tag;
-        $zzField['meta_title']=$tag;
-        $zzField['keywords']=cache('DB_CONFIG_DATA_INDEX')['WEB_SITE_KEYWORD'];
-        $zzField['description']=cache('DB_CONFIG_DATA_INDEX')['WEB_SITE_DESCRIPTION'];
-        $zzField['position']='<a href="/">首页</a> > <a>'.$tag.'</a>';
+        $zzField['title'] = $tag;
+        $zzField['meta_title'] = $tag;
+        $zzField['keywords'] = $this->systemConfig['keywords'];
+        $zzField['description'] = $this->systemConfig['description'];
+        $zzField['position'] ='<a href="/">首页</a> > <a>'.$tag.'</a>';
         $this->assign('zzField',$zzField);
         $this->assign('tag',$tag);
 
         //清除可能存在的栏目分类树id
-        cache('CURR_CATEGORY_PATENT_ID',false);
-
+        cache('curr_category_patent_id',false);
         //模板兼容性标签
         $this->assign('id',false);
         $this->assign('cid',false);
-         $view_suffix=config('view.view_suffix');
-        return $this->fetch(TPL.'tag.'.$view_suffix);
+        return $this->fetch();
     }
 
     //搜索页面
@@ -214,23 +203,19 @@ class Article extends Base
         if(!mb_check_encoding($kw,'utf-8')){
             $kw=iconv('gbk', 'utf-8', $kw);
         }
-
-        $zzField['id']='0';
-        $zzField['title']='搜索';
-        $zzField['meta_title']='搜索';
-        $zzField['keywords']=cache('DB_CONFIG_DATA_INDEX')['WEB_SITE_KEYWORD'];
-        $zzField['description']=cache('DB_CONFIG_DATA_INDEX')['WEB_SITE_DESCRIPTION'];
-        $zzField['position']='<a href="/">首页</a> > <a>搜索</a>';
+        $zzField['id'] = '0';
+        $zzField['title'] = '搜索';
+        $zzField['meta_title'] = '搜索';
+        $zzField['keywords'] = $this->systemConfig['keywords'];
+        $zzField['description'] = $this->systemConfig['description'];
+        $zzField['position'] = '<a href="/">首页</a> > <a>搜索</a>';
         $this->assign('zzField',$zzField);
         $this->assign('kw',$kw);
-
         //清除可能存在的栏目分类树id
-        cache('CURR_CATEGORY_PATENT_ID',false);
-
+        cache('curr_category_patent_id',false);
         //模板兼容性标签
         $this->assign('id',false);
         $this->assign('cid',false);
-        $view_suffix=config('view.view_suffix');
-        return $this->fetch(TPL.'search.'.$view_suffix);
+        return $this->fetch();
     }
 }
