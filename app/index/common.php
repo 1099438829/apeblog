@@ -49,7 +49,7 @@ function get_document_category_list(){
     //缓存文章菜单
     $docuemtCategory=cache('DATA_DOCUMENT_CATEGORY_LIST');
     if($docuemtCategory===null){
-        $docuemtCategoryList=Db::name('document_category')->where('status',1)->order('sort asc')->select();
+        $docuemtCategoryList=Db::name('document_category')->order('sort desc')->select();
         //转换，让id作为数组的键
         $docuemtCategory=[];
         foreach ($docuemtCategoryList as $key=>$item){
@@ -148,7 +148,7 @@ function tpl_get_channel($type,$typeid,$row,$where='',$orderby='',$display=1){
             if(!$dc){
                  throw new Exception('分类不存在或已删除！');
             }
-            $tempArr=Db::name('document_category')->where('id','in',$dc['child'])->where('status',1)->select();
+            $tempArr=Db::name('document_category')->where('id','in',$dc['child'])->select();
             if($display){
                 $tempArr=$tempArr->where('display',1);
             }
@@ -179,8 +179,8 @@ function tpl_get_channel($type,$typeid,$row,$where='',$orderby='',$display=1){
             $dc=get_document_category($typeid);
             if($dc['pid']!=0){
                 //获取根分类，此操作读取数据库，非缓存！
-                $dc=Db::name('document_category')->where('pid',0)->where('status',1)
-                    -> where("CONCAT(',',child,',') like '%,$typeid,%'");
+                $dc=Db::name('document_category')->where('pid',0)
+                    ->where("CONCAT(',',child,',') like '%,$typeid,%'");
                 if($display){
                     $dc=$dc->where('display',1);
                 }
@@ -196,7 +196,7 @@ function tpl_get_channel($type,$typeid,$row,$where='',$orderby='',$display=1){
             break;
         case 'where':
             //根据自定义条件获取分类（where语句），此操作读取数据库，非缓存！
-            $tempArr=Db::name('document_category')->where('status',1)-> where($where)->order($orderby);
+            $tempArr=Db::name('document_category')-> where($where)->order($orderby);
             if($display){
                 $tempArr=$tempArr->where('display',1);
             }
@@ -210,7 +210,7 @@ function tpl_get_channel($type,$typeid,$row,$where='',$orderby='',$display=1){
             break;
         case 'ids':
             //根据多个栏目id，逗号隔开的那种，获得栏目列表
-            $tempArr=Db::name('document_category')->where('status',1)-> where('id','in',$typeid)->order($orderby);
+            $tempArr=Db::name('document_category')-> where('id','in',$typeid)->order($orderby);
             if($display){
                 $tempArr=$tempArr->where('display',1);
             }
@@ -243,7 +243,11 @@ function get_document_category_by_parent($pid,$row,$display=1){
         }
         if($item['pid']==$pid&&($display?$item['display']==1:true)){
             $x=$x+1;
-            array_push($tempArr,$item);
+            $tempArr[$item['id']] = $item;
+        }
+        //判断是否有子元素,子元素则为其父元素的child字段设置为1
+        if ($item['pid'] > 0 && !empty($tempArr[$item['pid']])){
+            $tempArr[$item['pid']]['child'] = 1;
         }
     }
     return $tempArr;
@@ -297,7 +301,7 @@ function tpl_get_list($orderby,$pagesize,$cid,$type,$table='article',$where=fals
         ->join(config('database.prefix').'document_category b','a.category_id=b.id','LEFT')
         ->join(config('database.prefix')."document_$table c",'a.id=c.id','RIGHT')
         ->where("a.type='$table'")
-        ->where('a.status',1)->where('b.status',1)
+        ->where('a.status',1)
         ->field('a.*,b.title as category_title,c.*');
 
     if($display){
@@ -439,7 +443,7 @@ function tpl_get_article_list($cid,$row,$orderby,$table='article',$type='son',$w
         ->join(config('database.prefix').'document_category b','a.category_id=b.id','LEFT')
         ->join(config('database.prefix')."document_$table c",'a.id=c.id','RIGHT')
         ->where("a.type='$table'")
-        ->where('a.status',1)->where('b.status',1)
+        ->where('a.status',1)
         ->limit($row)
         ->field('a.*,b.title as category_title,c.*');
 
@@ -535,10 +539,10 @@ if (!function_exists('web_config'))
      */
     function web_config(string $formName): string
     {
-        $webConfig = cache('webConfig');
+        $webConfig = cache('systemConfig');
         if (empty($webConfig)){
-            $webConfig = Db::name('system_config')->where("status",1)->fetchSql(true)->column('value', 'form_name');
-            cache('webConfig',$webConfig);
+            $webConfig = Db::name('system_config')->where("status",1)->column('value', 'form_name');
+            cache('systemConfig',$webConfig);
         }
         return $webConfig[$formName]??'';
     }

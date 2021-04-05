@@ -1,18 +1,143 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <title>-{:web_config("title")}</title>
+    <title>-猿博</title>
     <meta name="keywords" content="轻烟随风,blog,博客,oracle,pl/sql,erp,数据库,sql server,EBS,ERP系统,甲骨文,R12">
     <meta name="description" content="oracle EBS等ERP系统上线，实施，维护过程中的心得，常见的开发工具的使用">
-    {include file="public/head" /}
-	<link rel="stylesheet" href="/template/default/lib/swiper/swiper.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Referrer" content="origin">
+
+    <style>.icon {
+        width: 18px;
+        height: 18px;
+        vertical-align: -3px;
+        fill: currentColor;
+        overflow: hidden;
+    }</style>
+    <style>html, body, #app {
+        background-image: url('/uploads/article/2021/03/beige-tiles.png') !important;
+        background-position: center center;
+        background-attachment: fixed;
+        background-size: cover;
+    }</style>
+    <link rel="icon" href="http://www.zyxpp.com//uploads/article/2020/12/LOGO1-1.png" type="image/x-icon">
+    <style>
+        :root {
+            --Maincolor: #FF8040 !important;
+            --MaincolorHover: #409EFF !important;
+            --fontSelectedColor: #3390ff !important;
+        }
+
+        #nprogress .bar {
+            background: var(--Maincolor) !important;
+        }
+    </style>
+
+    <link rel="stylesheet" href="/template/default/css/main-mobile.css">
+    <link rel="stylesheet" href="/template/default/lib/fontawesome5/css/all.min.css">
+    <link rel="stylesheet" href="/template/default/css/main.css">
+    <script src="/template/default/js/jquery.min.js"></script>
+    <link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.zyxpp.com/xmlrpc.php?rsd">
+    <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.zyxpp.com/wp-includes/wlwmanifest.xml">
+    <style type="text/css">.recentcomments a {
+        display: inline !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }</style>
+    <link rel="stylesheet" href="/template/default/lib/nprogress/nprogress.min.css">
+    <script src="/template/default/lib/nprogress/nprogress.min.js"></script>
+    <script src="/template/default/js/tools.js"></script>
+    <link rel="stylesheet" href="/template/default/lib/swiper/swiper.min.css">
     <script src="/template/default/lib/swiper/swiper.min.js"></script>
 </head>
 <body>
 
 <script>NProgress.start();</script>
 <div id="app">
-    {include file="public/header" /}
+    <header>
+        <div class="header-main-plane">
+            <div class="header-main container">
+                <script>
+                    function openMenu() {
+                        $('body').css('overflow', 'hidden');
+                        $(".drawer-menu-plane").addClass("drawer-menu-plane-show");
+                        $(".menu-plane").appendTo($(".drawer-menu-list"));
+                        $(".user-menu-plane").appendTo($(".drawer-menu-list"));
+                        $(".menu-item-has-children").append('<div class="m-dropdown" onclick="mobile_menuclick(event)" ><i class="fa fa-angle-down"></i></div>')
+                        $(".user-menu-main").append('<div class="m-dropdown" onclick="mobile_menuclick(event)"><i class="fa fa-angle-down"></i></div>')
+                    }
+
+                    function closeMenu() {
+                        $('body').css('overflow', 'auto');
+                        $(".drawer-menu-plane").removeClass("drawer-menu-plane-show");
+                        $(".user-menu-plane").prependTo($(".header-menu"));
+                        $(".menu-plane").prependTo($(".header-menu"));
+                        $(".m-dropdown").remove();
+                    }
+
+                    function openSearch() {
+                        $(".dialog-search-plane").addClass("dialog-search-plane-show");
+                    }
+
+                    function closeSearch() {
+                        //$('body').css('overflow', 'auto');
+                        $(".dialog-search-plane").removeClass("dialog-search-plane-show");
+                    }
+                </script>
+                <div class="mobile-menu-btn" onclick="openMenu()">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                </div>
+                <div class="drawer-menu-plane">
+                    <div class="drawer-menu-list">
+                    </div>
+                    <div class="drawer-menu-write" onclick="closeMenu()">
+                    </div>
+                </div>
+                <div class="header-logo-plane">
+                    <div class="header-logo">
+                        <a href=""><img
+                                src="http://apeblog.io//uploads/files/20210405\60b557b38a20dc46b4ae1514e7a38fb4.jpeg"
+                                alt=""></a></div>
+                </div>
+                <div class="mobile-search-btn" onclick="openSearch()">
+                    <i class="fa fa-search"></i>
+                </div>
+                <div class="dialog-search-plane">
+                    <div class="dialog-mask" onclick="closeSearch()"></div>
+                    <div class="dialog-plane">
+                        <h2>搜索内容</h2>
+                        <form class="search-form" action="/article/search.html" method="get" role="search">
+                            <div class="search-form-input-plane">
+                                <input type="text" class="search-keyword" name="kw" placeholder="搜索内容" value="">
+                            </div>
+                            <div>
+                                <button type="submit" class="search-submit" value="&#xf002;">搜索</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="header-menu">
+                    <div class="menu-plane">
+                        <nav class="menu-header-plane">
+                            <ul id="menu-%e4%b8%8a%e6%96%b9%e5%af%bc%e8%88%aa%e6%a0%8f" class="menu-header-list">
+                                <li id="menu-item-27" class="menu-item    menu-item-2">
+                                    <a class="nav-link" href="/index/article/lists.html?id=2">首页</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="user-menu-plane">
+                        <div class="user-menu-pc-search" onclick="openSearch()" title="搜索">
+                            <i class="fal fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
     <div class="top-divider"></div>
     <main class="container">
         <div class="html-main">
@@ -323,7 +448,7 @@
                                     </h2>
                                     <div class="post-item-content">
                                         Veeam日常运维恢复数据操作(从外接硬盘恢复)
-                                        基本的备份数据可以是nas存储柜，磁带，外接硬盘，  Veeam 功能很强大，可以备份整个Vmare虚拟机。本文以硬盘为例……
+                                        基本的备份数据可以是nas存储柜，磁带，外接硬盘， Veeam 功能很强大，可以备份整个Vmare虚拟机。本文以硬盘为例……
                                     </div>
                                     <div class="post-item-info">
                                         <div class="post-item-meta">
@@ -360,7 +485,7 @@
                                     </h2>
                                     <div class="post-item-content">
                                         oracle-EBS-OM价目表未设置导致确认出货后状态位没有变成已连接/interface
-                                        物流或仓库在做确认出货后，发现系统的行状态不是已连接/interface，  而是已发运，……
+                                        物流或仓库在做确认出货后，发现系统的行状态不是已连接/interface， 而是已发运，……
                                     </div>
                                     <div class="post-item-info">
                                         <div class="post-item-meta">
@@ -1030,7 +1155,7 @@
                             </ul>
                         </nav>
                         <div class="footer-info">
-                                              Copyright © 2020-2021 轻烟随风-我思故我在 <span class="theme-copyright">
+                            Copyright © 2020-2021 轻烟随风-我思故我在 <span class="theme-copyright">
                      <a href="javascript:;">CorePress Theme</a>
                 </span>
                             Powered by WordPress

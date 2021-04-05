@@ -1,53 +1,3 @@
-<header class="header_area">
-	<div class="main_menu">
-		<nav class="navbar navbar-expand-lg navbar-light">
-			<div class="container">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<a class="navbar-brand logo_h" href="/"><img src="/template/default/img/logo.png" alt=""></a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-				 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-					<ul class="nav navbar-nav menu_nav justify-content-center">
-
-						<li class="nav-item {:IsActiveNav($cid)?'active':''}"><a class="nav-link" href="/">首页</a></li>
-						{zz:channel type="top"}
-							<li class="nav-item {if $field['child']} submenu dropdown{/if} {:IsActiveNav($cid,$field['id'])?'active':''}">
-									{if $field['child']}
-										<a href="{$field['url']}" class="nav-link">
-									{else /}
-										<a class="nav-link" href="{$field['url']}">
-									{/if}
-											{$field['title']}
-								</a>
-
-									{if $field['child']}
-										<ul class="dropdown-menu">
-											{zz:channel type="son" typeid="$field['id']" void="vo"}
-											<li class="nav-item {:IsActiveNav($cid,$vo['id'])?'active':''}">
-												<a class="nav-link" href="{$vo['url']}" {if $vo['link_str']} target="_blank"{/if}>
-													{$vo['title']}</a></li>
-											 {/zz:channel}
-										</ul>
-									{/if}
-							</li>
-						{/zz:channel}
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li class="nav-item"><a href="http://www.hulaxz.com/" target="_blank" class="primary_btn text-uppercase">更多模板</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</div>
-</header>
-
-
-
 <header>
 	<div class="header-main-plane">
 		<div class="header-main container">
@@ -59,9 +9,7 @@
 					$(".user-menu-plane").appendTo($(".drawer-menu-list"));
 					$(".menu-item-has-children").append('<div class="m-dropdown" onclick="mobile_menuclick(event)" ><i class="fa fa-angle-down"></i></div>')
 					$(".user-menu-main").append('<div class="m-dropdown" onclick="mobile_menuclick(event)"><i class="fa fa-angle-down"></i></div>')
-
 				}
-
 				function closeMenu() {
 					$('body').css('overflow', 'auto');
 					$(".drawer-menu-plane").removeClass("drawer-menu-plane-show");
@@ -69,11 +17,9 @@
 					$(".menu-plane").prependTo($(".header-menu"));
 					$(".m-dropdown").remove();
 				}
-
 				function openSearch() {
 					$(".dialog-search-plane").addClass("dialog-search-plane-show");
 				}
-
 				function closeSearch() {
 					//$('body').css('overflow', 'auto');
 					$(".dialog-search-plane").removeClass("dialog-search-plane-show");
@@ -90,7 +36,7 @@
 			</div>
 			<div class="header-logo-plane">
 				<div class="header-logo">
-					<a href=""><img src="/uploads/article/2020/12/logo11.png" alt=""></a></div>
+					<a href=""><img src="{:file_cdn(web_config('logo'))}" alt=""></a></div>
 			</div>
 			<div class="mobile-search-btn" onclick="openSearch()">
 				<i class="fa fa-search"></i>
@@ -99,9 +45,9 @@
 				<div class="dialog-mask" onclick="closeSearch()"></div>
 				<div class="dialog-plane">
 					<h2>搜索内容</h2>
-					<form class="search-form" action="https://www.zyxpp.com" method="get" role="search">
+					<form class="search-form" action="{:url('/article/search')}" method="get" role="search">
 						<div class="search-form-input-plane">
-							<input type="text" class="search-keyword" name="s" placeholder="搜索内容" value="">
+							<input type="text" class="search-keyword" name="kw" placeholder="搜索内容" value="">
 						</div>
 						<div>
 							<button type="submit" class="search-submit" value="&#xf002;">搜索</button>
@@ -109,83 +55,28 @@
 					</form>
 				</div>
 			</div>
-
-
 			<div class="header-menu">
 				<div class="menu-plane">
 					<nav class="menu-header-plane">
 						<ul id="menu-%e4%b8%8a%e6%96%b9%e5%af%bc%e8%88%aa%e6%a0%8f" class="menu-header-list">
-							<li id="menu-item-27"
-								class="menu-item current-menu-item current_page_item menu-item-27"><a href=""
-																									  aria-current="page">
-								<svg class="icon" aria-hidden="true">
-									<use xlink:href="#icon-shouye_huaban1"></use>
-								</svg>
-								首页</a></li>
-							<li id="menu-item-411" class="menu-item menu-item-411"><a
-									href="category/talk/index.html">
-								<svg class="icon" aria-hidden="true">
-									<use xlink:href="#icon-business-management"></use>
-								</svg>
-								学习笔记</a></li>
-							<li id="menu-item-388" class="menu-item menu-item-has-children menu-item-388"><a
-									title="oracle甲骨文" href="#">
-								<svg class="icon" aria-hidden="true">
-									<use xlink:href="#icon-Management_system"></use>
-								</svg>
-								oracle EBS</a>
+							{zz:channel type="top"}
+							<li id="menu-item-{$field.id}" class="menu-item {notempty name="field['child']"}menu-item-has-children{/notempty} {:IsActiveNav($cid,$field['id'])?'current-menu-item':''} menu-item-{$field['id']}">
+								{notempty name="field['child']"}
+								<a href="#" aria-current="page">{$field['title']}</a>
+								{else /}
+								<a href="{$field['url']}" aria-current="page">{$field['title']}</a>
+								{/notempty}
+								{notempty name="field['child']"}
 								<ul class="sub-menu">
-									<li id="menu-item-32" class="menu-item menu-item-32"><a title="Oracle-OM-销售物流"
-																							href="category/oracle-om/index.html">
-										<svg class="icon" aria-hidden="true">
-											<use xlink:href="#icon-wuliuxiaocheche"></use>
-										</svg>
-										Oracle-OM-销售物流</a></li>
-									<li id="menu-item-194" class="menu-item menu-item-194"><a
-											title="Oracle-PROD-采购生产" href="category/oracle-pur-prod/index.html">
-										<svg class="icon" aria-hidden="true">
-											<use xlink:href="#icon-shengchan"></use>
-										</svg>
-										Oracle-PROD-采购生产</a></li>
-									<li id="menu-item-50" class="menu-item menu-item-50"><a
-											title="Oracle-Finance-财务" href="category/oracle-finance/index.html">
-										<svg class="icon" aria-hidden="true">
-											<use xlink:href="#icon-caiwu"></use>
-										</svg>
-										Oracle-Finance-财务</a></li>
-									<li id="menu-item-61" class="menu-item menu-item-61"><a title="Oracle-PL/SQL"
-																							href="category/oracle-pl-sql/index.html">
-										<svg class="icon" aria-hidden="true">
-											<use xlink:href="#icon-SQLxinjian"></use>
-										</svg>
-										Oracle-PL/SQL</a></li>
-									<li id="menu-item-82" class="menu-item menu-item-82"><a
-											title="Oracle-BI-Discoverer"
-											href="category/oracle-bi-discoverer/index.html">
-										<svg class="icon" aria-hidden="true">
-											<use xlink:href="#icon-baobiao"></use>
-										</svg>
-										Oracle-BI-Discoverer</a></li>
-									<li id="menu-item-117" class="menu-item menu-item-117"><a title="Oracle-其他文档软件"
-																							  href="category/oracle-download/index.html">
-										<svg class="icon" aria-hidden="true">
-											<use xlink:href="#icon-ruanjianfuwu"></use>
-										</svg>
-										Oracle-其他文档软件</a></li>
+									{zz:channel type="son" typeid="$field['id']" void="vo"}
+									<li id="menu-item-{$vo.id}" class="menu-item menu-item-{$vo.id} {:IsActiveNav($cid,$vo['id'])?'current-menu-item':''}">
+										<a title="{$vo['title']}" href="{$vo['url']}" aria-current="page" {if $vo['link_str']} target="_blank"{/if}>{$vo['title']}</a>
+									</li>
+									{/zz:channel}
 								</ul>
+								{/notempty}
 							</li>
-							<li id="menu-item-138" class="menu-item menu-item-138"><a title="Asp.Net"
-																					  href="category/dotnet/index.html">
-								<svg class="icon" aria-hidden="true">
-									<use xlink:href="#icon-weiruan"></use>
-								</svg>
-								Asp.Net</a></li>
-							<li id="menu-item-62" class="menu-item menu-item-62"><a title="sql-server"
-																					href="category/sql-server/index.html">
-								<svg class="icon" aria-hidden="true" style="color:#00868B">
-									<use xlink:href="#icon-SQLserver"></use>
-								</svg>
-								sql-server</a></li>
+							{/zz:channel}
 						</ul>
 					</nav>
 				</div>

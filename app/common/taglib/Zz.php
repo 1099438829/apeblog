@@ -39,7 +39,7 @@ class Zz extends TagLib{
         $row=isset($tag['row'])?$tag['row']:100;
         $void=isset($tag['void'])?$tag['void']:'field';
         $where=isset($tag['where'])?$tag['where']:'';
-        $orderby=isset($tag['orderby'])?$tag['orderby']:'sort asc';
+        $orderby=isset($tag['orderby'])?$tag['orderby']:'sort desc';
 
         $display=isset($tag['display'])?$tag['display']:1;
         $display=$display==1?1:0;

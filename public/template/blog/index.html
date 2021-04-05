@@ -1,18 +1,215 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh">
 <head>
-    <title>-{:web_config("title")}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Referrer" content="origin">
+
+    <style>.icon {
+        width: 18px;
+        height: 18px;
+        vertical-align: -3px;
+        fill: currentColor;
+        overflow: hidden;
+    }</style>
+    <style>html, body, #app {
+        background-image: url('wp-content/uploads/2021/03/beige-tiles.png') !important;
+        background-position: center center;
+        background-attachment: fixed;
+        background-size: cover;
+    }</style>
+    <link rel="icon" href="http://www.zyxpp.com/wp-content/uploads/2020/12/LOGO1-1.png" type="image/x-icon">
+    <style>
+        :root {
+            --Maincolor: #FF8040 !important;
+            --MaincolorHover: #409EFF !important;
+            --fontSelectedColor: #3390ff !important;
+        }
+
+        #nprogress .bar {
+            background: var(--Maincolor) !important;
+        }
+    </style>
+
+    <link rel="stylesheet" href="wp-content/themes/CorePress/static/css/main-mobile.css">
+    <link rel="stylesheet" href="wp-content/themes/CorePress/static/lib/fontawesome5/css/all.min.css">
+    <link rel="stylesheet" href="wp-content/themes/CorePress/static/css/main.css">
+    <script src="wp-content/themes/CorePress/static/js/jquery.min.js"></script>
+    <link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.zyxpp.com/xmlrpc.php?rsd">
+    <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.zyxpp.com/wp-includes/wlwmanifest.xml">
+
+    <style type="text/css">.recentcomments a {
+        display: inline !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }</style>
+    <link rel="stylesheet" href="wp-content/themes/CorePress/static/lib/nprogress/nprogress.min.css">
+    <script src="wp-content/themes/CorePress/static/lib/nprogress/nprogress.min.js"></script>
+    <script src="wp-content/themes/CorePress/static/js/tools.js"></script>
+    <link rel="stylesheet" href="wp-content/themes/CorePress/static/lib/swiper/swiper.min.css">
+    <script src="wp-content/themes/CorePress/static/lib/swiper/swiper.min.js"></script>
+    <title>轻烟随风的博客blog</title>
     <meta name="keywords" content="轻烟随风,blog,博客,oracle,pl/sql,erp,数据库,sql server,EBS,ERP系统,甲骨文,R12">
     <meta name="description" content="oracle EBS等ERP系统上线，实施，维护过程中的心得，常见的开发工具的使用">
-    {include file="public/head" /}
-	<link rel="stylesheet" href="/template/default/lib/swiper/swiper.min.css">
-    <script src="/template/default/lib/swiper/swiper.min.js"></script>
+
+
 </head>
 <body>
 
 <script>NProgress.start();</script>
 <div id="app">
-    {include file="public/header" /}
+    <header>
+        <div class="header-main-plane">
+            <div class="header-main container">
+                <script>
+                    function openMenu() {
+                        $('body').css('overflow', 'hidden');
+                        $(".drawer-menu-plane").addClass("drawer-menu-plane-show");
+                        $(".menu-plane").appendTo($(".drawer-menu-list"));
+                        $(".user-menu-plane").appendTo($(".drawer-menu-list"));
+                        $(".menu-item-has-children").append('<div class="m-dropdown" onclick="mobile_menuclick(event)" ><i class="fa fa-angle-down"></i></div>')
+                        $(".user-menu-main").append('<div class="m-dropdown" onclick="mobile_menuclick(event)"><i class="fa fa-angle-down"></i></div>')
+
+                    }
+
+                    function closeMenu() {
+                        $('body').css('overflow', 'auto');
+                        $(".drawer-menu-plane").removeClass("drawer-menu-plane-show");
+                        $(".user-menu-plane").prependTo($(".header-menu"));
+                        $(".menu-plane").prependTo($(".header-menu"));
+                        $(".m-dropdown").remove();
+                    }
+
+                    function openSearch() {
+                        $(".dialog-search-plane").addClass("dialog-search-plane-show");
+                    }
+
+                    function closeSearch() {
+                        //$('body').css('overflow', 'auto');
+                        $(".dialog-search-plane").removeClass("dialog-search-plane-show");
+                    }
+                </script>
+                <div class="mobile-menu-btn" onclick="openMenu()">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                </div>
+                <div class="drawer-menu-plane">
+                    <div class="drawer-menu-list">
+                    </div>
+                    <div class="drawer-menu-write" onclick="closeMenu()">
+                    </div>
+                </div>
+                <div class="header-logo-plane">
+                    <div class="header-logo">
+                        <a href=""><img src="wp-content/uploads/2020/12/logo11.png" alt=""></a></div>
+                </div>
+                <div class="mobile-search-btn" onclick="openSearch()">
+                    <i class="fa fa-search"></i>
+                </div>
+                <div class="dialog-search-plane">
+                    <div class="dialog-mask" onclick="closeSearch()"></div>
+                    <div class="dialog-plane">
+                        <h2>搜索内容</h2>
+                        <form class="search-form" action="https://www.zyxpp.com" method="get" role="search">
+                            <div class="search-form-input-plane">
+                                <input type="text" class="search-keyword" name="s" placeholder="搜索内容" value="">
+                            </div>
+                            <div>
+                                <button type="submit" class="search-submit" value="&#xf002;">搜索</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+                <div class="header-menu">
+                    <div class="menu-plane">
+                        <nav class="menu-header-plane">
+                            <ul id="menu-%e4%b8%8a%e6%96%b9%e5%af%bc%e8%88%aa%e6%a0%8f" class="menu-header-list">
+                                <li id="menu-item-27"
+                                    class="menu-item current-menu-item current_page_item menu-item-27"><a href=""
+                                                                                                          aria-current="page">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-shouye_huaban1"></use>
+                                    </svg>
+                                    首页</a></li>
+                                <li id="menu-item-411" class="menu-item menu-item-411"><a
+                                        href="category/talk/index.html">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-business-management"></use>
+                                    </svg>
+                                    学习笔记</a></li>
+                                <li id="menu-item-388" class="menu-item menu-item-has-children menu-item-388"><a
+                                        title="oracle甲骨文" href="#">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-Management_system"></use>
+                                    </svg>
+                                    oracle EBS</a>
+                                    <ul class="sub-menu">
+                                        <li id="menu-item-32" class="menu-item menu-item-32"><a title="Oracle-OM-销售物流"
+                                                                                                href="category/oracle-om/index.html">
+                                            <svg class="icon" aria-hidden="true">
+                                                <use xlink:href="#icon-wuliuxiaocheche"></use>
+                                            </svg>
+                                            Oracle-OM-销售物流</a></li>
+                                        <li id="menu-item-194" class="menu-item menu-item-194"><a
+                                                title="Oracle-PROD-采购生产" href="category/oracle-pur-prod/index.html">
+                                            <svg class="icon" aria-hidden="true">
+                                                <use xlink:href="#icon-shengchan"></use>
+                                            </svg>
+                                            Oracle-PROD-采购生产</a></li>
+                                        <li id="menu-item-50" class="menu-item menu-item-50"><a
+                                                title="Oracle-Finance-财务" href="category/oracle-finance/index.html">
+                                            <svg class="icon" aria-hidden="true">
+                                                <use xlink:href="#icon-caiwu"></use>
+                                            </svg>
+                                            Oracle-Finance-财务</a></li>
+                                        <li id="menu-item-61" class="menu-item menu-item-61"><a title="Oracle-PL/SQL"
+                                                                                                href="category/oracle-pl-sql/index.html">
+                                            <svg class="icon" aria-hidden="true">
+                                                <use xlink:href="#icon-SQLxinjian"></use>
+                                            </svg>
+                                            Oracle-PL/SQL</a></li>
+                                        <li id="menu-item-82" class="menu-item menu-item-82"><a
+                                                title="Oracle-BI-Discoverer"
+                                                href="category/oracle-bi-discoverer/index.html">
+                                            <svg class="icon" aria-hidden="true">
+                                                <use xlink:href="#icon-baobiao"></use>
+                                            </svg>
+                                            Oracle-BI-Discoverer</a></li>
+                                        <li id="menu-item-117" class="menu-item menu-item-117"><a title="Oracle-其他文档软件"
+                                                                                                  href="category/oracle-download/index.html">
+                                            <svg class="icon" aria-hidden="true">
+                                                <use xlink:href="#icon-ruanjianfuwu"></use>
+                                            </svg>
+                                            Oracle-其他文档软件</a></li>
+                                    </ul>
+                                </li>
+                                <li id="menu-item-138" class="menu-item menu-item-138"><a title="Asp.Net"
+                                                                                          href="category/dotnet/index.html">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-weiruan"></use>
+                                    </svg>
+                                    Asp.Net</a></li>
+                                <li id="menu-item-62" class="menu-item menu-item-62"><a title="sql-server"
+                                                                                        href="category/sql-server/index.html">
+                                    <svg class="icon" aria-hidden="true" style="color:#00868B">
+                                        <use xlink:href="#icon-SQLserver"></use>
+                                    </svg>
+                                    sql-server</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="user-menu-plane">
+                        <div class="user-menu-pc-search" onclick="openSearch()" title="搜索">
+                            <i class="fal fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
     <div class="top-divider"></div>
     <main class="container">
         <div class="html-main">
@@ -21,7 +218,7 @@
                     <div class="swiper-container carousel">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide"><a href="javascript:void(0);" target=""><img
-                                    src="/uploads/article/2021/03/11.jpg" alt=""></a></div>
+                                    src="wp-content/uploads/2021/03/11.jpg" alt=""></a></div>
                         </div>
                         <div class="swiper-pagination"></div>
                         <div class="swiper-button-prev"></div>
@@ -56,7 +253,7 @@
                             <div class="index-top-postcard-main">
                                 <div class="post-item-thumbnail">
                                     <a href="oaworkflowapprove/index.html"><img
-                                            src="/uploads/article/2021/02/workflow0.png" alt=""></a>
+                                            src="wp-content/uploads/2021/02/workflow0.png" alt=""></a>
                                 </div>
                                 <div class="index-top-postcard-title">
                                     <a href="oaworkflowapprove/index.html">常见审批流的探讨</a>
@@ -67,7 +264,7 @@
                         <div class="index-top-postcard-item">
                             <div class="index-top-postcard-main">
                                 <div class="post-item-thumbnail">
-                                    <a href="decoration-erp/index.html"><img src="/uploads/article/2021/03/甘特图装修.png"
+                                    <a href="decoration-erp/index.html"><img src="wp-content/uploads/2021/03/甘特图装修.png"
                                                                              alt=""></a>
                                 </div>
                                 <div class="index-top-postcard-title">
@@ -80,7 +277,7 @@
                             <div class="index-top-postcard-main">
                                 <div class="post-item-thumbnail">
                                     <a href="oracle-ebs-om-order-table/index.html"><img
-                                            src="/uploads/article/2021/02/om-workflow.png" alt=""></a>
+                                            src="wp-content/uploads/2021/02/om-workflow.png" alt=""></a>
                                 </div>
                                 <div class="index-top-postcard-title">
                                     <a href="oracle-ebs-om-order-table/index.html">oracle EBS从销售出货到物流入库全过程</a>
@@ -92,7 +289,7 @@
                             <div class="index-top-postcard-main">
                                 <div class="post-item-thumbnail">
                                     <a href="oracle-ebs-pur-inventory-table/index.html"><img
-                                            src="/uploads/article/2020/12/pur-workflow.png" alt=""></a>
+                                            src="wp-content/uploads/2020/12/pur-workflow.png" alt=""></a>
                                 </div>
                                 <div class="index-top-postcard-title">
                                     <a href="oracle-ebs-pur-inventory-table/index.html">oracle EBS采购入库收货财务匹配付款全过程</a>
@@ -115,7 +312,7 @@
                             <div class="post-item-container">
                                 <div class="post-item-thumbnail">
                                     <a href="decoration-erp/index.html" target="_blank"><img
-                                            src="/uploads/article/2021/03/甘特图装修.png"></a>
+                                            src="wp-content/uploads/2021/03/甘特图装修.png"></a>
                                 </div>
                                 <div class="post-item-tags">
                                     <span class="cat-item"><a target="_blank"
@@ -154,7 +351,7 @@
                             <div class="post-item-container">
                                 <div class="post-item-thumbnail">
                                     <a href="oaworkflowapprove/index1.html" target="_blank"><img
-                                            src="/uploads/article/2021/02/workflow0.png"></a>
+                                            src="wp-content/uploads/2021/02/workflow0.png"></a>
                                 </div>
                                 <div class="post-item-tags">
                                     <span class="cat-item"><a target="_blank" href="category/sql-server/index.html">sql-server</a></span>
@@ -192,7 +389,7 @@
                             <div class="post-item-container">
                                 <div class="post-item-thumbnail">
                                     <a href="oracle-ebs-pur-inventory-table/index1.html" target="_blank"><img
-                                            src="/uploads/article/2020/12/pur-workflow-1024x499.png"></a>
+                                            src="wp-content/uploads/2020/12/pur-workflow-1024x499.png"></a>
                                 </div>
                                 <div class="post-item-tags">
                                     <span class="cat-item"><a target="_blank"
@@ -235,7 +432,7 @@
                             <div class="post-item-container">
                                 <div class="post-item-thumbnail">
                                     <a href="oracle-ebs-om-order-table/index1.html" target="_blank"><img
-                                            src="/uploads/article/2020/12/om-flow1.png"></a>
+                                            src="wp-content/uploads/2020/12/om-flow1.png"></a>
                                 </div>
                                 <div class="post-item-tags">
                                     <span class="cat-item"><a target="_blank" href="category/oracle-om/index.html">Oracle-OM-销售物流</a></span>
@@ -273,7 +470,7 @@
                             <div class="post-item-container">
                                 <div class="post-item-thumbnail">
                                     <a href="oracle-ebs-pl-sql-arapsubleadernotposttogl/index.html" target="_blank"><img
-                                            src="/uploads/article/2021/03/11.jpg"></a>
+                                            src="wp-content/uploads/2021/03/11.jpg"></a>
                                 </div>
                                 <div class="post-item-tags">
                                     <span class="cat-item"><a target="_blank" href="category/oracle-pl-sql/index.html">Oracle-PL/SQL</a></span>
@@ -311,7 +508,7 @@
                             <div class="post-item-container">
                                 <div class="post-item-thumbnail">
                                     <a href="veeamrestorefromdisk/index.html" target="_blank"><img
-                                            src="/uploads/article/2021/04/veeamrestoredisk1.png"></a>
+                                            src="wp-content/uploads/2021/04/veeamrestoredisk1.png"></a>
                                 </div>
                                 <div class="post-item-tags">
                                     <span class="cat-item"><a target="_blank"
@@ -349,7 +546,7 @@
                             <div class="post-item-container">
                                 <div class="post-item-thumbnail">
                                     <a href="oracle-ebs-omshipconfirmstatuserror/index.html" target="_blank"><img
-                                            src="/uploads/article/2021/04/omnotcomfirm1.png"></a>
+                                            src="wp-content/uploads/2021/04/omnotcomfirm1.png"></a>
                                 </div>
                                 <div class="post-item-tags">
                                     <span class="cat-item"><a target="_blank" href="category/oracle-om/index.html">Oracle-OM-销售物流</a></span>
@@ -386,7 +583,7 @@
                             <div class="post-item-container">
                                 <div class="post-item-thumbnail">
                                     <a href="wordpresscountvisitor/index.html" target="_blank"><img
-                                            src="/uploads/article/2021/04/countvisitor.png"></a>
+                                            src="wp-content/uploads/2021/04/countvisitor.png"></a>
                                 </div>
                                 <div class="post-item-tags">
                                     <span class="cat-item"><a target="_blank"
@@ -426,7 +623,7 @@
                             <div class="post-item-container">
                                 <div class="post-item-thumbnail">
                                     <a href="aliyunmanagement/index.html" target="_blank"><img
-                                            src="/uploads/article/2021/03/aliyun1-1024x579.png"></a>
+                                            src="wp-content/uploads/2021/03/aliyun1-1024x579.png"></a>
                                 </div>
                                 <div class="post-item-tags">
                                     <span class="cat-item"><a target="_blank"
@@ -467,7 +664,7 @@
                             <div class="post-item-container">
                                 <div class="post-item-thumbnail">
                                     <a href="capturewebscreen/index.html" target="_blank"><img
-                                            src="/uploads/article/2021/03/webscreen-1024x575.png"></a>
+                                            src="wp-content/uploads/2021/03/webscreen-1024x575.png"></a>
                                 </div>
                                 <div class="post-item-tags">
                                     <span class="cat-item"><a target="_blank"
@@ -505,7 +702,7 @@
                             <div class="post-item-container">
                                 <div class="post-item-thumbnail">
                                     <a href="wordpressmanualupgrade/index.html" target="_blank"><img
-                                            src="/uploads/article/2021/03/11.jpg"></a>
+                                            src="wp-content/uploads/2021/03/11.jpg"></a>
                                 </div>
                                 <div class="post-item-tags">
                                     <span class="cat-item"><a target="_blank"
@@ -544,7 +741,7 @@
                             <div class="post-item-container">
                                 <div class="post-item-thumbnail">
                                     <a href="sonicwallopenport/index.html" target="_blank"><img
-                                            src="/uploads/article/2021/03/sonicallopenport1.png"></a>
+                                            src="wp-content/uploads/2021/03/sonicallopenport1.png"></a>
                                 </div>
                                 <div class="post-item-tags">
                                     <span class="cat-item"><a target="_blank"
@@ -583,7 +780,7 @@
                             <div class="post-item-container">
                                 <div class="post-item-thumbnail">
                                     <a href="oracle-ebs-pl-sql-onhand/index.html" target="_blank"><img
-                                            src="/uploads/article/2021/03/11.jpg"></a>
+                                            src="wp-content/uploads/2021/03/11.jpg"></a>
                                 </div>
                                 <div class="post-item-tags">
                                     <span class="cat-item"><a target="_blank" href="category/oracle-pl-sql/index.html">Oracle-PL/SQL</a></span>
@@ -769,7 +966,7 @@
                         </ul>
                     </div>
                     <div class="aside-box"><h2 class="widget-title">标签云</h2>
-                        <script src="/template/default/js/TagCloud.js"></script>
+                        <script src="wp-content/themes/CorePress/static/js/TagCloud.js"></script>
                         <div class="corepress-tag-cloud">
                             <div class="corepress-tag-container-tag1">
                             </div>
@@ -803,12 +1000,12 @@
                     </div>
                     <div class="aside-box"><h2 class="widget-title">免费简单好用的网站服务器运维面板</h2>
                         <a href="javascript:;"><img width="300" height="191"
-                                                    src="/uploads/article/2021/03/bt面板-300x191.png"
+                                                    src="wp-content/uploads/2021/03/bt面板-300x191.png"
                                                     class="image wp-image-559  attachment-medium size-medium" alt=""
                                                     loading="lazy" style="max-width: 100%; height: auto;"></a></div>
                     <div class="aside-box"><h2 class="widget-title">拥有一个自己的网站服务器</h2>
                         <a href="javascript:;"><img width="300" height="164"
-                                                    src="/uploads/article/2021/03/440-240_画板-1-300x164.jpg"
+                                                    src="wp-content/uploads/2021/03/440-240_画板-1-300x164.jpg"
                                                     class="image wp-image-574  attachment-medium size-medium" alt=""
                                                     loading="lazy" style="max-width: 100%; height: auto;"></a></div>
                 </div>
@@ -830,12 +1027,13 @@
                 <li><a href="#" rel="me">首页</a></li>
             </div>
         </div>
+
     </main>
     <footer>
-        <script type='text/javascript' src='/template/default/js/wp-embed.min.js' id='wp-embed-js'></script>
+        <script type='text/javascript' src='wp-includes/js/wp-embed.min.js' id='wp-embed-js'></script>
         <script>console.log("\n %c CorePress主题v 4.7 %c by applek | www.lovestu.com", "color:#fff;background:#409EFF;padding:5px 0;", "color:#eee;background:#444;padding:5px 10px;");
         </script>
-        <script src="/template/default/fonts/font.js"></script>
+        <script src="t/font_2438989_d6z0lhh98wo.js"></script>
         <div class="go-top-plane" title="返回顶部">
             <i class="fa fa-arrow-up" aria-hidden="true"></i>
         </div>
@@ -1037,10 +1235,10 @@
                         </div>
                         <div class="footer-info">
                             <span class="footer-icp"><img class="ipc-icon"
-                                                          src="/template/default/img/icp.svg" alt=""><a
+                                                          src="wp-content/themes/CorePress/static/img/icp.svg" alt=""><a
                                     href="javascript:;" target="_blank">苏ICP备2020066938号</a></span><span
                                 class="footer-icp"><img class="ipc-icon"
-                                                        src="/template/default/img/police.svg"
+                                                        src="wp-content/themes/CorePress/static/img/police.svg"
                                                         alt=""><a href="javascript:;" target="_blank">32048202000300</a></span>
                         </div>
                         <div>
@@ -1053,7 +1251,7 @@
                 <div class="footer-details footer-right">
                     <div>
                         <div class="footer-aside-box"><h2 class="footer-widget-title">博主QQ</h2>
-                            <img width="100" height="100" src="/uploads/article/2020/12/qq123937345-150x150.png"
+                            <img width="100" height="100" src="wp-content/uploads/2020/12/qq123937345-150x150.png"
                                  class="image wp-image-383  attachment-100x100 size-100x100" alt="" loading="lazy"
                                  style="max-width: 100%; height: auto;" title="博主QQ"></div>
                     </div>

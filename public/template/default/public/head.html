@@ -1,35 +1,31 @@
 	<meta charset="UTF-8">
-	<meta name="viewport"
-		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="Referrer" content="origin">
-
-	<style>.icon {
-		width: 18px;
-		height: 18px;
-		vertical-align: -3px;
-		fill: currentColor;
-		overflow: hidden;
-	}</style>
-	<style>html, body, #app {
-		background-image: url('/uploads/article/2021/03/beige-tiles.png') !important;
-		background-position: center center;
-		background-attachment: fixed;
-		background-size: cover;
-	}</style>
-	<link rel="icon" href="http://www.zyxpp.com//uploads/article/2020/12/LOGO1-1.png" type="image/x-icon">
 	<style>
+		.icon {
+			width: 18px;
+			height: 18px;
+			vertical-align: -3px;
+			fill: currentColor;
+			overflow: hidden;
+		}
+		html, body, #app {
+			background-image: url('/uploads/article/2021/03/beige-tiles.png') !important;
+			background-position: center center;
+			background-attachment: fixed;
+			background-size: cover;
+		}
 		:root {
 			--Maincolor: #FF8040 !important;
 			--MaincolorHover: #409EFF !important;
 			--fontSelectedColor: #3390ff !important;
 		}
-
 		#nprogress .bar {
 			background: var(--Maincolor) !important;
 		}
 	</style>
-
+	<link rel="icon" href="{:file_cdn(web_config('favicon'))}" type="image/x-icon">
 	<link rel="stylesheet" href="/template/default/css/main-mobile.css">
 	<link rel="stylesheet" href="/template/default/lib/fontawesome5/css/all.min.css">
 	<link rel="stylesheet" href="/template/default/css/main.css">
@@ -44,51 +40,3 @@
 	<link rel="stylesheet" href="/template/default/lib/nprogress/nprogress.min.css">
 	<script src="/template/default/lib/nprogress/nprogress.min.js"></script>
 	<script src="/template/default/js/tools.js"></script>
-
-<header class="header_area">
-	<div class="main_menu">
-		<nav class="navbar navbar-expand-lg navbar-light">
-			<div class="container">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<a class="navbar-brand logo_h" href="/"><img src="/template/default/img/logo.png" alt=""></a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-				 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-					<ul class="nav navbar-nav menu_nav justify-content-center">
-
-						<li class="nav-item {:IsActiveNav($cid)?'active':''}"><a class="nav-link" href="/">首页</a></li>
-						{zz:channel type="top"}
-							<li class="nav-item {if $field['child']} submenu dropdown{/if} {:IsActiveNav($cid,$field['id'])?'active':''}">
-									{if $field['child']}
-										<a href="{$field['url']}" class="nav-link">
-									{else /}
-										<a class="nav-link" href="{$field['url']}">
-									{/if}
-											{$field['title']}
-								</a>
-
-									{if $field['child']}
-										<ul class="dropdown-menu">
-											{zz:channel type="son" typeid="$field['id']" void="vo"}
-											<li class="nav-item {:IsActiveNav($cid,$vo['id'])?'active':''}">
-												<a class="nav-link" href="{$vo['url']}" {if $vo['link_str']} target="_blank"{/if}>
-													{$vo['title']}</a></li>
-											 {/zz:channel}
-										</ul>
-									{/if}
-							</li>
-						{/zz:channel}
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li class="nav-item"><a href="http://www.hulaxz.com/" target="_blank" class="primary_btn text-uppercase">更多模板</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</div>
-</header>
