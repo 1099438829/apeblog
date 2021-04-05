@@ -21,6 +21,7 @@ class Zz extends TagLib{
         'list'=> ['attr' => 'orderby,pagesize,type,typeid,void,model,where,display', 'close' => 1],
         'prenext'=> ['attr' => 'get,cid,void', 'close' => 1],
         'flink'=> ['attr' => 'type,row,void', 'close' => 1],
+        'banner'=> ['attr' => 'type,row,void', 'close' => 1],
         'sql'=> ['attr' => 'sql', 'close' => 1],
         'article'=> ['attr' => 'id,void,model', 'close' => 1],
         'tags'=> ['attr' => 'tags,void', 'close' => 1],
@@ -184,6 +185,26 @@ class Zz extends TagLib{
         $parse .= '{/volist}';
         return $parse;
     }
+
+    /**
+     * banner
+     */
+    public function tagBanner($tag,$content)
+    {
+        $type=isset($tag['type'])?$tag['type']:'text';
+        $type=$type=='text'?0:1;
+        $row=isset($tag['row'])?$tag['row']:100;
+        $void=isset($tag['void'])?$tag['void']:'field';
+
+        $parse = '<?php ';
+        $parse .= '$__LIST__ ='."tpl_get_banner($type,$row);";
+        $parse .= ' ?>';
+        $parse .= '{volist name="__LIST__" id="'.$void.'"}';
+        $parse .= $content;
+        $parse .= '{/volist}';
+        return $parse;
+    }
+
 
     /**
      * 执行SQL

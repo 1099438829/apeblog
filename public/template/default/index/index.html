@@ -20,8 +20,10 @@
                 <div>
                     <div class="swiper-container carousel">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide"><a href="javascript:void(0);" target=""><img
-                                    src="/uploads/article/2021/03/11.jpg" alt=""></a></div>
+                            {zz:banner pagesize="5" typeid="$cid"}
+                            <div class="swiper-slide"><a href="{$field['url']}" target=""><img
+                                    src="{$field['image']}" alt="">{$field['title']}</a></div>
+                            {/zz:banner}
                         </div>
                         <div class="swiper-pagination"></div>
                         <div class="swiper-button-prev"></div>
@@ -52,54 +54,19 @@
                 </style>
                 <div class="index-top-postcard-plane">
                     <div class="index-top-postcard-body">
+                        {zz:list pagesize="4" typeid="2"}
                         <div class="index-top-postcard-item">
                             <div class="index-top-postcard-main">
                                 <div class="post-item-thumbnail">
-                                    <a href="oaworkflowapprove/index.html"><img
-                                            src="/uploads/article/2021/02/workflow0.png" alt=""></a>
+                                    <a href="{$field['url']}"><img
+                                            src="{$field['cover_path']}" alt=""></a>
                                 </div>
                                 <div class="index-top-postcard-title">
-                                    <a href="oaworkflowapprove/index.html">常见审批流的探讨</a>
+                                    <a href="{$field['url']}">{$field['title']}</a>
                                 </div>
                             </div>
-
                         </div>
-                        <div class="index-top-postcard-item">
-                            <div class="index-top-postcard-main">
-                                <div class="post-item-thumbnail">
-                                    <a href="decoration-erp/index.html"><img src="/uploads/article/2021/03/甘特图装修.png"
-                                                                             alt=""></a>
-                                </div>
-                                <div class="index-top-postcard-title">
-                                    <a href="decoration-erp/index.html">某装修公司老板的项目管理系统的思维</a>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="index-top-postcard-item">
-                            <div class="index-top-postcard-main">
-                                <div class="post-item-thumbnail">
-                                    <a href="oracle-ebs-om-order-table/index.html"><img
-                                            src="/uploads/article/2021/02/om-workflow.png" alt=""></a>
-                                </div>
-                                <div class="index-top-postcard-title">
-                                    <a href="oracle-ebs-om-order-table/index.html">oracle EBS从销售出货到物流入库全过程</a>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="index-top-postcard-item">
-                            <div class="index-top-postcard-main">
-                                <div class="post-item-thumbnail">
-                                    <a href="oracle-ebs-pur-inventory-table/index.html"><img
-                                            src="/uploads/article/2020/12/pur-workflow.png" alt=""></a>
-                                </div>
-                                <div class="index-top-postcard-title">
-                                    <a href="oracle-ebs-pur-inventory-table/index.html">oracle EBS采购入库收货财务匹配付款全过程</a>
-                                </div>
-                            </div>
-
-                        </div>
+                        {/zz:list}
                     </div>
                 </div>
 

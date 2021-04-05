@@ -525,6 +525,29 @@ function tpl_get_friend_link($type,$row){
     return $flinkListTemp;
 }
 
+/**
+ * 模板-banner
+ */
+function tpl_get_banner($type,$row){
+    $bannerList=cache('DATA_BANNER');
+    if($bannerList===null){
+        $bannerList=Db::name('slides')->where('status',1)->order('sort asc')->limit($row)->select();
+        cache('DATA_BANNER',$bannerList);
+    }
+    if($type===0){
+        return $bannerList;
+    }
+    $bannerListTemp=[];
+    foreach ($bannerList as $key=>$item){
+        if($item['image']){
+            array_push($bannerListTemp,$item);
+        }
+    }
+    return $bannerListTemp;
+}
+
+
+
 if (!function_exists('web_config'))
 {
     /**
