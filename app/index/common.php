@@ -85,6 +85,30 @@ function get_document_category($x,$field=false){
 }
 
 /**
+ * @param $cid int 栏目分类
+ * @param bool $field
+ * @return mixed|string
+ * @throws Exception
+ * @author 李玉坤
+ * @date 2021-04-06 9:43
+ */
+function get_document_category_children($cid,$field=false){
+    if(!$cid){
+        throw new Exception('请指定要获取的栏目分类id！');
+    }
+    $docuemtCategoryChildrendLidst = Db::name('document_category')->where('id','=',$cid)->column();
+    if(!$docuemtCategory){
+        throw new Exception('分类不存在或已删除！');
+    }
+    if($field){
+        return $docuemtCategory[$field];
+    }
+    else{
+        return $docuemtCategory;
+    }
+}
+
+/**
  * 获取一个文章分类-通个分类标识
  */
 function get_document_category_by_name($name,$field=false){
