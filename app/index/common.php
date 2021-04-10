@@ -85,27 +85,26 @@ function get_document_category($x,$field=false){
 }
 
 /**
- * @param $cid int 栏目分类
+ * 获取栏目子元素
+ * @param $cid int|array 栏目分类
  * @param bool $field
  * @return mixed|string
  * @throws Exception
  * @author 李玉坤
  * @date 2021-04-06 9:43
  */
-function get_document_category_children($cid,$field=false){
+function get_document_category_children($cid){
     if(!$cid){
         throw new Exception('请指定要获取的栏目分类id！');
     }
-    $docuemtCategoryChildrendLidst = Db::name('document_category')->where('id','=',$cid)->column();
-    if(!$docuemtCategory){
-        throw new Exception('分类不存在或已删除！');
+    if (!is_array($cid)){
+        $cid = explode(',',$cid);
     }
-    if($field){
-        return $docuemtCategory[$field];
+    $children = Db::name('document_category')->where('pid','in',$cid)->column('id');
+    if(!empty($children)){
+        $children = array_merge($children,get_document_category_children($children));
     }
-    else{
-        return $docuemtCategory;
-    }
+    return $children;
 }
 
 /**
@@ -341,9 +340,11 @@ function tpl_get_list($orderby,$pagesize,$cid,$type,$table='article',$where=fals
         case 'find':
             //获取栏目下文章以及所有子孙分类文章
             $dc=get_document_category($cid);
-            $child=$dc['child'];
-            if($child){
-                $docmentListModel=$docmentListModel->where('a.category_id','in',"$cid,$child");
+            $children = get_document_category_children($cid);
+            if(!empty($children)){
+                array_push($children,$cid);
+                $children = implode('.',$children);
+                $docmentListModel=$docmentListModel->where('a.category_id','in',$children);
             }
             else{
                 $docmentListModel=$docmentListModel->where('a.category_id',$cid);
