@@ -9,8 +9,6 @@
 
 namespace app\index\controller;
 
-use think\facade\Db;
-
 /**
  * 应用入口
  * Class Index
@@ -35,13 +33,4 @@ class Index extends Base
         $this->assign('cid',false);
         return $this->fetch();
     }
-
-    public function test($cid){
-        if(!$cid){
-            throw new Exception('请指定要获取的栏目分类id！');
-        }
-       dd(get_document_category_children($cid));
-
-    }
-
 }
