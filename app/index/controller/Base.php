@@ -31,14 +31,6 @@ class Base extends BaseController
             cache('systemConfig',$systemConfig);
         }
         $this->systemConfig = $systemConfig;
-        //系统模板目录，兼容模板标签 include
-        $templatePath = public_path(config('view.view_path'));
-        if (!file_exists($templatePath)){
-            //检查主题目录是否存在，不存在则更新为默认目录
-            $templatePath = public_path('template/default/');
-            config(['view_path'=>'./template/default/'],'view');
-        }
-        define('TPL',$templatePath);
         //判断是否关闭站点。
         if(!$systemConfig['web_close']){
             $this->error('网站暂时关闭！','','stop');

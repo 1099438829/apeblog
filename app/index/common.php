@@ -1,10 +1,5 @@
 <?php
 // +----------------------------------------------------------------------
-// | HulaCWMS 呼啦企业网站管理系统
-// +----------------------------------------------------------------------
-// | Copyright (c) 2019 http://www.zhuopro.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Author: 灼灼文化
 // +----------------------------------------------------------------------
 use think\facade\Db;
 use think\Exception;
@@ -399,7 +394,6 @@ function tpl_get_list($orderby,$pagesize,$cid,$type,$table='article',$where=fals
     return $re;
 }
 
-
 /**
  * 根据栏目类型，生成栏目url
  */
@@ -570,8 +564,6 @@ function tpl_get_banner($type,$row){
     }
     return $bannerListTemp;
 }
-
-
 
 if (!function_exists('web_config'))
 {

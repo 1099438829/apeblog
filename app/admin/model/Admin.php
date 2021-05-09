@@ -4,7 +4,6 @@
 namespace app\admin\model;
 
 use app\admin\model\BaseModel;
-use app\admin\model\wechat\WechatUser;
 use think\facade\Cache;
 use think\facade\Session;
 
