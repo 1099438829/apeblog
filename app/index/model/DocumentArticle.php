@@ -4,7 +4,7 @@
 namespace app\index\model;
 
 
-use app\admin\model\BaseModel;
+use think\Model;
 
 /**
  * Class DocumentArticle
@@ -12,7 +12,7 @@ use app\admin\model\BaseModel;
  * @author 李玉坤
  * @date 2021-02-15 23:22
  */
-class DocumentArticle extends BaseModel
+class DocumentArticle extends Model
 {
     /**
      * 列表
