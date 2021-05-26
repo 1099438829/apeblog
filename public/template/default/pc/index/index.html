@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <title>-{:web_config("title")}</title>
-    <meta name="keywords" content="轻烟随风,blog,博客,oracle,pl/sql,erp,数据库,sql server,EBS,ERP系统,甲骨文,R12">
-    <meta name="description" content="oracle EBS等ERP系统上线，实施，维护过程中的心得，常见的开发工具的使用">
+    <title>{:web_config("title")}</title>
+    <meta name="keywords" content="{:web_config("keywords")}">
+    <meta name="description" content="{:web_config("description")}">
     {include file="public/head" /}
 	<link rel="stylesheet" href="__LIB__/swiper/swiper.min.css">
     <script src="__LIB__/swiper/swiper.min.js"></script>
@@ -713,7 +713,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="aside-box"><h2 class="widget-title">近期评论</h2>
+                    <div class="aside-box"><h2 class="widget-title">近期热门</h2>
                         <ul id="recentcomments">
                             <li class="recentcomments"><span class="comment-author-link">匿名</span>发表在《<a
                                     href="oracle-ebs-pl-sql-ap-podetial/index.html#comment-22">oracle-EBS-PL/sql AP
