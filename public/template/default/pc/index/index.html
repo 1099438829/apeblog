@@ -21,8 +21,11 @@
                     <div class="swiper-container carousel">
                         <div class="swiper-wrapper">
                             {zz:banner pagesize="5" typeid="$cid"}
-                            <div class="swiper-slide"><a href="{$field['url']}" target=""><img
-                                    src="{$field['image']}" alt="">{$field['title']}</a></div>
+                            <div class="swiper-slide">
+                                <a href="{$field['url']}" target="">
+                                    <img src="{$field['image']}" alt="{$field['title']}">
+                                </a>
+                            </div>
                             {/zz:banner}
                         </div>
                         <div class="swiper-pagination"></div>
@@ -78,513 +81,45 @@
                         </div>
                     </div>
                     <ul class="post-list">
+                        {zz:list pagesize="3" typeid="$cid" orderby="create_time desc"}
                         <li class="post-item ">
                             <div class="post-item-container">
                                 <div class="post-item-thumbnail">
-                                    <a href="decoration-erp/index.html" target="_blank"><img
-                                            src="/uploads/article/2021/03/甘特图装修.png"></a>
+                                    <a href="{$field['url']}" target="_blank">
+                                        <img src="{:file_cdn($field['cover_path'])}">
+                                    </a>
                                 </div>
                                 <div class="post-item-tags">
-                                    <span class="cat-item"><a target="_blank"
-                                                              href="category/talk/index.html">学习笔记</a></span>
+                                    <span class="cat-item">
+                                        <a target="_blank" href="{$field['url']}">{:cn_substr($field['title'],15)}...</a>
+                                    </span>
                                 </div>
                                 <div class="post-item-main">
                                     <h2>
                                         <span class="post-item-sticky">置顶</span>
-                                        <a href="decoration-erp/index.html" target="_blank">某家装公司项目管理软件系统的设计思路</a>
+                                        <a href="{$field['url']}" target="_blank">{:cn_substr($field['title'],15)}...</a>
                                     </h2>
-                                    <div class="post-item-content">
-                                        &nbsp;
-                                        最近偶然听说以前就职过的装修公司居然申请破产了，不禁有些惊讶。据说是因为管理层的战略投资失误，加上公司快速扩张，导致资金链断裂，引发连锁反应……
+                                    <div class="post-item-content">{:cn_substr($field['description'],40)}...
                                     </div>
                                     <div class="post-item-info">
                                         <div class="post-item-meta">
                                             <div class="post-item-meta-item">
-                            <span class="post-item-meta-author">
-                               <img src="wp-content/plugins/wp-user-avatar/images/wpua-32x32.png" width="24" height="24"
-                                    alt="头像"
-                                    class="avatar avatar-24 wp-user-avatar wp-user-avatar-24 photo avatar-default post-item-avatar">轻烟随风                            </span>
-                                                <span class="post-item-time">2021-03-24</span>
+                                                <span class="post-item-meta-author">
+                                                   <img src="{$field['author']}" width="24" height="24"
+                                                        alt="头像"
+                                                        class="avatar avatar-24 wp-user-avatar wp-user-avatar-24 photo avatar-default post-item-avatar">{$field['author']}</span>
+                                                <span class="post-item-time">{:MyDate('Y-m-d',$field['create_time'])}</span>
                                             </div>
                                             <div class="item-post-meta-other">
-                                                <span><i class="fas fa-eye" aria-hidden="true"></i>7</span> <span><i
-                                                    class="fas fa-comment-alt-lines"></i>0</span>
+                                                <span><i class="fas fa-eye" aria-hidden="true"></i>{$field['create_time']}</span> <span><i
+                                                    class="fas fa-comment-alt-lines"></i>{$field['create_time']}</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </li>
-
-
-                        <li class="post-item ">
-                            <div class="post-item-container">
-                                <div class="post-item-thumbnail">
-                                    <a href="oaworkflowapprove/index1.html" target="_blank"><img
-                                            src="/uploads/article/2021/02/workflow0.png"></a>
-                                </div>
-                                <div class="post-item-tags">
-                                    <span class="cat-item"><a target="_blank" href="category/sql-server/index.html">sql-server</a></span>
-                                </div>
-                                <div class="post-item-main">
-                                    <h2>
-                                        <span class="post-item-sticky">置顶</span>
-                                        <a href="oaworkflowapprove/index1.html" target="_blank">常见企业OA办公审批流、工作流实现层级审批、层层签核的方式</a>
-                                    </h2>
-                                    <div class="post-item-content">
-                                        OA办公审批流工作流实现层级审批、签核的探讨
-                                        最近在翻新公司的vb到c#的项目，研究了下工作流签核系统这块，可以逐级审批，退回到指定层，产生审批流列表也是……
-                                    </div>
-                                    <div class="post-item-info">
-                                        <div class="post-item-meta">
-                                            <div class="post-item-meta-item">
-                            <span class="post-item-meta-author">
-                               <img src="wp-content/plugins/wp-user-avatar/images/wpua-32x32.png" width="24" height="24"
-                                    alt="头像"
-                                    class="avatar avatar-24 wp-user-avatar wp-user-avatar-24 photo avatar-default post-item-avatar">轻烟随风                            </span>
-                                                <span class="post-item-time">2021-02-28</span>
-                                            </div>
-                                            <div class="item-post-meta-other">
-                                                <span><i class="fas fa-eye" aria-hidden="true"></i>73</span> <span><i
-                                                    class="fas fa-comment-alt-lines"></i>0</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-
-                        <li class="post-item ">
-                            <div class="post-item-container">
-                                <div class="post-item-thumbnail">
-                                    <a href="oracle-ebs-pur-inventory-table/index1.html" target="_blank"><img
-                                            src="/uploads/article/2020/12/pur-workflow-1024x499.png"></a>
-                                </div>
-                                <div class="post-item-tags">
-                                    <span class="cat-item"><a target="_blank"
-                                                              href="category/oracle-pur-prod/index.html">Oracle-PROD-采购生产</a></span>
-                                </div>
-                                <div class="post-item-main">
-                                    <h2>
-                                        <span class="post-item-sticky">置顶</span>
-                                        <a href="oracle-ebs-pur-inventory-table/index1.html" target="_blank">oracle-EBS-采购单创建接收检验入库经历主要表(多图)</a>
-                                    </h2>
-                                    <div class="post-item-content">
-                                        oracle-EBS-采购单创建接收检验入库(采购到入库全过程)经历主要表(多图)
-
-                                        一、创建请购单
-                                        1.可以从外部系统导入：
-                                        PO_REQUISITION_HEADERS_ALL
-                                        --外部系统接口……
-                                    </div>
-                                    <div class="post-item-info">
-                                        <div class="post-item-meta">
-                                            <div class="post-item-meta-item">
-                            <span class="post-item-meta-author">
-                               <img src="wp-content/plugins/wp-user-avatar/images/wpua-32x32.png" width="24" height="24"
-                                    alt="头像"
-                                    class="avatar avatar-24 wp-user-avatar wp-user-avatar-24 photo avatar-default post-item-avatar">轻烟随风                            </span>
-                                                <span class="post-item-time">2020-12-13</span>
-                                            </div>
-                                            <div class="item-post-meta-other">
-                                                <span><i class="fas fa-eye" aria-hidden="true"></i>161</span> <span><i
-                                                    class="fas fa-comment-alt-lines"></i>0</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-
-                        <li class="post-item ">
-                            <div class="post-item-container">
-                                <div class="post-item-thumbnail">
-                                    <a href="oracle-ebs-om-order-table/index1.html" target="_blank"><img
-                                            src="/uploads/article/2020/12/om-flow1.png"></a>
-                                </div>
-                                <div class="post-item-tags">
-                                    <span class="cat-item"><a target="_blank" href="category/oracle-om/index.html">Oracle-OM-销售物流</a></span>
-                                </div>
-                                <div class="post-item-main">
-                                    <h2>
-                                        <span class="post-item-sticky">置顶</span>
-                                        <a href="oracle-ebs-om-order-table/index1.html" target="_blank">oracle-EBS甲骨文销售订单下单发放挑库发运(销售到出货全过程)主要相关表(多图)</a>
-                                    </h2>
-                                    <div class="post-item-content">
-                                        本文主要讲解 oracle-EBS-销售订单下单、发放、挑库、发运(销售到出仓全过程)的主要相关表，搞清楚下面流程图和常用的几个数据表，基本对EBS OM
-                                        模块就有了大……
-                                    </div>
-                                    <div class="post-item-info">
-                                        <div class="post-item-meta">
-                                            <div class="post-item-meta-item">
-                            <span class="post-item-meta-author">
-                               <img src="wp-content/plugins/wp-user-avatar/images/wpua-32x32.png" width="24" height="24"
-                                    alt="头像"
-                                    class="avatar avatar-24 wp-user-avatar wp-user-avatar-24 photo avatar-default post-item-avatar">轻烟随风                            </span>
-                                                <span class="post-item-time">2020-12-09</span>
-                                            </div>
-                                            <div class="item-post-meta-other">
-                                                <span><i class="fas fa-eye" aria-hidden="true"></i>333</span> <span><i
-                                                    class="fas fa-comment-alt-lines"></i>1</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-
-                        <li class="post-item post-item-new">
-                            <div class="post-item-container">
-                                <div class="post-item-thumbnail">
-                                    <a href="oracle-ebs-pl-sql-arapsubleadernotposttogl/index.html" target="_blank"><img
-                                            src="/uploads/article/2021/03/11.jpg"></a>
-                                </div>
-                                <div class="post-item-tags">
-                                    <span class="cat-item"><a target="_blank" href="category/oracle-pl-sql/index.html">Oracle-PL/SQL</a></span>
-                                </div>
-                                <div class="post-item-main">
-                                    <h2>
-                                        <a href="oracle-ebs-pl-sql-arapsubleadernotposttogl/index.html" target="_blank">oracle-EBS-PL/sql
-                                            财务 AR AP 子分类账未过入总账GL的语句</a>
-                                    </h2>
-                                    <div class="post-item-content">
-                                        oracle-EBS-PL/sql 财务 AR AP 子分类账未过入总账GL的语句
-                                        再月结之前，除了跑ar ap的请求 子分类账区间例外报表外， 我们可以用下面sql语句，去捞取哪些数据……
-                                    </div>
-                                    <div class="post-item-info">
-                                        <div class="post-item-meta">
-                                            <div class="post-item-meta-item">
-                            <span class="post-item-meta-author">
-                               <img src="wp-content/plugins/wp-user-avatar/images/wpua-32x32.png" width="24" height="24"
-                                    alt="头像"
-                                    class="avatar avatar-24 wp-user-avatar wp-user-avatar-24 photo avatar-default post-item-avatar">轻烟随风                            </span>
-                                                <span class="post-item-time">今天</span>
-                                            </div>
-                                            <div class="item-post-meta-other">
-                                                <span><i class="fas fa-eye" aria-hidden="true"></i>0</span> <span><i
-                                                    class="fas fa-comment-alt-lines"></i>0</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-
-                        <li class="post-item post-item-new">
-                            <div class="post-item-container">
-                                <div class="post-item-thumbnail">
-                                    <a href="veeamrestorefromdisk/index.html" target="_blank"><img
-                                            src="/uploads/article/2021/04/veeamrestoredisk1.png"></a>
-                                </div>
-                                <div class="post-item-tags">
-                                    <span class="cat-item"><a target="_blank"
-                                                              href="category/talk/index.html">学习笔记</a></span>
-                                </div>
-                                <div class="post-item-main">
-                                    <h2>
-                                        <a href="veeamrestorefromdisk/index.html" target="_blank">Veeam日常运维恢复数据操作(从外接硬盘恢复)</a>
-                                    </h2>
-                                    <div class="post-item-content">
-                                        Veeam日常运维恢复数据操作(从外接硬盘恢复)
-                                        基本的备份数据可以是nas存储柜，磁带，外接硬盘，  Veeam 功能很强大，可以备份整个Vmare虚拟机。本文以硬盘为例……
-                                    </div>
-                                    <div class="post-item-info">
-                                        <div class="post-item-meta">
-                                            <div class="post-item-meta-item">
-                            <span class="post-item-meta-author">
-                               <img src="wp-content/plugins/wp-user-avatar/images/wpua-32x32.png" width="24" height="24"
-                                    alt="头像"
-                                    class="avatar avatar-24 wp-user-avatar wp-user-avatar-24 photo avatar-default post-item-avatar">轻烟随风                            </span>
-                                                <span class="post-item-time">今天</span>
-                                            </div>
-                                            <div class="item-post-meta-other">
-                                                <span><i class="fas fa-eye" aria-hidden="true"></i>0</span> <span><i
-                                                    class="fas fa-comment-alt-lines"></i>0</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-
-                        <li class="post-item ">
-                            <div class="post-item-container">
-                                <div class="post-item-thumbnail">
-                                    <a href="oracle-ebs-omshipconfirmstatuserror/index.html" target="_blank"><img
-                                            src="/uploads/article/2021/04/omnotcomfirm1.png"></a>
-                                </div>
-                                <div class="post-item-tags">
-                                    <span class="cat-item"><a target="_blank" href="category/oracle-om/index.html">Oracle-OM-销售物流</a></span>
-                                </div>
-                                <div class="post-item-main">
-                                    <h2>
-                                        <a href="oracle-ebs-omshipconfirmstatuserror/index.html" target="_blank">oracle-EBS-OM价目表未设置导致确认出货后状态位没有变成已连接/interface</a>
-                                    </h2>
-                                    <div class="post-item-content">
-                                        oracle-EBS-OM价目表未设置导致确认出货后状态位没有变成已连接/interface
-                                        物流或仓库在做确认出货后，发现系统的行状态不是已连接/interface，  而是已发运，……
-                                    </div>
-                                    <div class="post-item-info">
-                                        <div class="post-item-meta">
-                                            <div class="post-item-meta-item">
-                            <span class="post-item-meta-author">
-                               <img src="wp-content/plugins/wp-user-avatar/images/wpua-32x32.png" width="24" height="24"
-                                    alt="头像"
-                                    class="avatar avatar-24 wp-user-avatar wp-user-avatar-24 photo avatar-default post-item-avatar">轻烟随风                            </span>
-                                                <span class="post-item-time">昨天</span>
-                                            </div>
-                                            <div class="item-post-meta-other">
-                                                <span><i class="fas fa-eye" aria-hidden="true"></i>1</span> <span><i
-                                                    class="fas fa-comment-alt-lines"></i>0</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-
-                        <li class="post-item ">
-                            <div class="post-item-container">
-                                <div class="post-item-thumbnail">
-                                    <a href="wordpresscountvisitor/index.html" target="_blank"><img
-                                            src="/uploads/article/2021/04/countvisitor.png"></a>
-                                </div>
-                                <div class="post-item-tags">
-                                    <span class="cat-item"><a target="_blank"
-                                                              href="category/talk/index.html">学习笔记</a></span>
-                                </div>
-                                <div class="post-item-main">
-                                    <h2>
-                                        <a href="wordpresscountvisitor/index.html" target="_blank">wordpress统计网站日访问量总访问量代码</a>
-                                    </h2>
-                                    <div class="post-item-content">
-                                        wordpress统计网站日访问量总访问量代码
-                                        效果如下，转载了网络上常用的方法，不用安装第三方插件，纯粹是代码实现，感兴趣的朋友一起试试吧
-
-                                        1.function.PHP ……
-                                    </div>
-                                    <div class="post-item-info">
-                                        <div class="post-item-meta">
-                                            <div class="post-item-meta-item">
-                            <span class="post-item-meta-author">
-                               <img src="wp-content/plugins/wp-user-avatar/images/wpua-32x32.png" width="24" height="24"
-                                    alt="头像"
-                                    class="avatar avatar-24 wp-user-avatar wp-user-avatar-24 photo avatar-default post-item-avatar">轻烟随风                            </span>
-                                                <span class="post-item-time">昨天</span>
-                                            </div>
-                                            <div class="item-post-meta-other">
-                                                <span><i class="fas fa-eye" aria-hidden="true"></i>0</span> <span><i
-                                                    class="fas fa-comment-alt-lines"></i>0</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-
-                        <li class="post-item ">
-                            <div class="post-item-container">
-                                <div class="post-item-thumbnail">
-                                    <a href="aliyunmanagement/index.html" target="_blank"><img
-                                            src="/uploads/article/2021/03/aliyun1-1024x579.png"></a>
-                                </div>
-                                <div class="post-item-tags">
-                                    <span class="cat-item"><a target="_blank"
-                                                              href="category/talk/index.html">学习笔记</a></span>
-                                </div>
-                                <div class="post-item-main">
-                                    <h2>
-                                        <a href="aliyunmanagement/index.html" target="_blank">阿里云服务器的简单管理快照备份和远程访问设置</a>
-                                    </h2>
-                                    <div class="post-item-content">
-                                        阿里云服务器的简单管理快照备份和远程访问设置
-                                        购买阿里云后，主要做好服务器的3点运维即可：
-                                        1.设置实例
-                                        2.设置好快照（前提是购买了云盘空间）
-                                        3.设置远程i……
-                                    </div>
-                                    <div class="post-item-info">
-                                        <div class="post-item-meta">
-                                            <div class="post-item-meta-item">
-                            <span class="post-item-meta-author">
-                               <img src="wp-content/plugins/wp-user-avatar/images/wpua-32x32.png" width="24" height="24"
-                                    alt="头像"
-                                    class="avatar avatar-24 wp-user-avatar wp-user-avatar-24 photo avatar-default post-item-avatar">轻烟随风                            </span>
-                                                <span class="post-item-time">2021-03-29</span>
-                                            </div>
-                                            <div class="item-post-meta-other">
-                                                <span><i class="fas fa-eye" aria-hidden="true"></i>3</span> <span><i
-                                                    class="fas fa-comment-alt-lines"></i>0</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-
-                        <li class="post-item ">
-                            <div class="post-item-container">
-                                <div class="post-item-thumbnail">
-                                    <a href="capturewebscreen/index.html" target="_blank"><img
-                                            src="/uploads/article/2021/03/webscreen-1024x575.png"></a>
-                                </div>
-                                <div class="post-item-tags">
-                                    <span class="cat-item"><a target="_blank"
-                                                              href="category/talk/index.html">学习笔记</a></span>
-                                </div>
-                                <div class="post-item-main">
-                                    <h2>
-                                        <a href="capturewebscreen/index.html" target="_blank">用chrome谷歌浏览器截取转换网站某个页面保存为图片格式</a>
-                                    </h2>
-                                    <div class="post-item-content">
-                                        用chrome谷歌浏览器截取网站某个页面保存为图片
-                                        在做测试的时候，有时候需要把整个网页保存为图片，但是网页内容多，用传统的键盘 prtscr 键，只能截取实际看……
-                                    </div>
-                                    <div class="post-item-info">
-                                        <div class="post-item-meta">
-                                            <div class="post-item-meta-item">
-                            <span class="post-item-meta-author">
-                               <img src="wp-content/plugins/wp-user-avatar/images/wpua-32x32.png" width="24" height="24"
-                                    alt="头像"
-                                    class="avatar avatar-24 wp-user-avatar wp-user-avatar-24 photo avatar-default post-item-avatar">轻烟随风                            </span>
-                                                <span class="post-item-time">2021-03-28</span>
-                                            </div>
-                                            <div class="item-post-meta-other">
-                                                <span><i class="fas fa-eye" aria-hidden="true"></i>4</span> <span><i
-                                                    class="fas fa-comment-alt-lines"></i>0</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-
-                        <li class="post-item ">
-                            <div class="post-item-container">
-                                <div class="post-item-thumbnail">
-                                    <a href="wordpressmanualupgrade/index.html" target="_blank"><img
-                                            src="/uploads/article/2021/03/11.jpg"></a>
-                                </div>
-                                <div class="post-item-tags">
-                                    <span class="cat-item"><a target="_blank"
-                                                              href="category/talk/index.html">学习笔记</a></span>
-                                </div>
-                                <div class="post-item-main">
-                                    <h2>
-                                        <a href="wordpressmanualupgrade/index.html" target="_blank">WordPress手动升级教程</a>
-                                    </h2>
-                                    <div class="post-item-content">
-                                        WordPress手动升级教程，因为发现后台点自动更新总是提示错误
-                                        1、备份Wordpress资料及数据库，强烈建议，为安全起见。用宝塔或其他工具自行备份做快照。
-                                        2、下……
-                                    </div>
-                                    <div class="post-item-info">
-                                        <div class="post-item-meta">
-                                            <div class="post-item-meta-item">
-                            <span class="post-item-meta-author">
-                               <img src="wp-content/plugins/wp-user-avatar/images/wpua-32x32.png" width="24" height="24"
-                                    alt="头像"
-                                    class="avatar avatar-24 wp-user-avatar wp-user-avatar-24 photo avatar-default post-item-avatar">轻烟随风                            </span>
-                                                <span class="post-item-time">2021-03-25</span>
-                                            </div>
-                                            <div class="item-post-meta-other">
-                                                <span><i class="fas fa-eye" aria-hidden="true"></i>8</span> <span><i
-                                                    class="fas fa-comment-alt-lines"></i>0</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-
-                        <li class="post-item ">
-                            <div class="post-item-container">
-                                <div class="post-item-thumbnail">
-                                    <a href="sonicwallopenport/index.html" target="_blank"><img
-                                            src="/uploads/article/2021/03/sonicallopenport1.png"></a>
-                                </div>
-                                <div class="post-item-tags">
-                                    <span class="cat-item"><a target="_blank"
-                                                              href="category/talk/index.html">学习笔记</a></span>
-                                </div>
-                                <div class="post-item-main">
-                                    <h2>
-                                        <a href="sonicwallopenport/index.html" target="_blank">sonicwall防火墙内网访问某些特殊网站端口-常用的开端口运维操作</a>
-                                    </h2>
-                                    <div class="post-item-content">
-                                        sonicwall内网访问某些特殊网站端口-常用的开端口运维操作
-                                        有时候内网同事用访问一些特殊端口的网址，需要在防火墙上设置，
-                                        如下以sonicwall 为例子，比如开放……
-                                    </div>
-                                    <div class="post-item-info">
-                                        <div class="post-item-meta">
-                                            <div class="post-item-meta-item">
-                            <span class="post-item-meta-author">
-                               <img src="wp-content/plugins/wp-user-avatar/images/wpua-32x32.png" width="24" height="24"
-                                    alt="头像"
-                                    class="avatar avatar-24 wp-user-avatar wp-user-avatar-24 photo avatar-default post-item-avatar">轻烟随风                            </span>
-                                                <span class="post-item-time">2021-03-24</span>
-                                            </div>
-                                            <div class="item-post-meta-other">
-                                                <span><i class="fas fa-eye" aria-hidden="true"></i>10</span> <span><i
-                                                    class="fas fa-comment-alt-lines"></i>0</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-
-                        <li class="post-item ">
-                            <div class="post-item-container">
-                                <div class="post-item-thumbnail">
-                                    <a href="oracle-ebs-pl-sql-onhand/index.html" target="_blank"><img
-                                            src="/uploads/article/2021/03/11.jpg"></a>
-                                </div>
-                                <div class="post-item-tags">
-                                    <span class="cat-item"><a target="_blank" href="category/oracle-pl-sql/index.html">Oracle-PL/SQL</a></span>
-                                </div>
-                                <div class="post-item-main">
-                                    <h2>
-                                        <a href="oracle-ebs-pl-sql-onhand/index.html" target="_blank">oracle-EBS-PL/sql
-                                            库存-查看产品现有量实时状态</a>
-                                    </h2>
-                                    <div class="post-item-content">
-                                        oracle-EBS-PL/sql 库存-查看产品现有量实时状态
-                                        关键就是这个通用表，这个表记录当前oracle数据库内的产品的当前的实际库存： mtl_onhand_quantities
-                                        只要发……
-                                    </div>
-                                    <div class="post-item-info">
-                                        <div class="post-item-meta">
-                                            <div class="post-item-meta-item">
-                            <span class="post-item-meta-author">
-                               <img src="wp-content/plugins/wp-user-avatar/images/wpua-32x32.png" width="24" height="24"
-                                    alt="头像"
-                                    class="avatar avatar-24 wp-user-avatar wp-user-avatar-24 photo avatar-default post-item-avatar">轻烟随风                            </span>
-                                                <span class="post-item-time">2021-03-21</span>
-                                            </div>
-                                            <div class="item-post-meta-other">
-                                                <span><i class="fas fa-eye" aria-hidden="true"></i>6</span> <span><i
-                                                    class="fas fa-comment-alt-lines"></i>0</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-
+                        {/zz:arclist}
                     </ul>
                     <div class="pages">
                         <button class="index-load-more-btn"><i class="far fa-circle-notch"></i> 加载更多</button>
@@ -713,7 +248,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="aside-box"><h2 class="widget-title">近期热门</h2>
+                    <div class="aside-box"><h2 class="widget-title">近期热门https://www.zyxpp.com/wp-admin/admin-ajax.php</h2>
                         <ul id="recentcomments">
                             <li class="recentcomments"><span class="comment-author-link">匿名</span>发表在《<a
                                     href="oracle-ebs-pl-sql-ap-podetial/index.html#comment-22">oracle-EBS-PL/sql AP

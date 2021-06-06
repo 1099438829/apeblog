@@ -114,8 +114,17 @@ class Article extends AuthController
                 if (!$ainfo)return app("json")->fail("数据不存在");
                 aModel::where('id',$id)->save($data);
                 if (!empty($content)){
-                    //更新文档
-                    DocumentArticle::where('id',$id)->save(['content'=>$content]);
+                    $contentInfo = DocumentArticle::where('id',$id)->find();
+                    if (!$contentInfo){
+                        $updateData = [
+                            'id' => $id,
+                            'content' => $content
+                        ];
+                        DocumentArticle::insert($updateData);
+                    }else{
+                        //更新文档
+                        DocumentArticle::where('id',$id)->save(['content'=>$content]);
+                    }
                 }
             }
             $res = true;
@@ -184,7 +193,12 @@ class Article extends AuthController
         $category = cModel::systemPage($where);
         $category = get_tree_list($category);
         $info = aModel::get($where['id']);
-        $info->content = DocumentArticle::get($where['id'])->content;
+        $content = DocumentArticle::get($where['id']);
+        if ($content){
+            $info->content = $content->content;
+        }else{
+            $info->content = '';
+        }
         $this->assign("category",$category);
         $this->assign("info",$info);
         return $this->fetch();

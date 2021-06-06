@@ -216,6 +216,9 @@
     $(".add-form").submit(function () {
         let Arr = $('.add-form').serializeArray();
         let checkResult = true;
+        let content=  tinyMCE.activeEditor.getContent();
+        $("#content").val(content);
+
         $.each(Arr,function (index,item) {
             try {
                 switch (item.name) {
