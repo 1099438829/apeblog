@@ -11,9 +11,6 @@ class Index extends AuthController
 {
     // 无需登录的
     protected $noNeedLogin = ['test','accessauth','pddlogin'];
-    // 无需权限的
-    protected $noNeedRight = [''];
-
     /**
      * 后台首页
      * @return string
@@ -22,8 +19,12 @@ class Index extends AuthController
     public function index()
     {
         $this->assign("adminInfo",$this->adminInfo);
-        $this->assign("menu",AdminAuth::getMenu(0,$this->auth));
-        $this->assign("message",AdminNotify::pageList(5));
+        $menuList = cache(AdminAuth::getMenuCacheKey($this->adminId));
+        if($menuList === null){
+            $menuList = AdminAuth::getMenu(0,$this->auth);
+            cache(AdminAuth::getMenuCacheKey($this->adminId),$menuList,1*60*60);
+        }
+        $this->assign("menu",$menuList);
         return $this->fetch();
     }
 
@@ -45,6 +46,11 @@ class Index extends AuthController
      */
     public function menu()
     {
-        return app("json")->success(AdminAuth::getMenu(0,$this->auth));
+        $menuList = cache(AdminAuth::getMenuCacheKey($this->adminId));
+        if($menuList === null){
+            $menuList = AdminAuth::getMenu(0,$this->auth);
+            cache(AdminAuth::getMenuCacheKey($this->adminId),$menuList,1*60*60);
+        }
+        return app("json")->success($menuList);
     }
 }

@@ -95,7 +95,7 @@ abstract class AuthController extends SystemBasic
         $this->module = App::getInstance()->http->getName();
         $this->controller = un_camelize($this->request->controller());
         $this->action = $this->request->action();
-        $this->auth = explode(",", AdminRole::getAuth($this->adminInfo['role_id'] ?? 0));
+        $this->auth = explode(",", $this->adminInfo['role_auth']??'');
         $this->nowAuthId = AdminAuth::getAuthId($this->module,$this->controller,$this->action);
         $this->model = $this->buildModel($this->module,$this->request->controller());
         // 鉴权
@@ -117,7 +117,7 @@ abstract class AuthController extends SystemBasic
         if (!self::isActive()) exit($this->failedNotice(lang("未登录"),"/admin/login/login"));
         // 权限验证
         if ($this->nowAuthId == -1 || in_array($this->nowAuthId,$this->auth)) return true;
-        exit($this->failed(lang('没有权限!')));
+        exit($this->failed(lang('没有权限访问!')));
     }
 
     /**
