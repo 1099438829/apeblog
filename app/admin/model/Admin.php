@@ -61,6 +61,8 @@ class Admin extends BaseModel
      */
     public static function setLoginInfo($info)
     {
+        unset($info->pwd);//去除密码字段
+        $info->role_auth = AdminRole::getAuth($info['role_id'] ?? 0);//提前缓存auth字段避免频繁查询
         Session::set("adminId",$info['id']);
         Session::set("adminInfo",$info->toArray());
         event("AdminLog",[$info->toArray(),"admin","login","login"]);
@@ -132,6 +134,7 @@ class Admin extends BaseModel
         $model = $model->where("id",$id);
         $model = $model->field($field);
         $info = $model->find();
+        unset($info->pwd);
         return $info ? $info->toArray() : [];
     }
 

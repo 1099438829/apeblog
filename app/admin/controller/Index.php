@@ -25,6 +25,8 @@ class Index extends AuthController
             cache(AdminAuth::getMenuCacheKey($this->adminId),$menuList,1*60*60);
         }
         $this->assign("menu",$menuList);
+        $message = ['data'=>[],'count'=>0];
+        $this->assign("message",$message);
         return $this->fetch();
     }
 
