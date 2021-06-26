@@ -2,7 +2,7 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\Slides as aModel;
+use app\common\model\Slides as aModel;
 use app\admin\services\FormBuilderService as Form;
 use app\Request;
 use app\admin\services\UtilService as Util;

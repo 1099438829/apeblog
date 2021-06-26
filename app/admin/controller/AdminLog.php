@@ -2,7 +2,7 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\AdminLog as lModel;
+use app\common\model\AdminLog as lModel;
 use app\Request;
 use app\admin\services\UtilService as Util;
 

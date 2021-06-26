@@ -2,8 +2,8 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\Admin as aModel;
-use app\admin\model\AdminRole as rModel;
+use app\common\model\Admin as aModel;
+use app\common\model\AdminRole as rModel;
 use app\Request;
 use app\admin\services\UtilService as Util;
 use FormBuilder\Factory\Elm;

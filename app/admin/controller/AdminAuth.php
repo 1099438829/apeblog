@@ -2,7 +2,7 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\AdminAuth as aModel;
+use app\common\model\AdminAuth as aModel;
 use app\Request;
 use FormBuilder\Exception\FormBuilderException;
 use app\admin\services\UtilService as Util;

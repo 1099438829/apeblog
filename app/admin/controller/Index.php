@@ -2,8 +2,8 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\AdminAuth;
-use app\admin\model\AdminNotify;
+use app\common\model\AdminAuth;
+use app\common\model\AdminNotify;
 use app\Request;
 use app\admin\services\UtilService as Util;
 

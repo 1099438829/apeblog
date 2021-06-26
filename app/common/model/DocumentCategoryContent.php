@@ -1,18 +1,18 @@
 <?php
 
 
-namespace app\admin\model;
+namespace app\common\model;
 
 
 use app\admin\model\BaseModel;
 
 /**
- * Class Slides
+ * Class DocumentCategoryContent
  * @package app\admin\model\system
  * @author 李玉坤
  * @date 2021-02-15 23:22
  */
-class Slides extends BaseModel
+class DocumentCategoryContent extends BaseModel
 {
     /**
      * 列表
@@ -29,11 +29,7 @@ class Slides extends BaseModel
         $model = new self;
         $count = self::counts($model);
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'],(int)$where['limit']);
-        $data = $model->select()->each(function ($item){
-            if (!empty($item->pic)){
-                $item->pic = file_cdn($item->pic);
-            }
-        });
+        $data = $model->select();
         if ($data) $data = $data->toArray();
         return compact('data','count');
     }

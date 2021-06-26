@@ -2,9 +2,9 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\Document as aModel;
-use app\admin\model\DocumentCategory as cModel;
-use app\admin\model\DocumentArticle;
+use app\common\model\Document as aModel;
+use app\common\model\DocumentCategory as cModel;
+use app\common\model\DocumentArticle;
 use app\Request;
 use app\admin\services\UtilService as Util;
 use think\Exception;

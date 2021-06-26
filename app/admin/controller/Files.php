@@ -3,7 +3,7 @@
 namespace app\admin\controller;
 
 
-use app\admin\model\Attachment;
+use app\common\model\Attachment;
 use app\admin\services\storage\QcloudCoService;
 use app\admin\services\UtilService as Util;
 use think\exception\ValidateException;

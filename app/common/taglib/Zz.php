@@ -19,7 +19,7 @@ class Zz extends TagLib{
         'arclist'=> ['attr' => 'typeid,orderby,row,void,model,type,where,display,ids,limit', 'close' => 1],
         'type'=> ['attr' => 'typeid', 'close' => 1],
         'list'=> ['attr' => 'orderby,pagesize,type,typeid,void,model,where,display', 'close' => 1],
-        'prenext'=> ['attr' => 'get,cid,void', 'close' => 1],
+        'prenext'=> ['attr' => 'get,cid,void,none', 'close' => 1],
         'flink'=> ['attr' => 'type,row,void', 'close' => 1],
         'banner'=> ['attr' => 'type,row,void', 'close' => 1],
         'sql'=> ['attr' => 'sql', 'close' => 1],
@@ -40,7 +40,7 @@ class Zz extends TagLib{
         $row=isset($tag['row'])?$tag['row']:100;
         $void=isset($tag['void'])?$tag['void']:'field';
         $where=isset($tag['where'])?$tag['where']:'';
-        $orderby=isset($tag['orderby'])?$tag['orderby']:'sort desc';
+        $orderby=isset($tag['orderby'])?$tag['orderby']:'sort asc';
 
         $display=isset($tag['display'])?$tag['display']:1;
         $display=$display==1?1:0;
@@ -157,9 +157,10 @@ class Zz extends TagLib{
         $get=isset($tag['get'])?$tag['get']:'pre';
         $cid=isset($tag['cid'])?$tag['cid']:'$cid';
         $void=isset($tag['void'])?$tag['void']:'field';
+        $none=isset($tag['none'])?$tag['none']:'没有了';
 
         $parse = '<?php ';
-        $parse .= '$__LIST__ =[];array_push($__LIST__,'."tpl_get_prenext(\"$get\",$cid));";
+        $parse .= '$__LIST__ =[];array_push($__LIST__,'."tpl_get_prenext(\"$get\",$cid,\"$none\"));";
         $parse .= ' ?>';
         $parse .= '{volist name="__LIST__" id="'.$void.'"}';
         $parse .= $content;

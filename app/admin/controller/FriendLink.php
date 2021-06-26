@@ -2,7 +2,7 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\FriendLink as aModel;
+use app\common\model\FriendLink as aModel;
 use app\admin\services\FormBuilderService as Form;
 use app\Request;
 use app\admin\services\UtilService as Util;

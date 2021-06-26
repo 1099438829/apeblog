@@ -1,10 +1,10 @@
 <?php
 
 
-namespace app\index\model;
+namespace app\common\model;
 
 
-use think\Model;
+use app\admin\model\BaseModel;
 
 /**
  * Class DocumentArticle
@@ -12,7 +12,7 @@ use think\Model;
  * @author 李玉坤
  * @date 2021-02-15 23:22
  */
-class DocumentArticle extends Model
+class DocumentArticle extends BaseModel
 {
     /**
      * 列表

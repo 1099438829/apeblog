@@ -2,7 +2,7 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\SystemConfig as cModel;
+use app\common\model\SystemConfig as cModel;
 use app\Request;
 use app\admin\services\UtilService as Util;
 

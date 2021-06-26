@@ -30,7 +30,7 @@ function html2text($str){
 function get_type_content($id,$strip=false){
     $dc=Db::name('document_category_content')->find($id);
     if(!$dc){
-        throw new Exception('分类不存在或已删除！');
+        return '';
     }
     if($strip){
         return html2text($dc['content']);
@@ -44,7 +44,7 @@ function get_document_category_list(){
     //缓存文章菜单
     $docuemtCategory=cache('DATA_DOCUMENT_CATEGORY_LIST');
     if($docuemtCategory===null){
-        $docuemtCategoryList=Db::name('document_category')->order('sort desc')->select();
+        $docuemtCategoryList=Db::name('document_category')->where('status',1)->order('sort asc')->select();
         //转换，让id作为数组的键
         $docuemtCategory=[];
         foreach ($docuemtCategoryList as $key=>$item){
@@ -67,39 +67,15 @@ function get_document_category($x,$field=false){
     }
     //获取缓存的文章菜单
     $docuemtCategoryList=get_document_category_list();
-	$docuemtCategory=$docuemtCategoryList[$x]??'';
-	if(!$docuemtCategory){
-         throw new Exception('分类不存在或已删除！');
+	if(!isset($docuemtCategoryList[$x])){
+	    return false;
     }
     if($field){
-        return $docuemtCategory[$field];
+        return $docuemtCategoryList[$x][$field];
     }
     else{
-        return $docuemtCategory;
+        return $docuemtCategoryList[$x];
     }
-}
-
-/**
- * 获取栏目子元素
- * @param $cid int|array 栏目分类
- * @param bool $field
- * @return mixed|string
- * @throws Exception
- * @author 李玉坤
- * @date 2021-04-06 9:43
- */
-function get_document_category_children($cid){
-    if(!$cid){
-        throw new Exception('请指定要获取的栏目分类id！');
-    }
-    if (!is_array($cid)){
-        $cid = explode(',',$cid);
-    }
-    $children = Db::name('document_category')->where('pid','in',$cid)->column('id');
-    if(!empty($children)){
-        $children = array_merge($children,get_document_category_children($children));
-    }
-    return $children;
 }
 
 /**
@@ -119,7 +95,7 @@ function get_document_category_by_name($name,$field=false){
         }
     }
     if(!$docuemtCategory){
-         throw new Exception('分类不存在或已删除！');
+        return false;
     }
     if($field){
         return $docuemtCategory[$field];
@@ -132,7 +108,7 @@ function get_document_category_by_name($name,$field=false){
 /**
  * 模板-获取文章分类
  */
-function tpl_get_channel($type,$typeid,$row,$where='',$orderby='',$display=1){
+function tpl_get_channel($type,$typeid,$row=100,$where='',$orderby='',$display=1){
 
     switch($type){
         case 'top':
@@ -153,7 +129,7 @@ function tpl_get_channel($type,$typeid,$row,$where='',$orderby='',$display=1){
             }
             $dc=get_document_category($typeid);
             if(!$dc){
-                 throw new Exception('分类不存在或已删除！');
+                return false;
             }
             return get_document_category_by_parent($dc['pid'],$row,$display);;
             break;
@@ -166,7 +142,7 @@ function tpl_get_channel($type,$typeid,$row,$where='',$orderby='',$display=1){
             if(!$dc){
                  throw new Exception('分类不存在或已删除！');
             }
-            $tempArr=Db::name('document_category')->where('id','in',$dc['child'])->select();
+            $tempArr=Db::name('document_category')->where('id','in',$dc['child'])->where('status',1)->limit($row);
             if($display){
                 $tempArr=$tempArr->where('display',1);
             }
@@ -197,8 +173,8 @@ function tpl_get_channel($type,$typeid,$row,$where='',$orderby='',$display=1){
             $dc=get_document_category($typeid);
             if($dc['pid']!=0){
                 //获取根分类，此操作读取数据库，非缓存！
-                $dc=Db::name('document_category')->where('pid',0)
-                    ->where("CONCAT(',',child,',') like '%,$typeid,%'");
+                $dc=Db::name('document_category')-where('pid',0)->where('status',1)
+                    -> where("CONCAT(',',child,',') like '%,$typeid,%'")->limit($row);
                 if($display){
                     $dc=$dc->where('display',1);
                 }
@@ -214,7 +190,7 @@ function tpl_get_channel($type,$typeid,$row,$where='',$orderby='',$display=1){
             break;
         case 'where':
             //根据自定义条件获取分类（where语句），此操作读取数据库，非缓存！
-            $tempArr=Db::name('document_category')-> where($where)->order($orderby);
+            $tempArr=Db::name('document_category')->where('status',1)-> where($where)->order($orderby)->limit($row);
             if($display){
                 $tempArr=$tempArr->where('display',1);
             }
@@ -228,7 +204,7 @@ function tpl_get_channel($type,$typeid,$row,$where='',$orderby='',$display=1){
             break;
         case 'ids':
             //根据多个栏目id，逗号隔开的那种，获得栏目列表
-            $tempArr=Db::name('document_category')-> where('id','in',$typeid)->order($orderby);
+            $tempArr=Db::name('document_category')->where('status',1)-> where('id','in',$typeid)->order($orderby)->limit($row);
             if($display){
                 $tempArr=$tempArr->where('display',1);
             }
@@ -261,11 +237,7 @@ function get_document_category_by_parent($pid,$row,$display=1){
         }
         if($item['pid']==$pid&&($display?$item['display']==1:true)){
             $x=$x+1;
-            $tempArr[$item['id']] = $item;
-        }
-        //判断是否有子元素,子元素则为其父元素的child字段设置为1
-        if ($item['pid'] > 0 && !empty($tempArr[$item['pid']])){
-            $tempArr[$item['pid']]['child'] = 1;
+            array_push($tempArr,$item);
         }
     }
     return $tempArr;
@@ -275,7 +247,7 @@ function get_document_category_by_parent($pid,$row,$display=1){
  * $get=上一篇|下一篇
  * $cid=栏目分类id
  */
-function tpl_get_prenext($get,$cid=false){
+function tpl_get_prenext($get,$cid=false,$none){
     //文档id
     $id=input('id');
     if(!$get){
@@ -297,7 +269,7 @@ function tpl_get_prenext($get,$cid=false){
     else{
         $document['id']=false;
         $document['url']='javascript:void(0)';
-        $document['title']='没有了';
+        $document['title']=$none;
     }
 
     return $document;
@@ -317,9 +289,10 @@ function tpl_get_list($orderby,$pagesize,$cid,$type,$table='article',$where=fals
     $docmentListModel=Db::name('document')
         ->alias('a')
         ->join(config('database.prefix').'document_category b','a.category_id=b.id','LEFT')
-        ->join(config('database.prefix')."document_$table c",'a.id=c.id','RIGHT')
+        ->join(config('database.prefix')."document_$table c",'a.id=c.id','LEFT')
         ->where("a.type='$table'")
         ->where('a.status',1)
+        ->where('b.status',1)
         ->field('a.*,b.title as category_title,c.*');
 
     if($display){
@@ -335,11 +308,9 @@ function tpl_get_list($orderby,$pagesize,$cid,$type,$table='article',$where=fals
         case 'find':
             //获取栏目下文章以及所有子孙分类文章
             $dc=get_document_category($cid);
-            $children = get_document_category_children($cid);
-            if(!empty($children)){
-                array_push($children,$cid);
-                $children = implode('.',$children);
-                $docmentListModel=$docmentListModel->where('a.category_id','in',$children);
+            $child=$dc['child'];
+            if($child){
+                $docmentListModel=$docmentListModel->where('a.category_id','in',"$cid,$child");
             }
             else{
                 $docmentListModel=$docmentListModel->where('a.category_id',$cid);
@@ -374,7 +345,7 @@ function tpl_get_list($orderby,$pagesize,$cid,$type,$table='article',$where=fals
     //获取当前请求的请求参数，以确定分页是否要带上这些请求参数
 	$query=request()->query();
 	if($query){
-		$docmentListModel=$docmentListModel->paginate( ['list_rows'=>$pagesize,'query' => request()->param()]);
+		$docmentListModel=$docmentListModel->paginate($pagesize,false,['query' => getRouteQuery()]);
 	}
 	else{
 		$docmentListModel=$docmentListModel->paginate($pagesize);
@@ -392,6 +363,17 @@ function tpl_get_list($orderby,$pagesize,$cid,$type,$table='article',$where=fals
     ];
 
     return $re;
+}
+
+/**
+ * 获得当前路由及参数列表
+ * @return mixed
+ */
+function getRouteQuery(){
+    $request=request();
+    $queryArr=$request->param();
+    $queryArr['s']=$request->pathinfo();
+    return $queryArr;
 }
 
 /**
@@ -431,8 +413,8 @@ function tpl_get_article($id,$table){
         ->alias('a')
         ->join(config('database.prefix').'document_category b','a.category_id=b.id','LEFT')
         ->join(config('database.prefix')."document_$table c",'a.id=c.id','LEFT')
-        ->where('a.status',1)->where('a.display',1)->where('a.id',$id)->where("a.type='article'")
-        ->field('a.*,b.title as category_title,c.content');
+        ->where('a.status',1)->where('a.id',$id)->where("a.type='$table'")
+        ->field('a.*,b.title as category_title,c.*');
 
     $doc=$docmentModel->find();
 
@@ -461,8 +443,7 @@ function tpl_get_article_list($cid,$row,$orderby,$table='article',$type='son',$w
         ->alias('a')
         ->join(config('database.prefix').'document_category b','a.category_id=b.id','LEFT')
         ->join(config('database.prefix')."document_$table c",'a.id=c.id','RIGHT')
-        ->where("a.type='$table'")
-        ->where('a.status',1)
+        ->where("a.type='$table'")->where('a.status',1)->where('b.status',1)
         ->limit($row)
         ->field('a.*,b.title as category_title,c.*');
 
@@ -615,7 +596,7 @@ function tpl_get_position($dc,$positionList=array()){
         $htmlstr='<a href="/">首页</a>';
         $positionListCount=count($positionList);
         for ($x=$positionListCount-1;$x>=0;$x--){
-            $htmlstr=$htmlstr.'><a href="'.$positionList[$x]['url'].'">'.$positionList[$x]['title'].'</a>';
+            $htmlstr=$htmlstr.'<span>&gt;</span><a href="'.$positionList[$x]['url'].'">'.$positionList[$x]['title'].'</a>';
         }
         return $htmlstr;
     }

@@ -2,7 +2,7 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\InvitationCode as aModel;
+use app\common\model\InvitationCode as aModel;
 use app\Request;
 use app\admin\services\UtilService as Util;
 

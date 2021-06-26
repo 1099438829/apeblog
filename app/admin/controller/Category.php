@@ -2,8 +2,8 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\DocumentCategory as aModel;
-use app\admin\model\DocumentCategoryContent;
+use app\common\model\DocumentCategory as aModel;
+use app\common\model\DocumentCategoryContent;
 use app\Request;
 use app\admin\services\UtilService as Util;
 

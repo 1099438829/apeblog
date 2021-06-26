@@ -2,7 +2,7 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\User as aModel;
+use app\common\model\User as aModel;
 use app\Request;
 use app\admin\services\UtilService as Util;
 use FormBuilder\Factory\Elm;

@@ -50,13 +50,13 @@ class Article extends Base
         //读取列表页模板
         $listTmp='';
         if($dc['type']==0){
-            $listTmp=$dc['template'];
+            $listTmp=$dc['template_lists'];
 			if(!$listTmp){
 	            $this->error('请在栏目分类中，指定当前栏目的列表模板！');
 	        }
         }
         elseif($dc['type']==1){
-            $listTmp=$dc['template'];
+            $listTmp=$dc['template_index'];
 			if(!$listTmp){
 	            $this->error('请在栏目分类中，指定当前栏目的单篇模板！');
 	        }
@@ -114,7 +114,7 @@ class Article extends Base
         //添加当前页面的位置信息
         $article['position']=tpl_get_position($dc);
         //更新浏览次数
-        Db::name('document')->where('id', $article['id'])->inc('view', 1);
+        Db::name('document')->where('id', $article['id'])->inc('view')->update();
         //读取详情页模板
         $detailTmp=$dc['template_detail'];
         if(!$detailTmp){

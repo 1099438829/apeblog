@@ -57,7 +57,7 @@
                 </style>
                 <div class="index-top-postcard-plane">
                     <div class="index-top-postcard-body">
-                        {zz:list pagesize="4" typeid="2"}
+                        {zz:list orderby="create_time desc"}
                         <div class="index-top-postcard-item">
                             <div class="index-top-postcard-main">
                                 <div class="post-item-thumbnail">
@@ -81,7 +81,7 @@
                         </div>
                     </div>
                     <ul class="post-list">
-                        {zz:arclist pagesize="3" typeid="$cid" type="find" orderby="create_time desc"}
+                        {zz:list orderby="create_time desc"}
                         <li class="post-item ">
                             <div class="post-item-container">
                                 <div class="post-item-thumbnail">

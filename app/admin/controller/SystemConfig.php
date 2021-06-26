@@ -2,8 +2,8 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\SystemConfig as cModel;
-use app\admin\model\SystemConfigTab as tModel;
+use app\common\model\SystemConfig as cModel;
+use app\common\model\SystemConfigTab as tModel;
 use app\Request;
 use FormBuilder\Factory\Elm;
 use app\admin\services\FormBuilderService as Form;

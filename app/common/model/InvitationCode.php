@@ -1,21 +1,21 @@
 <?php
 
 
-namespace app\admin\model;
+namespace app\common\model;
 
 
 use app\admin\model\BaseModel;
 
 /**
- * Class DocumentCategoryContent
+ * Class InvitationCode
  * @package app\admin\model\system
  * @author 李玉坤
  * @date 2021-02-15 23:22
  */
-class DocumentCategoryContent extends BaseModel
+class InvitationCode extends BaseModel
 {
     /**
-     * 列表
+     * 邀请码列表
      * @param $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -27,6 +27,8 @@ class DocumentCategoryContent extends BaseModel
     public static function systemPage($where): array
     {
         $model = new self;
+        $model = $model->order('id','desc');
+        if (isset($where['code']) && $where['code'] !== '') $model->where('code', "like", "%$where[code]%");
         $count = self::counts($model);
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'],(int)$where['limit']);
         $data = $model->select();

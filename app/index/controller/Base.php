@@ -16,11 +16,6 @@ use app\admin\model\SystemConfig;
  */
 class Base extends BaseController
 {
-    /**
-     * 控制器中间件
-     * @var array
-     */
-    protected $middleware = [];
     //系统配置
     protected $systemConfig = [];
 
@@ -47,6 +42,8 @@ class Base extends BaseController
         }
         //判断是否开启了伪静态
         if ($systemConfig['web_rewrite']) {
+            $this->request->setRoot('/?s=');
+        } elseif(web_config('WEB_REWRITE')=='1') {
             $this->request->setRoot('/');
         } else {
             $this->request->setRoot('/index.php');

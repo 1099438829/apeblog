@@ -3,8 +3,8 @@
 namespace app\admin\controller;
 
 
-use app\admin\model\Attachment;
-use app\admin\model\AttachmentCategory;
+use app\common\model\Attachment;
+use app\common\model\AttachmentCategory;
 use FormBuilder\Factory\Elm;
 use app\admin\services\FormBuilderService as Form;
 use app\admin\services\storage\QcloudCoService;

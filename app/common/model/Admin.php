@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\admin\model;
+namespace app\common\model;
 
 use app\admin\model\BaseModel;
 use think\facade\Cache;
