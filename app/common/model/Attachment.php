@@ -4,8 +4,8 @@
 namespace app\common\model;
 
 
-use app\admin\model\BaseModel;
-use app\admin\model\SystemConfig;
+use app\common\model\BaseModel;
+use app\common\model\SystemConfig;
 
 /**
  * Class attachment

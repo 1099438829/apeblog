@@ -4,7 +4,7 @@
 namespace app\common\model;
 
 
-use app\admin\model\BaseModel;
+use app\common\model\BaseModel;
 
 /**
  * Class Slides

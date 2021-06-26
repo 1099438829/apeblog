@@ -3,13 +3,10 @@ declare (strict_types = 1);
 
 namespace app\index\controller;
 use app\BaseController;
-use app\index\model\PvLog;
-use app\index\model\UrlLog;
-use app\index\model\UvLog;
-use think\facade\Config;
-use think\facade\Db;
-use think\facade\View;
-use app\admin\model\SystemConfig;
+use app\common\model\PvLog;
+use app\common\model\UrlLog;
+use app\common\model\UvLog;
+use app\common\model\SystemConfig;
 
 /**
  * 控制器基础类

@@ -8,6 +8,22 @@ use think\Model;
 
 trait ModelTrait
 {
+    /**
+     * 错误信息,解决调用无法明确错误的问题
+     * @var mixed
+     */
+    protected $error;
+
+    /**
+     * 获取错误信息
+     * @access public
+     * @return mixed
+     */
+    public function getError()
+    {
+        return $this->error;
+    }
+
     public static function get($where)
     {
         if(!is_array($where)){

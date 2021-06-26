@@ -3,7 +3,7 @@
 
 namespace app\common\model;
 
-use app\admin\model\BaseModel;
+use app\common\model\BaseModel;
 use think\facade\Cache;
 use think\facade\Session;
 
