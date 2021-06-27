@@ -286,7 +286,7 @@ function tpl_get_prenext($get,$cid=false,$none){
  */
 function tpl_get_list($orderby,$pagesize,$cid,$type,$table='article',$where=false,$display=1){
 
-    $docmentListModel=Db::name('document')
+    $documentListModel= (new \app\common\model\Document())
         ->alias('a')
         ->join(config('database.prefix').'document_category b','a.category_id=b.id','LEFT')
         ->join(config('database.prefix')."document_$table c",'a.id=c.id','LEFT')
@@ -294,12 +294,9 @@ function tpl_get_list($orderby,$pagesize,$cid,$type,$table='article',$where=fals
         ->where('a.status',1)
         ->where('b.status',1)
         ->field('a.*,b.title as category_title,c.*');
-
     if($display){
-        $docmentListModel=$docmentListModel->where('a.display',1);
+        $documentListModel=$documentListModel->where('a.display',1);
     }
-
-
 	//判断当前是否搜索页面
     if(request()->action()=='search'){
         $type='search';
@@ -310,58 +307,55 @@ function tpl_get_list($orderby,$pagesize,$cid,$type,$table='article',$where=fals
             $dc=get_document_category($cid);
             $child=$dc['child'];
             if($child){
-                $docmentListModel=$docmentListModel->where('a.category_id','in',"$cid,$child");
+                $documentListModel=$documentListModel->where('a.category_id','in',"$cid,$child");
             }
             else{
-                $docmentListModel=$docmentListModel->where('a.category_id',$cid);
+                $documentListModel=$documentListModel->where('a.category_id',$cid);
             }
             break;
         case 'son':
             //获取栏目下文章
-            $docmentListModel=$docmentListModel->where('a.category_id',$cid);
+            $documentListModel=$documentListModel->where('a.category_id',$cid);
             break;
         case 'search':
             //获取关键字搜索的文章
             $kw=input('kw'); //搜索关键词
             $tid=input('cid');//文章分类Id
             if($kw){
-                $docmentListModel=$docmentListModel->where('a.title','like',"%$kw%");
+                $documentListModel=$documentListModel->where('a.title','like',"%$kw%");
             }
             if($tid){
-                $docmentListModel=$docmentListModel->where('a.category_id',$tid);
+                $documentListModel=$documentListModel->where('a.category_id',$tid);
             }
             break;
         case 'where':
             //根据自定义条件获取文章（where语句）
-            $docmentListModel=$docmentListModel->where($where);
+            $documentListModel=$documentListModel->where($where);
             break;
         case 'tag':
             //读取指定tag的文章
-            $docmentListModel=$docmentListModel->where('a.keywords','like',"%$where%");
+            $documentListModel=$documentListModel->where('a.keywords','like',"%$where%");
             break;
     }
-
-    $docmentListModel=$docmentListModel->order($orderby);
+    $documentListModel=$documentListModel->order($orderby);
     //获取当前请求的请求参数，以确定分页是否要带上这些请求参数
 	$query=request()->query();
 	if($query){
-		$docmentListModel=$docmentListModel->paginate($pagesize,false,['query' => getRouteQuery()]);
+		$documentListModel=$documentListModel->paginate($pagesize,false,['query' => getRouteQuery()]);
 	}
 	else{
-		$docmentListModel=$docmentListModel->paginate($pagesize);
+		$documentListModel=$documentListModel->paginate($pagesize);
 	}
     $lists=[];
-    foreach ($docmentListModel as $key=>$item){
+    foreach ($documentListModel as $key=>$item){
         //生成文章url
         $item['url']=aurl($item);
         $lists[$key]=$item;
     }
-
     $re=[
-        'model'=>$docmentListModel,
+        'model'=>$documentListModel,
         'lists'=>$lists
     ];
-
     return $re;
 }
 
@@ -439,7 +433,7 @@ function tpl_get_article($id,$table){
  */
 function tpl_get_article_list($cid,$row,$orderby,$table='article',$type='son',$where=false,$display=1,$ids=''){
 
-    $docmentListModel=Db::name('document')
+    $documentListModel=Db::name('document')
         ->alias('a')
         ->join(config('database.prefix').'document_category b','a.category_id=b.id','LEFT')
         ->join(config('database.prefix')."document_$table c",'a.id=c.id','RIGHT')
@@ -448,7 +442,7 @@ function tpl_get_article_list($cid,$row,$orderby,$table='article',$type='son',$w
         ->field('a.*,b.title as category_title,c.*');
 
     if($display){
-        $docmentListModel=$docmentListModel->where('a.display',1);
+        $documentListModel=$documentListModel->where('a.display',1);
     }
 
     switch ($type){
@@ -457,33 +451,33 @@ function tpl_get_article_list($cid,$row,$orderby,$table='article',$type='son',$w
             $dc=get_document_category($cid);
             $child=$dc['child'];
             if($child){
-                $docmentListModel=$docmentListModel->where('a.category_id','in',"$cid,$child");
+                $documentListModel=$documentListModel->where('a.category_id','in',"$cid,$child");
             }
             else{
-                $docmentListModel=$docmentListModel->where('a.category_id',$cid);
+                $documentListModel=$documentListModel->where('a.category_id',$cid);
             }
             break;
         case 'son':
             //获取栏目下文章
-            $docmentListModel=$docmentListModel->where('a.category_id',$cid);
+            $documentListModel=$documentListModel->where('a.category_id',$cid);
             break;
         case 'where':
             //根据自定义条件获取文章（where语句）
-            $docmentListModel=$docmentListModel->where($where);
+            $documentListModel=$documentListModel->where($where);
             break;
         case 'ids':
             //读取指定id的文章
-            $docmentListModel=$docmentListModel->where('a.id','in',$ids);
+            $documentListModel=$documentListModel->where('a.id','in',$ids);
             break;
         case 'tag':
             //读取指定tag的文章
-            $docmentListModel=$docmentListModel->where('a.keywords','like',"%$where%");
+            $documentListModel=$documentListModel->where('a.keywords','like',"%$where%");
             break;
     }
 
-    $docmentListModel=$docmentListModel->order($orderby)->select();
+    $documentListModel=$documentListModel->order($orderby)->select();
     $lists=[];
-    foreach ($docmentListModel as $key=>$item){
+    foreach ($documentListModel as $key=>$item){
         //生成文章url
         $item['url']=aurl($item);
         $lists[$key]=$item;

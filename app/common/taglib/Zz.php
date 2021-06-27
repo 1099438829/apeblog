@@ -136,7 +136,6 @@ class Zz extends TagLib{
         $where=isset($tag['where'])?$tag['where']:'';
         $display=isset($tag['display'])?$tag['display']:1;
         $display=$display==1?1:0;
-
         $parse = '<?php ';
         $parse .= '$__FUN__ ='."tpl_get_list(\"$orderby\",$pagesize,$typeid,\"$type\",\"$model\",\"$where\",$display);";
         $parse .= '$__LIST__ =$__FUN__["lists"];$pager = $__FUN__["model"]->render();';

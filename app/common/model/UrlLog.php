@@ -25,7 +25,6 @@ class UrlLog extends BaseModel {
             $dataUrl['pv'] = 1;
             $dataUrl['title'] = $title;
             $dataUrl['date'] = $date_data;
-            $dataUrl['create_time'] = time();
             $this->insertGetId($dataUrl);
         }
     }

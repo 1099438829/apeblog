@@ -43,8 +43,7 @@ class PvLog extends BaseModel {
             $pvData['view'] = 1;
             $pvData['date'] = $date_data;
             $pvData['time'] = $hour;
-            $pvData['create_time'] = time();
-            $this->insertGetId($pvData);
+            $this->save($pvData);
         }
         //uv表
         $uvLogModel=new UvLogModel();
@@ -61,8 +60,7 @@ class PvLog extends BaseModel {
             $uvData['ip'] = $ipData;
             $uvData['time'] = $hour;
             $uvData['date'] = $date_data;
-            $uvData['create_time'] = time();
-            $uvLogModel->insertGetId($uvData);
+            $uvLogModel->save($uvData);
         }
     }
 

@@ -5,7 +5,6 @@ namespace app\index\controller;
 use app\BaseController;
 use app\common\model\PvLog;
 use app\common\model\UrlLog;
-use app\common\model\UvLog;
 use app\common\model\SystemConfig;
 
 /**
@@ -32,15 +31,14 @@ class Base extends BaseController
         }
         //判断后台统计配置是否开启  1 开启
         if ($systemConfig["web_statistics"] == 1) {
-            //增加pv信息
-            (new PvLog())->addLog();
-            //增加uv信息
-            (new UvLog())->addLog();
+             //pv表   zz_pv_log  栏目存在 点击进入页面后
+            $pvLogModel=new PvLog();
+            $pvLogModel->set_view();
         }
         //判断是否开启了伪静态
-        if ($systemConfig['web_rewrite']) {
+        if ($systemConfig['web_rewrite']=='0') {
             $this->request->setRoot('/?s=');
-        } elseif(web_config('WEB_REWRITE')=='1') {
+        } elseif($systemConfig['web_rewrite']=='1') {
             $this->request->setRoot('/');
         } else {
             $this->request->setRoot('/index.php');
@@ -55,6 +53,9 @@ class Base extends BaseController
      */
     protected function urlrecord($title)
     {
-        (new UrlLog())->addLog($title);
+        $urlLogModel=new UrlLog();
+        //获取url
+        $urlInfo = $this->request->url(true);
+        $urlLogModel->set_url($title,$urlInfo);
     }
 }

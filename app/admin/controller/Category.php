@@ -110,10 +110,14 @@ class Category extends AuthController
      */
     public function add($pid ='')
     {
-        $systemConfig = cache('systemConfig');
-        $themeInfoFile = public_path('template'.DIRECTORY_SEPARATOR.$systemConfig['web_template']).'info.json';
-        $themeInfo = json_decode(file_get_contents($themeInfoFile),true);
-        $themeList = $themeInfo['category_list'];
+        $templatePath = system_config('web_template');
+        $themeInfoFile = public_path('template'.DIRECTORY_SEPARATOR.$templatePath).'info.json';
+        if (file_exists($themeInfoFile)){
+            $themeInfo = json_decode(file_get_contents($themeInfoFile),true);
+            $themeList = $themeInfo['category_list'];
+        }else{
+            $themeList = [];
+        }
         $where = Util::postMore([
             'name' => '',
             'status' => '',
@@ -135,10 +139,14 @@ class Category extends AuthController
      */
     public function edit(Request $request)
     {
-        $systemConfig = cache('systemConfig');
-        $themeInfoFile = public_path('template'.DIRECTORY_SEPARATOR.$systemConfig['web_template']).'info.json';
-        $themeInfo = json_decode(file_get_contents($themeInfoFile),true);
-        $themeList = $themeInfo['category_list'];
+        $templatePath = system_config('web_template');
+        $themeInfoFile = public_path('template'.DIRECTORY_SEPARATOR.$templatePath).'info.json';
+        if (file_exists($themeInfoFile)){
+            $themeInfo = json_decode(file_get_contents($themeInfoFile),true);
+            $themeList = $themeInfo['category_list'];
+        }else{
+            $themeList = [];
+        }
         $where = Util::postMore([
             'name' => '',
             'status' => '',
