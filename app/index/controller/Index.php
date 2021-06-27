@@ -22,7 +22,7 @@ class Index extends Base
     public function index()
     {
         //判断后台统计配置是否开启 1 开启
-        if($this->systemConfig["web_statistics"] ==1){
+        if(system_config("web_statistics") ==1){
         //统计url
             $this->urlrecord('网站首页');
         }
