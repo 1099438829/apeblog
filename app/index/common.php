@@ -44,7 +44,7 @@ function get_document_category_list(){
     //缓存文章菜单
     $docuemtCategory=cache('DATA_DOCUMENT_CATEGORY_LIST');
     if($docuemtCategory===null){
-        $docuemtCategoryList=Db::name('document_category')->where('status',1)->order('sort asc')->select();
+        $docuemtCategoryList= \app\common\model\DocumentCategory::where('status',1)->order('sort asc')->select()->toArray();
         //转换，让id作为数组的键
         $docuemtCategory=[];
         foreach ($docuemtCategoryList as $key=>$item){

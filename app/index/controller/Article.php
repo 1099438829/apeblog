@@ -8,6 +8,7 @@
 // +----------------------------------------------------------------------
 
 namespace app\index\controller;
+use app\common\model\Document;
 use think\facade\Db;
 use think\facade\Log;
 
@@ -92,12 +93,13 @@ class Article extends Base
             $this->error('参数错误！');
         }
         //获取该文章
-        $article=Db::name('document')->where('status',1)->where('id',$id)->find();
+        $article = (new Document())->where('status',1)->where('id',$id)->find();
         if(!$article){
             $this->error('文章不存在或已删除！');
         }
+        $article = $article->toArray();
         //根据分类id找分类信息
-        $dc=get_document_category($article['category_id']);
+        $dc = get_document_category($article['category_id']);
         if(!$dc){
             $this->error('栏目不存在或已删除！');
         }
@@ -109,18 +111,16 @@ class Article extends Base
             $this->error('文章不存在或已删除！');
         }
         $article=array_merge($article,$articleExt);
-
-
         //添加当前页面的位置信息
         $article['position']=tpl_get_position($dc);
         //更新浏览次数
-        Db::name('document')->where('id', $article['id'])->inc('view')->update();
+        (new Document())->where('id', $article['id'])->inc('view')->update();
         //读取详情页模板
-        $detailTmp=$dc['template_detail'];
+        $detailTmp=$dc['template'];
         if(!$detailTmp){
 			$this->error('请在栏目分类中，指定当前栏目的详情模板！');
         }
-		if(!is_file(TPL.$detailTmp)){
+		if(!is_file(config('view.view_path').'article/'.$detailTmp)){
 			$this->error('模板文件不存在！');
 		}
         $article['category_title']=$dc['title'];
@@ -129,20 +129,19 @@ class Article extends Base
         $this->assign('id',$id);
         //当前页面所属分类id
         $this->assign('cid',$article['category_id']);
-
         //缓存当前页面栏目分类树ids
-        cache('curr_category_patent_id',$dc['parent_id']?$dc['parent_id'].','.$article['category_id']:$article['category_id']);
-
-
+        cache('curr_category_patent_id',$dc['pid']?$dc['pid'].','.$article['category_id']:$article['category_id']);
         //设置文章的url
         $article['link_str']=aurl($article);
         //判断后台统计配置是否开启 1 开启
-        if($this->systemConfig["web_statistics"] ==1){
+        if(system_config("web_statistics") ==1){
                 //统计url
             $this->urlrecord($article['title']);
         }
-        Log::info('详情页模板路径：'.TPL.$detailTmp);
-        return $this->fetch(TPL.$detailTmp);
+        Log::info('详情页模板路径：'.config('view.view_path').'article/'.$detailTmp);
+        //去除后缀
+        $detailTmp = substr($detailTmp,0,strpos($detailTmp,'.'));
+        return $this->fetch('article/'.$detailTmp);
     }
 
     //自定义页面，可通过参数指定模板文件。完成完全自定义的文件输出。

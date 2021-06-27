@@ -12,33 +12,23 @@ use app\common\model\SystemConfig;
  */
 class Base extends BaseController
 {
-    //系统配置
-    protected $systemConfig = [];
-
     // 初始化
     protected function initialize(){
         parent::initialize();
-        /* 读取数据库中的配置 */
-        $systemConfig = cache('systemConfig');
-        if (empty($systemConfig)){
-            $systemConfig = SystemConfig::getSystemConfigValues();
-            cache('systemConfig',$systemConfig);
-        }
-        $this->systemConfig = $systemConfig;
         //判断是否关闭站点。
-        if(!$systemConfig['web_close']){
+        if(!system_config('web_close')){
             $this->error('网站暂时关闭！','','stop');
         }
         //判断后台统计配置是否开启  1 开启
-        if ($systemConfig["web_statistics"] == 1) {
+        if (system_config("web_statistics") == 1) {
              //pv表   zz_pv_log  栏目存在 点击进入页面后
             $pvLogModel=new PvLog();
             $pvLogModel->set_view();
         }
         //判断是否开启了伪静态
-        if ($systemConfig['web_rewrite']=='0') {
+        if (system_config('web_rewrite')=='0') {
             $this->request->setRoot('/?s=');
-        } elseif($systemConfig['web_rewrite']=='1') {
+        } elseif(system_config('web_rewrite')=='1') {
             $this->request->setRoot('/');
         } else {
             $this->request->setRoot('/index.php');
