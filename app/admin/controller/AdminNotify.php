@@ -2,7 +2,7 @@
 
 namespace app\admin\controller;
 
-use app\admin\services\UtilService as Util;
+use app\admin\service\UtilService as Util;
 use app\common\model\AdminNotify as nModel;
 /**
  * 消息提醒

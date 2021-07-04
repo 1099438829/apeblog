@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\common\utils;
+namespace app\common\service;
 
 /**
  * 宝塔邮件发送

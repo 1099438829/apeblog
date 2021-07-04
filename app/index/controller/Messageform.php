@@ -20,17 +20,19 @@ class Messageform extends Base
     public function addMessageform(){
         if(request()->isPost()){
             $data=$_POST;
-			//验证
-            $messageformValidate=new MessageformValidate();
-            if (!$messageformValidate->check($data)) {
-                $this->error($messageformValidate->getError());
-            }
-            $msgData['name']=isset($data['name'])?$data['name']:'';
-            $msgData['tel']=isset($data['tel'])?$data['tel']:'';
-            $msgData['email']=isset($data['email'])?$data['email']:'';
-            $msgData['content']=$data['content'];
-            $msgData['create_time']=time();
-            $re=Db::name('message_form')->save($msgData);
+        $model=new MessageFormModel();
+        $postData=$this->request->param();
+        //验证器
+        $messageFormValidate=new MessageFormValidate();
+        if (!$messageFormValidate->check($postData)) {
+            $this->error($messageFormValidate->getError());
+        }
+        $msgData['name']=isset($postData['name'])?$postData['name']:'';
+        $msgData['tel']=isset($postData['tel'])?$postData['tel']:'';
+        $msgData['email']=isset($postData['email'])?$postData['email']:'';
+        $msgData['content']=$postData['content'];
+        $msgData['create_time']=time();
+        $re=$model->add($msgData);
             if($re){
                 $this->success('留言成功');
             } else {

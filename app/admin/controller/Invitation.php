@@ -4,7 +4,7 @@ namespace app\admin\controller;
 
 use app\common\model\InvitationCode as aModel;
 use app\Request;
-use app\admin\services\UtilService as Util;
+use app\admin\service\UtilService as Util;
 
 /**
  * Class Invitation

@@ -5,7 +5,7 @@ namespace app\admin\controller;
 use app\common\model\DocumentCategory as aModel;
 use app\common\model\DocumentCategoryContent;
 use app\Request;
-use app\admin\services\UtilService as Util;
+use app\admin\service\UtilService as Util;
 
 /**
  * Class Article

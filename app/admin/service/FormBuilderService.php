@@ -1,14 +1,14 @@
 <?php
 
 
-namespace app\admin\services;
+namespace app\admin\service;
 
 use FormBuilder\Form\IviewForm;
 
 /**
  * 表单构建
  * Class FormBuilderService
- * @package app\admin\services
+ * @package app\admin\service
  */
 class FormBuilderService
 {

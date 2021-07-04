@@ -1,12 +1,12 @@
 <?php
 
 
-namespace app\admin\services;
+namespace app\admin\service;
 
 /**
  * UTIL
  * Class UtilService
- * @package app\admin\services
+ * @package app\admin\service
  */
 class UtilService
 {

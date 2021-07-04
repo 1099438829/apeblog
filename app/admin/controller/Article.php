@@ -6,7 +6,7 @@ use app\common\model\Document as aModel;
 use app\common\model\DocumentCategory as cModel;
 use app\common\model\DocumentArticle;
 use app\Request;
-use app\admin\services\UtilService as Util;
+use app\admin\service\UtilService as Util;
 use think\Exception;
 use think\facade\Log;
 

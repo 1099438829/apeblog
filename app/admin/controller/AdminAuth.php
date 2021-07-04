@@ -5,9 +5,9 @@ namespace app\admin\controller;
 use app\common\model\AdminAuth as aModel;
 use app\Request;
 use FormBuilder\Exception\FormBuilderException;
-use app\admin\services\UtilService as Util;
+use app\admin\service\UtilService as Util;
 use FormBuilder\Factory\Elm;
-use app\admin\services\FormBuilderService as Form;
+use app\admin\service\FormBuilderService as Form;
 use think\facade\Route as Url;
 
 /**

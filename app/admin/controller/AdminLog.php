@@ -4,7 +4,7 @@ namespace app\admin\controller;
 
 use app\common\model\AdminLog as lModel;
 use app\Request;
-use app\admin\services\UtilService as Util;
+use app\admin\service\UtilService as Util;
 
 /**
  * 日志

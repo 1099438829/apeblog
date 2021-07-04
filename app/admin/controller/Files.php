@@ -4,8 +4,8 @@ namespace app\admin\controller;
 
 
 use app\common\model\Attachment;
-use app\admin\services\storage\QcloudCoService;
-use app\admin\services\UtilService as Util;
+use app\admin\service\storage\QcloudCoService;
+use app\admin\service\UtilService as Util;
 use think\exception\ValidateException;
 use think\facade\Filesystem;
 use think\Request;

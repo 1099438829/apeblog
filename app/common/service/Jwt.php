@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\common\utils;
+namespace app\common\service;
 
 use Firebase\JWT\JWT as jt;
 /**

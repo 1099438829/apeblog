@@ -6,8 +6,8 @@ use app\common\model\SystemConfig as cModel;
 use app\common\model\SystemConfigTab as tModel;
 use app\Request;
 use FormBuilder\Factory\Elm;
-use app\admin\services\FormBuilderService as Form;
-use app\admin\services\UtilService as Util;
+use app\admin\service\FormBuilderService as Form;
+use app\admin\service\UtilService as Util;
 
 /**
  * 系统配置

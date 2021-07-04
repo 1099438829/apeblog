@@ -16,19 +16,19 @@ class Base extends BaseController
     protected function initialize(){
         parent::initialize();
         //判断是否关闭站点。
-        if(!system_config('web_close')){
+        if(!web_config('web_close')){
             $this->error('网站暂时关闭！','','stop');
         }
         //判断后台统计配置是否开启  1 开启
-        if (system_config("web_statistics") == 1) {
+        if (web_config("web_statistics") == 1) {
              //pv表   zz_pv_log  栏目存在 点击进入页面后
             $pvLogModel=new PvLog();
             $pvLogModel->set_view();
         }
         //判断是否开启了伪静态
-        if (system_config('web_rewrite')=='0') {
+        if (web_config('web_rewrite')=='0') {
             $this->request->setRoot('/?s=');
-        } elseif(system_config('web_rewrite')=='1') {
+        } elseif(web_config('web_rewrite')=='1') {
             $this->request->setRoot('/');
         } else {
             $this->request->setRoot('/index.php');

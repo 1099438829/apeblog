@@ -4,7 +4,7 @@ namespace app\admin\controller;
 
 use app\common\model\SystemConfig as cModel;
 use app\Request;
-use app\admin\services\UtilService as Util;
+use app\admin\service\UtilService as Util;
 
 /**
  * Class Theme
