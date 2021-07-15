@@ -1,12 +1,4 @@
 <?php
-// +----------------------------------------------------------------------
-// | HulaCWMS 呼啦企业网站管理系统
-// +----------------------------------------------------------------------
-// | Copyright (c) 2019 http://www.zhuopro.com All rights reserved.
-// +----------------------------------------------------------------------
-// | Author: 灼灼文化
-// +----------------------------------------------------------------------
-
 namespace app\index\controller;
 use app\common\validate\Messageform as MessageformValidate;
 use think\facade\Db;

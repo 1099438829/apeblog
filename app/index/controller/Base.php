@@ -5,7 +5,6 @@ namespace app\index\controller;
 use app\BaseController;
 use app\common\model\PvLog;
 use app\common\model\UrlLog;
-use app\common\model\SystemConfig;
 
 /**
  * 控制器基础类
