@@ -151,6 +151,7 @@ abstract class BaseController
         } elseif ($url) {
             $url = (strpos($url, '://') || 0 === strpos($url, '/')) ? $url : $this->app->route->buildUrl($url);
         }
+
         $result = [
             'code' => 0,
             'msg'  => $msg,
@@ -161,7 +162,7 @@ abstract class BaseController
 
         $type = $this->getResponseType();
         if ($type == 'html'){
-            $response = view(config('app.exception_tmpl'), $result);
+            $response = view(config('app.dispatch_success_tmpl'), $result);
         } else if ($type == 'json') {
             $response = json($result);
         }

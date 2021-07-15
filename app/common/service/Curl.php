@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\common\service;
+namespace app\service\service;
 
 /**
  * Class Curl

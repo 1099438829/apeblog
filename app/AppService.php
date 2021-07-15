@@ -3,7 +3,7 @@ declare (strict_types = 1);
 
 namespace app;
 
-use app\common\utils\Json;
+use app\common\service\Json;
 use think\Service;
 
 /**
