@@ -7,6 +7,17 @@
     {include file="public/head" /}
 	<link rel="stylesheet" href="__LIB__/swiper/swiper.min.css">
     <script src="__LIB__/swiper/swiper.min.js"></script>
+	<style>.icon {width: 18px; height: 18px;vertical-align: -3px;fill: currentColor;overflow: hidden;}</style><style>html, body, #app {background-image: url('wp-content/uploads/2021/01/light_wool.png')!important;background-position: center center;background-attachment: fixed;}</style>    <link rel="icon" href="https://www.lovestu.com/wp-content/uploads/2020/07/code.png" type="image/x-icon">
+    <style>
+    :root {
+        --Maincolor: #409EFF !important;
+        --MaincolorHover: #409EFF !important;
+        --fontSelectedColor: #3390ff !important;
+    }
+    #nprogress .bar {
+        background: var(--Maincolor)!important;
+    }
+</style>
 </head>
 <body>
 
@@ -22,7 +33,7 @@
                         <div class="swiper-wrapper">
                             {zz:banner pagesize="5" typeid="$cid"}
                             <div class="swiper-slide">
-                                <a href="{$field['url']}" target="">
+                                <a href="{$field['url']}" target="_blank">
                                     <img src="{$field['image']}" alt="{$field['title']}">
                                 </a>
                             </div>
@@ -76,9 +87,30 @@
                 <div class="post-list-page-plane">
                     <div class="list-plane-title">
                         <div class="index-tab-plane">
-                            <div class="" catid="0">最新文章
-                            </div>
-                        </div>
+                			<div class="index-tab-item index-tab-item-active" catid="0">最新文章</div>
+			                <div class="index-tab-item" catid="6">wordpress</div>
+							<div class="index-tab-item" catid="24">JavaScript</div>
+							<div class="index-tab-item" catid="8">绿化破解</div>            
+						</div>
+			            <script>
+			                var nowid = $('.index-tab-item-active').attr('catid');
+			                $('.index-tab-item').click(function () {
+			                    if (nowid == $(this).attr('catid')) {
+			                        return;
+			                    }
+			                    nowid = $(this).attr('catid');
+			                    paged = 2;
+			                    $('.index-tab-item').removeClass('index-tab-item-active');
+			                    $(this).addClass('index-tab-item-active');
+			                    $('.post-list').html('<div class="post-item post-loading"><i class="far fa-circle-notch fa-spin"></i> 加载中</div>');
+			                    $.post('https://www.lovestu.com/wp-admin/admin-ajax.php', {
+			                        action: 'corepress_load_post_by_tabs',
+			                        cat: $(this).attr('catid')
+			                    }, function (data) {
+			                        $('.post-list').html(data);
+			                         $("img").lazyload({effect: "fadeIn"});                    })
+			                });
+			            </script>
                     </div>
                     <ul class="post-list">
                         {zz:list orderby="create_time desc" type="where"}
@@ -86,7 +118,7 @@
                             <div class="post-item-container">
                                 <div class="post-item-thumbnail">
                                     <a href="{$field['url']}" target="_blank">
-                                        <img src="{:file_cdn($field['cover_path'])}">
+                                        <img src="__IMG__/loading.gif" data-original="{:file_cdn($field['cover_path'])}">
                                     </a>
                                 </div>
                                 <div class="post-item-tags">
@@ -126,7 +158,7 @@
 
                         <script>
                             var paged = 2;
-                            var max_page = 5;
+    						var max_page =6;
                             $('.index-load-more-btn').click(() => {
                                 var btn_cloass = '.index-load-more-btn';
                                 if (paged >= max_page) {
@@ -134,7 +166,7 @@
                                     return;
                                 }
                                 $(btn_cloass).html('<i class="far fa-circle-notch fa-spin"></i> 加载中');
-                                $.post('https://www.zyxpp.com/wp-admin/admin-ajax.php', {
+        						$.post('https://www.lovestu.com/wp-admin/admin-ajax.php', {
                                     action: 'corepress_load_post',
                                     page: paged,
                                     cat: $('.index-tab-item-active').attr('catid')
@@ -146,7 +178,7 @@
                                         $(btn_cloass).html('<i class="far fa-circle-notch"></i> 加载更多');
                                     }
                                     $('.post-list').append(data);
-                                    paged++;
+             						$("img").lazyload({effect: "fadeIn"});            paged++;
                                 })
                             })
 
@@ -350,7 +382,7 @@
                 copylen: 10,
                 addurl: 0
             }
-            document.body.oncopy = function () {
+    reprint.open=1;reprint.msg="复制成功，转载请保留本站链接";    document.body.oncopy = function () {
                 var copytext = window.getSelection().toString();
                 if (copynotmsg == 0) {
                     if (reprint.open == 1) {
@@ -377,7 +409,7 @@
 
                     if (content.length > 100) {
                         addarelt(reprint.msg, 'succ');
-                        JScopyText(content + '\n 【来源：https://www.zyxpp.com:443/，转载请注明】');
+                JScopyText(content + '\n 【来源：https://www.lovestu.com:443/，转载请注明】');
                     } else {
                         addarelt(reprint.msg, 'succ');
 

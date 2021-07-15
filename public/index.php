@@ -13,6 +13,7 @@
 namespace think;
 //检测系统
 
+/*
 if(file_exists("./install/") && !file_exists("./install/install.lock")){
     if($_SERVER['PHP_SELF'] != '/index.php'){
         header("Content-type: text/html; charset=utf-8");
@@ -21,6 +22,7 @@ if(file_exists("./install/") && !file_exists("./install/install.lock")){
     header('Location:/install/index.php');
     exit();
 }
+*/
 
 require __DIR__ . '/../vendor/autoload.php';
 // 执行HTTP应用并响应

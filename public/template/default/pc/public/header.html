@@ -47,7 +47,7 @@
 					<h2>搜索内容</h2>
 					<form class="search-form" action="{:url('/article/search')}" method="get" role="search">
 						<div class="search-form-input-plane">
-							<input type="text" class="search-keyword" name="kw" placeholder="搜索内容" value="">
+							<input type="text" class="search-keyword" name="tag" placeholder="搜索内容" value="">
 						</div>
 						<div>
 							<button type="submit" class="search-submit" value="&#xf002;">搜索</button>
@@ -58,7 +58,7 @@
 			<div class="header-menu">
 				<div class="menu-plane">
 					<nav class="menu-header-plane">
-						<ul id="menu-%e4%b8%8a%e6%96%b9%e5%af%bc%e8%88%aa%e6%a0%8f" class="menu-header-list">
+											<ul id="menu-%e4%b8%8a%e6%96%b9%e5%af%bc%e8%88%aa%e6%a0%8f" class="menu-header-list">
 							{zz:channel type="top"}
 							<li id="menu-item-{$field.id}" class="menu-item {notempty name="field['child']"}menu-item-has-children{/notempty} {:IsActiveNav($cid,$field['id'])?'current-menu-item':''} menu-item-{$field['id']}">
 								{notempty name="field['child']"}
@@ -84,6 +84,10 @@
 					<div class="user-menu-pc-search" onclick="openSearch()" title="搜索">
 						<i class="fal fa-search"></i>
 					</div>
+                    <span class="user-menu-main">
+                 		<a href="login.html"><button class="login-btn-header">登录</button></a>
+
+                    </span>
 				</div>
 			</div>
 		</div>

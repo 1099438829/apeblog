@@ -35,7 +35,7 @@ return [
             // 密码
             'password' => env('redis.password',''),
             // 位置
-            'select'    => 6,
+            'select' => '0',
             // 链接超时
             'timeout'    => 0,
             // 有效期

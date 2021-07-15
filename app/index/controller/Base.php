@@ -26,13 +26,13 @@ class Base extends BaseController
             $pvLogModel->set_view();
         }
         //判断是否开启了伪静态
-        if (web_config('web_rewrite')=='0') {
-            $this->request->setRoot('/?s=');
-        } elseif(web_config('web_rewrite')=='1') {
-            $this->request->setRoot('/');
-        } else {
-            $this->request->setRoot('/index.php');
-        }
+//        if (web_config('web_rewrite')=='0') {
+//            $this->request->setRoot('/?s=');
+//        } elseif(web_config('web_rewrite')=='1') {
+//            $this->request->setRoot('/');
+//        } else {
+//            $this->request->setRoot('/index.php');
+//        }
     }
 
     /**
