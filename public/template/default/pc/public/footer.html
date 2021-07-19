@@ -1,302 +1,127 @@
-<footer class="footer_area">
-	<div class="container">
-		<div class="row footer_inner">
-			<div class="col-lg-5 col-sm-6">
-				<aside class="f_widget ab_widget">
-					<div class="f_title">
-						<h3>关于我们</h3>
-					</div>
-					<p> {:cn_substr(html2text(get_type_content(86)),80)}...</p>
-					<p>{:web_config('WEB_POWERBY')}</p>
-				</aside>
-			</div>
-			<div class="col-lg-5 col-sm-6">
-				<aside class="f_widget news_widget">
-					<div class="f_title">
-						<h3>搜索</h3>
-					</div>
-					<p>您想找什么?</p>
-					<div id="mc_embed_signup">
-						<form action="{:url('Article/search')}" class="subscribe_form relative">
-							<div class="input-group d-flex flex-row">
-								<input  type="text" name="kw" placeholder="请输入关键字" onfocus="this.placeholder = ''" onblur="this.placeholder = '请输入关键字 '"
-								 required="">
-								<button class="btn sub-btn">
-									<span class="lnr lnr-arrow-right"></span>
-								</button>
-							</div>
-						</form>
-					</div>
-				</aside>
-			</div>
-			<div class="col-lg-2">
-				<aside class="f_widget social_widget">
-					<div class="f_title">
-						<h3>联系我们</h3>
-					</div>
-					<p>Let us be social</p>
-					<ul class="list">
-						<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-						<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-						<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-						<li><a href="#"><i class="fa fa-behance"></i></a></li>
-					</ul>
-				</aside>
-			</div>
-		</div>
-	</div>
-</footer>
-
-
-
 <footer>
-	<script type='text/javascript' src='__JS__/wp-embed.min.js' id='wp-embed-js'></script>
-	<script>console.log("\n %c CorePress主题v 4.7 %c by applek | www.lovestu.com", "color:#fff;background:#409EFF;padding:5px 0;", "color:#eee;background:#444;padding:5px 10px;");
+	<script>
+		console.log(
+				"\n %c CorePress主题v 5.1.1 %c by applek | www.lovestu.com",
+				"color:#fff;background:#409EFF;padding:5px 0;",
+				"color:#eee;background:#444;padding:5px 10px;"
+		);
 	</script>
-	<script src="/template/default/fonts/font.js"></script>
+	<script>
+		var _hmt = _hmt || [];
+		!(function () {
+			var e = document.createElement("script");
+			e.src =
+					"https://hm.baidu.com/hm.js?0fab3bd74fd3590e558fc2ad066e72de";
+			var t = document.getElementsByTagName("script")[0];
+			t.parentNode.insertBefore(e, t);
+		})();
+	</script>
+	<script src="t/font_1141258_lpotpn4kdqj.js"></script>
 	<div class="go-top-plane" title="返回顶部">
 		<i class="fa fa-arrow-up" aria-hidden="true"></i>
 	</div>
-	<script>
-		var copynotmsg = 0;
-		var reprint = {
-			open: 0,
-			msg: '',
-			copylenopen: 0,
-			copylen: 10,
-			addurl: 0
-		}
-		document.body.oncopy = function () {
-			var copytext = window.getSelection().toString();
-			if (copynotmsg == 0) {
-				if (reprint.open == 1) {
-					if (reprint.copylenopen == 1) {
-						if (copytext.length > reprint.copylen) {
-							addarelt('复制内容太长，禁止复制', 'erro');
-							JScopyText(' ');
-							copynotmsg = 0;
-						} else {
-							copyaddurl(copytext);
-						}
-					} else {
-						copyaddurl(copytext);
-					}
-				}
-			}
-			copynotmsg = 0;
-		}
-
-		function copyaddurl(content) {
-			if (reprint.addurl == 0) {
-				addarelt(reprint.msg, 'succ');
-			} else {
-
-				if (content.length > 100) {
-					addarelt(reprint.msg, 'succ');
-					JScopyText(content + '\n 【来源：https://www.zyxpp.com:443/oracleebsinvoicetopayment/，转载请注明】');
-				} else {
-					addarelt(reprint.msg, 'succ');
-
-				}
-			}
-		}
-
-		$('.go-top-plane').click(function () {
-			$('html,body').animate({scrollTop: '0px'}, 500);
-		});
-		$(document).scroll(function () {
-			var scroH = $(document).scrollTop();  //滚动高度
-			var viewH = $(window).height();  //可见高度
-			var contentH = $(document).height();  //内容高度
-			if (scroH > 100) {  //距离顶部大于100px时
-				$('.go-top-plane').addClass('go-top-plane-show')
-			} else {
-				$('.go-top-plane').removeClass('go-top-plane-show')
-			}
-			if (contentH - (scroH + viewH) <= 100) {  //距离底部高度小于100px
-			}
-			if (contentH == (scroH + viewH)) {  //滚动条滑到底部啦
-			}
-		});
-
-		function mobile_menuclick(e) {
-			if ($('.menu-item-has-children:hover > .sub-menu').css('visibility') == 'visible') {
-				$('.menu-item-has-children:hover > .sub-menu').addClass('sub-menu-hide');
-				$('.menu-item-has-children:hover > .sub-menu').removeClass('sub-menu-show');
-
-			} else {
-				$('.menu-item-has-children:hover > .sub-menu').removeClass('sub-menu-hide');
-				$('.menu-item-has-children:hover > .sub-menu').addClass('sub-menu-show');
-			}
-			e.stopPropagation();
-		}
-
-		$(document).ready(function () {
-			$(document).click(function (e) {
-				$('.sub-menu').removeClass('sub-menu-hide');
-				$('.sub-menu').removeClass('sub-menu-show');
-				e.stopPropagation();
-			});
-			$('.tag-cloud-link').each(function () {
-				var colors = ['#67C23A', '#E6A23C', '#F56C6C', '#909399', '#CC9966', '#FF6666', '#99CCFF', '#FF9999', '#CC6633'];
-				var backcolor = colors[Math.floor((Math.random() * colors.length))];
-				$(this).css('background-color', backcolor);
-			});
-
-			$('.menu-header-list > .menu-item-has-children');
-			var imgarr = $('.post-content-content').find('img').not('.c-downbtn-icon').not('.post-end-tools');
-
-			for (var i = 0; i < imgarr.length; i++) {
-				var imgurl = $(imgarr[i]).attr('src');
-				var html = imgarr[i].outerHTML;
-				if ($(imgarr[i]).parent()[0].tagName != 'A') {
-					$(imgarr[i]).replaceWith('<a data-fancybox="gallery" data-type="image" href="' + imgurl + '">' + html + '</a>');
-				}
-			}
-			$.fancybox.defaults.buttons = [
-				"close"
-			];
-			$('a[href*=".jpg"],a[href*=".webp"],a[href*=".svg"], a[href*=".jpeg"], a[href*=".png"], a[href*=".gif"], a[href*=".bmp"]').fancybox({});
-
-			var i = 0;
-			//文章目录
-			var html = '';
-			$(".post-content h2,.post-content h3").each(function () {
-				var tagName = $(this)[0].tagName.toLowerCase();
-				console.log();
-				if ($(this).parent().attr('class') == 'zd-plane-content') {
-					return;
-				}
-				$(this).attr('catalog', 'catalog-' + tagName + '-' + i);
-				var clickargs = "go_catalog('catalog-" + tagName + "-" + i + "','" + tagName + "')";
-				html = html + '<p catalogtagName="' + tagName + '" catalog="' + 'catalog-' + tagName + '-' + i + '" class="catalog-item" onclick="' + clickargs + '">' + $(this).html() + '</p>';
-				i++;
-			});
-			$('#post-catalog-list').html(html);
-			set_catalog_position();
-			$('#post-catalog').css('visibility', 'visible');
-			$('#post-catalog').css('opacity', '1');
-			if ($(".post-content h2").length == 0 && $(".post-content h3").length == 0) {
-				$('#post-catalog').css('visibility', 'hidden');
-			}
-
-			$('.corepress-code-pre>code').each(function () {
-				$(this).html(replaceTag($(this).html()));
-			});
-		});
-
-		$(window).resize(function () {
-			set_catalog_position();
-		});
-		$(document).scroll(function () {
-			if ($('#post-catalog').css('visibility') != 'visible') {
-				return;
-			}
-			$(".post-content h2[catalog],.post-content h3[catalog]").each(function () {
-				var el_y = this.getBoundingClientRect().y;
-				if (el_y < 100 && el_y > 0) {
-					var name = $(this).attr('catalog');
-					set_catalog_css();
-					$('p[catalog=' + name + ']').addClass('catalog-hover');
-
-					return;
-				}
-
-			});
-		});
-
-		function close_show(type) {
-			if (type == 1) {
-				$('.post-catalog-main').removeClass('post-catalog-main-hide')
-			} else {
-				$('#post-catalog').addClass('post-catalog-hide')
-			}
-		}
-
-		function set_catalog_css() {
-			$('p[catalog]').removeClass('catalog-hover');
-		}
-
-		function set_catalog_position() {
-
-			if ($('.post-info').length == 0) {
-				return;
-			}
-			var title_x = $('.post-info').offset().left;
-
-			$('#post-catalog').css('left', title_x - 200 + 'px');
-		}
-
-		function go_catalog(catalogname, tagName) {
-			var _scrolltop = $(tagName + '[catalog=' + catalogname + ']').offset().top;
-			$('html, body').animate({
-						scrollTop: _scrolltop - 60
-					}, 500
-			);
-		}
-
-		$(document).ready(
-				function () {
-					NProgress.done();
-				}
-		);
-	</script>
 	<div class="footer-plane">
 		<div class="footer-container">
 			<div class="footer-left">
 				<div>
 					<div class="footer-aside-box">
-						<div class="textwidget"><p>欢迎访问轻烟随风的网站，本网站介绍了一些博主经历的知识应用和分享，专注于企业信息化和一些技术探讨。欢迎各位留言评论和分享。</p>
-						</div>
-					</div>
-					<div class="widget_text footer-aside-box">
-						<div class="textwidget custom-html-widget">
-							<marquee behavior="alternate">欢迎访问，有任何建议或意见，欢迎您留言</marquee>
+						<div class="textwidget">
+							<p>
+								CorePress主题，一款强大的免费的CMS类主题，适合个人博客，极客等，前端无界面框架，加载迅速。
+							</p>
 						</div>
 					</div>
 					<nav class="menu-footer-plane">
-						<ul id="menu-%e5%ba%95%e9%83%a8%e8%8f%9c%e5%8d%95" class="menu-footer-list">
-							<li id="menu-item-76" class="menu-item menu-item-76"><a href="about/index.html">关于本站</a>
+						<ul
+								id="menu-%e5%ba%95%e9%83%a8%e8%8f%9c%e5%8d%95"
+								class="menu-footer-list"
+						>
+							<li id="menu-item-306" class="menu-item menu-item-306">
+								<a href="about.html">关于本站</a>
 							</li>
-							<li id="menu-item-81" class="menu-item menu-item-81"><a
-									href="advise/index.html">留言建议</a></li>
-							<li id="menu-item-557" class="menu-item menu-item-557"><a title="网站地图"
-																					  href="sitemaps/index.html">网站地图</a>
+							<li id="menu-item-307" class="menu-item menu-item-307">
+								<a href="msg.html">留言建议</a>
 							</li>
 						</ul>
 					</nav>
 					<div class="footer-info">
-						                  Copyright © 2020-2021 轻烟随风-我思故我在 <span class="theme-copyright">
-                     <a href="javascript:;">CorePress Theme</a>
-                </span>
-						Powered by WordPress
+						Copyright © 2021 Lovestu
+						<span class="theme-copyright"
+						><a href="corepress.html">CorePress Theme</a> </span
+						>Powered by WordPress
 					</div>
 					<div class="footer-info">
-                            <span class="footer-icp"><img class="ipc-icon"
-														  src="__IMG__/icp.svg" alt=""><a
-									href="javascript:;" target="_blank">苏ICP备2020066938号</a></span><span
-							class="footer-icp"><img class="ipc-icon"
-													src="__IMG__/police.svg"
-													alt=""><a href="javascript:;" target="_blank">32048202000300</a></span>
-					</div>
-					<div>
-						<p>总访问量：<span style="color:white">2246</span> &nbsp;&nbsp; 今日访问量：<span style="color:white">499</span>
-							&nbsp;&nbsp; 您是今天第：<span style="color:white">499</span> 个访问者</p>
+                  <span class="footer-icp"
+				  ><img
+						  class="ipc-icon"
+						  src="__IMG__/icp.svg"
+						  alt=""
+				  /><a href="javascript:;" target="_blank"
+				  >蜀ICP备16029882号-1</a
+				  ></span
+				  ><span class="footer-icp"
+					><img
+							class="ipc-icon"
+							src="__IMG__/police.svg"
+							alt=""
+					/><a href="javascript:;" target="_blank"
+					>蜀ICP备16029882号</a
+					></span
+					>
 					</div>
 				</div>
 			</div>
-
 			<div class="footer-details footer-right">
 				<div>
-					<div class="footer-aside-box"><h2 class="footer-widget-title">博主QQ</h2>
-						<img width="100" height="100" src="/uploads/article/2020/12/qq123937345-150x150.png"
-							 class="image wp-image-383  attachment-100x100 size-100x100" alt="" loading="lazy"
-							 style="max-width: 100%; height: auto;" title="博主QQ"></div>
+					<div class="footer-aside-box">
+						<img
+								width="200"
+								height="50"
+								src="wp-content/uploads/2020/07/logo-300x75.png"
+								class="image wp-image-352 attachment-200x50 size-200x50"
+								alt=""
+								loading="lazy"
+								style="max-width: 100%; height: auto"
+						/>
+					</div>
 				</div>
 			</div>
 			<div>
+				<script type="text/javascript" id="index_js-js-extra">
+					var set = {
+						is_single: "",
+						is_page: "",
+						is_home: "1",
+						ajaxurl: "https://www.lovestu.com/wp-admin/admin-ajax.php",
+						reprint: {
+							msg: "复制成功，转载请保留本站链接",
+							copylenopen: 0,
+							copylen: 0,
+							addurl: 0,
+							siteurl: "https://www.lovestu.com:443/",
+							open: 1,
+						},
+						module: { imglightbox: 1, imglazyload: 1 },
+						theme: { loadbar: 1 },
+						index: {
+							linksicon: 1,
+							chromeiconurl:
+									"https://www.lovestu.com/wp-content/themes/CorePress/static/img/chrome.png",
+						},
+						is_page_template: "",
+					};
+				</script>
+				<script
+						type="text/javascript"
+						src="wp-content/themes/CorePress/static/js/index.js"
+						id="index_js-js"
+				></script>
+				<script
+						type="text/javascript"
+						src="wp-includes/js/wp-embed.min.js"
+						id="wp-embed-js"
+				></script>
 			</div>
 		</div>
 	</div>
-
 </footer>
