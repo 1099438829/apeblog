@@ -10,12 +10,12 @@ use FormBuilder\Factory\Elm;
 use think\facade\Route as Url;
 
 /**
- * Class Advert
+ * Class Poster
  * @package app\admin\controller
  * @author 李玉坤
  * @date 2021-07-26 17:53
  */
-class Advert extends AuthController
+class Poster extends AuthController
 {
     /**
      * 构造方法 初始化一些参数

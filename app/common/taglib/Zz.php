@@ -14,6 +14,7 @@ class Zz extends TagLib{
         'prenext'=> ['attr' => 'get,cid,void,none', 'close' => 1],
         'flink'=> ['attr' => 'type,row,void', 'close' => 1],
         'banner'=> ['attr' => 'type,row,void', 'close' => 1],
+        'advert'=> ['attr' => 'type,row,void', 'close' => 1],
         'sql'=> ['attr' => 'sql', 'close' => 1],
         'article'=> ['attr' => 'id,void,model', 'close' => 1],
         'tags'=> ['attr' => 'tags,void', 'close' => 1],
@@ -179,7 +180,7 @@ class Zz extends TagLib{
     }
 
     /**
-     * banner
+     * poster
      */
     public function tagBanner($tag,$content)
     {
@@ -196,6 +197,31 @@ class Zz extends TagLib{
         $parse .= '{/volist}';
         return $parse;
     }
+
+    /**
+     * tagAdvert
+     * @param $tag
+     * @param $content
+     * @return string
+     * @author 李玉坤
+     * @date 2021-07-26 23:22
+     */
+    public function tagAdvert($tag,$content)
+    {
+        $type=isset($tag['type'])?$tag['type']:'text';
+        $type=$type=='text'?0:1;
+        $row=isset($tag['row'])?$tag['row']:100;
+        $void=isset($tag['void'])?$tag['void']:'field';
+
+        $parse = '<?php ';
+        $parse .= '$__LIST__ ='."tpl_get_advert($type,$row);";
+        $parse .= ' ?>';
+        $parse .= '{volist name="__LIST__" id="'.$void.'"}';
+        $parse .= $content;
+        $parse .= '{/volist}';
+        return $parse;
+    }
+
 
 
     /**

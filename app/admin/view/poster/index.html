@@ -37,7 +37,7 @@
             <div class="card">
                 <div class="card-toolbar clearfix">
                     <div id="toolbar" class="toolbar-btn-action">
-                        <button id="btn_add" type="button" class="btn btn-primary m-r-5" onclick="iframe.createIframe('添加广告','/admin/advert/add')">
+                        <button id="btn_add" type="button" class="btn btn-primary m-r-5" onclick="iframe.createIframe('添加广告','/admin/poster/add')">
                             <span class="mdi mdi-plus" aria-hidden="true"></span>新增
                         </button>
                         <a class="btn btn-warning" href="#!" onclick="delSelect()"><i class="mdi mdi-window-close"></i> 删除</a>
@@ -54,7 +54,7 @@
 <script type="text/javascript">
     $('#tb_departments').bootstrapTable({
         classes: 'table table-bordered table-hover table-striped',
-        url: '/admin/advert/Lst',
+        url: '/admin/poster/Lst',
         method: 'post',
         dataType : 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
         uniqueId: 'id',
@@ -108,7 +108,7 @@
             formatter:operateFormatter,
             events: {
                 'click .btn-edit': function (event, value, row, index) {
-                    iframe.createIframe('修改广告','/admin/advert/edit?id='+row.id)
+                    iframe.createIframe('修改广告','/admin/poster/edit?id='+row.id)
                 },
                 'click .btn-del': function (event, value, row, index) {
                     $.alert({
@@ -119,7 +119,7 @@
                                 text: '确认',
                                 btnClass: 'btn-primary',
                                 action: function(){
-                                    $.post(url="/admin/advert/del",data={"id":row.id},function (res) {
+                                    $.post(url="/admin/poster/del",data={"id":row.id},function (res) {
                                         if (res.status == 200) {parent.lightyear.notify('删除成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');$("#tb_departments").bootstrapTable('refresh');}
                                         else parent.lightyear.notify('删除失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                                     });
@@ -167,7 +167,7 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/advert/del",data={id:id},function (res) {
+                        $.post("/admin/poster/del",data={id:id},function (res) {
                             if (res.status == 200 || res.code == 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                             location.reload();
@@ -200,7 +200,7 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/advert/del",data={id:checkID},function (res) {
+                        $.post("/admin/poster/del",data={id:checkID},function (res) {
                             if (res.status == 200 || res.code == 200) { lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                         })

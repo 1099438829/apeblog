@@ -518,7 +518,7 @@ function tpl_get_friend_link($type,$row){
 }
 
 /**
- * 模板-banner
+ * 模板-poster
  */
 function tpl_get_banner($type,$row){
     $bannerList=cache('DATA_BANNER');
@@ -537,6 +537,36 @@ function tpl_get_banner($type,$row){
     }
     return $bannerListTemp;
 }
+
+/**
+ * 广告
+ * @param $type
+ * @param $row
+ * @return array|mixed|object|\think\App|\think\Collection|Db[]
+ * @throws \think\db\exception\DataNotFoundException
+ * @throws \think\db\exception\DbException
+ * @throws \think\db\exception\ModelNotFoundException
+ * @author 李玉坤
+ * @date 2021-07-26 23:24
+ */
+function tpl_get_advert($type,$row){
+    $advertList=cache('DATA_BANNER');
+    if($advertList===null){
+        $advertList=Db::name('advert')->where('status',1)->order('sort asc')->limit($row)->select();
+        cache('DATA_ADVERT',$advertList);
+    }
+    if($type===0){
+        return $advertList;
+    }
+    $advertListTemp=[];
+    foreach ($advertList as $key=>$item){
+        if($item['image']){
+            array_push($advertListTemp,$item);
+        }
+    }
+    return $advertListTemp;
+}
+
 
 if (!function_exists('web_config'))
 {
