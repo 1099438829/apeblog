@@ -3,16 +3,13 @@
 
 namespace app\common\model;
 
-
-use app\common\model\BaseModel;
-
 /**
- * Class Slides
- * @package app\admin\model\system
+ * Class Advert
+ * @package app\common\model
  * @author 李玉坤
- * @date 2021-02-15 23:22
+ * @date 2021-07-26 18:38
  */
-class Slides extends BaseModel
+class Advert extends BaseModel
 {
     /**
      * 列表

@@ -3,9 +3,6 @@
 
 namespace app\common\model;
 
-
-use app\admin\model\BaseModel;
-
 /**
  * Class Document
  * @package app\admin\model\system

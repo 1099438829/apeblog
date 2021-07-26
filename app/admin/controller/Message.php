@@ -2,7 +2,7 @@
 
 namespace app\admin\controller;
 
-use   app\admin\model\MessageForm as aModel;
+use app\common\model\MessageForm as aModel;
 use app\Request;
 use app\admin\service\UtilService as Util;
 

@@ -24,7 +24,7 @@ class Invitation extends AuthController
         $this->model = new aModel();
     }
     /**
-     * 活动列表
+     * 邀请码列表
      * @return string
      * @throws \Exception
      * @author 李玉坤
