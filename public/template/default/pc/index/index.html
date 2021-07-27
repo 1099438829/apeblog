@@ -7,20 +7,35 @@
     {include file="public/head" /}
 	<link rel="stylesheet" href="__LIB__/swiper/swiper.min.css">
     <script src="__LIB__/swiper/swiper.min.js"></script>
-	<style>.icon {width: 18px; height: 18px;vertical-align: -3px;fill: currentColor;overflow: hidden;}</style><style>html, body, #app {background-image: url('wp-content/uploads/2021/01/light_wool.png')!important;background-position: center center;background-attachment: fixed;}</style>    <link rel="icon" href="https://www.lovestu.com/wp-content/uploads/2020/07/code.png" type="image/x-icon">
+	<style>
+        .icon {
+            width: 18px;
+            height: 18px;
+            vertical-align: -3px;
+            fill: currentColor;
+            overflow: hidden;
+        }
+    </style>
     <style>
-    :root {
-        --Maincolor: #409EFF !important;
-        --MaincolorHover: #409EFF !important;
-        --fontSelectedColor: #3390ff !important;
-    }
-    #nprogress .bar {
-        background: var(--Maincolor)!important;
-    }
-</style>
+        html, body, #app {
+            background-image: url('{:web_config("logo")}')!important;
+            background-position: center center;
+            background-attachment: fixed;
+        }
+    </style>
+    <link rel="icon" href="{:web_config("logo")}" type="image/x-icon">
+    <style>
+        :root {
+            --Maincolor: #409EFF !important;
+            --MaincolorHover: #409EFF !important;
+            --fontSelectedColor: #3390ff !important;
+        }
+        #nprogress .bar {
+            background: var(--Maincolor)!important;
+        }
+    </style>
 </head>
 <body>
-
 <script>NProgress.start();</script>
 <div id="app">
     {include file="public/header" /}
@@ -83,32 +98,33 @@
                         {/zz:list}
                     </div>
                 </div>
-
                 <div class="post-list-page-plane">
                     <div class="list-plane-title">
                         <div class="index-tab-plane">
-                			<div class="index-tab-item index-tab-item-active" catid="0">最新文章</div>
-			                <div class="index-tab-item" catid="6">wordpress</div>
-						</div>
-			            <script>
-			                var nowid = $('.index-tab-item-active').attr('catid');
-			                $('.index-tab-item').click(function () {
-			                    if (nowid == $(this).attr('catid')) {
-			                        return;
-			                    }
-			                    nowid = $(this).attr('catid');
-			                    paged = 2;
-			                    $('.index-tab-item').removeClass('index-tab-item-active');
-			                    $(this).addClass('index-tab-item-active');
-			                    $('.post-list').html('<div class="post-item post-loading"><i class="far fa-circle-notch fa-spin"></i> 加载中</div>');
-			                    $.post('https://www.lovestu.com/wp-admin/admin-ajax.php', {
-			                        action: 'corepress_load_post_by_tabs',
-			                        cat: $(this).attr('catid')
-			                    }, function (data) {
-			                        $('.post-list').html(data);
-			                         $("img").lazyload({effect: "fadeIn"});                    })
-			                });
-			            </script>
+                        <div class="index-tab-item index-tab-item-active" catid="0">最新文章</div>
+                        <div class="index-tab-item" catid="6">wordpress</div>
+                            <div class="index-tab-item" catid="24">JavaScript</div>
+                            <div class="index-tab-item" catid="8">绿化破解</div>
+                        </div>
+                        <script>
+                            var nowid = $('.index-tab-item-active').attr('catid');
+                            $('.index-tab-item').click(function () {
+                                if (nowid == $(this).attr('catid')) {
+                                    return;
+                                }
+                                nowid = $(this).attr('catid');
+                                paged = 2;
+                                $('.index-tab-item').removeClass('index-tab-item-active');
+                                $(this).addClass('index-tab-item-active');
+                                $('.post-list').html('<div class="post-item post-loading"><i class="far fa-circle-notch fa-spin"></i> 加载中</div>');
+                                $.post('https://www.lovestu.com/wp-admin/admin-ajax.php', {
+                                    action: 'corepress_load_post_by_tabs',
+                                    cat: $(this).attr('catid')
+                                }, function (data) {
+                                    $('.post-list').html(data);
+                                     $("img").lazyload({effect: "fadeIn"});                    })
+                            });
+                        </script>
                     </div>
                     <ul class="post-list">
                         {zz:list orderby="create_time desc" type="where"}
@@ -158,7 +174,7 @@
     						var max_page =6;
                             $('.index-load-more-btn').click(() => {
                                 var btn_cloass = '.index-load-more-btn';
-                                if (paged >= max_page) {
+        						if (paged > max_page) {
                                     $(btn_cloass).text('到底啦');
                                     return;
                                 }
@@ -182,102 +198,54 @@
                         </script>
                     </div>
                 </div>
-
             </div>
             <div class="sidebar">
                 <div class="sidebar-box-list">
                     <div class="aside-box">
+                        <form class="search-form" action="https://www.lovestu.com" method="get" role="search">
+                            <div class="search-form-input-plane">
+                                <input type="text" class="search-keyword" name="s" placeholder="搜索内容" value="">
+                            </div>
+                            <div>
+                                <button type="submit" class="search-submit" value="&#xf002;">搜索</button>
+                              </div>
+                        </form>
+                    </div>
+                    <div class="aside-box"><h2 class="widget-title">句子</h2>
+                        <div class="widget-sentence-placeholder widget-sentence-placeholder-jzmk">
+                            <ul>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                        </div>
+                        <script>
+                            $(document).ready(function () {
+                                widget_sentence_load('djt', '.widget-sentence-placeholder-jzmk');
+                            });
+                        </script>
+                    </div>
+                    <div class="aside-box">
                         <h2 class="widget-title">热门阅读</h2>
+                        {zz:arclist orderby="view desc"}
                         <div class="hot-post-widget-item">
                             <div>
-                                <span class="hot-post-widget-item-num"> 1 </span>
+                                <span class="hot-post-widget-item-num">{$field['create_time']}</span>
                                 <span class="hot-post-widget-item-title">
-                      <a href="corepress.html"> CorePress主题 v5.1.1 </a>
-                    </span>
+                                    <a href="corepress.html">{:cn_substr($field['title'],15)}...</a>
+                                </span>
                             </div>
                             <div class="hot-post-widget-item-meta">
-                                <div>2021-07-12</div>
+                                <div>{$field['create_time']}</div>
                                 <div>
-                                    <a href="category/php/wordpress.html"> wordpress </a>
+                                    <a href="category/php/wordpress.html">{:cn_substr($field['title'],15)}...</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="hot-post-widget-item">
-                            <div>
-                                <span class="hot-post-widget-item-num"> 2 </span>
-                                <span class="hot-post-widget-item-title">
-                      <a href="odsz01.html"> OD修改软件文本字符串内容 </a>
-                    </span>
-                            </div>
-                            <div class="hot-post-widget-item-meta">
-                                <div>2019-04-29</div>
-                                <div>
-                                    <a href="category/asm/绿化破解.html"> 绿化破解 </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hot-post-widget-item">
-                            <div>
-                                <span class="hot-post-widget-item-num"> 3 </span>
-                                <span class="hot-post-widget-item-title">
-                      <a href="corepresswzzs.html">
-                        CorePress主题优秀网站展示
-                      </a>
-                    </span>
-                            </div>
-                            <div class="hot-post-widget-item-meta">
-                                <div>2021-03-20</div>
-                                <div>
-                                    <a href="category/php/wordpress.html"> wordpress </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hot-post-widget-item">
-                            <div>
-                                <span class="hot-post-widget-item-num"> 4 </span>
-                                <span class="hot-post-widget-item-title">
-                      <a href="uniappzdy.html"> uni-app 自定义组件 </a>
-                    </span>
-                            </div>
-                            <div class="hot-post-widget-item-meta">
-                                <div>2019-06-08</div>
-                                <div>
-                                    <a href="category/uniapp.html"> UniApp </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hot-post-widget-item">
-                            <div>
-                                <span class="hot-post-widget-item-num"> 5 </span>
-                                <span class="hot-post-widget-item-title">
-                      <a href="ollydbg.html"> OllyDbg官方版和增强版 </a>
-                    </span>
-                            </div>
-                            <div class="hot-post-widget-item-meta">
-                                <div>2019-04-21</div>
-                                <div>
-                                    <a href="category/soft.html"> 软件资源 </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hot-post-widget-item">
-                            <div>
-                                <span class="hot-post-widget-item-num"> 6 </span>
-                                <span class="hot-post-widget-item-title">
-                      <a href="layuigettext.html"> layui 获取select值和文本 </a>
-                    </span>
-                            </div>
-                            <div class="hot-post-widget-item-meta">
-                                <div>2019-08-08</div>
-                                <div>
-                                    <a href="category/front.html"> 前端 </a>
-                                </div>
-                            </div>
-                        </div>
+                        {/zz:arclist}
                     </div>
                     <div class="aside-box">
                         <h2 class="widget-title">标签云</h2>
-                        <script src="wp-content/themes/CorePress/static/js/TagCloud.js"></script>
+                        <script src="__JS__/TagCloud.js"></script>
                         <div class="corepress-tag-cloud">
                             <div class="corepress-tag-container-tag1"></div>
                         </div>
@@ -520,8 +488,6 @@
                         </a>
                     </div>
                 </div>
-            </div>
-
         </div>
         <div class="frinds-links">
             <div class="list-plane-title">
