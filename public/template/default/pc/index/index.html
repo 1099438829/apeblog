@@ -226,18 +226,18 @@
                     </div>
                     <div class="aside-box">
                         <h2 class="widget-title">热门阅读</h2>
-                        {zz:arclist orderby="view desc"}
+                        {zz:arclist orderby="view desc" type="where"}
                         <div class="hot-post-widget-item">
                             <div>
-                                <span class="hot-post-widget-item-num">{$field['create_time']}</span>
+                                <span class="hot-post-widget-item-num">{$i}</span>
                                 <span class="hot-post-widget-item-title">
-                                    <a href="corepress.html">{:cn_substr($field['title'],15)}...</a>
+                                    <a href="{$field['url']}">{:cn_substr($field['title'],15)}</a>
                                 </span>
                             </div>
                             <div class="hot-post-widget-item-meta">
                                 <div>{$field['create_time']}</div>
                                 <div>
-                                    <a href="category/php/wordpress.html">{:cn_substr($field['title'],15)}...</a>
+                                    <a href="#">{:cn_substr($field['category_title'],5)}</a>
                                 </div>
                             </div>
                         </div>
@@ -488,6 +488,7 @@
                         </a>
                     </div>
                 </div>
+            </div>
         </div>
         <div class="frinds-links">
             <div class="list-plane-title">

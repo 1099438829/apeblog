@@ -133,7 +133,7 @@ class Zz extends TagLib{
         $parse .= '$__FUN__ ='."tpl_get_list(\"$orderby\",$pagesize,$typeid,\"$type\",\"$model\",\"$where\",$display);";
         $parse .= '$__LIST__ =$__FUN__["lists"];$pager = $__FUN__["model"]->render();';
         $parse .= ' ?>';
-        $parse .= '{volist name="__LIST__" id="'.$void.'"}';
+        $parse .= '{volist name="__LIST__" id="'.$void.'" key="i"}';
         $parse .= $content;
         $parse .= '{/volist}';
         return $parse;
