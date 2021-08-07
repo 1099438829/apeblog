@@ -33,17 +33,19 @@
                       </a>
                     </div>
 <!--                    tag链接等待完善-->
+                    {notempty name="$field['tags']"}
                     <div class="post-item-tags ">
                       <span class="cat-item">
-                          <a target="_blank" href="{$field['url']}">{:cn_substr($field['title'],15)}...</a>
+                          <a target="_blank" href="{$field['url']}">{:cn_substr($field['tags'],15)}</a>
                       </span>
                     </div>
+                    {/notempty}
                     <div class="post-item-main">
                       <h2>
-                        <a target="_blank" href="{$field['url']}">{:cn_substr($field['title'],15)}...</a>
+                        <a target="_blank" href="{$field['url']}" style="white-space: nowrap;text-overflow: ellipsis;">{:cn_substr($field['title'],20)}</a>
                       </h2>
                       <div class="post-item-content">
-                        <a target="_blank" href="{$field['url']}">{:cn_substr($field['content'],15)}...</a>
+                        <a target="_blank" href="{$field['url']}" style="white-space: nowrap;text-overflow: ellipsis;">{:cn_substr($field['content'],40)}</a>
                       </div>
                       <div class="post-item-info">
                         <div class="post-item-meta">
