@@ -7,22 +7,6 @@
     {include file="public/head" /}
 	<link rel="stylesheet" href="__LIB__/swiper/swiper.min.css">
     <script src="__LIB__/swiper/swiper.min.js"></script>
-	<style>
-        .icon {
-            width: 18px;
-            height: 18px;
-            vertical-align: -3px;
-            fill: currentColor;
-            overflow: hidden;
-        }
-    </style>
-    <style>
-        html, body, #app {
-            background-image: url('{:web_config("logo")}')!important;
-            background-position: center center;
-            background-attachment: fixed;
-        }
-    </style>
     <link rel="icon" href="{:web_config("logo")}" type="image/x-icon">
     <style>
         :root {
@@ -34,6 +18,7 @@
             background: var(--Maincolor)!important;
         }
     </style>
+    <script src="__JS__/jquery.lazyload.min.js"></script>
 </head>
 <body>
 <script>NProgress.start();</script>
@@ -132,7 +117,7 @@
                             <div class="post-item-container">
                                 <div class="post-item-thumbnail">
                                     <a href="{$field['url']}" target="_blank">
-                                        <img src="__IMG__/loading.gif" data-original="{:file_cdn($field['cover_path'])}">
+                                        <img src="__IMG__/loading.gif" data-original="{:file_cdn($field['cover_path'])}"/>
                                     </a>
                                 </div>
                                 <div class="post-item-tags">
@@ -151,14 +136,15 @@
                                         <div class="post-item-meta">
                                             <div class="post-item-meta-item">
                                                 <span class="post-item-meta-author">
-                                                   <img src="{$field['author']}" width="24" height="24"
-                                                        alt="头像"
-                                                        class="avatar avatar-24 wp-user-avatar wp-user-avatar-24 photo avatar-default post-item-avatar">{$field['author']}</span>
+<!--                                                   <img src="{$field['avatar']}" width="24" height="24" alt="头像" class="avatar avatar-24 wp-user-avatar wp-user-avatar-24 photo avatar-default post-item-avatar">-->
+                                                    {$field['author']}
+                                                </span>
                                                 <span class="post-item-time">{$field['create_time']}</span>
                                             </div>
                                             <div class="item-post-meta-other">
-                                                <span><i class="fas fa-eye" aria-hidden="true"></i>{$field['create_time']}</span> <span><i
-                                                    class="fas fa-comment-alt-lines"></i>{$field['create_time']}</span>
+                                                <span><i class="fas fa-eye" aria-hidden="true"></i>{$field['view']}</span>
+<!--                                                评论数-->
+<!--                                                <span><i class="fas fa-comment-alt-lines"></i>{$field['view']}</span>-->
                                             </div>
                                         </div>
                                     </div>
