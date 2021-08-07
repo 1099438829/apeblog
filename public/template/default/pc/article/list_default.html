@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <title>行业字典管理 - {:web_config("title")}</title>
-    <title>轻烟随风的博客blog</title>
-    <meta name="keywords" content="轻烟随风,blog,博客,oracle,pl/sql,erp,数据库,sql server,EBS,ERP系统,甲骨文,R12">
-    <meta name="description" content="oracle EBS等ERP系统上线，实施，维护过程中的心得，常见的开发工具的使用">
+    <title>{$zzField['title']} - {:web_config("title")}</title>
+    <meta name="keywords" content="{$zzField['keywords']}">
+    <meta name="description" content="{$zzField['description']}">
 
     {include file="public/head" /}
 	<link rel="stylesheet" href="__LIB__/nprogress/nprogress.min.css">
@@ -42,28 +41,25 @@
                 <div class="post-content-body">
                     <div class="crumbs-plane-body">
                         <div class="crumbs-plane">
-                            <span class="corepress-crumbs-ul"><li><a href="../index.html"><i class="fas fa-home"></i> 主页</a></li><li><a
-                                    href="../category/oracle-finance/index.html"
-                                    rel="category tag">Oracle-Finance-财务</a></li></span></div>
+                            <span class="corepress-crumbs-ul">{$zzField['position']|raw}</span></div>
                     </div>
 
                     <div class="post-content">
-                        <h1 class="post-title">
-                            oracle-EBS-AP应付采购单匹配付款经历主要表(多图) </h1>
+                        <h1 class="post-title">{$zzField['title']}</h1>
                         <div class="post-info">
                             <div class="post-info-left">
                                 <a class="nickname url fn j-user-card" data-user="1"
-                                   href="../author/james/index.html"><i class="fa fa-user" aria-hidden="true"></i>轻烟随风
+                                   href="../author/james/index.html"><i class="fa fa-user" aria-hidden="true"></i>{$zzField['author']}
                                 </a>
                                 <span class="dot">•</span>
-                                <time class="entry-date published" datetime="2020-12-29T16:31:24+08:00>" pubdate=""><i
+                                <time class="entry-date published" datetime="{$zzField['create_time']}" pubdate=""><i
                                         class="far fa-clock"></i>
-                                    2020年12月29日 pm4:31
+                                    {$zzField['create_time']}
                                 </time>
                                 <span class="dot">•</span><i class="fas fa-folder"></i>
-                                <a href="../category/oracle-finance/index.html" rel="category tag">Oracle-Finance-财务</a>
+                                <a href="{:url('article/lists')}?category_id={$zzField['category_id']}" rel="category tag"> {$zzField['category_title']}</a>
                                 <span class="dot">•</span>
-                                <span><i class="fa fa-eye" aria-hidden="true"></i>103 阅读</span>
+                                <span><i class="fa fa-eye" aria-hidden="true"></i>{$zzField['view']} 阅读</span>
                             </div>
                             <div class="post-info-right">
                                 <span title="关闭或显示侧边栏" class="post-info-switch-sidebar post-info-switch-sidebar-show"><i
@@ -72,48 +68,7 @@
                         </div>
                         <div class="post-content-post">
                             <div class="post-content-content">
-                                <h1>oracle-EBS-AP应付采购单匹配付款经历主要表(多图)</h1>
-                                <p>本章接着之前的一篇采购订单：</p>
-                                <p>&nbsp;</p>
-                                <p>一、创建AP发票</p>
-                                <div id="attachment_335" style="width: 826px" class="wp-caption alignnone"><img
-                                        aria-describedby="caption-attachment-335" loading="lazy"
-                                        src="../wp-content/uploads/2020/12/oracle-ap-001-e1609251106356.png"
-                                        alt="oracle-ap-EBS 发票" width="816" height="430" class=" wp-image-335">
-                                    <p id="caption-attachment-335" class="wp-caption-text">oracle-ap-EBS 发票</p></div>
-                                <p><strong>AP_BATCHES_ALL</strong> <br>--批名表 select * from AP_BATCHES_ALL where
-                                    batch_id=160183<br><strong>ap_invoices_all</strong> <br>--发票主表  select * from
-                                    ap_invoices_all where INVOICE_NUM ='28-12-2020'<br>--batch_id = AP_BATCHES_ALL
-                                    .batch_id<br><br></p>
-                                <p>二、匹配采购订单</p>
-                                <p><img loading="lazy" src="../wp-content/uploads/2020/12/oracle-ap-002.png" alt=""
-                                        width="1006" height="602" class="alignnone size-full wp-image-354"></p>
-                                <div id="attachment_358" style="width: 998px" class="wp-caption alignnone"><img
-                                        aria-describedby="caption-attachment-358" loading="lazy"
-                                        src="../wp-content/uploads/2020/12/oracle-ap-003.png" alt="oracle-ap"
-                                        width="988" height="562" class="size-full wp-image-358">
-                                    <p id="caption-attachment-358" class="wp-caption-text">oracle-ap</p></div>
-                                <p>
-                                    <strong>ap_invoice_lines_all <br></strong>--发票明细行<strong><br></strong><strong></strong><strong></strong>--select
-                                    * from ap_invoice_lines_all where invoice_id in (5361405)<br>--invoice_id  =
-                                    <strong>ap_invoices_all</strong> .invoice_id  <br><strong>ap_invoice_distributions_all</strong> 
-                                       <br>--发票分配<br>--select * from ap_invoice_distributions_all AID where
-                                    AID.invoice_id in ( 5361405)<br>--MATCH_STATUS_FLAG：A  Validated (it used to be
-                                    called Approved)   N or NULL - Never validated  T - Tested but not validated</p>
-                                <p>三、付款</p>
-                                <div id="attachment_362" style="width: 1002px" class="wp-caption alignnone"><img
-                                        aria-describedby="caption-attachment-362" loading="lazy"
-                                        src="../wp-content/uploads/2020/12/oracle-ap-004.png" alt="oracle-ap ebs"
-                                        width="992" height="657" class="size-full wp-image-362">
-                                    <p id="caption-attachment-362" class="wp-caption-text">oracle-ap ebs 发票付款</p></div>
-                                <p><strong>AP_PAYMENT_SCHEDULES_ALL  </strong><br>---付款排程主档<br>-- select * from
-                                    AP_PAYMENT_SCHEDULES_ALL where INVOICE_ID in (5361405) <br>--invoice_id=<strong>ap_invoices_all</strong>
-                                    .invoice_id<br>----该表一张AP
-                                    应付发票对应一条或多条记录（根据付款条件而定，一次到期对应一条记录），记录了剩余金额amount_remaining、发票原始金额gross_amount、付款状态payment_status_flag（N从未付款、Y全部付款、P部分付款）<br><strong>AP_INVOICE_PAYMENTS_ALL</strong>
-                                    <br>--付款冲发票明细，对应多个invoice，<br>--select * from AP_INVOICE_PAYMENTS_ALL where
-                                    INVOICE_ID in (5361405)<br>--CHECK_ID =AP_CHECKS_ALL.CHECK_ID <br>--INVOICE_ID=AP_INVOICES_ALL.INVOICE_ID<br><strong>AP_CHECKS_ALL</strong>
-                                    <br>--付款文件头<br>--CHECK_ID =<strong>AP_INVOICE_PAYMENTS_ALL</strong> .CHECK_ID <br>--select
-                                    * from AP_CHECKS_ALL where CHECK_ID =2993939</p>
+                                {$zzField['content']|raw}
                             </div>
 
                             <div class="post-end-tools">

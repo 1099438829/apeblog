@@ -75,7 +75,7 @@ class Article extends Base
         //当前页面所属分类id
         $this->assign('cid',$id);
         //缓存当前页面栏目分类树ids
-        cache('curr_category_patent_id',$dc['parent_id']?$dc['parent_id'].','.$id:$id);
+        cache('curr_category_patent_id',$dc['pid']?$dc['pid'].','.$id:$id);
         return $this->fetch($listTmp);
     }
 
@@ -112,21 +112,24 @@ class Article extends Base
         //更新浏览次数
         $documentModel->where('id', $article['id'])->inc('view')->update();
         //读取详情页模板
-        $detailTmp=$dc['template_detail'];
-        if(!$detailTmp){
+        if(empty($dc['template'])){
 			$this->error('请在栏目分类中，指定当前栏目的详情模板！');
         }
+        $detailTmp=$dc['template'];
 		if(!is_file(config('view.view_path').'article/'.$detailTmp)){
 			$this->error('模板文件不存在！');
 		}
         $article['category_title']=$dc['title'];
+		//判断SEO 为空则取系统
+        $article['keywords'] = $article['keywords']?:web_config('keywords');
+        $article['description'] = $article['description']?:web_config('description');
         //输出文章内容
         $this->assign('zzField',$article);
         $this->assign('id',$id);
         //当前页面所属分类id
         $this->assign('cid',$article['category_id']);
         //缓存当前页面栏目分类树ids
-        cache('CURR_CATEGORY_PATENT_ID',$dc['parent_id']?$dc['parent_id'].','.$article['category_id']:$article['category_id']);
+        cache('CURR_CATEGORY_PATENT_ID',$dc['pid']?$dc['pid'].','.$article['category_id']:$article['category_id']);
         //设置文章的url
         $article['link_str']=aurl($article);
         //判断后台统计配置是否开启 1 开启
