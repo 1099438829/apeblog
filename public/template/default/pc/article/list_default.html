@@ -2,8 +2,8 @@
 <html lang="zh">
 <head>
     <title>{$zzField['title']} - {:web_config("title")}</title>
-    <meta name="keywords" content="{$zzField['keywords']}">
-    <meta name="description" content="{$zzField['description']}">
+    <meta name="keywords" content="{$zzField['keywords']}" />
+    <meta name="description" content="{$zzField['description']}"/>
 
     {include file="public/head" /}
 	<link rel="stylesheet" href="__LIB__/nprogress/nprogress.min.css">
@@ -57,7 +57,7 @@
                                     {$zzField['create_time']}
                                 </time>
                                 <span class="dot">•</span><i class="fas fa-folder"></i>
-                                <a href="{:url('article/lists')}?category_id={$zzField['category_id']}" rel="category tag"> {$zzField['category_title']}</a>
+                                <a href="{:url('article/lists')}?id={$zzField['category_id']}" rel="category tag"> {$zzField['category_title']}</a>
                                 <span class="dot">•</span>
                                 <span><i class="fa fa-eye" aria-hidden="true"></i>{$zzField['view']} 阅读</span>
                             </div>

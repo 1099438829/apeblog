@@ -44,29 +44,30 @@ class Article extends Base
         //读取列表页模板
         $listTmp='';
         if($dc['type']==0){
-            $listTmp=$dc['template_lists'];
-			if(!$listTmp){
+			if(empty($dc['template'])){
 	            $this->error('请在栏目分类中，指定当前栏目的列表模板！');
 	        }
-        }
-        elseif($dc['type']==1){
-            $listTmp=$dc['template_index'];
-			if(!$listTmp){
+        } elseif($dc['type']==1){
+            if(empty($dc['template'])){
 	            $this->error('请在栏目分类中，指定当前栏目的单篇模板！');
 	        }
             //如果是单篇栏目，加载内容
-	    $contentModel=new DocumentCategoryContent();
+	        $contentModel=new DocumentCategoryContent();
             $dcContent= $contentModel->find($id);
             $dc['content']=$dcContent['content'];
         }
-		if(!is_file(config('view.view_path').'article/'.$listTmp)){
+        $listTmp=$dc['template'];
+		if(!is_file(config('view.view_path').'category/'.$listTmp)){
 			$this->error('模板文件不存在！');
 		}
-        trace('列表页模板路径：'.config('view.view_path').'article/'.$listTmp,'debug');
+        trace('列表页模板路径：'.config('view.view_path').'category/'.$listTmp,'debug');
         //文章兼容字段
         $dc['category_id']=$dc['id'];
         //判断seo标题是否存在
         $dc['meta_title']=$dc['meta_title']?$dc['meta_title']:$dc['title'];
+        //判断SEO 为空则取系统
+        $article['keywords'] = $dc['keywords']?:web_config('keywords');
+        $article['description'] = $dc['description']?:web_config('description');
         //添加当前页面的位置信息
         $dc['position']=tpl_get_position($dc);
         //输出文章分类
@@ -76,7 +77,9 @@ class Article extends Base
         $this->assign('cid',$id);
         //缓存当前页面栏目分类树ids
         cache('curr_category_patent_id',$dc['pid']?$dc['pid'].','.$id:$id);
-        return $this->fetch($listTmp);
+        //去除后缀
+        $listTmp = substr($listTmp,0,strpos($listTmp,'.'));
+        return $this->fetch('category/'.$listTmp);
     }
 
     public function detail()
