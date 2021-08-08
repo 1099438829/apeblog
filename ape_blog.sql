@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 本地连接
+ Source Server         : 本地链接
  Source Server Type    : MySQL
  Source Server Version : 50726
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 26/07/2021 23:30:26
+ Date: 09/08/2021 01:05:20
 */
 
 SET NAMES utf8mb4;
@@ -126,7 +126,7 @@ CREATE TABLE `ape_admin_log`  (
   `user_agent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'User-Agent',
   `create_time` int(10) NOT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 630 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 662 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_admin_log
@@ -352,6 +352,38 @@ INSERT INTO `ape_admin_log` VALUES (626, 1, 'admin', 'admin', 'index', 'main', '
 INSERT INTO `ape_admin_log` VALUES (627, 1, 'admin', 'admin', 'login', 'login', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36', 1627313408);
 INSERT INTO `ape_admin_log` VALUES (628, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36', 1627313408);
 INSERT INTO `ape_admin_log` VALUES (629, 1, 'admin', 'admin', 'poster', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36', 1627313411);
+INSERT INTO `ape_admin_log` VALUES (630, 1, 'admin', 'admin', 'login', 'login', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36', 1627393923);
+INSERT INTO `ape_admin_log` VALUES (631, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36', 1627393923);
+INSERT INTO `ape_admin_log` VALUES (632, 1, 'admin', 'admin', 'login', 'login', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628344422);
+INSERT INTO `ape_admin_log` VALUES (633, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628344423);
+INSERT INTO `ape_admin_log` VALUES (634, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628344430);
+INSERT INTO `ape_admin_log` VALUES (635, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628344578);
+INSERT INTO `ape_admin_log` VALUES (636, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628347197);
+INSERT INTO `ape_admin_log` VALUES (637, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628347263);
+INSERT INTO `ape_admin_log` VALUES (638, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628347265);
+INSERT INTO `ape_admin_log` VALUES (639, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628349179);
+INSERT INTO `ape_admin_log` VALUES (640, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628349181);
+INSERT INTO `ape_admin_log` VALUES (641, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628349297);
+INSERT INTO `ape_admin_log` VALUES (642, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628349443);
+INSERT INTO `ape_admin_log` VALUES (643, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628349463);
+INSERT INTO `ape_admin_log` VALUES (644, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628349529);
+INSERT INTO `ape_admin_log` VALUES (645, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628349617);
+INSERT INTO `ape_admin_log` VALUES (646, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628349634);
+INSERT INTO `ape_admin_log` VALUES (647, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628349651);
+INSERT INTO `ape_admin_log` VALUES (648, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628349662);
+INSERT INTO `ape_admin_log` VALUES (649, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628354699);
+INSERT INTO `ape_admin_log` VALUES (650, 1, 'admin', 'admin', 'admin', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628354703);
+INSERT INTO `ape_admin_log` VALUES (651, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628354710);
+INSERT INTO `ape_admin_log` VALUES (652, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628354713);
+INSERT INTO `ape_admin_log` VALUES (653, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628355484);
+INSERT INTO `ape_admin_log` VALUES (654, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628355493);
+INSERT INTO `ape_admin_log` VALUES (655, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628355494);
+INSERT INTO `ape_admin_log` VALUES (656, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628355508);
+INSERT INTO `ape_admin_log` VALUES (657, 1, 'admin', 'admin', 'login', 'login', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628442267);
+INSERT INTO `ape_admin_log` VALUES (658, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628442267);
+INSERT INTO `ape_admin_log` VALUES (659, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628442274);
+INSERT INTO `ape_admin_log` VALUES (660, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628442282);
+INSERT INTO `ape_admin_log` VALUES (661, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628442292);
 
 -- ----------------------------
 -- Table structure for ape_admin_notify
@@ -415,7 +447,7 @@ CREATE TABLE `ape_advert`  (
   `sort` int(2) NULL DEFAULT 0 COMMENT '权重',
   `status` tinyint(2) NULL DEFAULT 1 COMMENT '是否启用 0不启用 1启用',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '职位专区表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '职位专区表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_advert
@@ -511,8 +543,8 @@ CREATE TABLE `ape_document`  (
 -- ----------------------------
 -- Records of ape_document
 -- ----------------------------
-INSERT INTO `ape_document` VALUES (1, 1, '超级管理员', '特种兵之霹雳火', 3, '/uploads/images/20210606\\1254252dcceb7a92a18dbe71e8a51ee8.jpg', 'article', '', 1, 1, 1, '', 1, 2, '111', '11', '', '', 99, 1622994445, 1624693478, 1, NULL);
-INSERT INTO `ape_document` VALUES (2, 1, '超级管理员', '111111111111111', 3, '/uploads/images/20210607\\e7f65d07dda7d50d3464349ead6a5eb1.png', 'article', '', 1, 1, 1, '', 1, 26, '', '', '', '', 99, 1622995800, 1624693479, 1, NULL);
+INSERT INTO `ape_document` VALUES (1, 1, '超级管理员', '特种兵之霹雳火', 3, '/uploads/images/20210606\\1254252dcceb7a92a18dbe71e8a51ee8.jpg', 'article', '', 1, 1, 1, '', 1, 55, '111', '11', '', '', 99, 1622994445, 1624693478, 1, NULL);
+INSERT INTO `ape_document` VALUES (2, 1, '超级管理员', '111111111111111', 3, '/uploads/images/20210607\\e7f65d07dda7d50d3464349ead6a5eb1.png', 'article', '', 1, 1, 1, '', 1, 79, '', '', '', '', 99, 1622995800, 1624693479, 1, NULL);
 
 -- ----------------------------
 -- Table structure for ape_document_article
@@ -528,7 +560,7 @@ CREATE TABLE `ape_document_article`  (
 -- Records of ape_document_article
 -- ----------------------------
 INSERT INTO `ape_document_article` VALUES (2, '<p>啊水水顶顶顶顶顶大师的帆帆帆帆帆帆帆帆 对方灌灌灌灌灌灌灌灌灌灌灌灌</p>');
-INSERT INTO `ape_document_article` VALUES (1, '<p>2131312</p>');
+INSERT INTO `ape_document_article` VALUES (1, '<ul style=\"list-style-type: square;\">\r\n<li style=\"text-align: left;\"><sub><span style=\"text-decoration: line-through;\">2131312</span></sub></li>\r\n</ul>\r\n<table style=\"border-collapse: collapse; width: 100%;\" border=\"1\">\r\n<tbody>\r\n<tr>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n</tr>\r\n<tr>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n</tr>\r\n<tr>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n</tr>\r\n<tr>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n</tr>\r\n<tr>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n</tr>\r\n<tr>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n</tr>\r\n<tr>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n</tr>\r\n<tr>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n</tr>\r\n</tbody>\r\n</table>');
 
 -- ----------------------------
 -- Table structure for ape_document_category
@@ -553,14 +585,12 @@ CREATE TABLE `ape_document_category`  (
   `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
   `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '数据状态',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '分类表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '分类表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ape_document_category
 -- ----------------------------
-INSERT INTO `ape_document_category` VALUES (3, '编程资料', '', '', 1, 0, 0, '', '', '', 'list_default.html', '', 8, 1, 1617634005, 1617634005, 1);
-INSERT INTO `ape_document_category` VALUES (2, '首页', '', '', 1, 0, 99, '', '', '', 'list_default.html', '', 6, 1, 1617634005, 1617634005, 1);
-INSERT INTO `ape_document_category` VALUES (4, '测试', '', '', 1, 2, 0, '', '', '', 'list_default.html', '', 6, 1, 1617634005, 1617634005, 1);
+INSERT INTO `ape_document_category` VALUES (3, '编程资料', '', '', 1, 0, 0, '', '', '', 'list_default.html', '', 77, 1, 1617634005, 1617634005, 1);
 
 -- ----------------------------
 -- Table structure for ape_document_category_content
@@ -575,9 +605,7 @@ CREATE TABLE `ape_document_category_content`  (
 -- ----------------------------
 -- Records of ape_document_category_content
 -- ----------------------------
-INSERT INTO `ape_document_category_content` VALUES (2, '');
 INSERT INTO `ape_document_category_content` VALUES (3, '');
-INSERT INTO `ape_document_category_content` VALUES (4, '');
 
 -- ----------------------------
 -- Table structure for ape_document_product
@@ -685,7 +713,7 @@ CREATE TABLE `ape_pv_log`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 31 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM AUTO_INCREMENT = 46 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_pv_log
@@ -720,6 +748,21 @@ INSERT INTO `ape_pv_log` VALUES (27, 15, 4, '2021-07-19', '2021-07-19 15:11:43',
 INSERT INTO `ape_pv_log` VALUES (28, 20, 2, '2021-07-24', '2021-07-24 20:48:23', '2021-07-24 20:48:23');
 INSERT INTO `ape_pv_log` VALUES (29, 10, 4, '2021-07-26', '2021-07-26 10:37:44', '2021-07-26 10:37:44');
 INSERT INTO `ape_pv_log` VALUES (30, 11, 10, '2021-07-26', '2021-07-26 11:00:02', '2021-07-26 11:00:02');
+INSERT INTO `ape_pv_log` VALUES (31, 10, 3, '2021-07-27', '2021-07-27 10:09:47', '2021-07-27 10:09:47');
+INSERT INTO `ape_pv_log` VALUES (32, 21, 2, '2021-07-27', '2021-07-27 21:52:10', '2021-07-27 21:52:10');
+INSERT INTO `ape_pv_log` VALUES (33, 22, 25, '2021-07-27', '2021-07-27 22:08:57', '2021-07-27 22:08:57');
+INSERT INTO `ape_pv_log` VALUES (34, 23, 21, '2021-07-27', '2021-07-27 23:24:16', '2021-07-27 23:24:16');
+INSERT INTO `ape_pv_log` VALUES (35, 18, 2, '2021-08-01', '2021-08-01 18:43:52', '2021-08-01 18:43:52');
+INSERT INTO `ape_pv_log` VALUES (36, 21, 3, '2021-08-07', '2021-08-07 21:46:26', '2021-08-07 21:46:26');
+INSERT INTO `ape_pv_log` VALUES (37, 22, 7, '2021-08-07', '2021-08-07 22:41:07', '2021-08-07 22:41:07');
+INSERT INTO `ape_pv_log` VALUES (38, 23, 52, '2021-08-07', '2021-08-07 23:00:22', '2021-08-07 23:00:22');
+INSERT INTO `ape_pv_log` VALUES (39, 0, 124, '2021-08-08', '2021-08-08 00:11:30', '2021-08-08 00:11:30');
+INSERT INTO `ape_pv_log` VALUES (40, 1, 6, '2021-08-08', '2021-08-08 01:00:11', '2021-08-08 01:00:11');
+INSERT INTO `ape_pv_log` VALUES (41, 16, 66, '2021-08-08', '2021-08-08 16:28:43', '2021-08-08 16:28:43');
+INSERT INTO `ape_pv_log` VALUES (42, 22, 52, '2021-08-08', '2021-08-08 22:31:51', '2021-08-08 22:31:51');
+INSERT INTO `ape_pv_log` VALUES (43, 23, 22, '2021-08-08', '2021-08-08 23:35:51', '2021-08-08 23:35:51');
+INSERT INTO `ape_pv_log` VALUES (44, 0, 147, '2021-08-09', '2021-08-09 00:00:19', '2021-08-09 00:00:19');
+INSERT INTO `ape_pv_log` VALUES (45, 1, 26, '2021-08-09', '2021-08-09 01:00:53', '2021-08-09 01:00:53');
 
 -- ----------------------------
 -- Table structure for ape_slides
@@ -883,7 +926,7 @@ CREATE TABLE `ape_url_log`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 42 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM AUTO_INCREMENT = 68 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_url_log
@@ -929,6 +972,32 @@ INSERT INTO `ape_url_log` VALUES (38, 'http://apeblog.io/', 1, '网站首页', '
 INSERT INTO `ape_url_log` VALUES (39, 'http://apeblog.io/%E8%B6%85%E7%BA%A7%E7%AE%A1%E7%90%86%E5%91%98', 1, '网站首页', '2021-07-24', NULL, NULL);
 INSERT INTO `ape_url_log` VALUES (40, 'http://apeblog.io/', 9, '网站首页', '2021-07-26', NULL, NULL);
 INSERT INTO `ape_url_log` VALUES (41, 'http://apeblog.io/%E8%B6%85%E7%BA%A7%E7%AE%A1%E7%90%86%E5%91%98', 5, '网站首页', '2021-07-26', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (42, 'http://apeblog.io/', 3, '网站首页', '2021-07-27', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (43, 'http://apeblog.io/%E8%B6%85%E7%BA%A7%E7%AE%A1%E7%90%86%E5%91%98', 21, '网站首页', '2021-07-27', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (44, 'http://apeblog.io/about.html', 1, '网站首页', '2021-07-27', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (45, 'http://apeblog.io/msg.html', 1, '网站首页', '2021-07-27', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (46, 'http://apeblog.io/corepress.html', 22, '网站首页', '2021-07-27', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (47, 'http://apeblog.io/index/article/lists.html?id=2', 1, '首页', '2021-07-27', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (48, 'http://apeblog.io/', 1, '网站首页', '2021-08-01', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (49, 'http://apeblog.io/%E8%B6%85%E7%BA%A7%E7%AE%A1%E7%90%86%E5%91%98', 1, '网站首页', '2021-08-01', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (50, 'http://apeblog.io/', 2, '网站首页', '2021-08-07', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (51, 'http://apeblog.io/%E8%B6%85%E7%BA%A7%E7%AE%A1%E7%90%86%E5%91%98', 2, '网站首页', '2021-08-07', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (52, 'http://apeblog.io/index/article/detail.html?id=2', 16, '111111111111111', '2021-08-07', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (53, 'http://apeblog.io/index/article/lists.html?id=3', 15, '编程资料', '2021-08-07', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (54, 'http://apeblog.io/index/article/detail.html?id=2', 14, '111111111111111', '2021-08-08', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (55, 'http://apeblog.io/index/article/lists.html?id=3', 47, '编程资料', '2021-08-08', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (56, 'http://apeblog.io/', 32, '网站首页', '2021-08-08', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (57, 'http://apeblog.io/%E8%B6%85%E7%BA%A7%E7%AE%A1%E7%90%86%E5%91%98', 1, '网站首页', '2021-08-08', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (58, 'http://apeblog.io/index/article/lists.html?id=2', 10, '首页', '2021-08-08', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (59, 'http://apeblog.io/index/article/detail.html?id=1', 24, '特种兵之霹雳火', '2021-08-08', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (60, 'http://apeblog.io/login.html', 2, '网站首页', '2021-08-08', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (61, 'http://apeblog.io/', 17, '网站首页', '2021-08-09', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (62, 'http://apeblog.io/index/article/detail.html?id=1', 22, '特种兵之霹雳火', '2021-08-09', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (63, 'http://apeblog.io/index/article/lists.html?id=3', 7, '编程资料', '2021-08-09', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (64, 'http://apeblog.io/index/article/detail.html?id=2', 19, '111111111111111', '2021-08-09', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (65, 'http://apeblog.io/index/article/lists.html?id=2', 1, '首页', '2021-08-09', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (66, 'http://apeblog.io/msg.html', 2, '网站首页', '2021-08-09', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (67, 'http://apeblog.io/about.html', 1, '网站首页', '2021-08-09', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for ape_user
@@ -966,7 +1035,7 @@ CREATE TABLE `ape_uv_log`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 19 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_uv_log
@@ -989,5 +1058,10 @@ INSERT INTO `ape_uv_log` VALUES (15, '127.0.0.1', 22, '2021-07-18', '2021-07-18 
 INSERT INTO `ape_uv_log` VALUES (16, '127.0.0.1', 10, '2021-07-19', '2021-07-19 10:23:43', '2021-07-19 10:23:43');
 INSERT INTO `ape_uv_log` VALUES (17, '127.0.0.1', 20, '2021-07-24', '2021-07-24 20:48:23', '2021-07-24 20:48:23');
 INSERT INTO `ape_uv_log` VALUES (18, '127.0.0.1', 10, '2021-07-26', '2021-07-26 10:37:44', '2021-07-26 10:37:44');
+INSERT INTO `ape_uv_log` VALUES (19, '127.0.0.1', 10, '2021-07-27', '2021-07-27 10:09:47', '2021-07-27 10:09:47');
+INSERT INTO `ape_uv_log` VALUES (20, '127.0.0.1', 18, '2021-08-01', '2021-08-01 18:43:52', '2021-08-01 18:43:52');
+INSERT INTO `ape_uv_log` VALUES (21, '127.0.0.1', 21, '2021-08-07', '2021-08-07 21:46:26', '2021-08-07 21:46:26');
+INSERT INTO `ape_uv_log` VALUES (22, '127.0.0.1', 0, '2021-08-08', '2021-08-08 00:11:30', '2021-08-08 00:11:30');
+INSERT INTO `ape_uv_log` VALUES (23, '127.0.0.1', 0, '2021-08-09', '2021-08-09 00:00:19', '2021-08-09 00:00:19');
 
 SET FOREIGN_KEY_CHECKS = 1;
