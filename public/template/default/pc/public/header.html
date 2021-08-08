@@ -36,7 +36,7 @@
 			</div>
 			<div class="header-logo-plane">
 				<div class="header-logo">
-					<a href=""><img src="{:file_cdn(web_config('logo'))}" alt=""></a></div>
+					<a href="/"><img src="{:file_cdn(web_config('logo'))}" alt=""></a></div>
 			</div>
 			<div class="mobile-search-btn" onclick="openSearch()">
 				<i class="fa fa-search"></i>
@@ -45,9 +45,9 @@
 				<div class="dialog-mask" onclick="closeSearch()"></div>
 				<div class="dialog-plane">
 					<h2>搜索内容</h2>
-					<form class="search-form" action="{:url('/article/search')}" method="get" role="search">
+					<form class="search-form" action="{:url('/index/article/search')}" method="get" role="search">
 						<div class="search-form-input-plane">
-							<input type="text" class="search-keyword" name="tag" placeholder="搜索内容" value="">
+							<input type="text" class="search-keyword" name="kw" placeholder="搜索内容" value="">
 						</div>
 						<div>
 							<button type="submit" class="search-submit" value="&#xf002;">搜索</button>
@@ -58,7 +58,10 @@
 			<div class="header-menu">
 				<div class="menu-plane">
 					<nav class="menu-header-plane">
-											<ul id="menu-%e4%b8%8a%e6%96%b9%e5%af%bc%e8%88%aa%e6%a0%8f" class="menu-header-list">
+						<ul id="menu-header-list" class="menu-header-list">
+							<li id="menu-item-128" class="menu-item current_page_item menu-item-128">
+								<a href="/" aria-current="page">首页</a>
+							</li>
 							{zz:channel type="top"}
 							<li id="menu-item-{$field.id}" class="menu-item {notempty name="field['child']"}menu-item-has-children{/notempty} {:IsActiveNav($cid,$field['id'])?'current-menu-item':''} menu-item-{$field['id']}">
 								{notempty name="field['child']"}
@@ -86,7 +89,6 @@
 					</div>
                     <span class="user-menu-main">
                  		<a href="login.html"><button class="login-btn-header">登录</button></a>
-
                     </span>
 				</div>
 			</div>

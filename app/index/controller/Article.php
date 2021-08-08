@@ -60,7 +60,7 @@ class Article extends Base
 		if(!is_file(config('view.view_path').'category/'.$listTmp)){
 			$this->error('模板文件不存在！');
 		}
-        trace('列表页模板路径：'.config('view.view_path').'category/'.$listTmp,'debug');
+        Log::info('列表页模板路径：'.config('view.view_path').'category/'.$listTmp);
         //文章兼容字段
         $dc['category_id']=$dc['id'];
         //判断seo标题是否存在
@@ -146,29 +146,6 @@ class Article extends Base
         return $this->fetch('article/'.$detailTmp);
     }
 
-    //自定义页面，可通过参数指定模板文件。完成完全自定义的文件输出。
-    //可以输出html片段，甚至可以输出JSON
-    //参数指定的模板文件必须位于模板文件夹下，且以content_开头，以.htm拓展名结尾
-    public function content()
-    {
-        $zzField=input();
-        if(!isset($zzField['tpl'])){
-            $this->error('没有指定模板文件！');
-        }
-        //将参数传递到模板页面
-        $this->assign('zzField',$zzField);
-        //模板兼容性标签
-        $this->assign('id',false);
-        $this->assign('cid',false);
-        //读取模板配置，获得模板后缀名
-        $view_suffix=config('view.view_suffix');
-        Log::info('详情页模板路径：'.config('view.view_path').'article/'.'content_'.$zzField['tpl'].'.'.$view_suffix);
-        cache('curr_category_patent_id',false);
-        $detailTmp = substr($detailTmp,0,strpos($detailTmp,'.'));
-        return $this->fetch('article/'.$detailTmp);
-        return $this->fetch();
-    }
-
     //文章标签页面
     public function tag()
     {
@@ -193,7 +170,8 @@ class Article extends Base
         //模板兼容性标签
         $this->assign('id',false);
         $this->assign('cid',false);
-        return $this->fetch();
+         $view_suffix=config('view.view_suffix');
+        return $this->fetch('tag.'.$view_suffix);
     }
 
     //搜索页面
@@ -219,6 +197,10 @@ class Article extends Base
         //模板兼容性标签
         $this->assign('id',false);
         $this->assign('cid',false);
+        $template = config('view.view_path').'article/search.html';
+        if(!is_file($template)){
+            $this->error('模板文件不存在！');
+        }
         return $this->fetch();
     }
 }

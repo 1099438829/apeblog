@@ -2,20 +2,24 @@
 <html lang="zh">
 <head>
     <title>{:web_config("title")}</title>
-    <meta name="keywords" content="{:web_config("keywords")}">
-    <meta name="description" content="{:web_config("description")}">
+    <meta name="keywords" content="{:web_config(" keywords
+    ")}">
+    <meta name="description" content="{:web_config(" description
+    ")}">
     {include file="public/head" /}
-	<link rel="stylesheet" href="__LIB__/swiper/swiper.min.css">
+    <link rel="stylesheet" href="__LIB__/swiper/swiper.min.css">
     <script src="__LIB__/swiper/swiper.min.js"></script>
-    <link rel="icon" href="{:web_config("logo")}" type="image/x-icon">
+    <link rel="icon" href="{:web_config(" logo
+    ")}" type="image/x-icon">
     <style>
         :root {
             --Maincolor: #409EFF !important;
             --MaincolorHover: #409EFF !important;
             --fontSelectedColor: #3390ff !important;
         }
+
         #nprogress .bar {
-            background: var(--Maincolor)!important;
+            background: var(--Maincolor) !important;
         }
     </style>
     <script src="__JS__/jquery.lazyload.min.js"></script>
@@ -86,8 +90,8 @@
                 <div class="post-list-page-plane">
                     <div class="list-plane-title">
                         <div class="index-tab-plane">
-                        <div class="index-tab-item index-tab-item-active" catid="0">最新文章</div>
-                        <div class="index-tab-item" catid="6">wordpress</div>
+                            <div class="index-tab-item index-tab-item-active" catid="0">最新文章</div>
+                            <div class="index-tab-item" catid="6">wordpress</div>
                             <div class="index-tab-item" catid="24">JavaScript</div>
                             <div class="index-tab-item" catid="8">绿化破解</div>
                         </div>
@@ -107,12 +111,13 @@
                                     cat: $(this).attr('catid')
                                 }, function (data) {
                                     $('.post-list').html(data);
-                                     $("img").lazyload({effect: "fadeIn"});                    })
+                                    $("img").lazyload({effect: "fadeIn"});
+                                })
                             });
                         </script>
                     </div>
                     <ul class="post-list">
-                        {zz:list orderby="create_time desc" type="where"}
+                        {zz:list orderby="create_time desc" pagesize="10" type="where" }
                         <li class="post-item ">
                             <div class="post-item-container">
                                 <div class="post-item-thumbnail">
@@ -130,9 +135,11 @@
                                 <div class="post-item-main">
                                     <h2>
                                         {if $field['is_top']==1}<span class="post-item-sticky">置顶</span>{/if}
-                                        <a href="{$field['url']}" style="white-space: nowrap;text-overflow: ellipsis;" target="_blank">{:cn_substr($field['title'],20)}</a>
+                                        <a target="_blank" href="{$field['url']}" style="white-space: nowrap;text-overflow: ellipsis;">{:cn_substr($field['title'],20)}</a>
                                     </h2>
-                                    <div class="post-item-content" style="white-space: nowrap;text-overflow: ellipsis;">{:cn_substr($field['content'],40)}</div>
+                                    <div class="post-item-content" style="white-space: nowrap;text-overflow: ellipsis;">
+                                        {:cn_substr($field['content'],100)}
+                                    </div>
                                     <div class="post-item-info">
                                         <div class="post-item-meta">
                                             <div class="post-item-meta-item">
@@ -143,9 +150,8 @@
                                                 <span class="post-item-time">{$field['create_time']}</span>
                                             </div>
                                             <div class="item-post-meta-other">
-                                                <span><i class="fas fa-eye" aria-hidden="true"></i>{$field['view']}</span>
-<!--                                                评论数-->
-<!--                                                <span><i class="fas fa-comment-alt-lines"></i>{$field['view']}</span>-->
+                            					<span><i class="fas fa-eye" aria-hidden="true"></i>{$field['view']}</span>
+<!--                           					<span><i class="fas fa-comment-alt-lines"></i>0</span>-->
                                             </div>
                                         </div>
                                     </div>
@@ -155,50 +161,26 @@
                         {/zz:list}
                     </ul>
                     <div class="pages">
-                        <button class="index-load-more-btn"><i class="far fa-circle-notch"></i> 加载更多</button>
-                        <script>
-                            var paged = 2;
-    						var max_page =6;
-                            $('.index-load-more-btn').click(() => {
-                                var btn_cloass = '.index-load-more-btn';
-        						if (paged > max_page) {
-                                    $(btn_cloass).text('到底啦');
-                                    return;
-                                }
-                                $(btn_cloass).html('<i class="far fa-circle-notch fa-spin"></i> 加载中');
-        						$.post('https://www.lovestu.com/wp-admin/admin-ajax.php', {
-                                    action: 'corepress_load_post',
-                                    page: paged,
-                                    cat: $('.index-tab-item-active').attr('catid')
-                                }, (data) => {
-
-                                    if (data.length == 0) {
-                                        $(btn_cloass).html('<i class="far fa-circle-notch"></i> 到底啦');
-                                    } else {
-                                        $(btn_cloass).html('<i class="far fa-circle-notch"></i> 加载更多');
-                                    }
-                                    $('.post-list').append(data);
-             						$("img").lazyload({effect: "fadeIn"});            paged++;
-                                })
-                            })
-
-                        </script>
+                        <div class="fenye">
+                            {$pager|raw}
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="sidebar">
                 <div class="sidebar-box-list">
                     <div class="aside-box">
-                        <form class="search-form" action="https://www.lovestu.com" method="get" role="search">
+                        <form class="search-form" action="{:url('/index/article/search')}" method="get" role="search">
                             <div class="search-form-input-plane">
-                                <input type="text" class="search-keyword" name="s" placeholder="搜索内容" value="">
+                                <input type="text" class="search-keyword" name="kw" placeholder="搜索内容" value=""/>
                             </div>
                             <div>
                                 <button type="submit" class="search-submit" value="&#xf002;">搜索</button>
-                              </div>
+                            </div>
                         </form>
                     </div>
-                    <div class="aside-box"><h2 class="widget-title">句子</h2>
+                    <div class="aside-box">
+                        <h2 class="widget-title">句子</h2>
                         <div class="widget-sentence-placeholder widget-sentence-placeholder-jzmk">
                             <ul>
                                 <li></li>
@@ -213,7 +195,7 @@
                     </div>
                     <div class="aside-box">
                         <h2 class="widget-title">热门阅读</h2>
-                        {zz:arclist orderby="view desc" type="where"}
+              			{zz:arclist row="6" type="where" orderby="view desc"}
                         <div class="hot-post-widget-item">
                             <div>
                                 <span class="hot-post-widget-item-num">{$i}</span>
@@ -242,15 +224,18 @@
                                 color: #fff;
                                 padding: 0 !important;
                             }
+
                             .corepress-tagcloud a:hover {
                                 color: #fff !important;
                             }
+
                             .tagcloud--item {
                                 color: #fff;
                                 padding: 2px 4px;
                                 border-radius: 3px;
                                 cursor: pointer;
                             }
+
                             .tagcloud--item:hover {
                                 opacity: 1 !important;
                                 z-index: 100 !important;
@@ -469,9 +454,9 @@
                         <h2 class="widget-title">拥有一个自己的网站服务器</h2>
                         <a href="javascript:;">
                             <img width="300" height="164"
-                                                    src="/uploads/article/2021/03/440-240_画板-1-300x164.jpg"
-                                                    class="image wp-image-574  attachment-medium size-medium" alt=""
-                                                    loading="lazy" style="max-width: 100%; height: auto;">
+                                 src="/uploads/article/2021/03/440-240_画板-1-300x164.jpg"
+                                 class="image wp-image-574  attachment-medium size-medium" alt=""
+                                 loading="lazy" style="max-width: 100%; height: auto;">
                         </a>
                     </div>
                 </div>

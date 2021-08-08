@@ -2,8 +2,8 @@
 <html lang="zh">
 <head>
     <title>{$zzField['title']} - {:web_config("title")}</title>
-    <meta name="keywords" content="{$zzField['keywords']}">
-    <meta name="description" content="{$zzField['description']}">
+    <meta name="keywords" content="{$zzField['keywords']}" />
+    <meta name="description" content="{$zzField['description']}"/>
 
     {include file="public/head" /}
 	<link rel="stylesheet" href="__LIB__/nprogress/nprogress.min.css">
@@ -528,145 +528,24 @@
             </div>
             <div class="sidebar">
                 <div class="sidebar-box-list">
-                    <div class="aside-box"><h2 class="widget-title">热门文章</h2>
+                    <div class="aside-box">
+                        <h2 class="widget-title">热门文章</h2>
+                        {zz:arclist row="8" orderby="view desc" type="where"}
                         <div class="hot-post-widget-item">
                             <div>
-                            <span class="hot-post-widget-item-num">
-                                    1                            </span>
+                                <span class="hot-post-widget-item-num">{$i}</span>
                                 <span class="hot-post-widget-item-title">
-                                <a href="../oracle-ebs-om-order-table/index1.html"> oracle-EBS甲骨文销售订单下单发放挑库发运(销售到出货全过程)主要相关表(多图)</a>
-                            </span>
+                                    <a href="{$field['url']}">{:cn_substr($field['title'],15)}</a>
+                                </span>
                             </div>
                             <div class="hot-post-widget-item-meta">
+                                <div>{$field['create_time']}</div>
                                 <div>
-                                    2020-12-09
-                                </div>
-                                <div>
-                                    <a href="../category/oracle-om/index.html"> Oracle-OM-销售物流</a>
+                                    <a href="#">{:cn_substr($field['category_title'],5)}</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="hot-post-widget-item">
-                            <div>
-                            <span class="hot-post-widget-item-num">
-                                    2                            </span>
-                                <span class="hot-post-widget-item-title">
-                                <a href="../decoration-erp/index.html"> 某家装公司项目管理软件系统的设计思路</a>
-                            </span>
-                            </div>
-                            <div class="hot-post-widget-item-meta">
-                                <div>
-                                    2021-03-24
-                                </div>
-                                <div>
-                                    <a href="../category/talk/index.html"> 学习笔记</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hot-post-widget-item">
-                            <div>
-                            <span class="hot-post-widget-item-num">
-                                    3                            </span>
-                                <span class="hot-post-widget-item-title">
-                                <a href="../oaworkflowapprove/index1.html"> 常见企业OA办公审批流、工作流实现层级审批、层层签核的方式</a>
-                            </span>
-                            </div>
-                            <div class="hot-post-widget-item-meta">
-                                <div>
-                                    2021-02-28
-                                </div>
-                                <div>
-                                    <a href="../category/sql-server/index.html"> sql-server</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hot-post-widget-item">
-                            <div>
-                            <span class="hot-post-widget-item-num">
-                                    4                            </span>
-                                <span class="hot-post-widget-item-title">
-                                <a href="../oracle-ebs-pur-inventory-table/index1.html"> oracle-EBS-采购单创建接收检验入库经历主要表(多图)</a>
-                            </span>
-                            </div>
-                            <div class="hot-post-widget-item-meta">
-                                <div>
-                                    2020-12-13
-                                </div>
-                                <div>
-                                    <a href="../category/oracle-pur-prod/index.html"> Oracle-PROD-采购生产</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hot-post-widget-item">
-                            <div>
-                            <span class="hot-post-widget-item-num">
-                                    5                            </span>
-                                <span class="hot-post-widget-item-title">
-                                <a href="../oracle-ebs-pl-sql-ap-podetial/index.html"> oracle-EBS-PL/sql AP 发票中匹配的po明细按发票</a>
-                            </span>
-                            </div>
-                            <div class="hot-post-widget-item-meta">
-                                <div>
-                                    2021-03-07
-                                </div>
-                                <div>
-                                    <a href="../category/oracle-finance/index.html"> Oracle-Finance-财务</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hot-post-widget-item">
-                            <div>
-                            <span class="hot-post-widget-item-num">
-                                    6                            </span>
-                                <span class="hot-post-widget-item-title">
-                                <a href="../oracle-ebs-pl-sql-price-list/index.html"> oracle EBS PL/sql 查看销售订单的价目表Price List</a>
-                            </span>
-                            </div>
-                            <div class="hot-post-widget-item-meta">
-                                <div>
-                                    2020-12-13
-                                </div>
-                                <div>
-                                    <a href="../category/oracle-pl-sql/index.html"> Oracle-PL/SQL</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hot-post-widget-item">
-                            <div>
-                            <span class="hot-post-widget-item-num">
-                                    7                            </span>
-                                <span class="hot-post-widget-item-title">
-                                <a href="../oracle-ebs-om-confirm-transferto-ar/index.html"> oracle-EBS-PL/sql查看销售订单已经确认出货，和过账到AR应收的订单行明细，查看物流操作时间</a>
-                            </span>
-                            </div>
-                            <div class="hot-post-widget-item-meta">
-                                <div>
-                                    2020-12-04
-                                </div>
-                                <div>
-                                    <a href="../category/oracle-pl-sql/index.html"> Oracle-PL/SQL</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hot-post-widget-item">
-                            <div>
-                            <span class="hot-post-widget-item-num">
-                                    8                            </span>
-                                <span class="hot-post-widget-item-title">
-                                <a href="../sql-server-max-lineconverttocolumn/index.html"> SQL Server- 行列转换 行转列，多行转多列 &#8211; max 函数用法</a>
-                            </span>
-                            </div>
-                            <div class="hot-post-widget-item-meta">
-                                <div>
-                                    2020-12-07
-                                </div>
-                                <div>
-                                    <a href="../category/sql-server/index.html"> sql-server</a>
-                                </div>
-                            </div>
-                        </div>
-
-
+                        {/zz:arclist}
                     </div>
                 </div>
             </div>

@@ -199,7 +199,7 @@ class Zz extends TagLib{
     }
 
     /**
-     * tagAdvert
+     * tagAdvert 广告
      * @param $tag
      * @param $content
      * @return string
