@@ -5,7 +5,11 @@ return [
     ],
 
     'listen'    => [
-        'AdminLog' => [], // 操作日志记录
+        'AppInit'  => [],
+        'HttpRun'  => [],
+        'HttpEnd'  => [],
+        'LogLevel' => [],
+        'LogWrite' => [],
     ],
 
     'subscribe' => [

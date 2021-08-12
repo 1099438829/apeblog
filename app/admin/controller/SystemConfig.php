@@ -29,29 +29,17 @@ class SystemConfig extends AuthController
         if ($tab_id < 5)
         {
             $system = cModel::getLstByTabId($tab_id);
-            //特殊处理主题信息
+            //特殊处理主题信息,这里不允许修改主题信息
             if ($tab_id == 1){
-                foreach ($system as &$form){
+                foreach ($system as $key=>&$form){
                     if ($form['form_name'] == 'web_template'){
-                        $templateDir = public_path('template');
-                        $templateList = get_dir($templateDir);
-                        if ($templateList){
-                            $form['param'] = '';
-                            foreach ($templateList as $value){
-                                $form['param'] .= ($form['param']?"\n":'').$value .'=>'.$value;
-                            }
-                        }
+                        unset($system[$key]);
                     }
                 }
             }
             $this->assign("tab_id",$tab_id);
             $this->assign("system",$system);
             return $this->fetch();
-        }else if ($tab_id == 38 || $tab_id == 39)
-        {
-            $this->assign("tab_id",$tab_id);
-            $this->assign("system",cModel::getLstByTabId($tab_id));
-            return $this->fetch("pay");
         }
     }
 
@@ -70,36 +58,6 @@ class SystemConfig extends AuthController
             if (remove_cache($adminPath) && remove_cache($indexPath) && remove_cache($apiPath) && remove_cache($commonPath)) return app("json")->success("操作成功");
             return app("json")->error("操作失败");
         }
-        return $this->fetch();
-    }
-
-    /**
-     * 上传配置
-     * @return string
-     * @throws \Exception
-     */
-    public function upload()
-    {
-        return $this->fetch();
-    }
-
-    /**
-     * 短信配置
-     * @return string
-     * @throws \Exception
-     */
-    public function sms()
-    {
-        return $this->fetch();
-    }
-
-    /**
-     *邮件配置
-     * @return string
-     * @throws \Exception
-     */
-    public function email()
-    {
         return $this->fetch();
     }
 
