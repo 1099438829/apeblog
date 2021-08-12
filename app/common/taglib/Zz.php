@@ -208,11 +208,9 @@ class Zz extends TagLib{
      */
     public function tagAdvert($tag,$content)
     {
-        $type=isset($tag['type'])?$tag['type']:'text';
-        $type=$type=='text'?0:1;
+        $type=isset($tag['type'])?$tag['type']:1;
         $row=isset($tag['row'])?$tag['row']:100;
         $void=isset($tag['void'])?$tag['void']:'field';
-
         $parse = '<?php ';
         $parse .= '$__LIST__ ='."tpl_get_advert($type,$row);";
         $parse .= ' ?>';

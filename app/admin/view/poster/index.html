@@ -87,16 +87,29 @@
         },{
             field: 'title',
             title: '广告名称'
-        },
-        {
+        },{
             field: 'image',
             title: '广告图片',
             formatter:function (value,row,index) {
                 let html ='<img src="'+value+'" alt="" width="50px;">';
                 return html;
             }
-        },
-        {
+        },{
+            field: 'position',
+            title: '广告图片',
+            formatter:function (value,row,index) {
+              switch (value) {
+                case 1:
+                    return '顶部页签';
+                case 2:
+                    return '右侧广告位';
+                case 3:
+                    return '文章页面';
+                default:
+                    return '顶部页签';
+              }
+            }
+        },{
             field: 'url',
             title: '链接地址',
         }, {

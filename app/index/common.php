@@ -566,13 +566,14 @@ function tpl_get_banner($type, $row)
  */
 function tpl_get_advert($type, $row)
 {
-    $advertList = cache('DATA_BANNER');
+    $advertList = cache('DATA_ADVERT'.'_'.$type);
     if ($advertList === null) {
-        $advertList = Db::name('advert')->where('status', 1)->order('sort asc')->limit($row)->select();
-        cache('DATA_ADVERT', $advertList);
-    }
-    if ($type === 0) {
-        return $advertList;
+        if ($type > 0) {
+            $advertList = Db::name('advert')->where('position',$type)->where('status', 1)->order('sort desc')->limit($row)->select();
+        }else{
+            $advertList = Db::name('advert')->where('status', 1)->order('sort desc')->limit($row)->select();
+        }
+        cache('DATA_ADVERT'.'_'.$type, $advertList);
     }
     $advertListTemp = [];
     foreach ($advertList as $key => $item) {

@@ -77,7 +77,7 @@ class Poster extends AuthController
         $form[] = Elm::input('sort','排序')->col(10);
         $form[]  = Elm::select('position', '位置')->options(function(){
             $options = [];
-            foreach(['首页', '首页右侧','文章页面'] as $k=>$v){
+            foreach(['顶部页签', '右侧广告位','文章页面'] as $k=>$v){
                 $options[] = Elm::option($k, $v);
             }
             return $options;
@@ -105,7 +105,7 @@ class Poster extends AuthController
         $form[] = Elm::input('sort','排序',$ainfo['sort'])->col(10);
         $form[]  = Elm::select('position', '位置',$ainfo['position'])->options(function(){
             $options = [];
-            foreach(['首页', '首页右侧','文章页面'] as $k=>$v){
+            foreach(['顶部页签', '右侧广告位','文章页面'] as $k=>$v){
                 $options[] = Elm::option($k, $v);
             }
             return $options;
