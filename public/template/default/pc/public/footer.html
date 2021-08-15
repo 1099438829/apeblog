@@ -6,17 +6,7 @@
 				"color:#eee;background:#444;padding:5px 10px;"
 		);
 	</script>
-	<script>
-		var _hmt = _hmt || [];
-		!(function () {
-			var e = document.createElement("script");
-			e.src =
-					"https://hm.baidu.com/hm.js?0fab3bd74fd3590e558fc2ad066e72de";
-			var t = document.getElementsByTagName("script")[0];
-			t.parentNode.insertBefore(e, t);
-		})();
-	</script>
-	<script src="t/font_1141258_lpotpn4kdqj.js"></script>
+<!--	<script src="t/font_1141258_lpotpn4kdqj.js"></script>-->
 	<div class="go-top-plane" title="返回顶部">
 		<i class="fa fa-arrow-up" aria-hidden="true"></i>
 	</div>
@@ -27,7 +17,7 @@
 					<div class="footer-aside-box">
 						<div class="textwidget">
 							<p>
-								CorePress主题，一款强大的免费的CMS类主题，适合个人博客，极客等，前端无界面框架，加载迅速。
+								{:web_config("description")}
 							</p>
 						</div>
 					</div>
@@ -41,10 +31,7 @@
 							</li>
 						</ul>
 					</nav>
-					<div class="footer-info">
-						{:web_config("copyright")}
-						<span class="theme-copyright"><a href="corepress.html">CorePress Theme</a> </span>Powered by {:web_config("copyright")}
-					</div>
+					<div class="footer-info">Copyright &copy; {:web_config("copyright")} Powered by WordPress</div>
 					<div class="footer-info">
 					  <span class="footer-icp"><img class="ipc-icon" src="__IMG__/icp.svg" alt=""/><a href="javascript:;" target="_blank">{:web_config("icp")}</a></span>
 					  <span class="footer-icp"><img class="ipc-icon" src="__IMG__/police.svg" alt=""/><a href="javascript:;" target="_blank">{:web_config("icp")}</a></span>
@@ -57,7 +44,7 @@
 						<img
 							width="200"
 							height="50"
-							src="wp-content/uploads/2020/07/logo-300x75.png"
+							src="{:web_config("logo")}"
 							class="image wp-image-352 attachment-200x50 size-200x50"
 							alt=""
 							loading="lazy"
@@ -72,13 +59,13 @@
 						is_single: "",
 						is_page: "",
 						is_home: "1",
-						ajaxurl: "https://www.lovestu.com/wp-admin/admin-ajax.php",
+						ajaxurl: "/admin-ajax.php",
 						reprint: {
 							msg: "复制成功，转载请保留本站链接",
 							copylenopen: 0,
 							copylen: 0,
 							addurl: 0,
-							siteurl: "https://www.lovestu.com:443/",
+							siteurl: "/",
 							open: 1,
 						},
 						module: { imglightbox: 1, imglazyload: 1 },
@@ -86,11 +73,12 @@
 						index: {
 							linksicon: 1,
 							chromeiconurl:
-									"https://www.lovestu.com/wp-content/themes/CorePress/static/img/chrome.png",
+									"__IMG__/chrome.png",
 						},
 						is_page_template: "",
 					};
 				</script>
+				<script type="text/javascript" src="__JS__/tools.js" id="tools-js"></script>
 				<script type="text/javascript" src="__JS__/index.js" id="index_js-js"></script>
 				<script type="text/javascript" src="__JS__/wp-embed.min.js" id="wp-embed-js"></script>
 			</div>

@@ -2,27 +2,19 @@
 <html lang="zh">
 <head>
     <title>{:web_config("title")}</title>
-    <meta name="keywords" content="{:web_config(" keywords
-    ")}">
-    <meta name="description" content="{:web_config(" description
-    ")}">
+    <meta name="keywords" content="{:web_config('keywords')}">
+    <meta name="description" content="{:web_config('description')}">
     {include file="public/head" /}
-    <link rel="stylesheet" href="__LIB__/swiper/swiper.min.css">
-    <script src="__LIB__/swiper/swiper.min.js"></script>
-    <link rel="icon" href="{:web_config(" logo
-    ")}" type="image/x-icon">
     <style>
         :root {
             --Maincolor: #409EFF !important;
             --MaincolorHover: #409EFF !important;
             --fontSelectedColor: #3390ff !important;
         }
-
         #nprogress .bar {
             background: var(--Maincolor) !important;
         }
     </style>
-    <script src="__JS__/jquery.lazyload.min.js"></script>
 </head>
 <body>
 <script>NProgress.start();</script>
@@ -37,7 +29,7 @@
                         <div class="swiper-wrapper">
                             {zz:banner pagesize="5" typeid="$cid"}
                             <div class="swiper-slide">
-                                <a href="{$field['url']}" target="_blank">
+                                <a href="{$field['url']}" >
                                     <img src="{$field['image']}" alt="{$field['title']}">
                                 </a>
                             </div>
@@ -91,9 +83,6 @@
                     <div class="list-plane-title">
                         <div class="index-tab-plane">
                             <div class="index-tab-item index-tab-item-active" catid="0">最新文章</div>
-                            <div class="index-tab-item" catid="6">wordpress</div>
-                            <div class="index-tab-item" catid="24">JavaScript</div>
-                            <div class="index-tab-item" catid="8">绿化破解</div>
                         </div>
                         <script>
                             var nowid = $('.index-tab-item-active').attr('catid');
@@ -106,7 +95,7 @@
                                 $('.index-tab-item').removeClass('index-tab-item-active');
                                 $(this).addClass('index-tab-item-active');
                                 $('.post-list').html('<div class="post-item post-loading"><i class="far fa-circle-notch fa-spin"></i> 加载中</div>');
-                                $.post('https://www.lovestu.com/wp-admin/admin-ajax.php', {
+                                $.post('/admin-ajax.php', {
                                     action: 'corepress_load_post_by_tabs',
                                     cat: $(this).attr('catid')
                                 }, function (data) {
@@ -180,20 +169,6 @@
                         </form>
                     </div>
                     <div class="aside-box">
-                        <h2 class="widget-title">句子</h2>
-                        <div class="widget-sentence-placeholder widget-sentence-placeholder-jzmk">
-                            <ul>
-                                <li></li>
-                                <li></li>
-                            </ul>
-                        </div>
-                        <script>
-                            $(document).ready(function () {
-                                widget_sentence_load('djt', '.widget-sentence-placeholder-jzmk');
-                            });
-                        </script>
-                    </div>
-                    <div class="aside-box">
                         <h2 class="widget-title">热门阅读</h2>
               			{zz:arclist row="6" type="where" orderby="view desc"}
                         <div class="hot-post-widget-item">
@@ -262,186 +237,6 @@
                             );
                         </script>
                     </div>
-                    <div class="aside-box">
-                        <h2 class="widget-title">最新评论</h2>
-                        <li>
-                            <div class="widger-comment-plane">
-                                <div class="widger-comment-info">
-                                    <div class="widger-comment-user">
-                                        <div class="widger-avatar">
-                                            <img
-                                                    alt="黯然gg"
-                                                    src="avatar/a817af1c94172733c4e559a236053976.jpg"
-                                                    srcset="
-                              https://sdn.geekzu.org/avatar/a817af1c94172733c4e559a236053976?s=60&d=mm&r=g 2x
-                            "
-                                                    class="avatar avatar-30 photo"
-                                                    height="30"
-                                                    width="30"
-                                                    loading="lazy"
-                                            />
-                                        </div>
-                                        <div class="widger-comment-name">黯然gg</div>
-                                    </div>
-                                    <div class="widger-comment-time">
-                                        <span> 7月17日 </span>
-                                    </div>
-                                </div>
-                                <div class="widger-comment-excerpt">
-                                    <p>
-                                        哈哈我换你这个主题了，现在在友链首页了，大佬来个友链（我是不会告你我从十一点多搞到现在的）
-                                        博客名称：阿...
-                                    </p>
-                                </div>
-                                <p class="widger-comment-postlink">
-                                    评论于
-                                    <a href="applylink.html" target="_blank">
-                                        申请友情链接
-                                    </a>
-                                </p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="widger-comment-plane">
-                                <div class="widger-comment-info">
-                                    <div class="widger-comment-user">
-                                        <div class="widger-avatar">
-                                            <img
-                                                    alt="黑域博客"
-                                                    src="avatar/a19c6a43816e575771df29bc689efa17.jpg"
-                                                    srcset="
-                              https://sdn.geekzu.org/avatar/a19c6a43816e575771df29bc689efa17?s=60&d=mm&r=g 2x
-                            "
-                                                    class="avatar avatar-30 photo"
-                                                    height="30"
-                                                    width="30"
-                                                    loading="lazy"
-                                            />
-                                        </div>
-                                        <div class="widger-comment-name">黑域博客</div>
-                                    </div>
-                                    <div class="widger-comment-time">
-                                        <span> 7月16日 </span>
-                                    </div>
-                                </div>
-                                <div class="widger-comment-excerpt">
-                                    <p>哈哈，我什么时候能上优秀网站</p>
-                                </div>
-                                <p class="widger-comment-postlink">
-                                    评论于
-                                    <a href="corepresswzzs.html" target="_blank">
-                                        CorePress主题优秀网站展示
-                                    </a>
-                                </p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="widger-comment-plane">
-                                <div class="widger-comment-info">
-                                    <div class="widger-comment-user">
-                                        <div class="widger-avatar">
-                                            <img
-                                                    alt="黯然gg"
-                                                    src="avatar/a817af1c94172733c4e559a236053976.jpg"
-                                                    srcset="
-                              https://sdn.geekzu.org/avatar/a817af1c94172733c4e559a236053976?s=60&d=mm&r=g 2x
-                            "
-                                                    class="avatar avatar-30 photo"
-                                                    height="30"
-                                                    width="30"
-                                                    loading="lazy"
-                                            />
-                                        </div>
-                                        <div class="widger-comment-name">黯然gg</div>
-                                    </div>
-                                    <div class="widger-comment-time">
-                                        <span> 7月16日 </span>
-                                    </div>
-                                </div>
-                                <div class="widger-comment-excerpt">
-                                    <p>
-                                        啊 必须要首页的嘛 我用的主题没有首页链接这个模块儿呀
-                                    </p>
-                                </div>
-                                <p class="widger-comment-postlink">
-                                    评论于
-                                    <a href="applylink.html" target="_blank">
-                                        申请友情链接
-                                    </a>
-                                </p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="widger-comment-plane">
-                                <div class="widger-comment-info">
-                                    <div class="widger-comment-user">
-                                        <div class="widger-avatar">
-                                            <img
-                                                    alt="Xpower"
-                                                    src="avatar/a19c6a43816e575771df29bc689efa17.jpg"
-                                                    srcset="
-                              https://sdn.geekzu.org/avatar/d88fa0e5183fc60bce09df183aa52f13?s=60&d=mm&r=g 2x
-                            "
-                                                    class="avatar avatar-30 photo"
-                                                    height="30"
-                                                    width="30"
-                                                    loading="lazy"
-                                            />
-                                        </div>
-                                        <div class="widger-comment-name">Xpower</div>
-                                    </div>
-                                    <div class="widger-comment-time">
-                                        <span> 7月16日 </span>
-                                    </div>
-                                </div>
-                                <div class="widger-comment-excerpt">
-                                    <p>这模板可以</p>
-                                </div>
-                                <p class="widger-comment-postlink">
-                                    评论于
-                                    <a href="shortcodeshow.html" target="_blank">
-                                        CorePress主题短代码演示
-                                    </a>
-                                </p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="widger-comment-plane">
-                                <div class="widger-comment-info">
-                                    <div class="widger-comment-user">
-                                        <div class="widger-avatar">
-                                            <img
-                                                    alt="雅魔窝"
-                                                    src="avatar/a19c6a43816e575771df29bc689efa17.jpg"
-                                                    srcset="
-                              https://sdn.geekzu.org/avatar/6836e13db58b6cdca078095a09f95ac3?s=60&d=mm&r=g 2x
-                            "
-                                                    class="avatar avatar-30 photo"
-                                                    height="30"
-                                                    width="30"
-                                                    loading="lazy"
-                                            />
-                                        </div>
-                                        <div class="widger-comment-name">雅魔窝</div>
-                                    </div>
-                                    <div class="widger-comment-time">
-                                        <span> 7月16日 </span>
-                                    </div>
-                                </div>
-                                <div class="widger-comment-excerpt">
-                                    <p>
-                                        适合wp高手使用，如果用做新手小白，可能还需要写更傻瓜式的教程。
-                                    </p>
-                                </div>
-                                <p class="widger-comment-postlink">
-                                    评论于
-                                    <a href="wordpresswwznltjzdyzd.html" target="_blank">
-                                        WordPress为文章目录添加自定义字段
-                                    </a>
-                                </p>
-                            </div>
-                        </li>
-                    </div>
                     {zz:advert row="3" type="2"}
                     <div class="aside-box">
                         <h2 class="widget-title">{$field['title']}</h2>
@@ -463,9 +258,18 @@
             </div>
             <div class="frinds-links-list">
                 {zz:flink pagesize="5"}
-                <li><a href="{$field['url']}" title="{$field['description']}" target="_blank">{$field['title']}</a></li>
+                <li>
+                    <a href="{$field['url']}" title="{$field['description']}" target="_blank">
+                        {notempty name="$field['image']"}
+                        <img class="frinds-links-icon img-lazyload" src="{$field['image']}" data-original="{$field['image']}"
+                             onerror="javascript:this.src='__IMG__/chrome.png'">
+                        {else /}
+                        <img class="frinds-links-icon img-lazyload" src="__IMG__/chrome.png" data-original="__IMG__/chrome.png"
+                             onerror="javascript:this.src='__IMG__/chrome.png'">
+                        {/notempty} {$field['title']}
+                    </a>
+                </li>
                 {/zz:flink}
-                <li><a href="#" rel="me">首页</a></li>
             </div>
         </div>
     </main>
