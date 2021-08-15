@@ -114,7 +114,7 @@
     function upload(inputName) {
         var formData = new FormData();
         formData.append("file",$("#file"+inputName)[0].files[0]);
-        formData.append("cid",0);
+        formData.append("type","images");
         formData.append("storage",1);
         $.ajax({
             type:'POST',

@@ -22,20 +22,21 @@ class Files extends AuthController
     public function image()
     {
         $file = $this->request->file("file");
-        switch (system_config("storage_type"))
+        $storage_type = system_config("storage_type") ?:1;//默认未本地存储
+        switch ($storage_type)
         {
             case 1:
-                $savename = Filesystem::putFile( 'image', $file);
+                $savename = Filesystem::putFile( 'images', $file);
                 $filePath = "/uploads/".$savename;
                 break;
             case 2:
-                $savename = Filesystem::putFile( 'image', $file);
+                $savename = Filesystem::putFile( 'images', $file);
                 $ext = $file->getOriginalExtension();
                 $key = '/image/'.date('Ymd')."/".substr(md5($file->getRealPath()) , 0, 5). date('YmdHis') . rand(0, 9999) . '.' . $ext;
                 $filePath = QcloudCoService::put($key, $file->getRealPath());
                 break;
         }
-        return Attachment::addAttachment($this->request->param("cid",0),$savename,$filePath,'image',$file->getMime(),$file->getSize(),system_config("storage_type")) ? app("json")->code()->success("上传成功",['filePath'=>$filePath,"name"=>$savename]) : app("json")->fail("上传失败");
+        return Attachment::addAttachment($this->request->param("cid",0),$savename,$filePath,'images',$file->getMime(),$file->getSize(),$storage_type) ? app("json")->code()->success("上传成功",['filePath'=>$filePath,"name"=>$savename]) : app("json")->fail("上传失败");
     }
 
     /**
@@ -78,14 +79,11 @@ class Files extends AuthController
     {
         if($request->isPost()) {
             // 获取表单上传文件 例如上传了001.jpg
-            $file = $request->file('file');//根据表单name替换imgFile
+            $file = $this->request->file('file');//根据表单name替换imgFile
             $type = $this->request->post("type");
             $type =  $type ?:'files';
-            switch (system_config("storage_type"))
-            {
-                case 1:
-                    switch ($type) {
-                        case 'files':
+            switch ($type) {
+                case 'files':
                             $fileSize = 10 * 1024 * 1024;
                             $fileExt = 'pdf,doc,docx,png,jpeg,jpg,text,mp4';
                             break;
@@ -97,6 +95,10 @@ class Files extends AuthController
                             $fileSize = 5 * 1024 * 1024;
                             $fileExt = 'pdf,doc,docx';
                             break;
+                case 'image':
+                    $fileSize = 5 * 1024 * 1024;
+                    $fileExt = 'png,jpeg,jpg';
+                    break;
                         case 'images':
                             $fileSize = 5 * 1024 * 1024;
                             $fileExt = 'png,jpeg,jpg';
@@ -118,24 +120,12 @@ class Files extends AuthController
                             // 限制文件后缀，多个后缀以英文逗号分割
                             'fileExt' => $fileExt
                             // 更多规则请看“上传验证”的规则，文档地址https://www.kancloud.cn/manual/thinkphp6_0/1037629#_444
-                        ]])->check(['file' => $file]);
-                        $savename = Filesystem::putFile( $type, $file);
-                        $filePath = "/uploads/".$savename;
-                        $res = Attachment::addAttachment($this->request->param("cid",0),basename($savename),$filePath,$type,$file->getMime(),$file->getSize(),system_config("storage_type"));
-                        return  $res? app("json")->code()->success("上传成功",['filePath'=>$filePath,"name"=>basename($savename)]) : app("json")->fail("上传失败");
-                    } catch (ValidateException $e) {
-                        return app("json")->fail($e->getMessage());
-                    }
-                    break;
-                case 2:
-                    return app("json")->fail('上传失败');
-                    $savename = Filesystem::putFile( 'image', $file);
-                    $ext = $file->getOriginalExtension();
-                    $key = '/image/'.date('Ymd')."/".substr(md5($file->getRealPath()) , 0, 5). date('YmdHis') . rand(0, 9999) . '.' . $ext;
-                    $filePath = QcloudCoService::put($key, $file->getRealPath());
-                    $res = Attachment::addAttachment($this->request->param("cid",0),basename($savename),$filePath,$type,$file->getMime(),$file->getSize(),system_config("storage_type"));
-                    return  $res? app("json")->code()->success("上传成功",['filePath'=>$filePath,"name"=>basename($savename)]) : app("json")->fail("上传失败");
-                    break;
+                ]])->check(['file' => $file]);
+                $savename = Filesystem::putFile( $type, $file);
+                $filePath = "/uploads/".$savename;
+                return $savename ? app("json")->code()->success("上传成功",['filePath'=>$filePath,"name"=>basename($savename)]) : app("json")->fail("上传失败");
+            } catch (ValidateException $e) {
+               return app("json")->fail($e->getMessage());
             }
         }else{
             return app("json")->fail('上传失败');
