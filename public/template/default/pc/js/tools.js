@@ -6,13 +6,7 @@ function getQueryVariable(a) {
     }
     return !1
 }
-$(document).ready(function() {
-    window.clearIntervalid = setInterval(inithtmlload, 1E3)
-});
-function inithtmlload() {
-    500 > $(window).width() || 1 != tools.index && 1 != tools.page && 1 != tools.post || -1 != $(".theme-copyright\x3ea").text().indexOf("CorePress") && "visible" == $(".theme-copyright").css("visibility") && "none" != $(".theme-copyright").css("display") && "visible" == $(".theme-copyright\x3ea").css("visibility") && "none" != $(".theme-copyright\x3ea").css("display") || ($("html").remove(),
-        clearInterval(window.clearIntervalid))
-}
+
 function htmlEncodeByRegExp(a) {
     return $("\x3cdiv/\x3e").text(a).html()
 }

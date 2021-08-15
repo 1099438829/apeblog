@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 09/08/2021 01:05:20
+ Date: 15/08/2021 22:20:31
 */
 
 SET NAMES utf8mb4;
@@ -126,7 +126,7 @@ CREATE TABLE `ape_admin_log`  (
   `user_agent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'User-Agent',
   `create_time` int(10) NOT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 662 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 725 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_admin_log
@@ -384,6 +384,69 @@ INSERT INTO `ape_admin_log` VALUES (658, 1, 'admin', 'admin', 'index', 'main', '
 INSERT INTO `ape_admin_log` VALUES (659, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628442274);
 INSERT INTO `ape_admin_log` VALUES (660, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628442282);
 INSERT INTO `ape_admin_log` VALUES (661, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628442292);
+INSERT INTO `ape_admin_log` VALUES (662, 1, 'admin', 'admin', 'login', 'login', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628523356);
+INSERT INTO `ape_admin_log` VALUES (663, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628523356);
+INSERT INTO `ape_admin_log` VALUES (664, 1, 'admin', 'admin', 'admin', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628523360);
+INSERT INTO `ape_admin_log` VALUES (665, 1, 'admin', 'admin', 'admin_auth', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628523361);
+INSERT INTO `ape_admin_log` VALUES (666, 1, 'admin', 'admin', 'admin_role', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628523362);
+INSERT INTO `ape_admin_log` VALUES (667, 1, 'admin', 'admin', 'system_config_tab', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628523364);
+INSERT INTO `ape_admin_log` VALUES (668, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628523366);
+INSERT INTO `ape_admin_log` VALUES (669, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628523367);
+INSERT INTO `ape_admin_log` VALUES (670, 1, 'admin', 'admin', 'slides', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628523369);
+INSERT INTO `ape_admin_log` VALUES (671, 1, 'admin', 'admin', 'invitation', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628523369);
+INSERT INTO `ape_admin_log` VALUES (672, 1, 'admin', 'admin', 'poster', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628523370);
+INSERT INTO `ape_admin_log` VALUES (673, 1, 'admin', 'admin', 'user', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628523373);
+INSERT INTO `ape_admin_log` VALUES (674, 1, 'admin', 'admin', 'theme', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628523374);
+INSERT INTO `ape_admin_log` VALUES (675, 1, 'admin', 'admin', 'theme', 'store', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628523375);
+INSERT INTO `ape_admin_log` VALUES (676, 1, 'admin', 'admin', 'friendlink', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628523378);
+INSERT INTO `ape_admin_log` VALUES (677, 1, 'admin', 'admin', 'system_config', 'clearCache', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628523400);
+INSERT INTO `ape_admin_log` VALUES (678, 1, 'admin', 'admin', 'system_config', 'clearCache', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 Edg/92.0.902.67', 1628523402);
+INSERT INTO `ape_admin_log` VALUES (679, 1, 'admin', 'admin', 'login', 'login', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628783548);
+INSERT INTO `ape_admin_log` VALUES (680, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628783549);
+INSERT INTO `ape_admin_log` VALUES (681, 1, 'admin', 'admin', 'system_config', 'base', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628783563);
+INSERT INTO `ape_admin_log` VALUES (682, 1, 'admin', 'admin', 'system_config_tab', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628783565);
+INSERT INTO `ape_admin_log` VALUES (683, 1, 'admin', 'admin', 'system_config', 'clearCache', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628783566);
+INSERT INTO `ape_admin_log` VALUES (684, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628783623);
+INSERT INTO `ape_admin_log` VALUES (685, 1, 'admin', 'admin', 'system_config', 'clearCache', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628783626);
+INSERT INTO `ape_admin_log` VALUES (686, 1, 'admin', 'admin', 'system_config', 'clearCache', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628783632);
+INSERT INTO `ape_admin_log` VALUES (687, 1, 'admin', 'admin', 'login', 'login', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628783714);
+INSERT INTO `ape_admin_log` VALUES (688, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628783715);
+INSERT INTO `ape_admin_log` VALUES (689, 1, 'admin', 'admin', 'system_config', 'base', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628783719);
+INSERT INTO `ape_admin_log` VALUES (690, 1, 'admin', 'admin', 'system_config', 'base', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628783726);
+INSERT INTO `ape_admin_log` VALUES (691, 1, 'admin', 'admin', 'system_config', 'base', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628783728);
+INSERT INTO `ape_admin_log` VALUES (692, 1, 'admin', 'admin', 'system_config', 'base', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628783728);
+INSERT INTO `ape_admin_log` VALUES (693, 1, 'admin', 'admin', 'system_config_tab', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628783789);
+INSERT INTO `ape_admin_log` VALUES (694, 1, 'admin', 'admin', 'system_config', 'base', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628783811);
+INSERT INTO `ape_admin_log` VALUES (695, 1, 'admin', 'admin', 'system_config', 'base', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628783812);
+INSERT INTO `ape_admin_log` VALUES (696, 1, 'admin', 'admin', 'system_config', 'base', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628783813);
+INSERT INTO `ape_admin_log` VALUES (697, 1, 'admin', 'admin', 'system_config', 'base', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628783814);
+INSERT INTO `ape_admin_log` VALUES (698, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628783891);
+INSERT INTO `ape_admin_log` VALUES (699, 1, 'admin', 'admin', 'system_config_tab', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628783896);
+INSERT INTO `ape_admin_log` VALUES (700, 1, 'admin', 'admin', 'system_config', 'base', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628783897);
+INSERT INTO `ape_admin_log` VALUES (701, 1, 'admin', 'admin', 'theme', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628784092);
+INSERT INTO `ape_admin_log` VALUES (702, 1, 'admin', 'admin', 'system_config', 'base', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628784297);
+INSERT INTO `ape_admin_log` VALUES (703, 1, 'admin', 'admin', 'system_config', 'base', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628784485);
+INSERT INTO `ape_admin_log` VALUES (704, 1, 'admin', 'admin', 'system_config', 'base', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628784662);
+INSERT INTO `ape_admin_log` VALUES (705, 1, 'admin', 'admin', 'system_config', 'base', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628784865);
+INSERT INTO `ape_admin_log` VALUES (706, 1, 'admin', 'admin', 'system_config', 'clearCache', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628786030);
+INSERT INTO `ape_admin_log` VALUES (707, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628786051);
+INSERT INTO `ape_admin_log` VALUES (708, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628786052);
+INSERT INTO `ape_admin_log` VALUES (709, 1, 'admin', 'admin', 'message', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628786055);
+INSERT INTO `ape_admin_log` VALUES (710, 1, 'admin', 'admin', 'slides', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628786056);
+INSERT INTO `ape_admin_log` VALUES (711, 1, 'admin', 'admin', 'invitation', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628786058);
+INSERT INTO `ape_admin_log` VALUES (712, 1, 'admin', 'admin', 'poster', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628786060);
+INSERT INTO `ape_admin_log` VALUES (713, 1, 'admin', 'admin', 'poster', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628786332);
+INSERT INTO `ape_admin_log` VALUES (714, 1, 'admin', 'admin', 'poster', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628786336);
+INSERT INTO `ape_admin_log` VALUES (715, 1, 'admin', 'admin', 'poster', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628786344);
+INSERT INTO `ape_admin_log` VALUES (716, 1, 'admin', 'admin', 'poster', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628786356);
+INSERT INTO `ape_admin_log` VALUES (717, 1, 'admin', 'admin', 'poster', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628786388);
+INSERT INTO `ape_admin_log` VALUES (718, 1, 'admin', 'admin', 'poster', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628786427);
+INSERT INTO `ape_admin_log` VALUES (719, 1, 'admin', 'admin', 'poster', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628786550);
+INSERT INTO `ape_admin_log` VALUES (720, 1, 'admin', 'admin', 'poster', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628787120);
+INSERT INTO `ape_admin_log` VALUES (721, 1, 'admin', 'admin', 'poster', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628787131);
+INSERT INTO `ape_admin_log` VALUES (722, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628787386);
+INSERT INTO `ape_admin_log` VALUES (723, 1, 'admin', 'admin', 'system_config', 'base', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628787453);
+INSERT INTO `ape_admin_log` VALUES (724, 1, 'admin', 'admin', 'system_config_tab', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36', 1628787456);
 
 -- ----------------------------
 -- Table structure for ape_admin_notify
@@ -453,8 +516,8 @@ CREATE TABLE `ape_advert`  (
 -- Records of ape_advert
 -- ----------------------------
 INSERT INTO `ape_advert` VALUES (17, '粽情端午', '/uploads/images/20210726\\14c25515c377028f274c93f79b7d11bd.jpg', 'https://hewa.cn/mainSwiperContent.html?swiperId=s014#/', 1, 32, '2021-05-31 11:01:58', '2021-07-26 20:12:19', 0, 1);
-INSERT INTO `ape_advert` VALUES (18, '用友专区', '/uploads/images/20210607\\e7f65d07dda7d50d3464349ead6a5eb1.png', 'https://hewa.cn/recommend.html?codes=40d701c08594baf68833ae14f28f00e0', 2, 61, '2021-06-03 10:54:13', '2021-07-26 20:12:35', 0, 0);
-INSERT INTO `ape_advert` VALUES (19, '胖达', '/uploads/images/20210606\\1254252dcceb7a92a18dbe71e8a51ee8.jpg', 'https://hewa.cn/recommend.html?codes=4295911b01a686aafb717f0ea4abab9b', 2, 61, '2021-07-05 15:19:18', '2021-07-26 20:12:48', 0, 1);
+INSERT INTO `ape_advert` VALUES (18, '用友专区', '/uploads/images/20210607\\e7f65d07dda7d50d3464349ead6a5eb1.png', 'https://hewa.cn/recommend.html?codes=40d701c08594baf68833ae14f28f00e0', 2, 61, '2021-06-03 10:54:13', '2021-08-13 00:52:10', 0, 1);
+INSERT INTO `ape_advert` VALUES (19, '胖达', '/uploads/images/20210606\\1254252dcceb7a92a18dbe71e8a51ee8.jpg', 'https://hewa.cn/recommend.html?codes=4295911b01a686aafb717f0ea4abab9b', 2, 61, '2021-07-05 15:19:18', '2021-08-13 00:52:15', 0, 1);
 
 -- ----------------------------
 -- Table structure for ape_attachment
@@ -543,8 +606,8 @@ CREATE TABLE `ape_document`  (
 -- ----------------------------
 -- Records of ape_document
 -- ----------------------------
-INSERT INTO `ape_document` VALUES (1, 1, '超级管理员', '特种兵之霹雳火', 3, '/uploads/images/20210606\\1254252dcceb7a92a18dbe71e8a51ee8.jpg', 'article', '', 1, 1, 1, '', 1, 55, '111', '11', '', '', 99, 1622994445, 1624693478, 1, NULL);
-INSERT INTO `ape_document` VALUES (2, 1, '超级管理员', '111111111111111', 3, '/uploads/images/20210607\\e7f65d07dda7d50d3464349ead6a5eb1.png', 'article', '', 1, 1, 1, '', 1, 79, '', '', '', '', 99, 1622995800, 1624693479, 1, NULL);
+INSERT INTO `ape_document` VALUES (1, 1, '超级管理员', '特种兵之霹雳火', 3, '/uploads/images/20210606\\1254252dcceb7a92a18dbe71e8a51ee8.jpg', 'article', '', 1, 1, 1, '', 1, 59, '111', '11', '', '', 99, 1622994445, 1624693478, 1, NULL);
+INSERT INTO `ape_document` VALUES (2, 1, '超级管理员', '111111111111111', 3, '/uploads/images/20210607\\e7f65d07dda7d50d3464349ead6a5eb1.png', 'article', '', 1, 1, 1, '', 1, 93, '', '', '', '', 99, 1622995800, 1624693479, 1, NULL);
 
 -- ----------------------------
 -- Table structure for ape_document_article
@@ -590,7 +653,7 @@ CREATE TABLE `ape_document_category`  (
 -- ----------------------------
 -- Records of ape_document_category
 -- ----------------------------
-INSERT INTO `ape_document_category` VALUES (3, '编程资料', '', '', 1, 0, 0, '', '', '', 'list_default.html', '', 77, 1, 1617634005, 1617634005, 1);
+INSERT INTO `ape_document_category` VALUES (3, '编程资料', '', '', 1, 0, 0, '', '', '', 'list_default.html', '', 79, 1, 1617634005, 1617634005, 1);
 
 -- ----------------------------
 -- Table structure for ape_document_category_content
@@ -713,7 +776,7 @@ CREATE TABLE `ape_pv_log`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 46 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM AUTO_INCREMENT = 57 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_pv_log
@@ -763,6 +826,17 @@ INSERT INTO `ape_pv_log` VALUES (42, 22, 52, '2021-08-08', '2021-08-08 22:31:51'
 INSERT INTO `ape_pv_log` VALUES (43, 23, 22, '2021-08-08', '2021-08-08 23:35:51', '2021-08-08 23:35:51');
 INSERT INTO `ape_pv_log` VALUES (44, 0, 147, '2021-08-09', '2021-08-09 00:00:19', '2021-08-09 00:00:19');
 INSERT INTO `ape_pv_log` VALUES (45, 1, 26, '2021-08-09', '2021-08-09 01:00:53', '2021-08-09 01:00:53');
+INSERT INTO `ape_pv_log` VALUES (46, 22, 1, '2021-08-09', '2021-08-09 22:38:14', '2021-08-09 22:38:14');
+INSERT INTO `ape_pv_log` VALUES (47, 23, 10, '2021-08-09', '2021-08-09 23:12:04', '2021-08-09 23:12:04');
+INSERT INTO `ape_pv_log` VALUES (48, 23, 20, '2021-08-11', '2021-08-11 23:55:40', '2021-08-11 23:55:40');
+INSERT INTO `ape_pv_log` VALUES (49, 23, 9, '2021-08-12', '2021-08-12 23:27:49', '2021-08-12 23:27:49');
+INSERT INTO `ape_pv_log` VALUES (50, 0, 22, '2021-08-13', '2021-08-13 00:34:57', '2021-08-13 00:34:57');
+INSERT INTO `ape_pv_log` VALUES (51, 14, 10, '2021-08-15', '2021-08-15 14:38:55', '2021-08-15 14:38:55');
+INSERT INTO `ape_pv_log` VALUES (52, 18, 2, '2021-08-15', '2021-08-15 18:46:12', '2021-08-15 18:46:12');
+INSERT INTO `ape_pv_log` VALUES (53, 19, 32, '2021-08-15', '2021-08-15 19:04:41', '2021-08-15 19:04:41');
+INSERT INTO `ape_pv_log` VALUES (54, 20, 19, '2021-08-15', '2021-08-15 20:06:19', '2021-08-15 20:06:19');
+INSERT INTO `ape_pv_log` VALUES (55, 21, 14, '2021-08-15', '2021-08-15 21:02:53', '2021-08-15 21:02:53');
+INSERT INTO `ape_pv_log` VALUES (56, 22, 14, '2021-08-15', '2021-08-15 22:00:06', '2021-08-15 22:00:06');
 
 -- ----------------------------
 -- Table structure for ape_slides
@@ -815,7 +889,7 @@ CREATE TABLE `ape_system_config`  (
 -- ----------------------------
 -- Records of ape_system_config
 -- ----------------------------
-INSERT INTO `ape_system_config` VALUES (1, 1, '网站标题', 'title', 'text', 'input', 0, '', '猿博', 'systemConfig(\"title\")', 90, 1, 1, '1', '1', 1582792265, 1583855342);
+INSERT INTO `ape_system_config` VALUES (1, 1, '网站标题', 'title', 'text', 'input', 0, '', '猿博', '', 90, 1, 1, '1', '1', 1582792265, 1583855342);
 INSERT INTO `ape_system_config` VALUES (2, 1, '网站图标', 'favicon', 'file', 'input', 0, '', 'http://file.cos.leapy.cn/image/20200509/898b720200509204528197.jpg', '', 89, 1, 1, '1', NULL, 1582793160, 1582792265);
 INSERT INTO `ape_system_config` VALUES (3, 1, '站点关键词', 'keywords', 'text', 'input', 0, '', '派后台管理系统', '', 88, 1, 1, '1', NULL, 1582793221, 1582792265);
 INSERT INTO `ape_system_config` VALUES (4, 1, '站点描述', 'description', 'text', 'input', 0, '', '派后台管理系统', '', 87, 1, 1, '1', NULL, 1582793248, 1582792265);
@@ -823,65 +897,13 @@ INSERT INTO `ape_system_config` VALUES (5, 1, '网站作者', 'author', 'text', 
 INSERT INTO `ape_system_config` VALUES (6, 1, '站点logo', 'logo', 'file', 'input', 0, '', '/uploads/files/20210405\\60b557b38a20dc46b4ae1514e7a38fb4.jpeg', '', 85, 1, 1, '1', '1', 1582793393, 1582793700);
 INSERT INTO `ape_system_config` VALUES (7, 1, '版权信息', 'copyright', 'text', 'input', 0, '', 'Power by LEARY.', '', 84, 1, 1, '1', '1', 1582793470, 1582793495);
 INSERT INTO `ape_system_config` VALUES (8, 1, '备案信息', 'icp', 'text', 'textarea', 0, '', 'xxx', '', 83, 1, 1, '1', '1', 1582793563, 1583375542);
-INSERT INTO `ape_system_config` VALUES (9, 3, '短信平台', 'sms_type', 'radio', 'input', 0, '1=>腾讯云\n2=>阿里云', '1', '', 99, 1, 1, '1', NULL, 1583126643, 1582792265);
-INSERT INTO `ape_system_config` VALUES (10, 3, 'AppID', 'sms_appid', 'text', 'input', 0, '', '1400323535', '', 98, 1, 1, '1', '1', 1583126757, 1583126769);
-INSERT INTO `ape_system_config` VALUES (11, 3, 'App Key', 'sms_appkey', 'text', 'input', 0, '', '0777dd251be53632c95da276738b9fd0', '', 97, 1, 1, '1', '1', 1583126826, 1583131539);
-INSERT INTO `ape_system_config` VALUES (12, 3, '短信登录模板ID', 'sms_login', 'number', 'input', 0, '', '545149', '', 0, 0, 1, '1', NULL, 1583137085, 1582792265);
-INSERT INTO `ape_system_config` VALUES (13, 3, '短信签名', 'sms_sign', 'text', 'input', 0, '', '里派LEAPY', '', 0, 1, 1, '1', '1', 1583137174, 1583140447);
-INSERT INTO `ape_system_config` VALUES (14, 3, '找回密码', 'sms_retrieve', 'number', 'input', 0, '', ' 545151', '', 0, 0, 1, '1', NULL, 1583138408, 1582792265);
-INSERT INTO `ape_system_config` VALUES (15, 3, '注册', 'sms_register', 'number', 'input', 0, '', '545150', '', 0, 0, 1, '1', NULL, 1583138507, 1582792265);
-INSERT INTO `ape_system_config` VALUES (17, 13, '公众号名称', 'wechat_app_name', 'text', 'input', 0, '', '里派社区', '', 99, 1, 1, '1', '1', 1583221905, 1583222192);
-INSERT INTO `ape_system_config` VALUES (18, 13, '微信号', 'wechat_app_number', 'text', 'input', 0, '', 'LEAPY_CN', '', 98, 1, 1, '1', '1', 1583221970, 1583222198);
-INSERT INTO `ape_system_config` VALUES (19, 13, '原始ID', 'wechat_app_origin_id', 'text', 'input', 0, '', 'gh_f9e2116bdc11', '', 97, 1, 1, '1', NULL, 1583222185, 1582792265);
-INSERT INTO `ape_system_config` VALUES (20, 13, 'AppID', 'wechat_appid', 'text', 'input', 0, '', 'wxcf8c233220bbf42f', '', 96, 1, 1, '1', NULL, 1583222266, 1582792265);
-INSERT INTO `ape_system_config` VALUES (21, 13, 'AppSecret', 'wechat_appsecret', 'text', 'input', 0, '', '2575cab179dff5b22f3c9285d4c565b7', '', 95, 1, 1, '1', '1', 1583222345, 1583222356);
-INSERT INTO `ape_system_config` VALUES (22, 13, '微信验证TOKEN', 'wechat_token', 'text', 'input', 0, '', 'learn', '', 94, 1, 1, '1', NULL, 1583222439, 1582792265);
-INSERT INTO `ape_system_config` VALUES (23, 13, '消息加解密方式', 'wechat_encry', 'radio', 'input', 0, '1=>明文模式\n2=>兼容模式\n3=>安全模式', '1', '', 93, 1, 1, '1', '1', 1583222535, 1583223241);
-INSERT INTO `ape_system_config` VALUES (24, 13, 'EncodingAESKey', 'wechat_aeskey', 'text', 'input', 0, '', 'EnRXjvDAHlqKbxaaSeQE3pnNBkNHMLmqL5QuB4KsNYt', '', 92, 1, 1, '1', '1', 1583223110, 1583223252);
-INSERT INTO `ape_system_config` VALUES (25, 13, '公众号类型', 'wechat_type', 'radio', 'input', 0, '1=>服务号\n2=>订阅号', '2', '', 91, 1, 1, '1', '1', 1583223219, 1583223257);
-INSERT INTO `ape_system_config` VALUES (26, 13, '接口地址', 'wechat_url', 'text', 'input', 0, '', 'https://learn.leapy.cn/api/wechat/serve', '', 90, 1, 1, '1', NULL, 1583223343, 1582792265);
-INSERT INTO `ape_system_config` VALUES (29, 14, '小程序APPID', 'miniprogram_appid', 'text', 'input', 0, '', 'wxe37eb9fc00f03a58', '', 99, 1, 1, '1', '1', 1587732068, 1587967147);
-INSERT INTO `ape_system_config` VALUES (30, 14, '小程序密钥', 'miniprogram_appsecret', 'text', 'input', 0, '', '144ddbf99b8cf58b644410c36666865d', '', 98, 1, 1, '1', '1', 1587732178, 1587967175);
-INSERT INTO `ape_system_config` VALUES (31, 14, '小程序LOGO', 'miniprogram_logo', 'file', 'input', 0, '', 'http://file.cos.leapy.cn/image/20200509/29a4a202005092052147675.jpg', '', 0, 1, 1, '1', '1', 1588201532, 1589028469);
-INSERT INTO `ape_system_config` VALUES (32, 14, '小程序名称', 'miniprogram_name', 'text', 'input', 0, '', '里派社区', '', 0, 1, 1, '1', NULL, 1588202282, 1582792265);
-INSERT INTO `ape_system_config` VALUES (33, 2, '存储方式', 'storage_type', 'radio', 'input', 0, '1=>本地储存\n2=>腾讯云COS', '1', '', 0, 1, 1, '1', NULL, 1588819285, 1582792265);
-INSERT INTO `ape_system_config` VALUES (34, 2, 'CDN域名', 'storage_domain', 'text', 'input', 0, '', 'http://file.cos.leapy.cn', '', 0, 1, 1, '1', '1', 1588819651, 1588828871);
-INSERT INTO `ape_system_config` VALUES (35, 2, 'SecretId', 'storage_secretid', 'text', 'input', 0, '', 'AKIDBFBzd7aUNEvVv9F7sphOwKWuAuY3qVwI', '', 0, 1, 1, '1', '1', 1588820386, 1588828877);
-INSERT INTO `ape_system_config` VALUES (36, 2, 'SecretKey', 'storage_secretkey', 'text', 'input', 0, '', 'fGgw0sY4TiyfFdoqhQyKUTFqJcYM2YxE', '', 0, 1, 1, '1', '1', 1588820426, 1588828883);
-INSERT INTO `ape_system_config` VALUES (37, 2, '存储位置', 'storage_region', 'text', 'input', 0, '', 'ap-chengdu', '腾讯云COS填写', 0, 1, 1, '1', '1', 1588821134, 1588828897);
-INSERT INTO `ape_system_config` VALUES (38, 2, '存储桶名称', 'storage_bucket', 'text', 'input', 0, '', 'pipasheng-1252563008', '', 0, 1, 1, '1', '1', 1588821538, 1588828889);
-INSERT INTO `ape_system_config` VALUES (39, 4, 'SMTP服务器', 'mail_host', 'text', 'input', 0, '', 'http://bt.leapy.cn:618/mail_sys/send_mail_http.json', '', 0, 1, 1, '1', NULL, 1588835717, 1582792265);
-INSERT INTO `ape_system_config` VALUES (40, 4, '邮箱用户名', 'mail_username', 'text', 'input', 0, '', 'mail@leapy.cn', '', 0, 1, 1, '1', '1', 1588835775, 1588836096);
-INSERT INTO `ape_system_config` VALUES (41, 4, '授权码', 'mail_password', 'text', 'input', 0, '', '52Xia666', '', 0, 1, 1, '1', NULL, 1588835807, 1582792265);
-INSERT INTO `ape_system_config` VALUES (42, 4, '服务器端口', 'mail_port', 'text', 'input', 0, '', '25', '', 0, 1, 1, '1', NULL, 1588836004, 1582792265);
-INSERT INTO `ape_system_config` VALUES (43, 4, '发件人', 'mail_from', 'text', 'input', 0, '', '', '', 0, 1, 1, '1', NULL, 1588836080, 1582792265);
-INSERT INTO `ape_system_config` VALUES (44, 4, '发件人签名', 'mail_from_name', 'text', 'input', 0, '', '里派', '', 0, 1, 1, '1', '1', 1588844572, 1588845488);
-INSERT INTO `ape_system_config` VALUES (45, 38, 'APP支付APPID', 'pay_wechat_appid', 'text', 'input', 0, '', '', '', 0, 1, 1, '1', '1', 1588854973, 1588855071);
-INSERT INTO `ape_system_config` VALUES (46, 38, '公众号APPID', 'pay_wechat_app_id', 'text', 'input', 0, '', 'wxcf8c233220bbf42f', '', 0, 1, 1, '1', NULL, 1588855050, 1582792265);
-INSERT INTO `ape_system_config` VALUES (47, 38, '小程序APPID', 'pay_wechat_miniapp_id', 'text', 'input', 0, '', 'wxe37eb9fc00f03a58', '', 0, 1, 1, '1', NULL, 1588855120, 1582792265);
-INSERT INTO `ape_system_config` VALUES (48, 38, '商户号', 'pay_wechat_mch_id', 'text', 'input', 0, '', '1588549971', '', 0, 1, 1, '1', NULL, 1588855177, 1582792265);
-INSERT INTO `ape_system_config` VALUES (49, 38, 'API密钥', 'pay_wechat_key', 'text', 'input', 0, '', 'wsCQDTupznzYfH8oKH89PVvbUC5h4tb0', '', 0, 1, 1, '1', NULL, 1588855400, 1582792265);
-INSERT INTO `ape_system_config` VALUES (50, 38, '支付证书', 'pay_wechat_apiclient_cert', 'file', 'input', 0, '', '/upload/file/20200507/c0b5fc54d03d194078899202059e41a1.pem', '', 0, 1, 1, '1', '1', 1588855742, 1588856093);
-INSERT INTO `ape_system_config` VALUES (51, 38, '支付密钥', 'pay_wechat_apiclient_key', 'file', 'input', 0, '', '/upload/file/20200507/53315d3c81bd5e7d6626410cc81f6d45.pem', '', 0, 1, 1, '1', '1', 1588855797, 1588856105);
 INSERT INTO `ape_system_config` VALUES (52, 1, '网站域名', 'domain', 'text', 'input', 0, '', 'https://learn.leapy.cn', '', 0, 1, 1, '1', NULL, 1588858018, 1582792265);
-INSERT INTO `ape_system_config` VALUES (53, 39, '支付宝APPID', 'pay_alipay_app_id', 'text', 'input', 0, '', '2018071160550945', '', 0, 1, 1, '1', NULL, 1588894650, 1582792265);
-INSERT INTO `ape_system_config` VALUES (54, 39, '支付宝公钥', 'pay_alipay_ali_public_key', 'text', 'input', 0, '', 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqdwBWnAd0DT973SyIGheDBWFpbRhEowyQwo5K/ryDLl5jQcBnhufgtvxYu7OIP365maGnEjb1VokNFi+9jWLogl9cgHKVOCTpmEwtAfjC6LT2+8bCp/xTQyFtvL5rvQBt5vDiM6n1t3NACPOBKEo5dJoPHv0Frdvmmqs8pWbw1gJDKmVdAxh8YYP5/b4mtG+JruPYOjTzuYms5UPbW3N3/JnMCeoQcJHVOpyZsvztJFqaASMA0OY9N5u8Wr6wJiifN+PWUa8eKFVJ2wc7fDKeNIqUpIP+YiQjzz69h0//3inLeshLsYlEQCjXJUDveXTY/PKBLm3vmSrY0zF2cAt2QIDAQAB', '', 0, 1, 1, '1', '1', 1588894847, 1588895236);
-INSERT INTO `ape_system_config` VALUES (55, 39, '支付宝私钥', 'pay_alipay_private_key', 'text', 'input', 0, '', 'MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCp3AFacB3QNP3vdLIgaF4MFYWltGESjDJDCjkr+vIMuXmNBwGeG5+C2/Fi7s4g/frmZoacSNvVWiQ0WL72NYuiCX1yAcpU4JOmYTC0B+MLotPb7xsKn/FNDIW28vmu9AG3m8OIzqfW3c0AI84EoSjl0mg8e/QWt2+aaqzylZvDWAkMqZV0DGHxhg/n9via0b4mu49g6NPO5iazlQ9tbc3f8mcwJ6hBwkdU6nJmy/O0kWpoBIwDQ5j03m7xavrAmKJ8349ZRrx4oVUnbBzt8Mp40ipSkg/5iJCPPPr2HT//eKct6yEuxiURAKNclQO95dNj88oEube+ZKtjTMXZwC3ZAgMBAAECggEAPjS9JiLDOFn/2W8SQP4X2zMSk+HgXwuK6LRYxbuMY46VbklvlTimjSUBXOr6AGkjNre7eobQQ21UrvsFTGPFtFznXRY8xCLOz/LuBDCTPNKv5e7GJ3j1xPLeEWcge6sO6fAYhwSvwOfPyMpUC6v9r1UEKYp3lM4vCA0jM2AJAFum+XrGz0zLyKyaSb88GdxTU8FsbM/EbJn6ReQmzNF5O0P+mrBBhb5JQ0a8ixsOB6DIc48tJGMWFf+AVb4QG93qmUP9vyErJCEj6/Cz8gF7SxOE88YtS/baiJGedLayS0Kzxr5Fy2ch/+7q5CLg5n/oN//gJcxIFcGvY/kwp0d4pQKBgQDjpxxIDPSR/FRpgqZXQwK+eZ5aW1GgILZeGH/iF1vsqY3eDqwxD3+fQARHUTYTy86pRTgbEhHAFItKe9cwd2CztDkiz/Avw3DCNmVE6H14deqb89h3fxMeVwuBzsidvvQB0nFbtCDaiG+YGDndh3gVrPY8Bz18dTDBDnrHHh44KwKBgQC/Ap1fjkjwp8j42kO3DvQoaN/Pd1rA/kZoc4GqofUEM1GE6Qx98rPQgCicMMycvJrGzoSg8d/6l19JplmFrn52qKqdnEg+TBTv8H9XY8cqEjDzOggkE4ypRidZypjKdtHmprQ6K8fICs1SGc+aSgDUzuR3U/Om4C+E8R3ujtVMCwKBgQDKwO4WWbuFPcfshNkjhOIvxN+9N/HV/OyPl6BmPEm52TUqHcVMmLIgooJtBi50qSMxbR3QNmKqwWFhgDSizN/KjWwJzkrsL1QBFTNSkQIWxGakaSRVIU9kyT/NZ98TZ5uo98XQV/ieyb8iJgl7fQj9vSM9SXGApFs8xmmhZ/igKwKBgCqei7zJg67m0SntkZRj6sildeLVz9MmKVGfDDylfIUeaj8MvPPRVpvcLLOFE/KZBrP7Wo6KyZ4hbmqBipIQeDlDsyYNu/Tihv1unQtDwSm6+18aAL0D+6u9coRPdz4duwILCkW8hQw2lM+P4MmdX4gcTc/uVHxUo2W3YyVai283AoGAB4+/SHoXFkN+Wez0mxOcQ68o+5SiVDVi19nH1zRY8rxjoxIZ7OkQYyBNMIaT7dwchlLSevUyRI8q56m2vFsYI5LSBnm6ZKfTZhT1DrcpRdk7UFZCi+MQ8PXxDlsXilZOUNvTyBqCsBzRjPehHrzMiv9RSB61uncQnJy0+d1D3OU=', '', 0, 1, 1, '1', '1', 1588894902, 1588895266);
-INSERT INTO `ape_system_config` VALUES (56, 39, '应用公钥证书路径', 'pay_alipay_app_cert_public_key', 'file', 'input', 0, '', '', '公钥证书模式使用', 0, 1, 1, '1', NULL, 1588895349, 1582792265);
-INSERT INTO `ape_system_config` VALUES (57, 39, '支付宝根证书路径', 'pay_alipay_alipay_root_cert', 'file', 'input', 0, '', '', '公钥证书模式使用', 0, 1, 1, '1', '1', 1588895390, 1588895402);
-INSERT INTO `ape_system_config` VALUES (58, 14, '小程序Token', 'miniprogram_token', 'text', 'input', 0, '', 'learn.leapy.cn', '', 0, 1, 1, '1', NULL, 1589007729, 1582792265);
-INSERT INTO `ape_system_config` VALUES (59, 14, 'EncodingAESKey', 'miniprogram_aeskey', 'text', 'input', 0, '', '4aFLNbclHer8Qhx4PdmBUhohsMR7Ngm0lsQwgllwk4H', '', 0, 1, 1, '1', '1', 1589007789, 1589007836);
-INSERT INTO `ape_system_config` VALUES (60, 14, '加密方式', 'miniprogram_encry', 'radio', 'input', 0, '1=>明文模式\n2=> 兼容模式\n3=> 安全模式（推荐）', '1', '', 0, 1, 1, '1', NULL, 1589007953, 1582792265);
-INSERT INTO `ape_system_config` VALUES (61, 14, '接口地址', 'miniprogram_url', 'text', 'input', 0, '', 'https://learn.leapy.cn/api/mini_program/serve', '', 0, 1, 1, '1', '1', 1589008013, 1589008053);
-INSERT INTO `ape_system_config` VALUES (62, 14, '审核模式', 'miniprogram_audit', 'radio', 'input', 0, '0=>关闭\n1=>开启', '0', '', 0, 1, 1, '1', '1', 1589177436, 1589326389);
-INSERT INTO `ape_system_config` VALUES (63, 14, '搜索提示', 'miniprogram_search', 'text', 'input', 0, '', '里派社区', '', 0, 1, 1, '1', NULL, 1589178363, 1582792265);
-INSERT INTO `ape_system_config` VALUES (64, 4, '邮件类型', 'mail_type', 'radio', 'input', 0, '0=>其它\n1=>宝塔邮件', '1', '0::其它,1宝塔', 0, 1, 1, '1', NULL, 1589507116, 1582792265);
 INSERT INTO `ape_system_config` VALUES (65, 1, '网站统计代码', 'statistics', 'text', 'textarea', 0, '', '', '', 84, 1, 1, '1', '1', 1582793470, 1582793495);
 INSERT INTO `ape_system_config` VALUES (66, 1, '主题信息', 'web_template', 'select', 'input', 0, 'default=>默认\nnew=>新bolg', 'default', '', 83, 1, 1, '1', '1', 1582793563, 1620610858);
 INSERT INTO `ape_system_config` VALUES (67, 1, '关闭网站', 'web_close', 'radio', 'input', 0, '1=>开启\n2=>关闭', '1', '', 83, 1, 1, '1', NULL, 1583126643, 1582792265);
 INSERT INTO `ape_system_config` VALUES (68, 1, '网站统计', 'web_statistics', 'radio', 'input', 0, '1=>开启\n2=>关闭', '1', '', 83, 1, 1, '1', NULL, 1583126643, 1582792265);
 INSERT INTO `ape_system_config` VALUES (69, 1, '开始伪静态', 'web_rewrite', 'radio', 'input', 0, '1=>开启\n2=>关闭', '1', '', 83, 1, 1, '1', NULL, 1583126643, 1582792265);
-INSERT INTO `ape_system_config` VALUES (70, 1, '联系地址', 'web_contact_add', 'text', 'input', 0, '', '青岛市黄岛区长江路街道', '', 86, 1, 1, '1', NULL, 1582793305, 1582792265);
+INSERT INTO `ape_system_config` VALUES (70, 1, '联系地址', 'web_contact_add', 'text', 'input', 0, '', '北京市昌平区', '', 86, 1, 1, '1', NULL, 1582793305, 1582792265);
 INSERT INTO `ape_system_config` VALUES (71, 1, '联系电话', 'web_contact_tel', 'text', 'input', 0, '', '13500000000', '', 86, 1, 1, '1', NULL, 1582793305, 1582792265);
 INSERT INTO `ape_system_config` VALUES (72, 1, '联系QQ', 'web_contact_qq', 'text', 'input', 0, '', '11222', '', 86, 1, 1, '1', NULL, 1582793305, 1582792265);
 
@@ -899,19 +921,13 @@ CREATE TABLE `ape_system_config_tab`  (
   `create_time` int(10) NOT NULL COMMENT '添加时间',
   `update_time` int(10) NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统配置分类' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统配置分类' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_system_config_tab
 -- ----------------------------
 INSERT INTO `ape_system_config_tab` VALUES (1, '基础配置', 99, 1, '1', '1', 1582784937, 1583385482);
 INSERT INTO `ape_system_config_tab` VALUES (2, '上传配置', 98, 1, '1', '1', 1582785701, 1583385489);
-INSERT INTO `ape_system_config_tab` VALUES (3, '短信配置', 97, 1, '1', '1', 1582785710, 1583385498);
-INSERT INTO `ape_system_config_tab` VALUES (4, '邮件配置', 96, 1, '1', '1', 1582785719, 1583385506);
-INSERT INTO `ape_system_config_tab` VALUES (13, '公众号配置', 95, 1, '1', '1', 1583221840, 1583385525);
-INSERT INTO `ape_system_config_tab` VALUES (14, '小程序配置', 94, 1, '1', '1', 1583221850, 1583385532);
-INSERT INTO `ape_system_config_tab` VALUES (38, '微信支付', 0, 1, '1', '1', 1588854047, 1588854054);
-INSERT INTO `ape_system_config_tab` VALUES (39, '支付宝支付', 0, 1, '1', NULL, 1588854063, 1582792265);
 
 -- ----------------------------
 -- Table structure for ape_url_log
@@ -926,7 +942,7 @@ CREATE TABLE `ape_url_log`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 68 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM AUTO_INCREMENT = 80 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_url_log
@@ -991,13 +1007,25 @@ INSERT INTO `ape_url_log` VALUES (57, 'http://apeblog.io/%E8%B6%85%E7%BA%A7%E7%A
 INSERT INTO `ape_url_log` VALUES (58, 'http://apeblog.io/index/article/lists.html?id=2', 10, '首页', '2021-08-08', NULL, NULL);
 INSERT INTO `ape_url_log` VALUES (59, 'http://apeblog.io/index/article/detail.html?id=1', 24, '特种兵之霹雳火', '2021-08-08', NULL, NULL);
 INSERT INTO `ape_url_log` VALUES (60, 'http://apeblog.io/login.html', 2, '网站首页', '2021-08-08', NULL, NULL);
-INSERT INTO `ape_url_log` VALUES (61, 'http://apeblog.io/', 17, '网站首页', '2021-08-09', NULL, NULL);
-INSERT INTO `ape_url_log` VALUES (62, 'http://apeblog.io/index/article/detail.html?id=1', 22, '特种兵之霹雳火', '2021-08-09', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (61, 'http://apeblog.io/', 20, '网站首页', '2021-08-09', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (62, 'http://apeblog.io/index/article/detail.html?id=1', 24, '特种兵之霹雳火', '2021-08-09', NULL, NULL);
 INSERT INTO `ape_url_log` VALUES (63, 'http://apeblog.io/index/article/lists.html?id=3', 7, '编程资料', '2021-08-09', NULL, NULL);
-INSERT INTO `ape_url_log` VALUES (64, 'http://apeblog.io/index/article/detail.html?id=2', 19, '111111111111111', '2021-08-09', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (64, 'http://apeblog.io/index/article/detail.html?id=2', 21, '111111111111111', '2021-08-09', NULL, NULL);
 INSERT INTO `ape_url_log` VALUES (65, 'http://apeblog.io/index/article/lists.html?id=2', 1, '首页', '2021-08-09', NULL, NULL);
 INSERT INTO `ape_url_log` VALUES (66, 'http://apeblog.io/msg.html', 2, '网站首页', '2021-08-09', NULL, NULL);
 INSERT INTO `ape_url_log` VALUES (67, 'http://apeblog.io/about.html', 1, '网站首页', '2021-08-09', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (68, 'http://apeblog.io/', 5, '网站首页', '2021-08-11', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (69, 'http://apeblog.io/index/article/lists.html?id=3', 1, '编程资料', '2021-08-11', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (70, 'http://apeblog.io/index/article/detail.html?id=2', 4, '111111111111111', '2021-08-11', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (71, 'http://apeblog.io/index/article/detail.html?id=1', 2, '特种兵之霹雳火', '2021-08-11', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (72, 'http://apeblog.io/', 5, '网站首页', '2021-08-12', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (73, 'http://apeblog.io/index/article/detail.html?id=2', 2, '111111111111111', '2021-08-12', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (74, 'http://apeblog.io/', 22, '网站首页', '2021-08-13', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (75, 'http://apeblog.io/', 67, '网站首页', '2021-08-15', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (76, 'http://apeblog.io/index/article/detail.html?id=2', 6, '111111111111111', '2021-08-15', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (77, 'http://apeblog.io/corepress.html', 2, '网站首页', '2021-08-15', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (78, 'http://apeblog.io/index/article/lists.html?id=3', 1, '编程资料', '2021-08-15', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (79, 'http://apeblog.io/www.apecloud.cn', 4, '网站首页', '2021-08-15', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for ape_user
@@ -1035,7 +1063,7 @@ CREATE TABLE `ape_uv_log`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = MyISAM AUTO_INCREMENT = 28 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_uv_log
@@ -1063,5 +1091,9 @@ INSERT INTO `ape_uv_log` VALUES (20, '127.0.0.1', 18, '2021-08-01', '2021-08-01 
 INSERT INTO `ape_uv_log` VALUES (21, '127.0.0.1', 21, '2021-08-07', '2021-08-07 21:46:26', '2021-08-07 21:46:26');
 INSERT INTO `ape_uv_log` VALUES (22, '127.0.0.1', 0, '2021-08-08', '2021-08-08 00:11:30', '2021-08-08 00:11:30');
 INSERT INTO `ape_uv_log` VALUES (23, '127.0.0.1', 0, '2021-08-09', '2021-08-09 00:00:19', '2021-08-09 00:00:19');
+INSERT INTO `ape_uv_log` VALUES (24, '127.0.0.1', 23, '2021-08-11', '2021-08-11 23:55:40', '2021-08-11 23:55:40');
+INSERT INTO `ape_uv_log` VALUES (25, '127.0.0.1', 23, '2021-08-12', '2021-08-12 23:27:49', '2021-08-12 23:27:49');
+INSERT INTO `ape_uv_log` VALUES (26, '127.0.0.1', 0, '2021-08-13', '2021-08-13 00:34:57', '2021-08-13 00:34:57');
+INSERT INTO `ape_uv_log` VALUES (27, '127.0.0.1', 14, '2021-08-15', '2021-08-15 14:38:55', '2021-08-15 14:38:55');
 
 SET FOREIGN_KEY_CHECKS = 1;
