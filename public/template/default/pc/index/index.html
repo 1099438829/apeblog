@@ -110,21 +110,21 @@
                         <li class="post-item ">
                             <div class="post-item-container">
                                 <div class="post-item-thumbnail">
-                                    <a href="{$field['url']}" target="_blank">
+                                    <a href="{$field['url']}">
                                         <img src="__IMG__/loading.gif" data-original="{:file_cdn($field['cover_path'])}"/>
                                     </a>
                                 </div>
                                 {notempty name="$field['tags']"}
                                 <div class="post-item-tags">
                                     <span class="cat-item">
-                                        <a target="_blank" href="{$field['url']}">{:cn_substr($field['tags'],20)}</a>
+                                        <a href="{$field['url']}">{:cn_substr($field['tags'],20)}</a>
                                     </span>
                                 </div>
                                 {/notempty}
                                 <div class="post-item-main">
                                     <h2>
                                         {if $field['is_top']==1}<span class="post-item-sticky">置顶</span>{/if}
-                                        <a target="_blank" href="{$field['url']}" style="white-space: nowrap;text-overflow: ellipsis;">{:cn_substr($field['title'],20)}</a>
+                                        <a href="{$field['url']}" style="white-space: nowrap;text-overflow: ellipsis;">{:cn_substr($field['title'],20)}</a>
                                     </h2>
                                     <div class="post-item-content" style="white-space: nowrap;text-overflow: ellipsis;">
                                         {:cn_substr($field['content'],100)}

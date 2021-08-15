@@ -7,8 +7,6 @@
     {include file="public/head" /}
 
   
-    <script type="text/javascript" src="__JS__/qrcode.min.js" id="corepress_jquery_qrcode-js"s></script>
-    <script src="__JS__/jquery.lazyload.min.js"></script>
   </head>
 <body>
 
@@ -28,7 +26,7 @@
                 <li class="post-item">
                   <div class="post-item-container">
                     <div class="post-item-thumbnail">
-                      <a href="{$field['url']}" target="_blank">
+                      <a href="{$field['url']}">
                         <img src="__IMG__/loading.gif" data-original="{:file_cdn($field['cover_path'])}" />
                       </a>
                     </div>
@@ -36,13 +34,14 @@
                     {notempty name="$field['tags']"}
                     <div class="post-item-tags ">
                       <span class="cat-item">
-                      	<a target="_blank" href="{$field['url']}">{:cn_substr($field['tags'],20)}</a>
+                      	<a href="{$field['url']}">{:cn_substr($field['tags'],20)}</a>
                       </span>
                     </div>
                     {/notempty}
                     <div class="post-item-main">
                       <h2>
-                        <a target="_blank" href="{$field['url']}" style="white-space: nowrap;text-overflow: ellipsis;">{:cn_substr($field['title'],20)}</a>
+                        {if $field['is_top']==1}<span class="post-item-sticky">置顶</span>{/if}
+                        <a href="{$field['url']}" style="white-space: nowrap;text-overflow: ellipsis;">{:cn_substr($field['title'],20)}</a>
                       </h2>
                       <div class="post-item-content" style="white-space: nowrap;text-overflow: ellipsis;">
                          {:cn_substr($field['content'],100)}
@@ -76,276 +75,96 @@
             </div>
           </div>
           <div class="sidebar">
-            <div class="aside-box">
-              <form class="search-form" action="{:url('/index/article/search')}" method="get" role="search">
-                <div class="search-form-input-plane">
-                  <input type="text" class="search-keyword" name="kw" placeholder="搜索内容" value=""/>
+            <div class="sidebar-box-list">
+                <div class="aside-box">
+                  <form class="search-form" action="{:url('/index/article/search')}" method="get" role="search">
+                    <div class="search-form-input-plane">
+                      <input type="text" class="search-keyword" name="kw" placeholder="搜索内容" value=""/>
+                    </div>
+                    <div>
+                      <button type="submit" class="search-submit" value="&#xf002;">搜索</button>
+                    </div>
+                  </form>
                 </div>
-                <div>
-                  <button type="submit" class="search-submit" value="&#xf002;">搜索</button>
-                </div>
-              </form>
-            </div>
-            <div class="aside-box">
-              <h2 class="widget-title">句子</h2>
-              <div class="widget-sentence-placeholder widget-sentence-placeholder-jzmk">
-                <ul>
-                  <li></li>
-                  <li></li>
-                </ul>
-              </div>
-              <script>
-                $(document).ready(function () {
-                  widget_sentence_load('djt', '.widget-sentence-placeholder-jzmk');
-                });
-              </script>
-            </div>
-            <div class="aside-box">
-              <h2 class="widget-title">热门阅读</h2>
-              {zz:arclist row="6" typeid="$id" orderby="view desc"}
-              <div class="hot-post-widget-item">
-                <div>
-                  <span class="hot-post-widget-item-num">{$i}</span>
-                  <span class="hot-post-widget-item-title">
-                      <a href="{$field['url']}">{:cn_substr($field['title'],15)}</a>
-                  </span>
-                </div>
-                <div class="hot-post-widget-item-meta">
-                  <div>{$field['create_time']}</div>
-                  <div>
-                    <a href="#">{:cn_substr($field['category_title'],5)}</a>
-                  </div>
-                </div>
-              </div>
-              {/zz:arclist}
-            </div>
-            <div class="aside-box">
-              <h2 class="widget-title">标签云</h2>
-              <script src="__JS__/TagCloud.js"></script>
-              <div class="corepress-tag-cloud">
-                <div class="corepress-tag-container-tag1"></div>
-              </div>
-              <style>
-                .corepress-tagcloud a {
-                  font-size: 12px;
-                  color: #fff;
-                  padding: 0 !important;
-                }
-
-                .corepress-tagcloud a:hover {
-                  color: #fff !important;
-                }
-
-                .tagcloud--item {
-                  color: #fff;
-                  padding: 2px 4px;
-                  border-radius: 3px;
-                  cursor: pointer;
-                }
-
-                .tagcloud--item:hover {
-                  opacity: 1 !important;
-                  z-index: 100 !important;
-                }
-              </style>
-              <script>
-                var tag = TagCloud(
-                  ".corepress-tag-container-tag1",
-                  JSON.parse(
-                    '[{"text":"WordPress","href":"https:\/\/www.lovestu.com\/tag\/wordpress"},{"text":"WordPress\u7248\u672c","href":"https:\/\/www.lovestu.com\/tag\/wordpress%e7%89%88%e6%9c%ac"},{"text":"\u4e3b\u9898","href":"https:\/\/www.lovestu.com\/tag\/%e4%b8%bb%e9%a2%98"},{"text":"\u4ee3\u7801","href":"https:\/\/www.lovestu.com\/tag\/code"},{"text":"\u4f7f\u7528\u6559\u7a0b","href":"https:\/\/www.lovestu.com\/tag\/tutorial"}]'
-                  ),
-                  {},
-                  [
-                    "#67C23A",
-                    "#E6A23C",
-                    "#F56C6C",
-                    "#909399",
-                    "#CC9966",
-                    "#FF6666",
-                    "#99CCFF",
-                    "#FF9999",
-                    "#CC6633",
-                  ]
-                );
-              </script>
-            </div>
-            <div class="aside-box">
-              <h2 class="widget-title">最新评论</h2>
-              <li>
-                <div class="widger-comment-plane">
-                  <div class="widger-comment-info">
-                    <div class="widger-comment-user">
-                      <div class="widger-avatar">
-                        <img
-                          alt="黯然gg"
-                          src="../avatar/a817af1c94172733c4e559a236053976.jpg"
-                          srcset="
-                            https://sdn.geekzu.org/avatar/a817af1c94172733c4e559a236053976?s=60&d=mm&r=g 2x
-                          "
-                          class="avatar avatar-30 photo"
-                          height="30"
-                          width="30"
-                          loading="lazy"
-                        />
+                <div class="aside-box">
+                  <h2 class="widget-title">热门阅读</h2>
+                  {zz:arclist row="6" typeid="$id" orderby="view desc"}
+                  <div class="hot-post-widget-item">
+                    <div>
+                      <span class="hot-post-widget-item-num">{$i}</span>
+                      <span class="hot-post-widget-item-title">
+                          <a href="{$field['url']}">{:cn_substr($field['title'],15)}</a>
+                      </span>
+                    </div>
+                    <div class="hot-post-widget-item-meta">
+                      <div>{$field['create_time']}</div>
+                      <div>
+                        <a href="#">{:cn_substr($field['category_title'],5)}</a>
                       </div>
-                      <div class="widger-comment-name">黯然gg</div>
-                    </div>
-                    <div class="widger-comment-time">
-                      <span>7月17日</span>
                     </div>
                   </div>
-                  <div class="widger-comment-excerpt">
-                    <p>
-                      哈哈我换你这个主题了，现在在友链首页了，大佬来个友链（我是不会告你我从十一点多搞到现在的）
-                      博客名称：阿...
-                    </p>
-                  </div>
-                  <p class="widger-comment-postlink">
-                    评论于
-                    <a href="../applylink.html" target="_blank">申请友情链接</a>
-                  </p>
+                  {/zz:arclist}
                 </div>
-              </li>
+                <div class="aside-box">
+                  <h2 class="widget-title">标签云</h2>
+                  <script src="__JS__/TagCloud.js"></script>
+                  <div class="corepress-tag-cloud">
+                    <div class="corepress-tag-container-tag1"></div>
+                  </div>
+                  <style>
+                    .corepress-tagcloud a {
+                      font-size: 12px;
+                      color: #fff;
+                      padding: 0 !important;
+                    }
 
-              <li>
-                <div class="widger-comment-plane">
-                  <div class="widger-comment-info">
-                    <div class="widger-comment-user">
-                      <div class="widger-avatar">
-                        <img
-                          alt="黑域博客"
-                          src="../avatar/a19c6a43816e575771df29bc689efa17.jpg"
-                          srcset="
-                            https://sdn.geekzu.org/avatar/a19c6a43816e575771df29bc689efa17?s=60&d=mm&r=g 2x
-                          "
-                          class="avatar avatar-30 photo"
-                          height="30"
-                          width="30"
-                          loading="lazy"
-                        />
-                      </div>
-                      <div class="widger-comment-name">黑域博客</div>
-                    </div>
-                    <div class="widger-comment-time">
-                      <span>7月16日</span>
-                    </div>
-                  </div>
-                  <div class="widger-comment-excerpt">
-                    <p>哈哈，我什么时候能上优秀网站</p>
-                  </div>
-                  <p class="widger-comment-postlink">
-                    评论于
-                    <a href="../corepresswzzs.html" target="_blank"
-                      >CorePress主题优秀网站展示</a
-                    >
-                  </p>
-                </div>
-              </li>
+                    .corepress-tagcloud a:hover {
+                      color: #fff !important;
+                    }
 
-              <li>
-                <div class="widger-comment-plane">
-                  <div class="widger-comment-info">
-                    <div class="widger-comment-user">
-                      <div class="widger-avatar">
-                        <img
-                          alt="黯然gg"
-                          src="../avatar/a817af1c94172733c4e559a236053976.jpg"
-                          srcset="
-                            https://sdn.geekzu.org/avatar/a817af1c94172733c4e559a236053976?s=60&d=mm&r=g 2x
-                          "
-                          class="avatar avatar-30 photo"
-                          height="30"
-                          width="30"
-                          loading="lazy"
-                        />
-                      </div>
-                      <div class="widger-comment-name">黯然gg</div>
-                    </div>
-                    <div class="widger-comment-time">
-                      <span>7月16日</span>
-                    </div>
-                  </div>
-                  <div class="widger-comment-excerpt">
-                    <p>啊 必须要首页的嘛 我用的主题没有首页链接这个模块儿呀</p>
-                  </div>
-                  <p class="widger-comment-postlink">
-                    评论于
-                    <a href="../applylink.html" target="_blank">申请友情链接</a>
-                  </p>
-                </div>
-              </li>
+                    .tagcloud--item {
+                      color: #fff;
+                      padding: 2px 4px;
+                      border-radius: 3px;
+                      cursor: pointer;
+                    }
 
-              <li>
-                <div class="widger-comment-plane">
-                  <div class="widger-comment-info">
-                    <div class="widger-comment-user">
-                      <div class="widger-avatar">
-                        <img
-                          alt="Xpower"
-                          src="../avatar/a19c6a43816e575771df29bc689efa17.jpg"
-                          srcset="
-                            https://sdn.geekzu.org/avatar/d88fa0e5183fc60bce09df183aa52f13?s=60&d=mm&r=g 2x
-                          "
-                          class="avatar avatar-30 photo"
-                          height="30"
-                          width="30"
-                          loading="lazy"
-                        />
-                      </div>
-                      <div class="widger-comment-name">Xpower</div>
-                    </div>
-                    <div class="widger-comment-time">
-                      <span>7月16日</span>
-                    </div>
-                  </div>
-                  <div class="widger-comment-excerpt">
-                    <p>这模板可以</p>
-                  </div>
-                  <p class="widger-comment-postlink">
-                    评论于
-                    <a href="../shortcodeshow.html" target="_blank"
-                      >CorePress主题短代码演示</a
-                    >
-                  </p>
+                    .tagcloud--item:hover {
+                      opacity: 1 !important;
+                      z-index: 100 !important;
+                    }
+                  </style>
+                  <script>
+                    var tag = TagCloud(
+                      ".corepress-tag-container-tag1",
+                      JSON.parse(
+                        '[{"text":"WordPress","href":"https:\/\/www.lovestu.com\/tag\/wordpress"},{"text":"WordPress\u7248\u672c","href":"https:\/\/www.lovestu.com\/tag\/wordpress%e7%89%88%e6%9c%ac"},{"text":"\u4e3b\u9898","href":"https:\/\/www.lovestu.com\/tag\/%e4%b8%bb%e9%a2%98"},{"text":"\u4ee3\u7801","href":"https:\/\/www.lovestu.com\/tag\/code"},{"text":"\u4f7f\u7528\u6559\u7a0b","href":"https:\/\/www.lovestu.com\/tag\/tutorial"}]'
+                      ),
+                      {},
+                      [
+                        "#67C23A",
+                        "#E6A23C",
+                        "#F56C6C",
+                        "#909399",
+                        "#CC9966",
+                        "#FF6666",
+                        "#99CCFF",
+                        "#FF9999",
+                        "#CC6633",
+                      ]
+                    );
+                  </script>
                 </div>
-              </li>
-
-              <li>
-                <div class="widger-comment-plane">
-                  <div class="widger-comment-info">
-                    <div class="widger-comment-user">
-                      <div class="widger-avatar">
-                        <img
-                          alt="雅魔窝"
-                          src="../avatar/a19c6a43816e575771df29bc689efa17.jpg"
-                          srcset="
-                            https://sdn.geekzu.org/avatar/6836e13db58b6cdca078095a09f95ac3?s=60&d=mm&r=g 2x
-                          "
-                          class="avatar avatar-30 photo"
-                          height="30"
-                          width="30"
-                          loading="lazy"
-                        />
-                      </div>
-                      <div class="widger-comment-name">雅魔窝</div>
-                    </div>
-                    <div class="widger-comment-time">
-                      <span>7月16日</span>
-                    </div>
-                  </div>
-                  <div class="widger-comment-excerpt">
-                    <p>
-                      适合wp高手使用，如果用做新手小白，可能还需要写更傻瓜式的教程。
-                    </p>
-                  </div>
-                  <p class="widger-comment-postlink">
-                    评论于
-                    <a href="../wordpresswwznltjzdyzd.html" target="_blank"
-                      >WordPress为文章目录添加自定义字段</a
-                    >
-                  </p>
+                {zz:advert row="3" type="2"}
+                <div class="aside-box">
+                    <h2 class="widget-title">{$field['title']}</h2>
+                    <a href="{$field['url']}" target="_blank">
+                        <img width="300" height="191" src="{$field['image']}"
+                             class="image wp-image-559  attachment-medium size-medium" alt=""
+                             loading="lazy" style="max-width: 100%; height: auto;">
+                    </a>
                 </div>
-              </li>
+                {/zz:advert}
             </div>
           </div>
         </div>

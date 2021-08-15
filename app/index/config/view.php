@@ -10,15 +10,15 @@ if (file_exists(public_path("template/{$theme}"))){
 }
 //检查是否切换模板
 if(ismobile() == "wap"  && file_exists(public_path("template/{$theme}/mobile"))) {
-    $mode = "mobile/";
+    $mode = "mobile";
 } else {
-    $mode = "pc/";
+    $mode = "pc";
 }
 return [
   // 模板路径
     'taglib_pre_load'     =>    'app\common\taglib\Zz',
     // 模板路径
-    'view_path'    => './template/' .$theme.'/'.$mode,
+    'view_path'    => './template/' .$theme.'/'.$mode.'/',
     // 视图输出字符串内容替换
     'tpl_replace_string'       => [
         '__STATIC__' => '/static',
