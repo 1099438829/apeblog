@@ -481,7 +481,7 @@ function tpl_get_article_list($cid, $row, $orderby, $table = 'article', $type = 
             break;
         case 'tag':
             //读取指定tag的文章
-            $documentListModel = $documentListModel->where('a.keywords', 'like', "%$where%");
+            $documentListModel = $documentListModel->where('a.keywords', 'like', "$where%");
             break;
     }
 

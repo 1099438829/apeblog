@@ -254,12 +254,12 @@
             <div class="list-plane-title">
                 <div>友情链接 <span class="list-plane-linksdescribe">欢迎添加友情链接</span>
                 </div>
-                <a href="applylink/index1.html" class="frinds-links-apply">申请友链</a>
+                <a href="{:url('applylink')}" class="frinds-links-apply">申请友链</a>
             </div>
             <div class="frinds-links-list">
                 {zz:flink pagesize="5"}
                 <li>
-                    <a href="{$field['url']}" title="{$field['description']}" target="_blank">
+                    <a href="{$field['url']}" title="{$field['title']}" target="_blank">
                         {notempty name="$field['image']"}
                         <img class="frinds-links-icon img-lazyload" src="{$field['image']}" data-original="{$field['image']}"
                              onerror="javascript:this.src='__IMG__/chrome.png'">

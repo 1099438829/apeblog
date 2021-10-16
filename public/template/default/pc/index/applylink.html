@@ -1,0 +1,226 @@
+    <!doctype html>
+    <html lang="zh">
+    <head>
+    <title>{:web_config("title")}</title>
+    <meta name="keywords" content="{:web_config('keywords')}">
+    <meta name="description" content="{:web_config('description')}">
+    {include file="public/head" /}
+    <style>
+    :root {
+        --Maincolor: #409EFF !important;
+        --MaincolorHover: #409EFF !important;
+        --fontSelectedColor: #3390ff !important;
+    }
+        #nprogress .bar {
+            background: var(--Maincolor) !important;
+        }
+    </style>
+    <link rel="stylesheet" href="__CSS__/page-links.css" />
+    <link rel="stylesheet" href="__CSS__/comment-module.css" />
+</head>
+<body>
+<script>NProgress.start();</script>
+<div id="app">
+    {include file="public/header" /}
+    <div class="top-divider"></div>
+    <main class="container">
+        <div class="html-main">
+            <div class="post-main">
+                <div class="post-content-body">
+                    <div class="post-content">
+                        <h1 class="post-title">
+                            申请友情链接
+                        </h1>
+                        <div class="post-content-post">
+                            <div class="post-content-content">
+                                <p>
+                                    本站开放申请友情链接，只和
+                                    <span style="color: #ff0000;">
+												<strong>
+													技术博客
+												</strong>
+											</span>
+                                    做友链，资源站不要来留言，并且需要博客文章超过50篇。
+                                </p>
+                                <div class="title-plane">
+                                    <p>
+                                        本站信息
+                                    </p>
+                                    <div>
+                                        网站名称：Lovestu
+                                        </p>
+                                        <p>
+                                            网站地址：https://www.lovestu.com
+                                        </p>
+                                        <p>
+                                            网站描述：原创WordPress主题设计师，爱学习，爱代码，爱生活。
+                                        </p>
+                                        <p>
+                                    </div>
+                                </div>
+                                <p>
+                                    请做好友链以后，在本页面留言。我会回复。
+                                </p>
+                                <div class="links-plane">
+                                    {zz:flink  pagesize="5"}
+                                    <div class="links-item">
+                                        <a href="{$field['url']}" target="_blank">
+                                            <div>
+                                                {notempty name="$field['image']"}
+                                                <img class="frinds-links-icon img-lazyload" src="{$field['image']}" data-original="{$field['image']}"
+                                                     onerror="javascript:this.src='__IMG__/chrome.png'" class="link-icon" alt="">
+                                                {else /}
+                                                <img class="frinds-links-icon img-lazyload" src="__IMG__/chrome.png" data-original="__IMG__/chrome.png"
+                                                     onerror="javascript:this.src='__IMG__/chrome.png'" class="link-icon" alt="">
+                                                {/notempty}
+                                            </div>
+                                            <div class="link-info-plane">
+                                                <div class="link-title">
+                                                    {$field['title']}
+                                                </div>
+                                                <div class="link-description">
+                                                    {$field['description']}
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    {/zz:flink}
+                                </div>
+                            </div>
+                            <div class="post-tool-plane">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="comments" class="responsesWrapper">
+                    <div class="reply-title">
+                        发表评论
+                    </div>
+                    <div id="respond" class="comment-respond">
+                        <h3 id="reply-title" class="comment-reply-title">
+                            <small>
+                                <a rel="nofollow" id="cancel-comment-reply-link" href="/applylink#respond"
+                                   style="display:none;">
+                                    取消回复
+                                </a>
+                            </small>
+                        </h3>
+                        <form action="https://www.lovestu.com/wp-comments-post.php" method="post"
+                              id="form_comment" class="comment-form">
+                            <div class="comment_userinput">
+                                <div class="comment-form-author">
+                                    <input id="author" name="title" placeholder="标题(*)" type="text" value="" size="30" class="required">
+                                </div>
+                                <div class="comment-form-url">
+                                    <input id="url" name="url" placeholder="网址" type="text" value="" size="30">
+                                </div>
+                                <div class="comment-form-email">
+                                    <input id="email" name="image" type="text" placeholder="图标(*)" value="" class="required">
+                                </div>
+                            </div>
+                            <div class="comment-user-plane">
+                                <div class="logged-in-as">
+                                    <img class="comment-user-avatar" width="48" height="auto" src="https://cravatar.cn/avatar/?s=48&d=mm&r=g"
+                                         alt="">
+                                </div>
+                                <div class="comment_form_textarea_box">
+											<textarea class="comment_form_textarea" name="comment" id="comment" placeholder="网站介绍"
+                                                      rows="5">
+											</textarea>
+                                </div>
+                            </div>
+                            <div style="display: none" class="comment-form-cookies-consent">
+                                <input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent"
+                                       type="checkbox" value="yes" checked="checked">
+                            </div>
+                            <div class="form-submit">
+                                <div style="text-align: right">
+                                    <input name="submit" type="submit" id="submit" class="button primary-btn"
+                                           value="发表申请" />
+                                </div>
+                                <input type='hidden' name='comment_post_ID' value='421' id='comment_post_ID'
+                                />
+                                <input type='hidden' name='comment_parent' id='comment_parent' value='0'
+                                />
+                            </div>
+                        </form>
+                    </div>
+                    <script type='text/javascript' src='__JS__/comment-reply.min.js?ver=5.1.1'>
+                    </script>
+                    <script type='text/javascript'>
+                        $('body').on('click', '.comment-reply-link', function(e) {
+                            addComment.moveForm("li-comment-" + $(this).attr('data-commentid'), $(this).attr('data-commentid'), "respond", $(this).attr('data-postid'));
+                            console.log("li-comment-" + $(this).attr('data-commentid'), $(this).attr('data-commentid'), "respond", $(this).attr('data-postid'));
+                            e.stopPropagation();
+                            return false;
+                        });
+                        $(document).click(function(e) {
+                            $('.conment-face-plane').css("opacity", "0");
+                            $('.conment-face-plane').css("visibility", "hidden");
+                            e.stopPropagation();
+                        });
+                        $('body').on('click', '.img-pace', function(e) {
+                            $('.comment_form_textarea').val($('.comment_form_textarea').val() + '[f=' + $(this).attr('facename') + ']')
+                        });
+                        $('body').on('click', '.popover-btn-face', function(e) {
+                            if ($('.conment-face-plane').css("visibility") == 'visible') {
+                                $('.conment-face-plane').css("opacity", "0");
+                                $('.conment-face-plane').css("visibility", "hidden");
+                            } else {
+                                $('.conment-face-plane').css("opacity", "1");
+                                $('.conment-face-plane').css("visibility", "visible");
+                            }
+                            e.stopPropagation();
+                        });
+                    </script>
+                </div>
+            </div>
+            <div class="sidebar">
+                <div class="sidebar-box-list">
+                    <div class="aside-box">
+                        <form class="search-form" action="{:url('/index/article/search')}" method="get" role="search">
+                            <div class="search-form-input-plane">
+                                <input type="text" class="search-keyword" name="kw" placeholder="搜索内容" value=""/>
+                            </div>
+                            <div>
+                                <button type="submit" class="search-submit" value="&#xf002;">搜索</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="aside-box">
+                        <h2 class="widget-title">热门阅读</h2>
+                        {zz:arclist row="6" type="where" orderby="view desc"}
+                        <div class="hot-post-widget-item">
+                            <div>
+                                <span class="hot-post-widget-item-num">{$i}</span>
+                                <span class="hot-post-widget-item-title">
+                                    <a href="{$field['url']}">{:cn_substr($field['title'],15)}</a>
+                                </span>
+                            </div>
+                            <div class="hot-post-widget-item-meta">
+                                <div>{$field['create_time']}</div>
+                                <div>
+                                    <a href="#">{:cn_substr($field['category_title'],5)}</a>
+                                </div>
+                            </div>
+                        </div>
+                        {/zz:arclist}
+                    </div>
+                    {zz:advert row="3" type="2"}
+                    <div class="aside-box">
+                        <h2 class="widget-title">{$field['title']}</h2>
+                        <a href="{$field['url']}" target="_blank">
+                            <img width="300" height="191" src="{$field['image']}"
+                                 class="image wp-image-559  attachment-medium size-medium" alt=""
+                                 loading="lazy" style="max-width: 100%; height: auto;">
+                        </a>
+                    </div>
+                    {/zz:advert}
+                </div>
+            </div>
+        </div>
+    </main>
+    {include file="public/footer" /}
+</div>
+</body>
+</html>
