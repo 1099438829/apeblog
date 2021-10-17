@@ -4,6 +4,7 @@ namespace app\index\controller;
 use app\admin\service\UtilService as Util;
 use app\common\model\FriendLink as friendLinkModel;
 use app\common\validate\MessageForm as MessageformValidate;
+use app\common\model\MessageForm as MessageFormModel;
 use app\Request;
 
 /**
@@ -100,7 +101,7 @@ class Index extends Base
             if (!$messageFormValidate->check($data)) {
                 $this->error($messageFormValidate->getError());
             }
-            $res = friendLinkModel::create($data);
+            $res = MessageFormModel::create($data);
             if($res){
                 $this->success('留言成功');
             } else {
