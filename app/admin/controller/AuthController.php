@@ -161,7 +161,8 @@ abstract class AuthController extends SystemBasic
     protected function buildModel(string $module, string $controller)
     {
         $path = explode(".", $this->request->controller());
-        $modelPath = "app\\{$this->module}\\model";
+//        $modelPath = "app\\{$this->module}\\model";
+        $modelPath = "app\\common\\model"; //全部为common
         foreach ($path as $v) $modelPath .= "\\".$v;
         if (class_exists($modelPath)) return app($modelPath);
         return null;
