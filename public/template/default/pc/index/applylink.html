@@ -105,17 +105,17 @@
                                 </a>
                             </small>
                         </h3>
-                        <form action="https://www.lovestu.com/wp-comments-post.php" method="post"
+                        <form action="{:url('applylink')}" method="post"
                               id="form_comment" class="comment-form">
                             <div class="comment_userinput">
                                 <div class="comment-form-author">
-                                    <input id="author" name="title" placeholder="标题(*)" type="text" value="" size="30" class="required">
+                                    <input id="author" name="title" placeholder="网站名称(*)" type="text" value="" size="30" class="required">
                                 </div>
                                 <div class="comment-form-url">
-                                    <input id="url" name="url" placeholder="网址" type="text" value="" size="30">
+                                    <input id="url" name="url" placeholder="网站网址" type="text" value="" size="30">
                                 </div>
                                 <div class="comment-form-email">
-                                    <input id="email" name="image" type="text" placeholder="图标(*)" value="" class="required">
+                                    <input id="email" name="image" type="text" placeholder="网站图标" value="" class="required">
                                 </div>
                             </div>
                             <div class="comment-user-plane">
@@ -157,19 +157,6 @@
                         $(document).click(function(e) {
                             $('.conment-face-plane').css("opacity", "0");
                             $('.conment-face-plane').css("visibility", "hidden");
-                            e.stopPropagation();
-                        });
-                        $('body').on('click', '.img-pace', function(e) {
-                            $('.comment_form_textarea').val($('.comment_form_textarea').val() + '[f=' + $(this).attr('facename') + ']')
-                        });
-                        $('body').on('click', '.popover-btn-face', function(e) {
-                            if ($('.conment-face-plane').css("visibility") == 'visible') {
-                                $('.conment-face-plane').css("opacity", "0");
-                                $('.conment-face-plane').css("visibility", "hidden");
-                            } else {
-                                $('.conment-face-plane').css("opacity", "1");
-                                $('.conment-face-plane').css("visibility", "visible");
-                            }
                             e.stopPropagation();
                         });
                     </script>
