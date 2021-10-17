@@ -1,0 +1,220 @@
+    <!doctype html>
+    <html lang="zh">
+    <head>
+    <title>{:web_config("title")}</title>
+    <meta name="keywords" content="{:web_config('keywords')}">
+    <meta name="description" content="{:web_config('description')}">
+    {include file="public/head" /}
+    <style>
+    :root {
+        --Maincolor: #409EFF !important;
+        --MaincolorHover: #409EFF !important;
+        --fontSelectedColor: #3390ff !important;
+    }
+        #nprogress .bar {
+            background: var(--Maincolor) !important;
+        }
+    </style>
+    <link rel="stylesheet" href="__CSS__/page-links.css" />
+    <link rel="stylesheet" href="__CSS__/comment-module.css" />
+</head>
+<body>
+<script>NProgress.start();</script>
+<div id="app">
+    {include file="public/header" /}
+    <div class="top-divider"></div>
+    <main class="container">
+        <div class="html-main">
+            <div class="post-main">
+                <div class="post-content-body">
+                    <div class="post-content">
+                        <h1 class="post-title">
+                            留言建议            </h1>
+                        <div class="post-content-post">
+                            <div class="post-content-content">
+                                <p>有什么想说的，可以在本页面说</p>
+                            </div>
+
+                            <div class="post-tool-plane">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="comments" class="responsesWrapper">
+                    <div class="reply-title">
+                        发表评论
+                    </div>
+                    <div id="respond" class="comment-respond">
+                        <h3 id="reply-title" class="comment-reply-title">
+                            <small>
+                                <a rel="nofollow" id="cancel-comment-reply-link" href="/msg#respond" style="display:none;">取消回复</a>
+                            </small>
+                        </h3>
+                        <form action="{:url('msg')}" method="post" id="form_comment" class="comment-form">
+                            <div class="comment-user-plane">
+                                <div class="logged-in-as">
+                                    <img class="comment-user-avatar" width="48" height="auto" src="https://cravatar.cn/avatar/34be3c7c0655313619d9b91a7e6f1ee6?s=48&amp;d=mm&amp;r=g" alt="">
+                                </div>
+                                <div class="comment_form_textarea_box">
+                                    <textarea class="comment_form_textarea" name="content" id="comment" placeholder="发表你的看法" rows="5"></textarea>
+                                    <div id="comment_addplane">
+                                        <button class="popover-btn popover-btn-face" type="button">
+                                            <i class="far fa-smile-wink">
+                                            </i>添加表情</button>
+                                        <div class="conment-face-plane" style="opacity: 0; visibility: hidden;">
+                                            <img class="img-pace" src="__IMG__/face/yun.gif" width="30" facename="yun">
+                                            <img class="img-pace" src="__IMG__/face/youling.gif" width="30" facename="youling">
+                                            <img class="img-pace" src="__IMG__/face/yiwen.gif" width="30" facename="yiwen">
+                                            <img class="img-pace" src="__IMG__/face/yinxian.gif" width="30" facename="yinxian">
+                                            <img class="img-pace" src="__IMG__/face/xigua.gif" width="30" facename="xigua">
+                                            <img class="img-pace" src="__IMG__/face/xieyanxiao.gif" width="30" facename="xieyanxiao">
+                                            <img class="img-pace" src="__IMG__/face/xiaoku.gif" width="30" facename="xiaoku">
+                                            <img class="img-pace" src="__IMG__/face/xiaojiujie.gif" width="30" facename="xiaojiujie">
+                                            <img class="img-pace" src="__IMG__/face/wunai.gif" width="30" facename="wunai">
+                                            <img class="img-pace" src="__IMG__/face/wozuimei.gif" width="30" facename="wozuimei">
+                                            <img class="img-pace" src="__IMG__/face/woshou.gif" width="30" facename="woshou">
+                                            <img class="img-pace" src="__IMG__/face/weiqu.gif" width="30" facename="weiqu">
+                                            <img class="img-pace" src="__IMG__/face/tuosai.gif" width="30" facename="tuosai">
+                                            <img class="img-pace" src="__IMG__/face/touxiao.gif" width="30" facename="touxiao">
+                                            <img class="img-pace" src="__IMG__/face/tiaopi.gif" width="30" facename="tiaopi">
+                                            <img class="img-pace" src="__IMG__/face/shuai.gif" width="30" facename="shuai">
+                                            <img class="img-pace" src="__IMG__/face/shengli.gif" width="30" facename="shengli">
+                                            <img class="img-pace" src="__IMG__/face/se.gif" width="30" facename="se">
+                                            <img class="img-pace" src="__IMG__/face/quantou.gif" width="30" facename="quantou">
+                                            <img class="img-pace" src="__IMG__/face/qinqin.gif" width="30" facename="qinqin">
+                                            <img class="img-pace" src="__IMG__/face/qiang.gif" width="30" facename="qiang">
+                                            <img class="img-pace" src="__IMG__/face/piezui.gif" width="30" facename="piezui">
+                                            <img class="img-pace" src="__IMG__/face/penxue.gif" width="30" facename="penxue">
+                                            <img class="img-pace" src="__IMG__/face/nanguo.gif" width="30" facename="nanguo">
+                                            <img class="img-pace" src="__IMG__/face/liuhan.gif" width="30" facename="liuhan">
+                                            <img class="img-pace" src="__IMG__/face/lenghan.gif" width="30" facename="lenghan">
+                                            <img class="img-pace" src="__IMG__/face/leiben.gif" width="30" facename="leiben">
+                                            <img class="img-pace" src="__IMG__/face/ku.gif" width="30" facename="ku">
+                                            <img class="img-pace" src="__IMG__/face/koubi.gif" width="30" facename="koubi">
+                                            <img class="img-pace" src="__IMG__/face/keai.gif" width="30" facename="keai">
+                                            <img class="img-pace" src="__IMG__/face/jingkong.gif" width="30" facename="jingkong">
+                                            <img class="img-pace" src="__IMG__/face/jie.gif" width="30" facename="jie">
+                                            <img class="img-pace" src="__IMG__/face/huaixiao.gif" width="30" facename="huaixiao">
+                                            <img class="img-pace" src="__IMG__/face/hanxiao.gif" width="30" facename="hanxiao">
+                                            <img class="img-pace" src="__IMG__/face/haixiu.gif" width="30" facename="haixiu">
+                                            <img class="img-pace" src="__IMG__/face/guzhang.gif" width="30" facename="guzhang">
+                                            <img class="img-pace" src="__IMG__/face/ganga.gif" width="30" facename="ganga">
+                                            <img class="img-pace" src="__IMG__/face/fadai.gif" width="30" facename="fadai">
+                                            <img class="img-pace" src="__IMG__/face/doge.gif" width="30" facename="doge">
+                                            <img class="img-pace" src="__IMG__/face/dabing.gif" width="30" facename="dabing">
+                                            <img class="img-pace" src="__IMG__/face/ciya.gif" width="30" facename="ciya">
+                                            <img class="img-pace" src="__IMG__/face/caidao.gif" width="30" facename="caidao">
+                                            <img class="img-pace" src="__IMG__/face/cahan.gif" width="30" facename="cahan">
+                                            <img class="img-pace" src="__IMG__/face/bizui.gif" width="30" facename="bizui">
+                                            <img class="img-pace" src="__IMG__/face/baoquan.gif" width="30" facename="baoquan">
+                                            <img class="img-pace" src="__IMG__/face/aoman.gif" width="30" facename="aoman">
+                                            <img class="img-pace" src="__IMG__/face/aixin.gif" width="30" facename="aixin">
+                                            <img class="img-pace" src="__IMG__/face/OK.gif" width="30" facename="OK">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment_userinput">
+                                <div class="comment-form-author">
+                                    <input id="author" name="name" placeholder="昵称(*)" type="text" value="" size="30" class="required">
+                                </div>
+                                <div class="comment-form-email">
+                                    <input id="email" name="email" type="text" placeholder="邮箱(*)" value="" class="required">
+                                </div>
+                                <div class="comment-form-url">
+                                    <input id="tel" placeholder="网址(*)" name="tel" type="text" value="" size="30">
+                                </div>
+                            </div>
+                            <div style="display: none" class="comment-form-cookies-consent">
+                                <input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes" checked="checked">
+                            </div>
+                            <div class="form-submit">
+                                <div style="text-align: right">
+                                    <input name="submit" type="submit" id="submit" class="button primary-btn" value="发表评论">
+                                </div>
+                                <input type="hidden" name="comment_post_ID" value="428" id="comment_post_ID">
+                                <input type="hidden" name="comment_parent" id="comment_parent" value="0">
+                            </div>
+                        </form>
+                    </div>
+                    <script type='text/javascript' src='__JS__/comment-reply.min.js'></script>
+                    <script type='text/javascript'>
+                        $("body").on("click", ".comment-reply-link",
+                            function(e) {
+                                addComment.moveForm("li-comment-" + $(this).attr("data-commentid"), $(this).attr("data-commentid"), "respond", $(this).attr("data-postid"));
+                                console.log("li-comment-" + $(this).attr("data-commentid"), $(this).attr("data-commentid"), "respond", $(this).attr("data-postid"));
+                                e.stopPropagation();
+                                return false;
+                            });
+                        $(document).click(function(e) {
+                            $(".conment-face-plane").css("opacity", "0");
+                            $(".conment-face-plane").css("visibility", "hidden");
+                            e.stopPropagation();
+                        });
+                        $("body").on("click", ".img-pace",
+                            function(e) {
+                                $(".comment_form_textarea").val($(".comment_form_textarea").val() + "[f=" + $(this).attr("facename") + "]");
+                            });
+                        $("body").on("click", ".popover-btn-face",
+                            function(e) {
+                                if ($(".conment-face-plane").css("visibility") == "visible") {
+                                    $(".conment-face-plane").css("opacity", "0");
+                                    $(".conment-face-plane").css("visibility", "hidden");
+                                } else {
+                                    $(".conment-face-plane").css("opacity", "1");
+                                    $(".conment-face-plane").css("visibility", "visible");
+                                }
+                                e.stopPropagation();
+                            });
+                    </script>
+                </div>
+            </div>
+            <div class="sidebar">
+                <div class="sidebar-box-list">
+                    <div class="aside-box">
+                        <form class="search-form" action="{:url('/index/article/search')}" method="get" role="search">
+                            <div class="search-form-input-plane">
+                                <input type="text" class="search-keyword" name="kw" placeholder="搜索内容" value=""/>
+                            </div>
+                            <div>
+                                <button type="submit" class="search-submit" value="&#xf002;">搜索</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="aside-box">
+                        <h2 class="widget-title">热门阅读</h2>
+                        {zz:arclist row="6" type="where" orderby="view desc"}
+                        <div class="hot-post-widget-item">
+                            <div>
+                                <span class="hot-post-widget-item-num">{$i}</span>
+                                <span class="hot-post-widget-item-title">
+                                    <a href="{$field['url']}">{:cn_substr($field['title'],15)}</a>
+                                </span>
+                            </div>
+                            <div class="hot-post-widget-item-meta">
+                                <div>{$field['create_time']}</div>
+                                <div>
+                                    <a href="#">{:cn_substr($field['category_title'],5)}</a>
+                                </div>
+                            </div>
+                        </div>
+                        {/zz:arclist}
+                    </div>
+                    {zz:advert row="3" type="2"}
+                    <div class="aside-box">
+                        <h2 class="widget-title">{$field['title']}</h2>
+                        <a href="{$field['url']}" target="_blank">
+                            <img width="300" height="191" src="{$field['image']}"
+                                 class="image wp-image-559  attachment-medium size-medium" alt=""
+                                 loading="lazy" style="max-width: 100%; height: auto;">
+                        </a>
+                    </div>
+                    {/zz:advert}
+                </div>
+            </div>
+        </div>
+    </main>
+    {include file="public/footer" /}
+</div>
+</body>
+</html>
