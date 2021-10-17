@@ -1,8 +1,11 @@
 <?php
 namespace app\index\controller;
+use app\admin\service\UtilService as Util;
 use app\common\model\Document;
 use  app\common\model\DocumentCategory;
 use app\common\model\DocumentCategoryContent;
+use app\common\model\Comment as commentModel;
+use app\Request;
 use think\facade\Log;
 
 /**
@@ -144,6 +147,36 @@ class Article extends Base
         //去除后缀
         $detailTmp = substr($detailTmp,0,strpos($detailTmp,'.'));
         return $this->fetch('article/'.$detailTmp);
+    }
+
+    /**
+     * 创建评论
+     * @param Request $request
+     * @return mixed
+     * @author 李玉坤
+     * @date 2021-10-17 19:13
+     */
+    public function create_comment(Request $request){
+        $data = Util::postMore([
+            ['document_id',''],
+            ['pid',''],
+            ['author',''],
+            ['url',''],
+            ['email',''],
+            ['content',''],
+        ]);
+        if ($data['document_id'] == "") $this->error("文章id不能为空");
+        if ($data['author'] == "") $this->error("昵称不能为空");
+        if ($data['email'] == "") $this->error("邮箱不能为空");
+        if ($data['url'] == "") $this->error("url不能为空");
+        if ($data['content'] == "") $this->error("内容能为空");
+        $data['status']  = 0;
+        $res = commentModel::create($data);
+        if($res){
+            $this->success('申请成功，请耐心等待审核');
+        } else {
+            $this->error('提交失败，请联系站长查看',null);
+        }
     }
 
     //文章标签页面

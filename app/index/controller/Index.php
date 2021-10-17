@@ -51,8 +51,8 @@ class Index extends Base
                 ['description',''],
 
             ]);
-            if ($data['title'] == "") return app("json")->fail("链接名称不能为空");
-            if ($data['url'] == "") return app("json")->fail("链接地址不能为空");
+            if ($data['title'] == "") $this->error("链接名称不能为空");
+            if ($data['url'] == "") $this->error("链接地址不能为空");
             //判断下用户是否存在
             $info = friendLinkModel::where('url',$data['url'])->find();
             if ($info){
