@@ -221,6 +221,7 @@
                     </ul>
                   </div>
                 </div>
+                {if web_config('comment_close') !=1}
                 <div id="comments" class="responsesWrapper">
                     <div class="reply-title">发表评论</div>
                     <div id="respond" class="comment-respond">
@@ -406,6 +407,7 @@
                     </script>
                     <nav class="comment-navigation pages"></nav>
                 </div>
+                {/if}
             </div>
             <div class="sidebar">
                 <div class="sidebar-box-list">
