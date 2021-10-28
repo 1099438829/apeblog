@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <title>{$zzField['title']} - {:web_config("title")}</title>
-    <meta name="keywords" content="{$zzField['keywords']}" />
-    <meta name="description" content="{$zzField['description']}"/>
+    <title>{$apeField['title']} - {:web_config("title")}</title>
+    <meta name="keywords" content="{$apeField['keywords']}" />
+    <meta name="description" content="{$apeField['description']}"/>
     {include file="public/head" /}
     <style>
         .post-content-post img {
@@ -36,25 +36,25 @@
                 <div class="post-content-body">
                     <div class="crumbs-plane-body">
                         <div class="crumbs-plane">
-                            <span class="corepress-crumbs-ul">{$zzField['position']|raw}</span>
+                            <span class="corepress-crumbs-ul">{$apeField['position']|raw}</span>
                         </div>
                     </div>
                     <div class="post-content">
-                        <h1 class="post-title">{$zzField['title']}</h1>
+                        <h1 class="post-title">{$apeField['title']}</h1>
                         <div class="post-info">
                             <div class="post-info-left">
                                 <a class="nickname url fn j-user-card" data-user="1"
-                                   href="../author/james/index.html"><i class="fa fa-user" aria-hidden="true"></i>{$zzField['author']}
+                                   href="../author/james/index.html"><i class="fa fa-user" aria-hidden="true"></i>{$apeField['author']}
                                 </a>
                                 <span class="dot">•</span>
-                                <time class="entry-date published" datetime="{$zzField['create_time']}" pubdate=""><i
+                                <time class="entry-date published" datetime="{$apeField['create_time']}" pubdate=""><i
                                         class="far fa-clock"></i>
-                                    {$zzField['create_time']}
+                                    {$apeField['create_time']}
                                 </time>
                                 <span class="dot">•</span><i class="fas fa-folder"></i>
-                                <a href="{:url('article/lists')}?id={$zzField['category_id']}" rel="category tag"> {$zzField['category_title']}</a>
+                                <a href="{:url('article/lists')}?id={$apeField['category_id']}" rel="category tag"> {$apeField['category_title']}</a>
                                 <span class="dot">•</span>
-                                <span><i class="fa fa-eye" aria-hidden="true"></i>{$zzField['view']} 阅读</span>
+                                <span><i class="fa fa-eye" aria-hidden="true"></i>{$apeField['view']} 阅读</span>
                             </div>
                             <div class="post-info-right">
                                 <span title="关闭或显示侧边栏" class="post-info-switch-sidebar post-info-switch-sidebar-show"><i class="fas fa-toggle-on"></i></span>
@@ -62,12 +62,12 @@
                         </div>
                         <div class="post-content-post">
                             <div class="post-content-content">
-                                {$zzField['content']|raw}
+                                {$apeField['content']|raw}
                             </div>
                             <div class="post-end-tools">
                                 <div class="post-copyright">
                                   <p>版权声明：
-                                    <br />作者：{$zzField['author']}
+                                    <br />作者：{$apeField['author']}
                                     <br />链接：
                                     <span>
                                       <u>
@@ -179,25 +179,25 @@
                                 <div class="post-turn-page-plane">
                                     <div class="post-turn-page post-turn-page-previous" style="background-image:url()">
                                         <div class="post-turn-page-main">
-                                            {zz:prenext get="pre" cid="$zzField['category_id']"}
+                                            {ape:prenext get="pre" cid="$apeField['category_id']"}
                                             <div>
                                                 <a href="{:url('/index/article/detail')}?id={$field['id']}">{$field['title']}</a>
                                             </div>
                                             <div class="post-turn-page-link-pre">
                                                 <a href="{:url('/index/article/detail')}?id={$field['id']}"><<上一篇></上一篇></a>
                                             </div>
-                                            {/zz:prenext}
+                                            {/ape:prenext}
                                         </div>
                                     </div>
                                     <div class="post-turn-page post-turn-page-next" style="background-image:url(../wp-content/uploads/2020/12/oracleAP_Payments_GL_Voucher.png)">
-                                        {zz:prenext get="next" cid="$zzField['category_id']"}
+                                        {ape:prenext get="next" cid="$apeField['category_id']"}
                                         <div class="post-turn-page-main">
                                             <a href="{:url('/index/article/detail')}?id={$field['id']}">{$field['title']}</a>
                                             <div class="post-turn-page-link-next">
                                                 <a href="javascript:;">下一篇>></a>
                                             </div>
                                         </div>
-                                        {/zz:prenext}
+                                        {/ape:prenext}
                                     </div>
                                 </div>
                             </div>
@@ -362,7 +362,7 @@
                                     <div style="text-align: right">
                                         <input name="submit" type="submit" id="submit" class="button primary-btn" value="发表评论">
                                     </div>
-                                    <input type="hidden" name="document_id" value="{$zzField['id']}" id="comment_document_id">
+                                    <input type="hidden" name="document_id" value="{$apeField['id']}" id="comment_document_id">
                                     <input type="hidden" name="pid" id="comment_pid" value="0">
                                     </div>
                                 </form>
@@ -412,7 +412,7 @@
                 <div class="sidebar-box-list">
                     <div class="aside-box">
                         <h2 class="widget-title">热门文章</h2>
-                        {zz:arclist row="8" orderby="view desc" type="where"}
+                        {ape:arclist row="8" orderby="view desc" type="where"}
                         <div class="hot-post-widget-item">
                             <div>
                                 <span class="hot-post-widget-item-num">{$i}</span>
@@ -427,7 +427,7 @@
                                 </div>
                             </div>
                         </div>
-                        {/zz:arclist}
+                        {/ape:arclist}
                     </div>
                 </div>
             </div>

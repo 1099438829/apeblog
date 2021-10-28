@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh">
   <head>
-    <title>{$zzField['meta_title']} - {:web_config("title")}</title>
-    <meta name="keywords" content="{$zzField['keywords']}" />
-    <meta name="description" content="{$zzField['description']}" />
+    <title>{$apeField['meta_title']} - {:web_config("title")}</title>
+    <meta name="keywords" content="{$apeField['keywords']}" />
+    <meta name="description" content="{$apeField['description']}" />
     {include file="public/head" /}
 
   
@@ -19,10 +19,10 @@
           <div class="post-main">
             <div class="post-list-page-plane">
               <div class="list-plane-title">
-                <div>{$zzField['title']}</div>
+                <div>{$apeField['title']}</div>
               </div>
               <ul class="post-list">
-                {zz:list orderby="create_time desc" type="where" pagesize="10"}
+                {ape:list orderby="create_time desc" type="where" pagesize="10"}
                 <li class="post-item">
                   <div class="post-item-container">
                     <div class="post-item-thumbnail">
@@ -65,7 +65,7 @@
                     </div>
                   </div>
                 </li>
-                {/zz:list}
+                {/ape:list}
               </ul>
               <div class="pages">
                 <div class="fenye">
@@ -88,7 +88,7 @@
                 </div>
                 <div class="aside-box">
                   <h2 class="widget-title">热门阅读</h2>
-                  {zz:arclist row="6" typeid="$id" orderby="view desc"}
+                  {ape:arclist row="6" typeid="$id" orderby="view desc"}
                   <div class="hot-post-widget-item">
                     <div>
                       <span class="hot-post-widget-item-num">{$i}</span>
@@ -103,7 +103,7 @@
                       </div>
                     </div>
                   </div>
-                  {/zz:arclist}
+                  {/ape:arclist}
                 </div>
                 <div class="aside-box">
                   <h2 class="widget-title">标签云</h2>
@@ -155,7 +155,7 @@
                     );
                   </script>
                 </div>
-                {zz:advert row="3" type="2"}
+                {ape:advert row="3" type="2"}
                 <div class="aside-box">
                     <h2 class="widget-title">{$field['title']}</h2>
                     <a href="{$field['url']}" target="_blank">
@@ -164,7 +164,7 @@
                              loading="lazy" style="max-width: 100%; height: auto;">
                     </a>
                 </div>
-                {/zz:advert}
+                {/ape:advert}
             </div>
           </div>
         </div>

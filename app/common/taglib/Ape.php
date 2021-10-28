@@ -1,7 +1,7 @@
 <?php
 namespace app\common\taglib;
 use think\template\TagLib;
-class Zz extends TagLib{
+class Ape extends TagLib{
     /**
      * 定义标签列表
      */

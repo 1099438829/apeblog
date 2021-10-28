@@ -15,6 +15,16 @@ use think\facade\Log;
  */
 class Article extends Base
 {
+    /**
+     * 列表页
+     * @return string
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @author 李玉坤
+     * @date 2021-10-29 0:17
+     */
     public function lists(){
         $dc=false;
         //栏目分类id
@@ -45,7 +55,6 @@ class Article extends Base
             $this->urlrecord($dc['title']);
         }
         //读取列表页模板
-        $listTmp='';
         if($dc['type']==0){
 			if(empty($dc['template'])){
 	            $this->error('请在栏目分类中，指定当前栏目的列表模板！');
@@ -74,7 +83,7 @@ class Article extends Base
         //添加当前页面的位置信息
         $dc['position']=tpl_get_position($dc);
         //输出文章分类
-        $this->assign('zzField',$dc);
+        $this->assign('apeField',$dc);
         $this->assign('id',$id);
         //当前页面所属分类id
         $this->assign('cid',$id);
@@ -85,6 +94,16 @@ class Article extends Base
         return $this->fetch('category/'.$listTmp);
     }
 
+    /**
+     * 详情页
+     * @return string
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @author 李玉坤
+     * @date 2021-10-29 0:17
+     */
     public function detail()
     {
     	$id=input('id/d');
@@ -130,7 +149,7 @@ class Article extends Base
         $article['keywords'] = $article['keywords']?:web_config('keywords');
         $article['description'] = $article['description']?:web_config('description');
         //输出文章内容
-        $this->assign('zzField',$article);
+        $this->assign('apeField',$article);
         $this->assign('id',$id);
         //当前页面所属分类id
         $this->assign('cid',$article['category_id']);
@@ -179,7 +198,15 @@ class Article extends Base
         }
     }
 
-    //文章标签页面
+    /**
+     * 文章标签页面
+     * @return string
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @author 李玉坤
+     * @date 2021-10-29 0:19
+     */
     public function tag()
     {
         $tag=input('t');
@@ -189,13 +216,13 @@ class Article extends Base
         if(!mb_check_encoding($tag,'utf-8')){
             $tag=iconv('gbk', 'utf-8', $tag);
         }
-        $zzField['id']='0';
-        $zzField['title'] = $tag;
-        $zzField['meta_title'] = $tag;
-        $zzField['keywords'] =web_config('keywords');
-        $zzField['description'] =web_config('description');
-        $zzField['position'] ='<a href="/">首页</a> > <a>'.$tag.'</a>';
-        $this->assign('zzField',$zzField);
+        $apeField['id']='0';
+        $apeField['title'] = $tag;
+        $apeField['meta_title'] = $tag;
+        $apeField['keywords'] =web_config('keywords');
+        $apeField['description'] =web_config('description');
+        $apeField['position'] ='<a href="/">首页</a> > <a>'.$tag.'</a>';
+        $this->assign('apeField',$apeField);
         $this->assign('tag',$tag);
 
         //清除可能存在的栏目分类树id
@@ -207,7 +234,15 @@ class Article extends Base
         return $this->fetch('tag.'.$view_suffix);
     }
 
-    //搜索页面
+    /**
+     * 搜索页面
+     * @return string
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @author 李玉坤
+     * @date 2021-10-29 0:18
+     */
     public function search()
     {
         $kw=input('kw');
@@ -217,13 +252,13 @@ class Article extends Base
         if(!mb_check_encoding($kw,'utf-8')){
             $kw=iconv('gbk', 'utf-8', $kw);
         }
-        $zzField['id'] = '0';
-        $zzField['title'] = '搜索';
-        $zzField['meta_title'] = '搜索';
-        $zzField['keywords'] = web_config('keywords');
-        $zzField['description'] = web_config('description');
-        $zzField['position'] = '<a href="/">首页</a> > <a>搜索</a>';
-        $this->assign('zzField',$zzField);
+        $apeField['id'] = '0';
+        $apeField['title'] = '搜索';
+        $apeField['meta_title'] = '搜索';
+        $apeField['keywords'] = web_config('keywords');
+        $apeField['description'] = web_config('description');
+        $apeField['position'] = '<a href="/">首页</a> > <a>搜索</a>';
+        $this->assign('apeField',$apeField);
         $this->assign('kw',$kw);
         //清除可能存在的栏目分类树id
         cache('curr_category_patent_id',false);

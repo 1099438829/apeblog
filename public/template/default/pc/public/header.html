@@ -65,7 +65,7 @@
 							<li id="menu-item-128" class="menu-item current_page_item menu-item-128">
 								<a href="/" aria-current="page">首页</a>
 							</li>
-							{zz:channel type="top"}
+							{ape:channel type="top"}
 							<li id="menu-item-{$field.id}" class="menu-item {notempty name="field['child']"}menu-item-has-children{/notempty} {:IsActiveNav($cid,$field['id'])?'current-menu-item':''} menu-item-{$field['id']}">
 								{notempty name="field['child']"}
 								<a href="#" aria-current="page">{$field['title']}</a>
@@ -74,15 +74,15 @@
 								{/notempty}
 								{notempty name="field['child']"}
 								<ul class="sub-menu">
-									{zz:channel type="son" typeid="$field['id']" void="vo"}
+									{ape:channel type="son" typeid="$field['id']" void="vo"}
 									<li id="menu-item-{$vo.id}" class="menu-item menu-item-{$vo.id} {:IsActiveNav($cid,$vo['id'])?'current-menu-item':''}">
 										<a title="{$vo['title']}" href="{$vo['url']}" aria-current="page" {if $vo['link_str']} target="_blank"{/if}>{$vo['title']}</a>
 									</li>
-									{/zz:channel}
+									{/ape:channel}
 								</ul>
 								{/notempty}
 							</li>
-							{/zz:channel}
+							{/ape:channel}
 						</ul>
 					</nav>
 				</div>

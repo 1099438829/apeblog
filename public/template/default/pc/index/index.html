@@ -27,13 +27,13 @@
                 <div>
                     <div class="swiper-container carousel">
                         <div class="swiper-wrapper">
-                            {zz:banner pagesize="5" typeid="$cid"}
+                            {ape:banner pagesize="5" typeid="$cid"}
                             <div class="swiper-slide">
                                 <a href="{$field['url']}" >
                                     <img src="{$field['image']}" alt="{$field['title']}">
                                 </a>
                             </div>
-                            {/zz:banner}
+                            {/ape:banner}
                         </div>
                         <div class="swiper-pagination"></div>
                         <div class="swiper-button-prev"></div>
@@ -64,7 +64,7 @@
                 </style>
                 <div class="index-top-postcard-plane">
                     <div class="index-top-postcard-body">
-                        {zz:list orderby="create_time desc" where="is_recommend=1" type="where"}
+                        {ape:list orderby="create_time desc" where="is_recommend=1" type="where"}
                         <div class="index-top-postcard-item">
                             <div class="index-top-postcard-main">
                                 <div class="post-item-thumbnail">
@@ -76,7 +76,7 @@
                                 </div>
                             </div>
                         </div>
-                        {/zz:list}
+                        {/ape:list}
                     </div>
                 </div>
                 <div class="post-list-page-plane">
@@ -106,7 +106,7 @@
                         </script>
                     </div>
                     <ul class="post-list">
-                        {zz:list orderby="create_time desc" pagesize="10" type="where" }
+                        {ape:list orderby="create_time desc" pagesize="10" type="where" }
                         <li class="post-item ">
                             <div class="post-item-container">
                                 <div class="post-item-thumbnail">
@@ -147,7 +147,7 @@
                                 </div>
                             </div>
                         </li>
-                        {/zz:list}
+                        {/ape:list}
                     </ul>
                     <div class="pages">
                         <div class="fenye">
@@ -170,7 +170,7 @@
                     </div>
                     <div class="aside-box">
                         <h2 class="widget-title">热门阅读</h2>
-              			{zz:arclist row="6" type="where" orderby="view desc"}
+              			{ape:arclist row="6" type="where" orderby="view desc"}
                         <div class="hot-post-widget-item">
                             <div>
                                 <span class="hot-post-widget-item-num">{$i}</span>
@@ -185,7 +185,7 @@
                                 </div>
                             </div>
                         </div>
-                        {/zz:arclist}
+                        {/ape:arclist}
                     </div>
                     <div class="aside-box">
                         <h2 class="widget-title">标签云</h2>
@@ -237,7 +237,7 @@
                             );
                         </script>
                     </div>
-                    {zz:advert row="3" type="2"}
+                    {ape:advert row="3" type="2"}
                     <div class="aside-box">
                         <h2 class="widget-title">{$field['title']}</h2>
                         <a href="{$field['url']}" target="_blank">
@@ -246,7 +246,7 @@
                                  loading="lazy" style="max-width: 100%; height: auto;">
                         </a>
                     </div>
-                    {/zz:advert}
+                    {/ape:advert}
                 </div>
             </div>
         </div>
@@ -257,7 +257,7 @@
                 <a href="{:url('applylink')}" class="frinds-links-apply">申请友链</a>
             </div>
             <div class="frinds-links-list">
-                {zz:flink pagesize="5"}
+                {ape:flink pagesize="5"}
                 <li>
                     <a href="{$field['url']}" title="{$field['title']}" target="_blank">
                         {notempty name="$field['image']"}
@@ -269,7 +269,7 @@
                         {/notempty} {$field['title']}
                     </a>
                 </li>
-                {/zz:flink}
+                {/ape:flink}
             </div>
         </div>
     </main>

@@ -50,7 +50,7 @@
                                 </div>
                                 <p>请做好友链以后，在本页面留言。我会回复。</p>
                                 <div class="links-plane">
-                                    {zz:flink  pagesize="5"}
+                                    {ape:flink  pagesize="5"}
                                     <div class="links-item">
                                         <a href="{$field['url']}" target="_blank">
                                             <div>
@@ -72,7 +72,7 @@
                                             </div>
                                         </a>
                                     </div>
-                                    {/zz:flink}
+                                    {/ape:flink}
                                 </div>
                             </div>
                             <div class="post-tool-plane">
@@ -153,7 +153,7 @@
                     </div>
                     <div class="aside-box">
                         <h2 class="widget-title">热门阅读</h2>
-                        {zz:arclist row="6" type="where" orderby="view desc"}
+                        {ape:arclist row="6" type="where" orderby="view desc"}
                         <div class="hot-post-widget-item">
                             <div>
                                 <span class="hot-post-widget-item-num">{$i}</span>
@@ -168,9 +168,9 @@
                                 </div>
                             </div>
                         </div>
-                        {/zz:arclist}
+                        {/ape:arclist}
                     </div>
-                    {zz:advert row="3" type="2"}
+                    {ape:advert row="3" type="2"}
                     <div class="aside-box">
                         <h2 class="widget-title">{$field['title']}</h2>
                         <a href="{$field['url']}" target="_blank">
@@ -179,7 +179,7 @@
                                  loading="lazy" style="max-width: 100%; height: auto;">
                         </a>
                     </div>
-                    {/zz:advert}
+                    {/ape:advert}
                 </div>
             </div>
         </div>

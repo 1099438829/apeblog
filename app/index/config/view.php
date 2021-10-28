@@ -16,7 +16,7 @@ if(ismobile() == "wap"  && file_exists(public_path("template/{$theme}/mobile")))
 }
 return [
   // 模板路径
-    'taglib_pre_load'     =>    'app\common\taglib\Zz',
+    'taglib_pre_load'     => 'app\common\taglib\Ape',
     // 模板路径
     'view_path'    => './template/' .$theme.'/'.$mode.'/',
     // 视图输出字符串内容替换
