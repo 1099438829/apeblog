@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <title>{$mate_title} - {:system_config("title")}</title>
+    {include file="public/header" /}
+    <link rel="stylesheet" href="__ADMIN_PATH__css/more.css">
+</head>
+<body>
+<div class="container-fluid p-t-15">
+    <div class="col-lg-12">
+        <div class="card">
+            <ul class="nav nav-tabs page-tabs">
+                <li class="active"><a href="#!">备份数据库</a> </li>
+                <li><a href="/admin/databases/index?type=import">还原数据库</a> </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active">
+                    <div id="toolbar" class="toolbar-btn-action">
+                        <button type="button" class="btn  btn-success btn-primary m-r-5" id="btn-export">
+                            <span aria-hidden="true">立即备份</span>
+                        </button>
+                        <button type="button" class="btn btn-success m-r-5" id="btn-optimize">
+                            <span aria-hidden="true">优化表</span>
+                        </button>
+                        <button type="button" class="btn btn-success m-r-5" id="btn-repair">
+                            <span aria-hidden="true">修复表</span>
+                        </button>
+                    </div>
+                    <table id="tb_departments"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="public/footer"/}
+<script type="text/javascript">
+    $('#tb_departments').bootstrapTable({
+        classes: 'table table-bordered table-hover table-striped',
+        url: '/admin/databases/Lst',
+        method: 'post',
+        dataType : 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
+        uniqueId: 'id',
+        idField: 'id',             // 每行的唯一标识字段
+        toolbar: '#toolbar',       // 工具按钮容器
+        showColumns: false,         // 是否显示所有的列
+        showRefresh: false,         // 是否显示刷新按钮
+        responseHandler: function (res) {
+            return {
+                "total": res.count,
+                "rows": res.data,
+            };
+        },
+        pagination: true,
+        queryParams: function(params) {
+            let temp = toArrayList($(".searchForm").serializeArray());
+            temp['limit'] = params.limit;
+            temp['page'] = (params.offset / params.limit) + 1;
+            return temp;
+        },
+        sidePagination: "server",
+        pageNumber: 1,
+        pageSize: 10,
+        pageList: [10, 20, 50, 100],
+        columns: [{
+            checkbox: true,    // 是否显示复选框
+        },{
+            field: 'name',
+            title: '表名'
+        }, {
+            field: 'rows',
+            title: '数据量',
+        }, {
+            field: 'data_length',
+            title: '数据大小',
+            formatter:function (value,row,index) {
+                return renderSize(value);
+            }
+        },{
+            field: 'create_time',
+            title: '创建时间',
+        }, {
+            field: 'operate',
+            title: '操作',
+            formatter:function (value,row,index) {
+                let html = '<a href="#!" class="btn btn-xs btn-default m-r-5 btn-optimize" title="优化表" data-toggle="tooltip" data-trigger="hover"><i class="mdi mdi-rotate-3d"></i></a> \n' +
+                    '<a class="btn btn-xs btn-default btn-repair" href="#!" title="修复表" data-toggle="tooltip" data-trigger="hover"><i class="mdi mdi-rotate-right-variant"></i></a>';
+                return html;
+            },
+            events: {
+                'click .btn-optimize': function (event, value, row, index) {
+                    $.ajax({
+                        type: "post",
+                        url: "/admin/databases/optimize",
+                        data: {ids:row.name},
+                        success: function (res) {
+                            if (res.code == 200 || res.status == 200) {
+                                parent.lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                            } else{
+                                parent.lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                            }
+                        },
+                        complete: function () {
+                        }
+                    });
+                },
+                'click .btn-repair': function (event, value, row, index) {
+                    $.ajax({
+                        type: "post",
+                        url: "/admin/databases/repair",
+                        data: {ids:row.name},
+                        success: function (res) {
+                            if (res.code == 200 || res.status == 200) {
+                                parent.lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                            } else{
+                                parent.lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                            }
+                        },
+                        complete: function () {
+                        }
+                    });
+                }
+            }
+        }],
+        onLoadSuccess: function(data){
+            $("[data-toggle='tooltip']").tooltip();
+        }
+    });
+
+    //格式化文件大小
+    function renderSize(value){
+        if(null==value||value==''){
+            return "0 Bytes";
+        }
+        var unitArr = new Array("Bytes","KB","MB","GB","TB","PB","EB","ZB","YB");
+        var index=0;
+        var srcsize = parseFloat(value);
+        index=Math.floor(Math.log(srcsize)/Math.log(1024));
+        var size =srcsize/Math.pow(1024,index);
+        size=size.toFixed(2);//保留的小数位数
+        return size+unitArr[index];
+    }
+
+    $("#btn-export").click(function () {
+        var checkID = "";
+        var selectedItem = $('#tb_departments').bootstrapTable('getAllSelections');
+        if (selectedItem=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        for (var i = 0 ; i<  selectedItem.length; i++)
+        {
+            checkID += selectedItem[i]['name']+",";
+        }
+        if (checkID=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        $.confirm({
+            title: '重要提醒!',
+            content: '您确认要执行该操作吗？',
+            backgroundDismiss: true,
+            buttons: {
+                ok: {
+                    text: '确认',
+                    btnClass: 'btn-danger',
+                    action: function () {
+                        $.post("/admin/databases/export",data={ids:checkID},function (res) {
+                            if (res.status == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
+                            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        })
+                        loadIndex = parent.layer.open({
+                            type: 1,
+                            title:'',
+                            area:'440px',
+                            skin: 'layui-layer-demo', //样式类名
+                            closeBtn: 0, //不显示关闭按钮
+                            anim: 2,
+                            content: '<div id="zz-div-backdata" class="zz-div-backdata"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i><div class="content">正在备份数据库，请稍等...</div></div>'
+                        });
+                        window.onbeforeunload = function(){ return "正在备份数据库，请不要关闭！" }
+                    }
+                },
+                cancel: {
+                    text: '取消',
+                    btnClass: 'btn-primary'
+                }
+            }
+        });
+    })
+
+    $("#btn-optimize").click(function () {
+        var checkID = "";
+        var selectedItem = $('#tb_departments').bootstrapTable('getAllSelections');
+        if (selectedItem=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        for (var i = 0 ; i<  selectedItem.length; i++)
+        {
+            checkID += selectedItem[i]['name']+",";
+        }
+        if (checkID=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        $.confirm({
+            title: '重要提醒!',
+            content: '您确认要执行该操作吗？',
+            backgroundDismiss: true,
+            buttons: {
+                ok: {
+                    text: '确认',
+                    btnClass: 'btn-danger',
+                    action: function () {
+                        $.post("/admin/databases/optimize",data={ids:checkID},function (res) {
+                            if (res.status == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
+                            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        })
+                    }
+                },
+                cancel: {
+                    text: '取消',
+                    btnClass: 'btn-primary'
+                }
+            }
+        });
+    })
+
+    $("#btn-repair").click(function () {
+        var checkID = "";
+        var selectedItem = $('#tb_departments').bootstrapTable('getAllSelections');
+        if (selectedItem=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        for (var i = 0 ; i<  selectedItem.length; i++)
+        {
+            checkID += selectedItem[i]['name']+",";
+        }
+        if (checkID=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        $.confirm({
+            title: '重要提醒!',
+            content: '您确认要执行该操作吗？',
+            backgroundDismiss: true,
+            buttons: {
+                ok: {
+                    text: '确认',
+                    btnClass: 'btn-danger',
+                    action: function () {
+                        $.post("/admin/databases/repair",data={ids:checkID},function (res) {
+                            if (res.status == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
+                            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        })
+                    }
+                },
+                cancel: {
+                    text: '取消',
+                    btnClass: 'btn-primary'
+                }
+            }
+        });
+    })
+</script>
+</body>
+</html>

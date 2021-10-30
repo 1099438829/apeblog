@@ -34,8 +34,8 @@ return [
     // 异常页面的模板文件
     'exception_tmpl'   => app()->getThinkPath() . 'tpl/think_exception.tpl',
     // 默认跳转页面对应的模板文件
-    'dispatch_success_tmpl'  => root_path(). 'extend/tpl/dispatch_jump.tpl',
-    'dispatch_error_tmpl'    => root_path(). 'extend/tpl/dispatch_jump.tpl',
+    'dispatch_success_tmpl'  => root_path(). 'app/common/tpl/dispatch_jump.tpl',
+    'dispatch_error_tmpl'    => root_path(). 'app/common/tpl/dispatch_jump.tpl',
 
     // 错误显示信息,非调试模式有效
     'error_message'    => '页面错误！请稍后再试～',

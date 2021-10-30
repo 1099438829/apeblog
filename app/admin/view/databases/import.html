@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <title>{$mate_title} - {:system_config("title")}</title>
+    {include file="public/header" /}
+    <link rel="stylesheet" href="__ADMIN_PATH__css/more.css">
+</head>
+<body>
+<div class="container-fluid p-t-15">
+    <div class="col-lg-12">
+        <div class="card">
+            <ul class="nav nav-tabs page-tabs">
+                <li><a href="/admin/databases/index?type=export">备份数据库</a></li>
+                <li class="active"><a href="#!">还原数据库</a> </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active">
+                    <table id="tb_departments"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{include file="public/footer"/}
+<script type="text/javascript">
+    // tree-grid使用
+    var $treeTable = $('#tree-table');
+    $treeTable.bootstrapTable({
+        url: '/admin/category/lst',
+        method: 'post',
+        responseHandler: function (res) {
+            return {
+                "rows": res.data,
+            };
+        },
+        queryParams: function(params) {
+            var temp = toArrayList($(".searchForm").serializeArray());
+            return temp;
+        },
+        idField: 'id',
+        uniqueId: 'id',
+        dataType: 'json',
+        toolbar: '#toolbar2',
+        showColumns: true,         // 是否显示所有的列
+        showRefresh: true,         // 是否显示刷新按钮
+        columns: [
+            // {
+            //     field: 'check',
+            //     checkbox: true
+            // },
+            {
+                field: 'title',
+                title: '名称',
+            },
+            {
+                field: 'id',
+                title: 'ID',
+            },
+            {
+                field: 'display',
+                title: '可见性',
+                formatter: function (value, row, index) {
+                    if (value == 0) {
+                        is_checked = '';
+                    } else if (value == 1){
+                        is_checked = 'checked="checked"';
+                    }
+                    var field = "display";
+                    result = '<label class="lyear-switch switch-primary switch-solid lyear-status"><input type="checkbox" '+ is_checked +'><span  onClick="updateStatus('+ row.id +', '+ value +', \''+ field +'\')"></span></label>';
+                    return result;
+                },
+            },
+            {
+                field: 'sort',
+                title: '排序',
+                sortable: true,
+            },
+            {
+                field: 'operate',
+                title: '操作',
+                align: 'center',
+                events : {
+                    'click .category-add': function (e, value, row, index) {
+                        location.href = '/admin/category/add?pid='+row.id;
+                    },
+                    'click .article-add': function (e, value, row, index) {
+                        location.href = '/admin/article/add?category_id='+row.id;
+                    },
+                    'click .category-delete': function (e, value, row, index) {
+                        $.alert({
+                            title: '系统提示',
+                            content: '删除提醒',
+                            buttons: {
+                                confirm: {
+                                    text: '确认',
+                                    btnClass: 'btn-primary',
+                                    action: function(){
+                                        $.post(url="/admin/category/del",data={"id":row.id},function (res) {
+                                            if (res.code == 200) {parent.lightyear.notify('删除成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');$("#tree-table").bootstrapTable('refresh');}
+                                            else parent.lightyear.notify('删除失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                                        });
+                                    }
+                                },
+                                cancel: {
+                                    text: '取消'
+                                }
+                            }
+                        });
+                    },
+                    'click .category-edit': function (e, value, row, index) {
+                        iframe.createIframe('修改分类','/admin/category/edit?id='+row.id)
+                    }
+                },
+                formatter: operateFormatter
+            }
+        ],
+        treeShowField: 'title',
+        parentIdField: 'pid',
+
+        onResetView: function(data) {
+            $treeTable.treegrid({
+                initialState: 'collapsed', // 所有节点都折叠
+                treeColumn: 1,
+                //expanderExpandedClass: 'mdi mdi-folder-open',  // 可自定义图标样式
+                //expanderCollapsedClass: 'mdi mdi-folder',
+                onChange: function() {
+                    $treeTable.bootstrapTable('resetWidth');
+                }
+            });
+
+            // 只展开树形的第一集节点
+            $treeTable.treegrid('getRootNodes').treegrid('expand');
+        },
+        onCheck: function(row) {
+            var datas = $treeTable.bootstrapTable('getData');
+
+            selectChilds(datas, row, 'id', 'pid', true); // 选择子类
+
+            selectParentChecked(datas, row, 'id', 'pid'); // 选择父类
+
+            $treeTable.bootstrapTable('load', datas);
+        },
+
+        onUncheck: function(row) {
+            var datas = $treeTable.bootstrapTable('getData');
+            selectChilds(datas, row, 'id', 'pid', false);
+            $treeTable.bootstrapTable('load', datas);
+        },
+    });
+
+    // 操作按钮
+    function operateFormatter(value, row, index) {
+        return [
+            '<a type="button" class="category-add btn btn-xs btn-default m-r-5" title="编辑" data-toggle="tooltip"><i class="mdi mdi-plus"></i></a>',
+            '<a type="button" class="article-add btn btn-xs btn-default m-r-5" title="添加文章" data-toggle="tooltip"><i class="mdi mdi-pencil-box"></i></a>',
+            '<a type="button" class="category-edit btn btn-xs btn-default m-r-5" title="修改" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>',
+            '<a type="button" class="category-delete btn btn-xs btn-default" title="删除" data-toggle="tooltip"><i class="mdi mdi-delete"></i></a>'
+        ].join('');
+    }
+</script>
+</body>
+</html>

@@ -202,24 +202,6 @@
             }
         });
     }
-
-    function test() {
-        var selRows = $treeTable.bootstrapTable("getSelections");
-        if(selRows.length == 0){
-            alert("请至少选择一行");
-            return;
-        }
-        console.log(selRows);
-
-        var postData = "";
-        $.each(selRows,function(i) {
-            postData +=  this.id;
-            if (i < selRows.length - 1) {
-                postData += "， ";
-            }
-        });
-        alert("你选中行的 id 为："+postData);
-    }
 </script>
 </body>
 </html>
