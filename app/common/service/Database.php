@@ -1,7 +1,7 @@
 <?php
 
 namespace app\common\service;
-use think\db;
+use think\facade\Db;
 
 //数据导出模型
 class Database{

@@ -179,6 +179,10 @@ class Databases extends AuthController
         return !count(glob($path)) ? app("json")->success("备份文件删除成功",'code') : app("json")->fail("备份文件删除失败，请检查权限");
     }
 
+
+
+
+
     /**
      * 备份数据库
      * @return mixed
@@ -233,7 +237,8 @@ class Databases extends AuthController
             //创建备份文件
             $Database = new Database($file, $config);
             $res = $Database->create();
-            return $res ? app("json")->success("初始化成功",'code') : app("json")->fail("初始化失败，备份文件创建失败！");
+            $tab = array('id' => 0, 'start' => 0);
+            return $res ? app("json")->success("初始化成功", array('tables' => $data['ids'], 'tab' => $tab)) : app("json")->fail("初始化失败，备份文件创建失败！");
         } elseif (request()->isGet() && is_numeric($data['id']) && is_numeric($data['start'])) { //备份数据
             $data['ids'] = session('backup_tables');
             //备份指定表
@@ -243,7 +248,8 @@ class Databases extends AuthController
                 $this->error('备份出错！');
             } elseif (0 === $data['start']) { //下一表
                 if(isset($data['ids'][++$data['id']])){
-                    return app("json")->success("备份完成",'code');
+                    $tab = array('id' => $data['id'], 'start' => 0);
+                    return app("json")->success($data['ids'][$data['id']]."备份完成",array('tab' => $tab));
                 } else { //备份完成，清空缓存
                     unlink(session('backup_config.path') . 'backup.lock');
                     session('backup_tables', null);
@@ -252,8 +258,9 @@ class Databases extends AuthController
                     return app("json")->success("备份完成",'code');
                 }
             } else {
+                $tab  = array('id' => $data['id'], 'start' => $data['start'][0]);
                 $rate = floor(100 * ($data['start'][0] / $data['start'][1]));
-                return app("json")->success("正在备份...({$rate}%)",'code');
+                return app("json")->success("正在备份...({$rate}%)",array('tab' => $tab));
             }
 
         } else { //出错

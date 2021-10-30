@@ -3,7 +3,17 @@
 <head>
     <title>{$mate_title} - {:system_config("title")}</title>
     {include file="public/header" /}
-    <link rel="stylesheet" href="__ADMIN_PATH__css/more.css">
+    <style>
+        .div-backdata{
+            width:400px;
+            padding:60px 20px;
+            text-align: center;
+        }
+        .div-backdata .layui-icon{
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
 <div class="container-fluid p-t-15">
@@ -35,6 +45,7 @@
 
 {include file="public/footer"/}
 <script type="text/javascript">
+    var loadIndex;
     $('#tb_departments').bootstrapTable({
         classes: 'table table-bordered table-hover table-striped',
         url: '/admin/databases/Lst',
@@ -150,38 +161,50 @@
             checkID += selectedItem[i]['name']+",";
         }
         if (checkID=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
-        $.confirm({
-            title: '重要提醒!',
-            content: '您确认要执行该操作吗？',
-            backgroundDismiss: true,
-            buttons: {
-                ok: {
-                    text: '确认',
-                    btnClass: 'btn-danger',
-                    action: function () {
-                        $.post("/admin/databases/export",data={ids:checkID},function (res) {
-                            if (res.status == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
-                            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
-                        })
-                        loadIndex = parent.layer.open({
-                            type: 1,
-                            title:'',
-                            area:'440px',
-                            skin: 'layui-layer-demo', //样式类名
-                            closeBtn: 0, //不显示关闭按钮
-                            anim: 2,
-                            content: '<div id="zz-div-backdata" class="zz-div-backdata"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i><div class="content">正在备份数据库，请稍等...</div></div>'
-                        });
-                        window.onbeforeunload = function(){ return "正在备份数据库，请不要关闭！" }
-                    }
-                },
-                cancel: {
-                    text: '取消',
-                    btnClass: 'btn-primary'
-                }
-            }
+        loadIndex = parent.layer.open({
+            type: 1,
+            title:'',
+            area:'440px',
+            skin: 'layui-layer-demo', //样式类名
+            closeBtn: 0, //不显示关闭按钮
+            anim: 2,
+            content: '<div id="div-backdata" class="div-backdata"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i><div class="content">正在备份数据库，请稍等...</div></div>'
         });
+
+        $.post("/admin/databases/export",data={ids:checkID},function (res) {
+            if (res.status == 200) {
+                updateBackDataInfo("开始备份，请不要关闭本页面！");
+                backup(res.data.tab);
+                window.onbeforeunload = function(){ return "正在备份数据库，请不要关闭！" }
+            } else{
+                parent.layer.close(loadIndex);
+                parent.layer.msg(res.msg?res.msg:'操作失败',{icon: 2,time:3*1000});
+            }
+        },"json")
+        return false;
     })
+
+    function updateBackDataInfo(info) {
+        $('#div-backdata>.content', parent.document).text(info);
+    }
+
+    function backup(tab){
+        $.get("/admin/databases/export", tab, function(res){
+            if(res.status == 200){
+                updateBackDataInfo(res.msg);
+                if(!res.data){
+                    parent.layer.close(loadIndex);
+                    parent.layer.msg(res.msg?res.msg:'操作成功',{icon: 1,time:3*1000});
+                    window.onbeforeunload = function(){ return null }
+                    return;
+                }
+                backup(res.data.tab);
+            } else {
+                parent.layer.close(loadIndex);
+                parent.layer.msg(res.msg?res.msg:'操作失败',{icon: 2,time:3*1000});
+            }
+        }, "json");
+    }
 
     $("#btn-optimize").click(function () {
         var checkID = "";
