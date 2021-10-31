@@ -255,7 +255,7 @@ class Databases extends AuthController
                     session('backup_tables', null);
                     session('backup_file', null);
                     session('backup_config', null);
-                    return app("json")->success("备份完成",'code');
+                    return app("json")->success("备份完成");
                 }
             } else {
                 $tab  = array('id' => $data['id'], 'start' => $data['start'][0]);

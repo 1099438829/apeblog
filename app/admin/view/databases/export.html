@@ -153,32 +153,32 @@
     }
 
     $("#btn-export").click(function () {
-        var checkID = "";
+        var checkID = [];
         var selectedItem = $('#tb_departments').bootstrapTable('getAllSelections');
         if (selectedItem=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         for (var i = 0 ; i<  selectedItem.length; i++)
         {
-            checkID += selectedItem[i]['name']+",";
+            checkID.push(selectedItem[i]['name']);
         }
-        if (checkID=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
-        loadIndex = parent.layer.open({
+        if (checkID.length == 0 ) return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        loadIndex = layer.open({
             type: 1,
             title:'',
             area:'440px',
             skin: 'layui-layer-demo', //样式类名
             closeBtn: 0, //不显示关闭按钮
             anim: 2,
-            content: '<div id="div-backdata" class="div-backdata"><i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i><div class="content">正在备份数据库，请稍等...</div></div>'
+            content: '<div id="div-backdata" class="div-backdata"><span class="mdi mdi-36px mdi-spin mdi-loading"></span><div class="content">正在备份数据库，请稍等...</div></div>'
         });
 
-        $.post("/admin/databases/export",data={ids:checkID},function (res) {
+        $.post("/admin/databases/export",data={ids:checkID.join(',')},function (res) {
             if (res.status == 200) {
                 updateBackDataInfo("开始备份，请不要关闭本页面！");
                 backup(res.data.tab);
                 window.onbeforeunload = function(){ return "正在备份数据库，请不要关闭！" }
             } else{
-                parent.layer.close(loadIndex);
-                parent.layer.msg(res.msg?res.msg:'操作失败',{icon: 2,time:3*1000});
+                layer.close(loadIndex);
+                layer.msg(res.msg?res.msg:'操作失败',{icon: 2,time:3*1000});
             }
         },"json")
         return false;
@@ -192,16 +192,17 @@
         $.get("/admin/databases/export", tab, function(res){
             if(res.status == 200){
                 updateBackDataInfo(res.msg);
-                if(!res.data){
-                    parent.layer.close(loadIndex);
-                    parent.layer.msg(res.msg?res.msg:'操作成功',{icon: 1,time:3*1000});
+                if(res.data.length == 0){
+                    console.log(res.msg,res.data)
+                    layer.close(loadIndex);
+                    layer.msg(res.msg?res.msg:'操作成功',{icon: 1,time:3*1000});
                     window.onbeforeunload = function(){ return null }
                     return;
                 }
                 backup(res.data.tab);
             } else {
-                parent.layer.close(loadIndex);
-                parent.layer.msg(res.msg?res.msg:'操作失败',{icon: 2,time:3*1000});
+                layer.close(loadIndex);
+                layer.msg(res.msg?res.msg:'操作失败',{icon: 2,time:3*1000});
             }
         }, "json");
     }
