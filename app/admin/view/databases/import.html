@@ -3,7 +3,6 @@
 <head>
     <title>{$mate_title} - {:system_config("title")}</title>
     {include file="public/header" /}
-    <link rel="stylesheet" href="__ADMIN_PATH__css/more.css">
 </head>
 <body>
 <div class="container-fluid p-t-15">
@@ -24,139 +23,121 @@
 
 {include file="public/footer"/}
 <script type="text/javascript">
-    // tree-grid使用
-    var $treeTable = $('#tree-table');
-    $treeTable.bootstrapTable({
-        url: '/admin/category/lst',
+    $('#tb_departments').bootstrapTable({
+        classes: 'table table-bordered table-hover table-striped',
+        url: '/admin/databases/Lst?type=import',
         method: 'post',
+        dataType : 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
+        uniqueId: 'id',
+        idField: 'id',             // 每行的唯一标识字段
+        toolbar: '#toolbar',       // 工具按钮容器
+        showColumns: false,         // 是否显示所有的列
+        showRefresh: false,         // 是否显示刷新按钮
         responseHandler: function (res) {
             return {
+                "total": res.count,
                 "rows": res.data,
             };
         },
+        pagination: false,
         queryParams: function(params) {
-            var temp = toArrayList($(".searchForm").serializeArray());
+            let temp = toArrayList($(".searchForm").serializeArray());
             return temp;
         },
-        idField: 'id',
-        uniqueId: 'id',
-        dataType: 'json',
-        toolbar: '#toolbar2',
-        showColumns: true,         // 是否显示所有的列
-        showRefresh: true,         // 是否显示刷新按钮
-        columns: [
-            // {
-            //     field: 'check',
-            //     checkbox: true
-            // },
-            {
-                field: 'title',
-                title: '名称',
+        columns: [{
+            field: 'time',
+            title: '备份时间'
+        }, {
+            field: 'part',
+            title: '卷数',
+        }, {
+            field: 'compress',
+            title: '压缩'
+        },{
+            field: 'size',
+            title: '数据大小',
+            formatter:function (value,row,index) {
+                return renderSize(value);
+            }
+        },{
+            field: 'status',
+            title: '状态',
+        }, {
+            field: 'operate',
+            title: '操作',
+            formatter:function (value,row,index) {
+                let html = '<a href="#!" class="btn btn-xs btn-default m-r-5 btn-import" title="还原" data-toggle="tooltip" data-trigger="hover"><i class="mdi mdi-lock-reset"></i></a> \n' +
+                    '<a class="btn btn-xs btn-default btn-delete" href="#!" title="删除" data-toggle="tooltip" data-trigger="hover"><i class="mdi mdi-delete"></i></a>';
+                return html;
             },
-            {
-                field: 'id',
-                title: 'ID',
-            },
-            {
-                field: 'display',
-                title: '可见性',
-                formatter: function (value, row, index) {
-                    if (value == 0) {
-                        is_checked = '';
-                    } else if (value == 1){
-                        is_checked = 'checked="checked"';
-                    }
-                    var field = "display";
-                    result = '<label class="lyear-switch switch-primary switch-solid lyear-status"><input type="checkbox" '+ is_checked +'><span  onClick="updateStatus('+ row.id +', '+ value +', \''+ field +'\')"></span></label>';
-                    return result;
-                },
-            },
-            {
-                field: 'sort',
-                title: '排序',
-                sortable: true,
-            },
-            {
-                field: 'operate',
-                title: '操作',
-                align: 'center',
-                events : {
-                    'click .category-add': function (e, value, row, index) {
-                        location.href = '/admin/category/add?pid='+row.id;
-                    },
-                    'click .article-add': function (e, value, row, index) {
-                        location.href = '/admin/article/add?category_id='+row.id;
-                    },
-                    'click .category-delete': function (e, value, row, index) {
-                        $.alert({
-                            title: '系统提示',
-                            content: '删除提醒',
-                            buttons: {
-                                confirm: {
-                                    text: '确认',
-                                    btnClass: 'btn-primary',
-                                    action: function(){
-                                        $.post(url="/admin/category/del",data={"id":row.id},function (res) {
-                                            if (res.code == 200) {parent.lightyear.notify('删除成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');$("#tree-table").bootstrapTable('refresh');}
-                                            else parent.lightyear.notify('删除失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
-                                        });
-                                    }
-                                },
-                                cancel: {
-                                    text: '取消'
+            events: {
+                'click .btn-import': function (event, value, row, index) {
+                    var self = this, status = ".";
+                    $.get("/admin/databases/import", success, "json");
+                    window.onbeforeunload = function(){ return "正在还原数据库，请不要关闭！" }
+                    return false;
+
+                    function success(data){
+                        if(data.code){
+                            if(data.gz){
+                                data.msg += status;
+                                if(status.length === 5){
+                                    status = ".";
+                                } else {
+                                    status += ".";
                                 }
                             }
-                        });
-                    },
-                    'click .category-edit': function (e, value, row, index) {
-                        iframe.createIframe('修改分类','/admin/category/edit?id='+row.id)
+                            $(self).parent().prev().text(data.msg);
+                            if(data.data.part){
+                                $.get(self.href,
+                                    {"part" : data.data.part, "start" : data.data.start},
+                                    success,
+                                    "json"
+                                );
+                            }  else {
+                                window.onbeforeunload = function(){ return null; }
+                            }
+                        } else {
+                            top.layer.msg(data.msg?data.msg:'操作失败',{icon: 2,time:data.wait*1000});
+                        }
                     }
                 },
-                formatter: operateFormatter
-            }
-        ],
-        treeShowField: 'title',
-        parentIdField: 'pid',
-
-        onResetView: function(data) {
-            $treeTable.treegrid({
-                initialState: 'collapsed', // 所有节点都折叠
-                treeColumn: 1,
-                //expanderExpandedClass: 'mdi mdi-folder-open',  // 可自定义图标样式
-                //expanderCollapsedClass: 'mdi mdi-folder',
-                onChange: function() {
-                    $treeTable.bootstrapTable('resetWidth');
+                'click .btn-delete': function (event, value, row, index) {
+                    $.ajax({
+                        type: "post",
+                        url: "/admin/databases/delOne",
+                        data: {key:row.key},
+                        success: function (res) {
+                            if (res.code == 200 || res.status == 200) {
+                                parent.lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                                $("#tb_departments").bootstrapTable('refresh');
+                            } else{
+                                parent.lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                            }
+                        },
+                        complete: function () {
+                        }
+                    });
                 }
-            });
-
-            // 只展开树形的第一集节点
-            $treeTable.treegrid('getRootNodes').treegrid('expand');
-        },
-        onCheck: function(row) {
-            var datas = $treeTable.bootstrapTable('getData');
-
-            selectChilds(datas, row, 'id', 'pid', true); // 选择子类
-
-            selectParentChecked(datas, row, 'id', 'pid'); // 选择父类
-
-            $treeTable.bootstrapTable('load', datas);
-        },
-
-        onUncheck: function(row) {
-            var datas = $treeTable.bootstrapTable('getData');
-            selectChilds(datas, row, 'id', 'pid', false);
-            $treeTable.bootstrapTable('load', datas);
-        },
+            }
+        }],
+        onLoadSuccess: function(data){
+            $("[data-toggle='tooltip']").tooltip();
+        }
     });
 
-    // 操作按钮
-    function operateFormatter(value, row, index) {
-        return [
-            '<a type="button" class="category-add btn btn-xs btn-default m-r-5" title="编辑" data-toggle="tooltip"><i class="mdi mdi-plus"></i></a>',
-            '<a type="button" class="article-add btn btn-xs btn-default m-r-5" title="添加文章" data-toggle="tooltip"><i class="mdi mdi-pencil-box"></i></a>',
-            '<a type="button" class="category-edit btn btn-xs btn-default m-r-5" title="修改" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>',
-            '<a type="button" class="category-delete btn btn-xs btn-default" title="删除" data-toggle="tooltip"><i class="mdi mdi-delete"></i></a>'
-        ].join('');
+    //格式化文件大小
+    function renderSize(value){
+        if(null==value||value==''){
+            return "0 Bytes";
+        }
+        var unitArr = new Array("Bytes","KB","MB","GB","TB","PB","EB","ZB","YB");
+        var index=0;
+        var srcsize = parseFloat(value);
+        index=Math.floor(Math.log(srcsize)/Math.log(1024));
+        var size =srcsize/Math.pow(1024,index);
+        size=size.toFixed(2);//保留的小数位数
+        return size+unitArr[index];
     }
 </script>
 </body>

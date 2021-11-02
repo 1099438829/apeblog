@@ -93,25 +93,26 @@ class Databases extends AuthController
                         }
                         $extension        = strtoupper(pathinfo($file->getFilename(), PATHINFO_EXTENSION));
                         $info['compress'] = ($extension === 'SQL') ? '-' : $extension;
-                        $info['time']     = strtotime("{$date} {$time}");
-
-                        $list["{$date} {$time}"] = $info;
+                        $info['time']     = "{$date} {$time}";
+                        $info['key']     = strtotime("{$date} {$time}");
+                        $list[] = $info;
                     }
                 }
-                $title = '数据还原';
                 break;
-
             /* 数据备份 */
             case 'export':
                 $list  = Db::query('SHOW TABLE STATUS');
                 $list  = array_map('array_change_key_case', $list);
-                $title = '数据备份';
                 break;
 
             default:
                 $this->error('参数错误！');
         }
-        return app("json")->layui($list);
+        $result = [
+            "data"  => $list,
+            "count" =>  count($list)
+        ];
+        return app("json")->layui($result);
     }
 
 
@@ -170,18 +171,14 @@ class Databases extends AuthController
      */
     public function delOne(){
         $data = Util::postMore([
-            ['time',''],
+            ['key',''],
         ]);
-        if ($data['time'] == "") return app("json")->fail("参数错误");
-        $name  = date('Ymd-His', $data['time']) . '-*.sql*';
+        if ($data['key'] == "") return app("json")->fail("参数错误");
+        $name  = date('Ymd-His', $data['key']) . '-*.sql*';
         $path  = realpath(system_config('data_backup_path')) . DIRECTORY_SEPARATOR . $name;
         array_map("unlink", glob($path));
         return !count(glob($path)) ? app("json")->success("备份文件删除成功",'code') : app("json")->fail("备份文件删除失败，请检查权限");
     }
-
-
-
-
 
     /**
      * 备份数据库
@@ -275,13 +272,13 @@ class Databases extends AuthController
      */
     public function import(){
         $data = Util::postMore([
-            ['time',''],
+            ['key',''],
             ['part',''],
             ['start',''],
         ]);
-        if(is_numeric($data['time']) && is_null($data['part']) && is_null($data['start'])){ //初始化
+        if(is_numeric($data['key']) && is_null($data['part']) && is_null($data['start'])){ //初始化
             //获取备份文件信息
-            $name  = date('Ymd-His', $data['time']) . '-*.sql*';
+            $name  = date('Ymd-His', $data['key']) . '-*.sql*';
             $path  = realpath(system_config('data_backup_path')) . DIRECTORY_SEPARATOR . $name;
             $files = glob($path);
             $list  = array();
