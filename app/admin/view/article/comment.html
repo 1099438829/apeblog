@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <title>文章管理 - {:system_config("title")}后台管理系统</title>
+    <title>文章评论管理 - {:system_config("title")}后台管理系统</title>
     {include file="public/header" /}
 </head>
 <body>
@@ -13,10 +13,26 @@
                 <div class="card-body">
                     <form class="form-inline searchForm" onsubmit="return false;">
                         <div class="form-group">
-                            <label for="name">文章标题</label>
+                            <label for="author">姓名</label>
                             <div class="input-group">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="请输入文章标题">
+                                    <input type="text" class="form-control" id="author" name="author" placeholder="请输入姓名">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">邮箱</label>
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="email" name="email" placeholder="邮箱">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="url">网址</label>
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="url" name="url" placeholder="网址">
                                 </div>
                             </div>
                         </div>
@@ -37,7 +53,6 @@
             <div class="card">
                 <div class="card-toolbar clearfix">
                     <div class="toolbar-btn-action">
-                        <a class="btn btn-primary m-r-5" href="/admin/article/add"><i class="mdi mdi-plus"></i> 新增</a>
                         <a class="btn btn-warning" href="#!" onclick="delSelect()"><i class="mdi mdi-window-close"></i> 删除</a>
                     </div>
                 </div>
@@ -50,9 +65,10 @@
 </div>
 {include file="public/footer"/}
 <script type="text/javascript">
+    var id = GetQueryString("id");
     $('#tb_departments').bootstrapTable({
         classes: 'table table-bordered table-hover table-striped',
-        url: '/admin/article/Lst',
+        url: '/admin/article/commentList?id='+id,
         method: 'post',
         dataType : 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
         uniqueId: 'id',
@@ -69,6 +85,7 @@
         pagination: true,
         queryParams: function(params) {
             let temp = toArrayList($(".searchForm").serializeArray());
+            temp['document_id'] = id;
             temp['limit'] = params.limit;
             temp['page'] = (params.offset / params.limit) + 1;
             return temp;
@@ -81,16 +98,19 @@
             checkbox: true,    // 是否显示复选框
         },{
             field: 'id',
-            title: '序号'
+            title: 'ID'
         },{
-            field: 'title',
-            title: '标题'
+            field: 'author',
+            title: '姓名'
         }, {
-            field: 'category_title',
-            title: '分类',
+            field: 'email',
+            title: '邮箱',
         }, {
-            field: 'display',
-            title: '可见性',
+            field: 'url',
+            title: '网址',
+        }, {
+            field: 'status',
+            title: '状态',
             formatter: function (value, row, index) {
                 if (value == 0) {
                     is_checked = '';
@@ -102,54 +122,51 @@
                 return result;
             },
         },{
-            field: 'view',
-            title: '浏览量',
-        }, {
-            field: 'sort',
-            title: '排序',
-            editable: {
-                type: 'text',
-                emptytext:'',
-                highlight: false,
-                mode:'inline'
-            }
-        }, {
             field: 'create_time',
-            title: '创建时间',
-        }, {
-            field: 'create_time',
-            title: '更新时间',
+            title: '留言时间',
         }, {
             field: 'operate',
             title: '操作',
             formatter:function (value,row,index) {
-                let html ='<a class="btn btn-xs btn-default btn-del" href="#!" title="删除" data-toggle="tooltip" onclick="delOne('+row.id+')"><i class="mdi mdi-window-close"></i></a>\n' +
-                        '<a type="button" class="btn-edit btn btn-xs btn-default m-r-5"  href="/admin/article/edit?id='+row.id+'" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>\n'+
-                        '<a type="button" class="btn-edit btn btn-xs btn-default m-r-5"  href="/admin/article/comment?id='+row.id+'" title="查看评论" data-toggle="tooltip"><i class="mdi mdi-message-text"></i></a>\n';
+                let html = '<a href="#!" class="btn btn-xs btn-default m-r-5 btn-detail" title="详情" data-toggle="tooltip" data-trigger="hover"><i class="mdi mdi-eye-outline"></i></a> \n' +
+                    '<a class="btn btn-xs btn-default btn-del" href="#!" title="删除" data-toggle="tooltip" onclick="delOne('+row.id+')"><i class="mdi mdi-window-close"></i></a>';
                 return html;
             },
-            events : {
-                'click .btn-edit': function (e, value, row, index) {
-						
+            events: {
+                'click .btn-detail': function (event, value, row, index) {
+                    //职位描述+任职要求
+                    let content = ' <div class="p-lr-15">\n' +
+                        '               <div class="row show-grid">\n' +
+                        '                   <div class="col-xs-12 col-md-4">姓名:</div>\n' +
+                        '                   <div class="col-xs-12 col-md-8">'+row.author+'</div>\n' +
+                        '               </div>\n' +
+                        '               <div class="row show-grid">\n' +
+                        '                   <div class="col-xs-12 col-md-4">网址:</div>\n' +
+                        '                   <div class="col-xs-12 col-md-8">'+row.url+'</div>\n' +
+                        '               </div>\n' +
+                        '               <div class="row show-grid">\n' +
+                        '                   <div class="col-xs-12 col-md-4">邮箱:</div>\n' +
+                        '                   <div class="col-xs-12 col-md-8">'+row.email+'</div>\n' +
+                        '               </div>\n' +
+                        '               <div class="row show-grid">\n' +
+                        '                   <div class="col-xs-12 col-md-4">评论内容:</div>\n' +
+                        '                   <div class="col-xs-12 col-md-8" style="white-space: pre-wrap;">'+row.content+'</div>\n' +
+                        '               </div>\n' +
+                        '          </div>';
+                    $.alert({
+                        title: '详情',
+                        content: content,
+                        boxWidth: '50%', //定义弹窗宽度
+                        useBootstrap: false, //定义宽度必须设置
+                        buttons: {
+                            cancel: {
+                                text: '关闭',
+                            }
+                        }
+                    });
                 }
             }
         }],
-        onEditableSave: function (field, row) {
-            $.ajax({
-                type: "post",
-                url: "/admin/article/update",
-                data: row,
-                success: function (res) {
-                    if (res.code == 200 || res.status == 200) {
-                        parent.lightyear.notify('操作成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
-                    } else{
-                        parent.lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
-                    }
-                },
-                complete: function () {
-                }
-            });
-        },
         onLoadSuccess: function(data){
             $("[data-toggle='tooltip']").tooltip();
         }
@@ -170,7 +187,7 @@
         var newstate = (value == 1) ? 0 : 1; // 发送参数值跟当前参数值相反
         $.ajax({
             type: "post",
-            url: "/admin/article/field?id="+id,
+            url: "/admin/article/commentField?id="+id,
             data: {field: field, value: newstate},
             dataType: 'json',
             success: function (res) {
@@ -193,7 +210,7 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/admin_log/del",data={id:id},function (res) {
+                        $.post("/admin/message/del",data={id:id},function (res) {
                             if (res.status == 200 || res.code == 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                             location.reload();
@@ -226,7 +243,7 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/admin_log/del",data={id:checkID},function (res) {
+                        $.post("/admin/message/del",data={id:checkID},function (res) {
                             if (res.status == 200 || res.code == 200) { lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                         })
@@ -238,6 +255,12 @@
                 }
             }
         });
+    }
+    function GetQueryString(name)
+    {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  unescape(r[2]); return null;
     }
 </script>
 </body>

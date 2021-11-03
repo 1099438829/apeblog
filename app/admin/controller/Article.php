@@ -5,6 +5,7 @@ namespace app\admin\controller;
 use app\common\model\Document as aModel;
 use app\common\model\DocumentCategory as cModel;
 use app\common\model\DocumentArticle;
+use app\common\model\Comment as CommentModel;
 use app\Request;
 use app\admin\service\UtilService as Util;
 use think\Exception;
@@ -203,4 +204,56 @@ class Article extends AuthController
         $this->assign("info",$info);
         return $this->fetch();
     }
+
+    /**
+     * 文章管理主页
+     * @return string
+     * @throws \Exception
+     */
+    public function comment($article_id ='')
+    {
+        return $this->fetch();
+    }
+
+    /**
+     * 文章评论列表
+     * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @author 李玉坤
+     * @date 2021-11-03 23:28
+     */
+    public function commentList()
+    {
+        $where = Util::postMore([
+            ['document_id',''],
+            ['name',''],
+            ['tel',''],
+            ['email',''],
+            ['start_time',''],
+            ['end_time',''],
+            ['page',1],
+            ['limit',20],
+        ]);
+        if ($where['document_id'] == "") return app("json")->fail("参数错误");
+        return app("json")->layui(CommentModel::systemPage($where));
+    }
+
+
+    /**
+     * 修改字段
+     * @param $id
+     * @return mixed
+     * @author 李玉坤
+     * @date 2021-02-16 23:12
+     */
+    public function commentField($id)
+    {
+        if (!$id) return app("json")->fail("参数有误，Id为空！");
+        $where = Util::postMore([['field',''],['value','']]);
+        if ($where['field'] == '' || $where['value'] =='') return app("json")->fail("参数有误！");
+        return CommentModel::update([$where['field']=>$where['value']],['id'=>$id]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+    }
+
 }

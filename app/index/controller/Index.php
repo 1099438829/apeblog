@@ -91,7 +91,7 @@ class Index extends Base
     {
         if(request()->isPost()){
             $data = Util::postMore([
-                ['name',''],
+                ['author',''],
                 ['tel',''],
                 ['email',''],
                 ['content',''],

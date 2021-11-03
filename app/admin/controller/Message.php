@@ -49,7 +49,7 @@ class Message extends AuthController
     public function lst(Request $request)
     {
         $where = Util::postMore([
-            ['name',''],
+            ['author',''],
             ['tel',''],
             ['email',''],
             ['start_time',''],

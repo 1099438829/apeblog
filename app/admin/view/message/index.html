@@ -13,10 +13,10 @@
                 <div class="card-body">
                     <form class="form-inline searchForm" onsubmit="return false;">
                         <div class="form-group">
-                            <label for="name">姓名</label>
+                            <label for="author">姓名</label>
                             <div class="input-group">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="请输入姓名">
+                                    <input type="text" class="form-control" id="author" name="author" placeholder="请输入姓名">
                                 </div>
                             </div>
                         </div>
@@ -98,7 +98,7 @@
             field: 'id',
             title: 'ID'
         },{
-            field: 'name',
+            field: 'author',
             title: '姓名'
         }, {
             field: 'tel',
@@ -123,7 +123,7 @@
                     let content = ' <div class="p-lr-15">\n' +
                         '               <div class="row show-grid">\n' +
                         '                   <div class="col-xs-12 col-md-4">姓名:</div>\n' +
-                        '                   <div class="col-xs-12 col-md-8">'+row.name+'</div>\n' +
+                        '                   <div class="col-xs-12 col-md-8">'+row.author+'</div>\n' +
                         '               </div>\n' +
                         '               <div class="row show-grid">\n' +
                         '                   <div class="col-xs-12 col-md-4">联系方式:</div>\n' +

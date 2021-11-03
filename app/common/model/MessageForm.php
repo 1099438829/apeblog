@@ -25,7 +25,7 @@ class MessageForm extends BaseModel
     {
         $model = new self;
         $model = $model->order('create_time','desc');
-        if (isset($where['name']) && $where['name'] !== '') $model->where('name', "like", "%$where[name]%");
+        if (isset($where['author']) && $where['author'] !== '') $model->where('author', "like", "%$where[name]%");
         if (isset($where['email']) && $where['email'] !== '') $model->where('email', "like", "%$where[email]%");
         if (isset($where['tel']) && $where['tel'] !== '') $model->where('tel', "like", "%$where[tel]%");
         if (isset($where['start_time']) && $where['start_time'] != '') $model = $model->where("m.created_at", ">", strtotime($where['start_time'] . " 00:00:00"));
