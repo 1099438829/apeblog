@@ -73,12 +73,12 @@
             events: {
                 'click .btn-import': function (event, value, row, index) {
                     var self = this, status = ".";
-                    $.get("/admin/databases/import", success, "json");
+                    $.post("/admin/databases/import", {"key":row.key}, success, "json");
                     window.onbeforeunload = function(){ return "正在还原数据库，请不要关闭！" }
                     return false;
-
                     function success(data){
-                        if(data.code){
+                        if(data.status){
+                            console.log(data)
                             if(data.gz){
                                 data.msg += status;
                                 if(status.length === 5){
@@ -87,10 +87,15 @@
                                     status += ".";
                                 }
                             }
-                            $(self).parent().prev().text(data.msg);
+                            $('#tb_departments').bootstrapTable('updateRow',{
+                                index: index,
+                                row: {
+                                    status: data.msg,
+                                }
+                            })
                             if(data.data.part){
-                                $.get(self.href,
-                                    {"part" : data.data.part, "start" : data.data.start},
+                                $.post("/admin/databases/import",
+                                    {"key":row.key,"part" : data.data.part, "start" : data.data.start},
                                     success,
                                     "json"
                                 );
@@ -98,7 +103,8 @@
                                 window.onbeforeunload = function(){ return null; }
                             }
                         } else {
-                            top.layer.msg(data.msg?data.msg:'操作失败',{icon: 2,time:data.wait*1000});
+                            parent.lightyear.notify(data.msg?data.msg:'操作失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                            return false;
                         }
                     }
                 },

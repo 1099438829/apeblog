@@ -273,8 +273,8 @@ class Databases extends AuthController
     public function import(){
         $data = Util::postMore([
             ['key',''],
-            ['part',''],
-            ['start',''],
+            ['part',null],
+            ['start',null],
         ]);
         if(is_numeric($data['key']) && is_null($data['part']) && is_null($data['start'])){ //初始化
             //获取备份文件信息
@@ -294,9 +294,9 @@ class Databases extends AuthController
             $last = end($list);
             if(count($list) === $last[0]){
                 session('backup_list', $list); //缓存备份列表
-                return app("json")->success("初始化完成",'code');
+                return app("json")->success("初始化完成",array('part' => 1, 'start' => 0));
             } else {
-                return app("json")->fail("备份文件可能已经损坏，请检查",'code');
+                return app("json")->fail("备份文件可能已经损坏，请检查");
             }
         } elseif(is_numeric($data['part']) && is_numeric($data['start'])) {
             $list  = session('backup_list');
@@ -313,7 +313,7 @@ class Databases extends AuthController
                     return app("json")->success("正在还原...#{$data['part']}",'code');
                 } else {
                     session('backup_list', null);
-                    return app("json")->success("还原完成",'code');
+                    return app("json")->success("还原完成");
                 }
             } else {
                 $data = array('part' => $data['part'], 'start' => $data['start'][0]);
