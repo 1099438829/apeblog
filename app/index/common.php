@@ -120,6 +120,10 @@ function tpl_get_channel($type, $typeid, $row = 100, $where = '', $orderby = '',
 {
 
     switch ($type) {
+        case "all":
+            //获取顶级分类
+            return get_document_category_all(0, $row, $display);
+            break;
         case 'top':
             //获取顶级分类
             return get_document_category_by_parent(0, $row, $display);
@@ -175,7 +179,6 @@ function tpl_get_channel($type, $typeid, $row = 100, $where = '', $orderby = '',
             return $tempArr;
             break;
         case 'root':
-
             if (!$typeid) {
                 throw new Exception('请指定要获取的栏目分类id！');
             }
@@ -253,6 +256,24 @@ function get_document_category_by_parent($pid, $row, $display = 1)
     }
     return $tempArr;
 }
+
+function get_document_category_all( $display = 1)
+{
+    $documentCategoryList = get_document_category_list();
+    $tempArr = array();
+    foreach ($documentCategoryList as $item) {
+        if (($display ? $item['display'] == 1 : true)) {
+            if ($item['pid'] == 0){
+                $tempArr[$item['id']] = $item;
+            }else{
+                $tempArr[$item['pid']]['child'][] = $item;
+            }
+        }
+    }
+    return $tempArr;
+}
+
+
 
 /**
  * 模板-获取上一篇和下一篇

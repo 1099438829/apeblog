@@ -62,10 +62,8 @@
 				<div class="menu-plane">
 					<nav class="menu-header-plane">
 						<ul id="menu-header-list" class="menu-header-list">
-							<li id="menu-item-128" class="menu-item current_page_item menu-item-128">
-								<a href="/" aria-current="page">首页</a>
-							</li>
-							{ape:channel type="top"}
+							<li id="menu-item-1" class="menu-item menu-item-1"><a href="/" aria-current="page">首页</a></li>
+							{ape:channel type="all"}
 							<li id="menu-item-{$field.id}" class="menu-item {notempty name="field['child']"}menu-item-has-children{/notempty} {:IsActiveNav($cid,$field['id'])?'current-menu-item':''} menu-item-{$field['id']}">
 								{notempty name="field['child']"}
 								<a href="#" aria-current="page">{$field['title']}</a>
@@ -90,7 +88,7 @@
 					<div class="user-menu-pc-search" onclick="openSearch()" title="搜索">
 						<i class="fal fa-search"></i>
 					</div>
-                    <span class="user-menu-main">
+                    <span class="user-menu-main user-menu-main-notlogin">
                  		<a href="login.html"><button class="login-btn-header">登录</button></a>
                     </span>
 				</div>
