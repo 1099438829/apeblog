@@ -4,6 +4,7 @@ namespace app\admin\controller;
 
 use app\common\model\Document as aModel;
 use app\common\model\DocumentCategory as cModel;
+use app\common\model\Tag as TagModel;
 use app\common\model\DocumentArticle;
 use app\common\model\Comment as CommentModel;
 use app\Request;
@@ -109,6 +110,10 @@ class Article extends AuthController
                     ];
                     DocumentArticle::insert($updateData);
                 }
+                if (!empty($data['tags'])){
+                    $tagModel = new TagModel();
+                    $tagModel->createTags($data['tags'],$id,$this->adminId);
+                }
             }else
             {
                 $ainfo = aModel::get($id);
@@ -126,6 +131,10 @@ class Article extends AuthController
                         //更新文档
                         DocumentArticle::where('id',$id)->save(['content'=>$content]);
                     }
+                }
+                if (!empty($data['tags'])){
+                    $tagModel = new TagModel();
+                    $tagModel->createTags($data['tags'],$id,$this->adminId);
                 }
             }
             $res = true;

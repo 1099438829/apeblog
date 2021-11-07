@@ -230,8 +230,11 @@ class Article extends Base
         //模板兼容性标签
         $this->assign('id',false);
         $this->assign('cid',false);
-         $view_suffix=config('view.view_suffix');
-        return $this->fetch('tag.'.$view_suffix);
+        $template = config('view.view_path').'article/tag.html';
+        if(!is_file($template)){
+            $this->error('模板文件不存在！');
+        }
+        return $this->fetch();
     }
 
     /**

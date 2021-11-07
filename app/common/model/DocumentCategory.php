@@ -3,6 +3,7 @@
 
 namespace app\common\model;
 
+use think\facade\Db;
 /**
  * Class DocumentCategory
  * @package app\admin\model\system
@@ -19,15 +20,15 @@ class DocumentCategory extends BaseModel
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      * @author 李玉坤
-     * @date 2021-02-15 23:24
+     * @date 2021-11-08 0:25
      */
     public static function systemPage($where): array
     {
         $model = new self;
         $model = $model->field(['id','pid','title','sort','display'])->order('sort asc,id asc');
         if (isset($where['title']) && $where['title'] != '') $model = $model->where("title|id","like","%$where[title]%");
-        $data = $model->select();
-        return $data->toArray() ?: [];
+        $data = $model->select()->toArray();
+        return $data ?: [];
     }
 
     /**

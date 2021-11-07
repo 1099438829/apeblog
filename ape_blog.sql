@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 29/10/2021 00:31:09
+ Date: 08/11/2021 01:05:20
 */
 
 SET NAMES utf8mb4;
@@ -31,21 +31,21 @@ CREATE TABLE `ape_admin`  (
   `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '头像',
   `role_id` int(4) NOT NULL DEFAULT 0 COMMENT '角色id',
   `tel` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '电话',
-  `mail` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮箱',
-  `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '简介',
+  `mail` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '邮箱',
+  `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '简介',
   `status` tinyint(1) NOT NULL COMMENT '状态1:正常0冻结',
-  `ip` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '注册ip',
-  `create_user` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '添加人',
-  `update_user` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改时间',
-  `create_time` int(10) NULL DEFAULT NULL COMMENT '添加时间',
-  `update_time` int(10) NULL DEFAULT NULL COMMENT '更新时间',
+  `ip` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '注册ip',
+  `create_user` int(32) NOT NULL DEFAULT 0 COMMENT '添加人',
+  `update_user` int(32) NOT NULL DEFAULT 0 COMMENT '修改时间',
+  `create_time` int(10) NOT NULL COMMENT '添加时间',
+  `update_time` int(10) NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '后台人员列表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_admin
 -- ----------------------------
-INSERT INTO `ape_admin` VALUES (1, 1, 'admin', '超级管理员', '14e1b600b1fd579f47433b88e8d85291', '', '/uploads/image/20210215/bc6445679240d4795e279860a6ab34e9.jpeg', 1, '17896852019', 'cfn@leapy.cn', '这家伙很懒，什么也没留下。', 1, NULL, '1', NULL, 1580031132, 1613389670);
+INSERT INTO `ape_admin` VALUES (1, 1, 'admin', '超级管理员', '14e1b600b1fd579f47433b88e8d85291', '', '/uploads/image/20210215/bc6445679240d4795e279860a6ab34e9.jpeg', 1, '17896852019', 'cfn@leapy.cn', '这家伙很懒，什么也没留下。', 1, '', 1, 1, 1580031132, 1635572650);
 
 -- ----------------------------
 -- Table structure for ape_admin_auth
@@ -54,62 +54,63 @@ DROP TABLE IF EXISTS `ape_admin_auth`;
 CREATE TABLE `ape_admin_auth`  (
   `id` int(4) NOT NULL AUTO_INCREMENT COMMENT '权限id',
   `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '权限名称',
-  `icon` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标',
+  `icon` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '图标',
   `pid` int(4) NOT NULL DEFAULT 0 COMMENT '父id',
-  `module` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '模块名',
-  `controller` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '控制器名称',
-  `action` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '方法名名称',
-  `params` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '参数',
-  `font_family` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '字体',
-  `spreed` tinyint(1) NULL DEFAULT 0 COMMENT 'spreed',
-  `is_check` tinyint(1) NULL DEFAULT 0 COMMENT '是否选中',
+  `module` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '模块名',
+  `controller` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '控制器名称',
+  `action` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '方法名名称',
+  `params` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '参数',
+  `font_family` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '字体',
+  `spreed` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'spreed',
+  `is_check` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否选中',
   `is_menu` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否菜单',
-  `path` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '路径',
+  `path` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '路径',
   `rank` int(2) NOT NULL DEFAULT 0 COMMENT '排序',
   `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态 1可用',
-  `create_user` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '添加人',
-  `update_user` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改时间',
-  `create_time` int(10) NOT NULL COMMENT '添加时间',
-  `update_time` int(10) NOT NULL COMMENT '更新时间',
+  `create_user` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '添加人',
+  `update_user` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '修改时间',
+  `create_time` int(10) NOT NULL DEFAULT 0 COMMENT '添加时间',
+  `update_time` int(10) NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '权限表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '权限表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_admin_auth
 -- ----------------------------
-INSERT INTO `ape_admin_auth` VALUES (1, '查看日志', '', 8, 'admin', 'admin.admin_log', 'index', '', 'ok-icon', 0, 0, 1, '/admin/admin_log/index', 0, 1, NULL, NULL, 1582093161, 1581664102);
-INSERT INTO `ape_admin_auth` VALUES (2, '控制台', 'mdi mdi-home', 0, 'admin', 'index', 'main', '', 'ok-icon', 0, 1, 1, '/admin/index/main', 99, 1, NULL, '1', 1582093161, 1624692439);
-INSERT INTO `ape_admin_auth` VALUES (4, '账号管理', 'mdi mdi-account', 0, 'admin', 'admin', 'index', '', 'ok-icon', 0, 0, 1, '/admin/admin/index', 0, 1, NULL, '2', 1582093161, 1613627431);
-INSERT INTO `ape_admin_auth` VALUES (5, '用户管理', '', 4, 'admin', 'admin', 'index', '', NULL, 0, 0, 1, '/admin/admin/index', 0, 1, NULL, '2', 1582093161, 1613627443);
-INSERT INTO `ape_admin_auth` VALUES (6, '权限管理', '', 4, 'admin', 'admin_auth', 'index', '', NULL, 0, 0, 1, '/admin/admin_auth/index', 0, 1, NULL, '2', 1582093161, 1613627454);
-INSERT INTO `ape_admin_auth` VALUES (7, '角色管理', '', 4, 'admin', 'admin_role', 'index', '', NULL, 0, 0, 1, '/admin/admin_role/index', 0, 1, NULL, '1', 1582093161, 1582263652);
-INSERT INTO `ape_admin_auth` VALUES (8, '系统管理', 'mdi mdi-settings', 0, 'admin', 'admin_log', 'index', '', 'ok-icon', 1, 1, 1, '/admin/admin_log/index', 0, 1, NULL, NULL, 1582093161, 1582093161);
-INSERT INTO `ape_admin_auth` VALUES (9, '修改密码', '', 8, 'admin', 'admin', 'pwd', '', NULL, 0, 0, 0, '/admin/admin/pwd', 0, 1, '1', NULL, 1582093161, 1582093161);
-INSERT INTO `ape_admin_auth` VALUES (10, '清理缓存', '', 8, 'admin', 'system_config', 'clearCache', '', NULL, 0, 0, 1, '/admin/system_config/clearCache', 0, 1, '1', '1', 1582093658, 1593407914);
-INSERT INTO `ape_admin_auth` VALUES (11, '网站配置', '', 8, 'admin', 'system_config', 'base', '', NULL, 0, 0, 1, '/admin/system_config/base', 0, 1, '1', '1', 1582266348, 1582781624);
-INSERT INTO `ape_admin_auth` VALUES (12, '开发者配置', '', 8, 'admin', 'system_config_tab', 'index', '', NULL, 0, 0, 1, '/admin/system_config_tab/index', 0, 1, '1', '1', 1582266439, 1590149680);
-INSERT INTO `ape_admin_auth` VALUES (13, '后台登录', '', 8, 'admin', 'login', 'login', '', NULL, 0, 0, 0, '/admin/login/login', 0, 1, '1', NULL, 1582707133, 1582093161);
-INSERT INTO `ape_admin_auth` VALUES (14, '上传配置', '', 8, 'admin', 'system_config', 'upload', '', NULL, 0, 0, 0, '/admin/system_config/upload', 0, 1, '1', NULL, 1582781658, 1582781667);
-INSERT INTO `ape_admin_auth` VALUES (15, '短信配置', '', 8, 'admin', 'system_config', 'sms', '', NULL, 0, 0, 0, '/admin/system_config/sms', 0, 1, '1', NULL, 1582781757, 1582781796);
-INSERT INTO `ape_admin_auth` VALUES (16, '邮件配置', '', 8, 'admin', 'system_config', 'email', '', NULL, 0, 0, 0, '/admin/system_config/email', 0, 1, '1', NULL, 1582781787, 1582093161);
-INSERT INTO `ape_admin_auth` VALUES (17, '内容管理', 'mdi mdi-file-document-box', 0, 'admin', 'content', 'index', '', NULL, 0, 0, 1, '/admin/content/index', 0, 1, '1', '1', 1612973864, 1613400986);
-INSERT INTO `ape_admin_auth` VALUES (18, '文章列表', '', 17, 'admin', 'article', 'index', '', NULL, 0, 0, 1, '/admin/article/index', 0, 1, '1', '1', 1612973911, 1613401778);
-INSERT INTO `ape_admin_auth` VALUES (19, '栏目分类', '', 17, 'admin', 'category', 'index', '', NULL, 0, 0, 1, '/admin/category/index', 0, 1, '1', '1', 1612973967, 1613401827);
-INSERT INTO `ape_admin_auth` VALUES (21, '留言管理', '', 27, 'admin', 'message', 'index', '', NULL, 0, 0, 1, '/admin/message/index', 0, 1, '1', '1', 1612974123, 1613449203);
-INSERT INTO `ape_admin_auth` VALUES (23, '分类管理', '', 22, 'admin', 'category', 'index', '', NULL, 0, 0, 1, '/admin/category/index', 0, 1, '1', NULL, 1613390173, 1582093161);
-INSERT INTO `ape_admin_auth` VALUES (24, '幻灯片管理', '', 27, 'admin', 'slides', 'index', '', NULL, 0, 0, 1, '/admin/slides/index', 0, 1, '1', '1', 1613390220, 1613449217);
-INSERT INTO `ape_admin_auth` VALUES (25, '文章管理', '', 22, 'admin', 'article', 'index', '', NULL, 0, 0, 1, '/admin/article/index', 0, 1, '1', NULL, 1613390289, 1582093161);
-INSERT INTO `ape_admin_auth` VALUES (26, '文章回收站', '', 22, 'admin', 'article', 'recovery', '', NULL, 0, 0, 1, '/admin/article/recovery', 0, 1, '1', NULL, 1613390366, 1582093161);
-INSERT INTO `ape_admin_auth` VALUES (27, '活动管理', 'mdi mdi-image-multiple', 0, 'admin', 'operate', 'index', '', NULL, 0, 0, 1, '/admin/operate/index', 0, 1, '1', '1', 1613391146, 1613449194);
-INSERT INTO `ape_admin_auth` VALUES (28, '会员管理', 'mdi mdi-account-multiple', 0, 'admin', 'user', 'index', '', NULL, 0, 0, 1, '/admin/user/index', 0, 1, '1', NULL, 1613400082, 1582093161);
-INSERT INTO `ape_admin_auth` VALUES (29, '会员管理', '', 28, 'admin', 'user', 'index', '', NULL, 0, 0, 1, '/admin/user/index', 0, 1, '1', NULL, 1613400129, 1582093161);
-INSERT INTO `ape_admin_auth` VALUES (31, '主题管理', 'mdi mdi-store', 0, 'admin', 'theme', 'index', '', NULL, 0, 0, 1, '/admin/theme/index', 0, 1, '1', NULL, 1613400314, 1620610846);
-INSERT INTO `ape_admin_auth` VALUES (32, '主题管理', '', 31, 'admin', 'theme', 'index', '', NULL, 0, 0, 1, '/admin/theme/index', 0, 1, '1', NULL, 1613400349, 1582093161);
-INSERT INTO `ape_admin_auth` VALUES (33, '主题商店', '', 31, 'admin', 'theme', 'store', '', NULL, 0, 0, 1, '/admin/theme/store', 0, 1, '1', '1', 1613400389, 1613400404);
-INSERT INTO `ape_admin_auth` VALUES (34, '友链管理', 'mdi mdi-account-card-details', 0, 'admin', 'friendlink', 'index', '', NULL, 0, 0, 1, '/admin/friendlink/index', 0, 1, '1', NULL, 1613400510, 1582093161);
-INSERT INTO `ape_admin_auth` VALUES (35, '友链列表', '', 34, 'admin', 'friendlink', 'index', '', NULL, 0, 0, 1, '/admin/friendlink/index', 0, 1, '1', NULL, 1613400539, 1582093161);
-INSERT INTO `ape_admin_auth` VALUES (37, '邀请码管理', '', 27, 'admin', 'invitation', 'index', '', NULL, 0, 0, 1, '/admin/invitation/index', 0, 1, '1', '1', 1613400778, 1613449225);
-INSERT INTO `ape_admin_auth` VALUES (38, '广告管理', 'mdi mdi-bulletin-board', 27, 'admin', 'poster', 'index', '', NULL, 0, 0, 1, '/admin/poster/index', 0, 1, '1', '1', 1627293150, 1627293165);
+INSERT INTO `ape_admin_auth` VALUES (1, '查看日志', '', 8, 'admin', 'admin.admin_log', 'index', '', 'ok-icon', 0, 0, 1, '/admin/admin_log/index', 0, 1, '', '', 1582093161, 1581664102);
+INSERT INTO `ape_admin_auth` VALUES (2, '控制台', 'mdi mdi-home', 0, 'admin', 'index', 'main', '', 'ok-icon', 0, 1, 1, '/admin/index/main', 99, 1, '', '1', 1582093161, 1624692439);
+INSERT INTO `ape_admin_auth` VALUES (4, '账号管理', 'mdi mdi-account', 0, 'admin', 'admin', 'index', '', 'ok-icon', 0, 0, 1, '/admin/admin/index', 0, 1, '', '2', 1582093161, 1613627431);
+INSERT INTO `ape_admin_auth` VALUES (5, '用户管理', '', 4, 'admin', 'admin', 'index', '', '', 0, 0, 1, '/admin/admin/index', 0, 1, '', '2', 1582093161, 1613627443);
+INSERT INTO `ape_admin_auth` VALUES (6, '权限管理', '', 4, 'admin', 'admin_auth', 'index', '', '', 0, 0, 1, '/admin/admin_auth/index', 0, 1, '', '2', 1582093161, 1613627454);
+INSERT INTO `ape_admin_auth` VALUES (7, '角色管理', '', 4, 'admin', 'admin_role', 'index', '', '', 0, 0, 1, '/admin/admin_role/index', 0, 1, '', '1', 1582093161, 1582263652);
+INSERT INTO `ape_admin_auth` VALUES (8, '系统管理', 'mdi mdi-settings', 0, 'admin', 'admin_log', 'index', '', 'ok-icon', 1, 1, 1, '/admin/admin_log/index', 0, 1, '', '', 1582093161, 1582093161);
+INSERT INTO `ape_admin_auth` VALUES (9, '修改密码', '', 8, 'admin', 'admin', 'pwd', '', '', 0, 0, 0, '/admin/admin/pwd', 0, 1, '1', '', 1582093161, 1582093161);
+INSERT INTO `ape_admin_auth` VALUES (10, '清理缓存', '', 8, 'admin', 'system_config', 'clearCache', '', '', 0, 0, 1, '/admin/system_config/clearCache', 0, 1, '1', '1', 1582093658, 1593407914);
+INSERT INTO `ape_admin_auth` VALUES (11, '网站配置', '', 8, 'admin', 'system_config', 'base', '', '', 0, 0, 1, '/admin/system_config/base', 0, 1, '1', '1', 1582266348, 1582781624);
+INSERT INTO `ape_admin_auth` VALUES (12, '开发者配置', '', 8, 'admin', 'system_config_tab', 'index', '', '', 0, 0, 1, '/admin/system_config_tab/index', 0, 1, '1', '1', 1582266439, 1590149680);
+INSERT INTO `ape_admin_auth` VALUES (13, '后台登录', '', 8, 'admin', 'login', 'login', '', '', 0, 0, 0, '/admin/login/login', 0, 1, '1', '', 1582707133, 1582093161);
+INSERT INTO `ape_admin_auth` VALUES (14, '上传配置', '', 8, 'admin', 'system_config', 'upload', '', '', 0, 0, 0, '/admin/system_config/upload', 0, 1, '1', '', 1582781658, 1582781667);
+INSERT INTO `ape_admin_auth` VALUES (15, '短信配置', '', 8, 'admin', 'system_config', 'sms', '', '', 0, 0, 0, '/admin/system_config/sms', 0, 1, '1', '', 1582781757, 1582781796);
+INSERT INTO `ape_admin_auth` VALUES (16, '邮件配置', '', 8, 'admin', 'system_config', 'email', '', '', 0, 0, 0, '/admin/system_config/email', 0, 1, '1', '', 1582781787, 1582093161);
+INSERT INTO `ape_admin_auth` VALUES (17, '内容管理', 'mdi mdi-file-document-box', 0, 'admin', 'content', 'index', '', '', 0, 0, 1, '/admin/content/index', 0, 1, '1', '1', 1612973864, 1613400986);
+INSERT INTO `ape_admin_auth` VALUES (18, '文章列表', '', 17, 'admin', 'article', 'index', '', '', 0, 0, 1, '/admin/article/index', 0, 1, '1', '1', 1612973911, 1613401778);
+INSERT INTO `ape_admin_auth` VALUES (19, '栏目分类', '', 17, 'admin', 'category', 'index', '', '', 0, 0, 1, '/admin/category/index', 0, 1, '1', '1', 1612973967, 1613401827);
+INSERT INTO `ape_admin_auth` VALUES (21, '留言管理', '', 27, 'admin', 'message', 'index', '', '', 0, 0, 1, '/admin/message/index', 0, 1, '1', '1', 1612974123, 1613449203);
+INSERT INTO `ape_admin_auth` VALUES (23, '分类管理', '', 22, 'admin', 'category', 'index', '', '', 0, 0, 1, '/admin/category/index', 0, 1, '1', '', 1613390173, 1582093161);
+INSERT INTO `ape_admin_auth` VALUES (24, '幻灯片管理', '', 27, 'admin', 'slides', 'index', '', '', 0, 0, 1, '/admin/slides/index', 0, 1, '1', '1', 1613390220, 1613449217);
+INSERT INTO `ape_admin_auth` VALUES (25, '文章管理', '', 22, 'admin', 'article', 'index', '', '', 0, 0, 1, '/admin/article/index', 0, 1, '1', '', 1613390289, 1582093161);
+INSERT INTO `ape_admin_auth` VALUES (26, '文章回收站', '', 22, 'admin', 'article', 'recovery', '', '', 0, 0, 1, '/admin/article/recovery', 0, 1, '1', '', 1613390366, 1582093161);
+INSERT INTO `ape_admin_auth` VALUES (27, '活动管理', 'mdi mdi-image-multiple', 0, 'admin', 'operate', 'index', '', '', 0, 0, 1, '/admin/operate/index', 0, 1, '1', '1', 1613391146, 1613449194);
+INSERT INTO `ape_admin_auth` VALUES (28, '会员管理', 'mdi mdi-account-multiple', 0, 'admin', 'user', 'index', '', '', 0, 0, 1, '/admin/user/index', 0, 1, '1', '', 1613400082, 1582093161);
+INSERT INTO `ape_admin_auth` VALUES (29, '会员管理', '', 28, 'admin', 'user', 'index', '', '', 0, 0, 1, '/admin/user/index', 0, 1, '1', '', 1613400129, 1582093161);
+INSERT INTO `ape_admin_auth` VALUES (31, '主题管理', 'mdi mdi-store', 0, 'admin', 'theme', 'index', '', '', 0, 0, 1, '/admin/theme/index', 0, 1, '1', '', 1613400314, 1620610846);
+INSERT INTO `ape_admin_auth` VALUES (32, '主题管理', '', 31, 'admin', 'theme', 'index', '', '', 0, 0, 1, '/admin/theme/index', 0, 1, '1', '', 1613400349, 1582093161);
+INSERT INTO `ape_admin_auth` VALUES (33, '主题商店', '', 31, 'admin', 'theme', 'store', '', '', 0, 0, 1, '/admin/theme/store', 0, 1, '1', '1', 1613400389, 1613400404);
+INSERT INTO `ape_admin_auth` VALUES (34, '友链管理', 'mdi mdi-account-card-details', 0, 'admin', 'friendlink', 'index', '', '', 0, 0, 1, '/admin/friendlink/index', 0, 1, '1', '', 1613400510, 1582093161);
+INSERT INTO `ape_admin_auth` VALUES (35, '友链列表', '', 34, 'admin', 'friendlink', 'index', '', '', 0, 0, 1, '/admin/friendlink/index', 0, 1, '1', '', 1613400539, 1582093161);
+INSERT INTO `ape_admin_auth` VALUES (37, '邀请码管理', '', 27, 'admin', 'invitation', 'index', '', '', 0, 0, 1, '/admin/invitation/index', 0, 1, '1', '1', 1613400778, 1613449225);
+INSERT INTO `ape_admin_auth` VALUES (38, '广告管理', 'mdi mdi-bulletin-board', 27, 'admin', 'poster', 'index', '', '', 0, 0, 1, '/admin/poster/index', 0, 1, '1', '1', 1627293150, 1627293165);
+INSERT INTO `ape_admin_auth` VALUES (39, '数据库管理', '', 8, 'admin', 'databases', 'index', '', '', 0, 0, 1, '/admin/databases/index', 0, 1, '1', '', 1635572569, 1635572671);
 
 -- ----------------------------
 -- Table structure for ape_admin_log
@@ -117,32 +118,31 @@ INSERT INTO `ape_admin_auth` VALUES (38, '广告管理', 'mdi mdi-bulletin-board
 DROP TABLE IF EXISTS `ape_admin_log`;
 CREATE TABLE `ape_admin_log`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '编号',
-  `admin_id` int(10) NOT NULL COMMENT '操作人id',
-  `admin_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作人名字',
-  `module` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '模块名',
-  `controller` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '控制器名',
-  `action` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '方法名',
-  `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ip',
-  `user_agent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'User-Agent',
+  `admin_id` int(10) NOT NULL DEFAULT 0 COMMENT '操作人id',
+  `admin_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '操作人名字',
+  `module` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '模块名',
+  `controller` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '控制器名',
+  `action` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '方法名',
+  `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT 'ip',
+  `user_agent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT 'User-Agent',
   `create_time` int(10) NOT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_admin_log
 -- ----------------------------
-INSERT INTO `ape_admin_log` VALUES (1, 1, 'admin', 'admin', 'message', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.30', 1635437500);
-INSERT INTO `ape_admin_log` VALUES (2, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.30', 1635437656);
-INSERT INTO `ape_admin_log` VALUES (3, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.30', 1635437736);
-INSERT INTO `ape_admin_log` VALUES (4, 1, 'admin', 'admin', 'theme', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.30', 1635437741);
-INSERT INTO `ape_admin_log` VALUES (5, 1, 'admin', 'admin', 'friendlink', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.30', 1635437742);
-INSERT INTO `ape_admin_log` VALUES (6, 1, 'admin', 'admin', 'poster', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.30', 1635438458);
-INSERT INTO `ape_admin_log` VALUES (7, 1, 'admin', 'admin', 'system_config', 'clearCache', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.30', 1635438465);
-INSERT INTO `ape_admin_log` VALUES (8, 1, 'admin', 'admin', 'system_config_tab', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.30', 1635438467);
-INSERT INTO `ape_admin_log` VALUES (9, 1, 'admin', 'admin', 'admin', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.30', 1635438472);
-INSERT INTO `ape_admin_log` VALUES (10, 1, 'admin', 'admin', 'admin_auth', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.30', 1635438472);
-INSERT INTO `ape_admin_log` VALUES (11, 1, 'admin', 'admin', 'admin_role', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.30', 1635438473);
-INSERT INTO `ape_admin_log` VALUES (12, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.30', 1635438476);
+INSERT INTO `ape_admin_log` VALUES (1, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.38', 1636301752);
+INSERT INTO `ape_admin_log` VALUES (2, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.38', 1636301777);
+INSERT INTO `ape_admin_log` VALUES (3, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.38', 1636302055);
+INSERT INTO `ape_admin_log` VALUES (4, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.38', 1636302058);
+INSERT INTO `ape_admin_log` VALUES (5, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.38', 1636302152);
+INSERT INTO `ape_admin_log` VALUES (6, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.38', 1636302180);
+INSERT INTO `ape_admin_log` VALUES (7, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.38', 1636302241);
+INSERT INTO `ape_admin_log` VALUES (8, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.38', 1636303081);
+INSERT INTO `ape_admin_log` VALUES (9, 1, 'admin', 'admin', 'category', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.38', 1636303631);
+INSERT INTO `ape_admin_log` VALUES (10, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.38', 1636304403);
+INSERT INTO `ape_admin_log` VALUES (11, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36 Edg/95.0.1020.38', 1636304676);
 
 -- ----------------------------
 -- Table structure for ape_admin_notify
@@ -188,7 +188,7 @@ CREATE TABLE `ape_admin_role`  (
 -- ----------------------------
 -- Records of ape_admin_role
 -- ----------------------------
-INSERT INTO `ape_admin_role` VALUES (1, 0, '超级管理员', '2,4,5,6,7,8,1,9,10,11,12,13,14,15,16,17,18,19,27,21,24,37,38,28,29,31,32,33,34,35', '2,4,5,6,7,8,1,9,10,11,12,13,14,15,16,17,18,19,27,21,24,37,38,28,29,31,32,33,34,35', 0, 1, '1', '1', 1580031132, 1627296049);
+INSERT INTO `ape_admin_role` VALUES (1, 0, '超级管理员', '2,4,5,6,7,8,1,9,10,11,12,13,14,15,16,39,17,18,19,27,21,24,37,38,28,29,31,32,33,34,35', '2,4,5,6,7,8,1,9,10,11,12,13,14,15,16,39,17,18,19,27,21,24,37,38,28,29,31,32,33,34,35', 0, 1, '1', '1', 1580031132, 1635572662);
 
 -- ----------------------------
 -- Table structure for ape_advert
@@ -196,24 +196,21 @@ INSERT INTO `ape_admin_role` VALUES (1, 0, '超级管理员', '2,4,5,6,7,8,1,9,1
 DROP TABLE IF EXISTS `ape_advert`;
 CREATE TABLE `ape_advert`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT '专区名称',
-  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '专区banner图',
-  `url` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '专区banner跳转url',
-  `position` tinyint(4) UNSIGNED NULL DEFAULT 1 COMMENT '专区位置  默认 1 1 顶部页签  2 右侧边栏',
-  `user_id` int(19) NULL DEFAULT NULL COMMENT '操作人id',
-  `create_time` datetime NULL DEFAULT NULL,
-  `update_time` datetime NULL DEFAULT NULL,
-  `sort` int(2) NULL DEFAULT 0 COMMENT '权重',
-  `status` tinyint(2) NULL DEFAULT 1 COMMENT '是否启用 0不启用 1启用',
+  `title` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '专区名称',
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '专区banner图',
+  `url` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '专区banner跳转url',
+  `position` tinyint(4) UNSIGNED NOT NULL DEFAULT 1 COMMENT '专区位置  默认 1 1 顶部页签  2 右侧边栏',
+  `user_id` int(19) NOT NULL DEFAULT 0 COMMENT '操作人id',
+  `create_time` int(10) NOT NULL,
+  `update_time` int(10) NOT NULL,
+  `sort` int(2) NOT NULL DEFAULT 0 COMMENT '权重',
+  `status` tinyint(2) NOT NULL DEFAULT 1 COMMENT '是否启用 0不启用 1启用',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '职位专区表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '职位专区表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_advert
 -- ----------------------------
-INSERT INTO `ape_advert` VALUES (17, '粽情端午', '/uploads/images/20210726\\14c25515c377028f274c93f79b7d11bd.jpg', 'https://hewa.cn/mainSwiperContent.html?swiperId=s014#/', 1, 32, '2021-05-31 11:01:58', '2021-07-26 20:12:19', 0, 1);
-INSERT INTO `ape_advert` VALUES (18, '用友专区', '/uploads/images/20210607\\e7f65d07dda7d50d3464349ead6a5eb1.png', 'https://hewa.cn/recommend.html?codes=40d701c08594baf68833ae14f28f00e0', 2, 61, '2021-06-03 10:54:13', '2021-08-13 00:52:10', 0, 1);
-INSERT INTO `ape_advert` VALUES (19, '胖达', '/uploads/images/20210606\\1254252dcceb7a92a18dbe71e8a51ee8.jpg', 'https://hewa.cn/recommend.html?codes=4295911b01a686aafb717f0ea4abab9b', 2, 61, '2021-07-05 15:19:18', '2021-08-13 00:52:15', 0, 1);
 
 -- ----------------------------
 -- Table structure for ape_attachment
@@ -231,17 +228,11 @@ CREATE TABLE `ape_attachment`  (
   `create_time` int(10) NOT NULL COMMENT '上传时间',
   `update_time` int(10) NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_attachment
 -- ----------------------------
-INSERT INTO `ape_attachment` VALUES (1, 2, '816417fae9785c2efa62bdb96327dc79.jpg', '/uploads/images/20210606\\816417fae9785c2efa62bdb96327dc79.jpg', 'images', 'image/jpeg', '1919593', 1, 1622992555, 1622992555);
-INSERT INTO `ape_attachment` VALUES (2, 2, '045f1d01edbd194f80f0b9fb28e35844.jpg', '/uploads/images/20210606\\045f1d01edbd194f80f0b9fb28e35844.jpg', 'images', 'image/jpeg', '4766893', 1, 1622992566, 1622992566);
-INSERT INTO `ape_attachment` VALUES (3, 0, '1254252dcceb7a92a18dbe71e8a51ee8.jpg', '/uploads/images/20210606\\1254252dcceb7a92a18dbe71e8a51ee8.jpg', 'images', 'image/jpeg', '560215', 1, 1622994431, 1622994431);
-INSERT INTO `ape_attachment` VALUES (4, 0, 'e7f65d07dda7d50d3464349ead6a5eb1.png', '/uploads/images/20210607\\e7f65d07dda7d50d3464349ead6a5eb1.png', 'images', 'image/png', '387019', 1, 1622995792, 1622995792);
-INSERT INTO `ape_attachment` VALUES (5, 3, '96125961627bc5768065fdb4ed7cded1.jpg', '/uploads/images/20210726\\96125961627bc5768065fdb4ed7cded1.jpg', 'images', 'image/jpeg', '21029', 1, 1627301501, 1627301501);
-INSERT INTO `ape_attachment` VALUES (6, 3, '14c25515c377028f274c93f79b7d11bd.jpg', '/uploads/images/20210726\\14c25515c377028f274c93f79b7d11bd.jpg', 'images', 'image/jpeg', '1602752', 1, 1627301511, 1627301511);
 
 -- ----------------------------
 -- Table structure for ape_attachment_category
@@ -252,19 +243,16 @@ CREATE TABLE `ape_attachment_category`  (
   `pid` int(10) NOT NULL DEFAULT 0 COMMENT '上级分类',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '目录名称',
   `type` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '所属附件类型',
-  `create_user` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '添加人',
-  `update_user` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改时间',
+  `create_user` int(10) NOT NULL DEFAULT 0 COMMENT '添加人',
+  `update_user` int(10) NOT NULL DEFAULT 0 COMMENT '修改时间',
   `create_time` int(11) NOT NULL COMMENT '添加时间',
   `update_time` int(11) NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件分类' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件分类' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_attachment_category
 -- ----------------------------
-INSERT INTO `ape_attachment_category` VALUES (1, 0, '用户头像', 'images', '1', NULL, 1613799617, 1613799617);
-INSERT INTO `ape_attachment_category` VALUES (2, 0, 'banner', 'images', '1', NULL, 1622992546, 1622992546);
-INSERT INTO `ape_attachment_category` VALUES (3, 0, '广告', 'images', '1', NULL, 1627301484, 1627301484);
 
 -- ----------------------------
 -- Table structure for ape_comment
@@ -283,17 +271,11 @@ CREATE TABLE `ape_comment`  (
   `status` int(11) NOT NULL DEFAULT 0 COMMENT '状态 0显示 1不显示',
   `update_time` int(11) NOT NULL COMMENT '评论时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '评论表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '评论表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of ape_comment
 -- ----------------------------
-INSERT INTO `ape_comment` VALUES (1, 'k', '1221245565@qq.com', '', 'jhklh', 0, 0, 1585573775, 1, 0, 0);
-INSERT INTO `ape_comment` VALUES (2, '1', '22222@qq.com', '', '1', 0, 0, 1597918464, 1, 0, 0);
-INSERT INTO `ape_comment` VALUES (3, '1', 'fds@qq.com', '', 'ew', 0, 0, 1597918488, 1, 0, 0);
-INSERT INTO `ape_comment` VALUES (4, '驱蚊', '我去饿', '我去饿', '请问企鹅   驱蚊', 0, 0, 1634483307, 2, 0, 1634483307);
-INSERT INTO `ape_comment` VALUES (5, '看看', '1099438829@qq.com', 'www.baidu.com', '啊实打实', 0, 0, 1634483642, 1, 0, 1634483642);
-INSERT INTO `ape_comment` VALUES (6, '看看', '1099438829@qq.com', 'http://www.baidu.com', '测试[f=woshou]', 0, 0, 1635436694, 1, 0, 1635436694);
 
 -- ----------------------------
 -- Table structure for ape_document
@@ -304,35 +286,33 @@ CREATE TABLE `ape_document`  (
   `uid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
   `author` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '作者',
   `title` char(80) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '标题',
-  `category_id` int(10) UNSIGNED NOT NULL COMMENT '所属分类',
-  `cover_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '封面',
+  `category_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '所属分类',
+  `cover_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '封面',
   `type` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'article' COMMENT '内容类型',
-  `theme` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '主题模板',
+  `theme` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '主题模板',
   `is_recommend` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否推荐',
   `is_top` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否置顶',
-  `is_hot` tinyint(4) NULL DEFAULT 0 COMMENT '是否热门',
-  `link_str` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '外链',
+  `is_hot` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否热门',
+  `link_str` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '外链',
   `display` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '可见性',
   `view` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '浏览量',
   `tags` char(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '标识',
-  `abstract` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '摘要',
-  `keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '',
+  `abstract` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '摘要',
+  `keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '描述',
   `sort` int(10) NOT NULL DEFAULT 0 COMMENT '排序',
   `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
   `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '数据状态',
-  `password` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文章密码',
+  `password` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '文章密码',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_category_status`(`category_id`, `status`) USING BTREE,
   INDEX `idx_status_type_pid`(`status`, `uid`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '文档模型基础表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文档模型基础表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ape_document
 -- ----------------------------
-INSERT INTO `ape_document` VALUES (1, 1, '超级管理员', '特种兵之霹雳火', 3, '/uploads/images/20210606\\1254252dcceb7a92a18dbe71e8a51ee8.jpg', 'article', '', 1, 1, 1, '', 1, 115, '111', '11', '', '', 99, 1622994445, 1624693478, 1, NULL);
-INSERT INTO `ape_document` VALUES (2, 1, '超级管理员', '111111111111111', 3, '/uploads/images/20210607\\e7f65d07dda7d50d3464349ead6a5eb1.png', 'article', '', 1, 1, 1, '', 1, 248, '', '', '', '', 99, 1622995800, 1624693479, 1, NULL);
 
 -- ----------------------------
 -- Table structure for ape_document_article
@@ -342,13 +322,11 @@ CREATE TABLE `ape_document_article`  (
   `id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '文档ID',
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '文章内容',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '文档模型文章表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '文档模型文章表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ape_document_article
 -- ----------------------------
-INSERT INTO `ape_document_article` VALUES (2, '<p>啊水水顶顶顶顶顶大师的帆帆帆帆帆帆帆帆 对方灌灌灌灌灌灌灌灌灌灌灌灌</p>');
-INSERT INTO `ape_document_article` VALUES (1, '<ul style=\"list-style-type: square;\">\r\n<li style=\"text-align: left;\"><sub><span style=\"text-decoration: line-through;\">2131312</span></sub></li>\r\n</ul>\r\n<table style=\"border-collapse: collapse; width: 100%;\" border=\"1\">\r\n<tbody>\r\n<tr>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n</tr>\r\n<tr>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n</tr>\r\n<tr>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n</tr>\r\n<tr>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n</tr>\r\n<tr>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n</tr>\r\n<tr>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n</tr>\r\n<tr>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n</tr>\r\n<tr>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n<td style=\"width: 12.5%;\">&nbsp;</td>\r\n</tr>\r\n</tbody>\r\n</table>');
 
 -- ----------------------------
 -- Table structure for ape_document_category
@@ -373,12 +351,11 @@ CREATE TABLE `ape_document_category`  (
   `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
   `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '数据状态',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '分类表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '分类表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ape_document_category
 -- ----------------------------
-INSERT INTO `ape_document_category` VALUES (3, '编程资料', '', '', 1, 0, 0, '', '', '', 'list_default.html', '', 95, 1, 1617634005, 1617634005, 1);
 
 -- ----------------------------
 -- Table structure for ape_document_category_content
@@ -388,12 +365,11 @@ CREATE TABLE `ape_document_category_content`  (
   `id` int(11) NOT NULL,
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ape_document_category_content
 -- ----------------------------
-INSERT INTO `ape_document_category_content` VALUES (3, '');
 
 -- ----------------------------
 -- Table structure for ape_document_product
@@ -408,7 +384,7 @@ CREATE TABLE `ape_document_product`  (
   `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '文档模型文章表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文档模型文章表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ape_document_product
@@ -430,13 +406,11 @@ CREATE TABLE `ape_friend_link`  (
   `update_time` int(10) NOT NULL DEFAULT 0 COMMENT '更新时间',
   `status` int(10) NOT NULL DEFAULT 1 COMMENT '状态 0禁用',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '友链表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ape_friend_link
 -- ----------------------------
-INSERT INTO `ape_friend_link` VALUES (1, 1, '源码云', 'www.apecloud.cn', '/uploads/images/20210606\\816417fae9785c2efa62bdb96327dc79.jpg', '猿码云', 99, 1626661946, 1626661957, 1);
-INSERT INTO `ape_friend_link` VALUES (2, 1, '百度', 'www.baidu.com', '', '', 0, 1634460306, 1634460306, 0);
 
 -- ----------------------------
 -- Table structure for ape_invitation_code
@@ -450,7 +424,7 @@ CREATE TABLE `ape_invitation_code`  (
   `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '邀请码' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '邀请码' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of ape_invitation_code
@@ -462,7 +436,7 @@ CREATE TABLE `ape_invitation_code`  (
 DROP TABLE IF EXISTS `ape_message_form`;
 CREATE TABLE `ape_message_form`  (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '姓名',
+  `author` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '姓名',
   `tel` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '手机',
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '邮箱',
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '留言内容',
@@ -472,7 +446,7 @@ CREATE TABLE `ape_message_form`  (
   `status` int(10) NOT NULL DEFAULT 1,
   `create_time` int(10) NOT NULL DEFAULT 0 COMMENT '留言时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ape_message_form
@@ -490,16 +464,11 @@ CREATE TABLE `ape_pv_log`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_pv_log
 -- ----------------------------
-INSERT INTO `ape_pv_log` VALUES (1, 23, 113, '2021-10-17', '2021-10-17 23:16:52', '2021-10-17 23:16:52');
-INSERT INTO `ape_pv_log` VALUES (2, 21, 2, '2021-10-20', '2021-10-20 21:58:30', '2021-10-20 21:58:30');
-INSERT INTO `ape_pv_log` VALUES (3, 23, 12, '2021-10-20', '2021-10-20 23:05:18', '2021-10-20 23:05:18');
-INSERT INTO `ape_pv_log` VALUES (4, 23, 12, '2021-10-28', '2021-10-28 23:41:31', '2021-10-28 23:41:31');
-INSERT INTO `ape_pv_log` VALUES (5, 0, 5, '2021-10-29', '2021-10-29 00:00:37', '2021-10-29 00:00:37');
 
 -- ----------------------------
 -- Table structure for ape_slides
@@ -516,13 +485,11 @@ CREATE TABLE `ape_slides`  (
   `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '数据状态',
   `sort` int(10) NOT NULL DEFAULT 0 COMMENT '排序',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '幻灯片' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '幻灯片' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of ape_slides
 -- ----------------------------
-INSERT INTO `ape_slides` VALUES (1, 'ceshi', '/uploads/images/20210606\\816417fae9785c2efa62bdb96327dc79.jpg', 'http://apeblog.io/', NULL, 1622992131, 1622992572, 1, 0);
-INSERT INTO `ape_slides` VALUES (2, 'ceshi2', '/uploads/images/20210606\\045f1d01edbd194f80f0b9fb28e35844.jpg', '/', NULL, 1622992586, 1622992586, 1, 0);
 
 -- ----------------------------
 -- Table structure for ape_system_config
@@ -547,7 +514,7 @@ CREATE TABLE `ape_system_config`  (
   `create_time` int(10) NOT NULL DEFAULT 0 COMMENT '添加时间',
   `update_time` int(10) NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 73 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统配置表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统配置表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_system_config
@@ -558,18 +525,22 @@ INSERT INTO `ape_system_config` VALUES (3, 1, '站点关键词', 'keywords', 'te
 INSERT INTO `ape_system_config` VALUES (4, 1, '站点描述', 'description', 'text', 'input', 0, '', '猿博系统', '', 87, 1, 1, '1', '1', 1582793248, 1582792265);
 INSERT INTO `ape_system_config` VALUES (5, 1, '网站作者', 'author', 'text', 'input', 0, '', '木子的忧伤', '', 86, 1, 1, '1', '1', 1582793305, 1582792265);
 INSERT INTO `ape_system_config` VALUES (6, 1, '站点logo', 'logo', 'file', 'input', 0, '', '/uploads/files/20210405\\60b557b38a20dc46b4ae1514e7a38fb4.jpeg', '', 85, 1, 1, '1', '1', 1582793393, 1582793700);
-INSERT INTO `ape_system_config` VALUES (7, 1, '版权信息', 'copyright', 'text', 'input', 0, '', 'Power by LEARY.', '', 84, 1, 1, '1', '1', 1582793470, 1582793495);
+INSERT INTO `ape_system_config` VALUES (7, 1, '版权信息', 'copyright', 'text', 'input', 0, '', 'Power by muzi', '', 84, 1, 1, '1', '1', 1582793470, 1582793495);
 INSERT INTO `ape_system_config` VALUES (8, 1, '备案信息', 'icp', 'text', 'textarea', 0, '', '蜀ICP备16029882号-1蜀ICP备16029882号', '', 83, 1, 1, '1', '1', 1582793563, 1583375542);
 INSERT INTO `ape_system_config` VALUES (9, 1, '评论开关', 'comment_close', 'radio', 'input', 0, '1=>开启\n0=>关闭', '1', '', 83, 1, 1, '1', '1', 1583126643, 1582792265);
-INSERT INTO `ape_system_config` VALUES (52, 1, '网站域名', 'domain', 'text', 'input', 0, '', 'http://apeblog.io', '', 0, 1, 1, '1', '1', 1588858018, 1582792265);
-INSERT INTO `ape_system_config` VALUES (65, 1, '网站统计代码', 'statistics', 'text', 'textarea', 0, '', '', '', 84, 1, 1, '1', '1', 1582793470, 1582793495);
-INSERT INTO `ape_system_config` VALUES (66, 1, '主题信息', 'web_template', 'select', 'input', 0, 'default=>默认\nnew=>新bolg', 'default', '', 83, 1, 1, '1', '1', 1582793563, 1620610858);
-INSERT INTO `ape_system_config` VALUES (67, 1, '关闭网站', 'web_close', 'radio', 'input', 0, '1=>开启\n0=>关闭', '1', '', 83, 1, 1, '1', '1', 1583126643, 1582792265);
-INSERT INTO `ape_system_config` VALUES (68, 1, '网站统计', 'web_statistics', 'radio', 'input', 0, '1=>开启\n0=>关闭', '0', '', 83, 1, 1, '1', '1', 1583126643, 1582792265);
-INSERT INTO `ape_system_config` VALUES (69, 1, '开始伪静态', 'web_rewrite', 'radio', 'input', 0, '1=>开启\n0=>关闭', '0', '', 83, 1, 1, '1', '1', 1583126643, 1582792265);
-INSERT INTO `ape_system_config` VALUES (70, 1, '联系地址', 'web_contact_add', 'text', 'input', 0, '', '北京市昌平区', '', 86, 1, 1, '1', '1', 1582793305, 1582792265);
-INSERT INTO `ape_system_config` VALUES (71, 1, '联系电话', 'web_contact_tel', 'text', 'input', 0, '', '13500000000', '', 86, 1, 1, '1', '1', 1582793305, 1582792265);
-INSERT INTO `ape_system_config` VALUES (72, 1, '联系QQ', 'web_contact_qq', 'text', 'input', 0, '', '11222', '', 86, 1, 1, '1', '1', 1582793305, 1582792265);
+INSERT INTO `ape_system_config` VALUES (10, 1, '网站域名', 'domain', 'text', 'input', 0, '', 'http://apeblog.io', '', 0, 1, 1, '1', '1', 1588858018, 1582792265);
+INSERT INTO `ape_system_config` VALUES (11, 1, '网站统计代码', 'statistics', 'text', 'textarea', 0, '', '', '', 84, 1, 1, '1', '1', 1582793470, 1582793495);
+INSERT INTO `ape_system_config` VALUES (12, 1, '主题信息', 'web_template', 'select', 'input', 0, 'default=>默认\nnew=>新bolg', 'default', '', 83, 1, 1, '1', '1', 1582793563, 1620610858);
+INSERT INTO `ape_system_config` VALUES (13, 1, '关闭网站', 'web_close', 'radio', 'input', 0, '1=>开启\n0=>关闭', '1', '', 83, 1, 1, '1', '1', 1583126643, 1582792265);
+INSERT INTO `ape_system_config` VALUES (14, 1, '网站统计', 'web_statistics', 'radio', 'input', 0, '1=>开启\n0=>关闭', '1', '', 83, 1, 1, '1', '1', 1583126643, 1582792265);
+INSERT INTO `ape_system_config` VALUES (15, 1, '开始伪静态', 'web_rewrite', 'radio', 'input', 0, '1=>开启\n0=>关闭', '0', '', 83, 1, 1, '1', '1', 1583126643, 1582792265);
+INSERT INTO `ape_system_config` VALUES (16, 1, '联系地址', 'web_contact_add', 'text', 'input', 0, '', '北京市昌平区', '', 86, 1, 1, '1', '1', 1582793305, 1582792265);
+INSERT INTO `ape_system_config` VALUES (17, 1, '联系电话', 'web_contact_tel', 'text', 'input', 0, '', '13500000000', '', 86, 1, 1, '1', '1', 1582793305, 1582792265);
+INSERT INTO `ape_system_config` VALUES (18, 1, '联系QQ', 'web_contact_qq', 'text', 'input', 0, '', '11222', '', 86, 1, 1, '1', '1', 1582793305, 1582792265);
+INSERT INTO `ape_system_config` VALUES (19, 3, '数据库备份根路径', 'data_backup_path', 'text', 'input', 0, '', './databack/', '路径必须以 / 结尾', 86, 1, 1, '1', '1', 1582793305, 1582792265);
+INSERT INTO `ape_system_config` VALUES (20, 3, '数据库备份卷大小', 'data_backup_part_size', 'text', 'input', 0, '', '20971520', '该值用于限制压缩后的分卷最大长度。单位：B；建议设置20M', 86, 1, 1, '1', '1', 1582793305, 1582792265);
+INSERT INTO `ape_system_config` VALUES (21, 3, '数据库备份文件是否启用压缩', 'data_backup_compress', 'radio', 'input', 0, '1=>开启\n0=>关闭', '1', '压缩备份文件需要PHP环境支持gzopen,gzwrite函数', 86, 1, 1, '1', '1', 1582793305, 1582792265);
+INSERT INTO `ape_system_config` VALUES (22, 3, '数据库备份文件压缩级别', 'data_backup_compress_level', 'text', 'input', 0, '', '4', '数据库备份文件的压缩级别，该配置在开启压缩时生效1:普通\n4:一般\n9:最高', 86, 1, 1, '1', '1', 1582793305, 1582792265);
 
 -- ----------------------------
 -- Table structure for ape_system_config_tab
@@ -585,13 +556,32 @@ CREATE TABLE `ape_system_config_tab`  (
   `create_time` int(10) NOT NULL COMMENT '添加时间',
   `update_time` int(10) NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统配置分类' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统配置分类' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_system_config_tab
 -- ----------------------------
 INSERT INTO `ape_system_config_tab` VALUES (1, '基础配置', 99, 1, '1', '1', 1582784937, 1583385482);
 INSERT INTO `ape_system_config_tab` VALUES (2, '上传配置', 98, 1, '1', '1', 1582785701, 1583385489);
+INSERT INTO `ape_system_config_tab` VALUES (3, '数据库配置', 98, 1, '1', '1', 1582785701, 1583385489);
+
+-- ----------------------------
+-- Table structure for ape_tag
+-- ----------------------------
+DROP TABLE IF EXISTS `ape_tag`;
+CREATE TABLE `ape_tag`  (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '专区名称',
+  `document_id` int(10) NOT NULL DEFAULT 0 COMMENT '文章id',
+  `user_id` int(19) NOT NULL DEFAULT 0 COMMENT '操作人id',
+  `create_time` int(11) NOT NULL,
+  `update_time` int(11) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '标签表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ape_tag
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for ape_url_log
@@ -606,23 +596,11 @@ CREATE TABLE `ape_url_log`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'pv记录表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_url_log
 -- ----------------------------
-INSERT INTO `ape_url_log` VALUES (1, 'http://apeblog.io/', 3, '网站首页', '2021-10-17', NULL, NULL);
-INSERT INTO `ape_url_log` VALUES (2, 'http://apeblog.io/msg.html', 4, '网站首页', '2021-10-17', NULL, NULL);
-INSERT INTO `ape_url_log` VALUES (3, 'http://apeblog.io/', 3, '网站首页', '2021-10-20', NULL, NULL);
-INSERT INTO `ape_url_log` VALUES (4, 'http://apeblog.io/www.apecloud.cn', 1, '网站首页', '2021-10-20', NULL, NULL);
-INSERT INTO `ape_url_log` VALUES (5, 'http://apeblog.io/index/article/detail.html?id=2', 6, '111111111111111', '2021-10-20', NULL, NULL);
-INSERT INTO `ape_url_log` VALUES (6, 'http://apeblog.io/about.html', 2, '网站首页', '2021-10-20', NULL, NULL);
-INSERT INTO `ape_url_log` VALUES (7, 'http://apeblog.io/', 6, '网站首页', '2021-10-28', NULL, NULL);
-INSERT INTO `ape_url_log` VALUES (8, 'http://apeblog.io/index/article/detail.html?id=1', 4, '特种兵之霹雳火', '2021-10-28', NULL, NULL);
-INSERT INTO `ape_url_log` VALUES (9, 'http://apeblog.io/index/article/lists.html?id=3', 1, '编程资料', '2021-10-28', NULL, NULL);
-INSERT INTO `ape_url_log` VALUES (10, 'http://apeblog.io/index/article/lists.html?id=3', 1, '编程资料', '2021-10-29', NULL, NULL);
-INSERT INTO `ape_url_log` VALUES (11, 'http://apeblog.io/index/article/detail.html?id=2', 2, '111111111111111', '2021-10-29', NULL, NULL);
-INSERT INTO `ape_url_log` VALUES (12, 'http://apeblog.io/index/article/detail.html?id=1', 2, '特种兵之霹雳火', '2021-10-29', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for ape_user
@@ -660,14 +638,10 @@ CREATE TABLE `ape_uv_log`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Uv记录表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_uv_log
 -- ----------------------------
-INSERT INTO `ape_uv_log` VALUES (1, '127.0.0.1', 23, '2021-10-17', '2021-10-17 23:16:52', '2021-10-17 23:16:52');
-INSERT INTO `ape_uv_log` VALUES (2, '127.0.0.1', 21, '2021-10-20', '2021-10-20 21:58:30', '2021-10-20 21:58:30');
-INSERT INTO `ape_uv_log` VALUES (3, '127.0.0.1', 23, '2021-10-28', '2021-10-28 23:41:31', '2021-10-28 23:41:31');
-INSERT INTO `ape_uv_log` VALUES (4, '127.0.0.1', 0, '2021-10-29', '2021-10-29 00:00:37', '2021-10-29 00:00:37');
 
 SET FOREIGN_KEY_CHECKS = 1;

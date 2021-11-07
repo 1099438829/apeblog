@@ -4654,3 +4654,7 @@ body[data-theme='translucent'] {
     height: -webkit-calc(100vh - 56px - 69px - 20px);
     height: calc(100vh - 56px - 69px - 20px);
 }
+
+.card-body .tab-right{
+    float: right;
+}

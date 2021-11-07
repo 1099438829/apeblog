@@ -37,7 +37,9 @@ class SystemConfig extends AuthController
                     }
                 }
             }
+            $tabList= tModel::lst($where['status'] = 1);
             $this->assign("tab_id",$tab_id);
+            $this->assign("tab_list",$tabList['data']);
             $this->assign("system",$system);
             return $this->fetch();
         }
