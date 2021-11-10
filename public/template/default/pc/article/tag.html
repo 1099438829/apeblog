@@ -17,10 +17,10 @@
           <div class="post-main">
             <div class="post-list-page-plane">
               <div class="list-plane-title">
-                <div>标签内容：{$kw}</div>
+                <div>标签内容：{$tag}</div>
               </div>
               <ul class="post-list">
-                {ape:list pagesize="10"  type="where"}
+                {ape:list pagesize="10" type="tag"}
                 <li class="post-item">
                   <div class="post-item-container">
                     <div class="post-item-thumbnail">
@@ -76,7 +76,7 @@
                 <div class="aside-box">
                   <form class="search-form" action="{:url('/index/article/search')}" method="get" role="search">
                     <div class="search-form-input-plane">
-                      <input type="text" class="search-keyword" name="kw" placeholder="搜索内容" value="{$kw}"/>
+                      <input type="text" class="search-keyword" name="kw" placeholder="搜索内容"/>
                     </div>
                     <div>
                       <button type="submit" class="search-submit" value="&#xf002;">搜索</button>
@@ -131,26 +131,32 @@
                   z-index: 100 !important;
                 }
               </style>
-              <script>
-                var tag = TagCloud(
-                  ".corepress-tag-container-tag1",
-                  JSON.parse(
-                    '[{"text":"WordPress","href":"https:\/\/www.lovestu.com\/tag\/wordpress"},{"text":"WordPress\u7248\u672c","href":"https:\/\/www.lovestu.com\/tag\/wordpress%e7%89%88%e6%9c%ac"},{"text":"\u4e3b\u9898","href":"https:\/\/www.lovestu.com\/tag\/%e4%b8%bb%e9%a2%98"},{"text":"\u4ee3\u7801","href":"https:\/\/www.lovestu.com\/tag\/code"},{"text":"\u4f7f\u7528\u6559\u7a0b","href":"https:\/\/www.lovestu.com\/tag\/tutorial"}]'
-                  ),
-                  {},
-                  [
-                    "#67C23A",
-                    "#E6A23C",
-                    "#F56C6C",
-                    "#909399",
-                    "#CC9966",
-                    "#FF6666",
-                    "#99CCFF",
-                    "#FF9999",
-                    "#CC6633",
-                  ]
-                );
-              </script>
+                    <script>
+                        $.get("{:url('/index/article/taglist')}",function(data,status){
+                            TagCloud(
+                                ".corepress-tag-container-tag1",
+                                data.data,
+                                {},
+                                [
+                                    "#67C23A",
+                                    "#E6A23C",
+                                    "#F56C6C",
+                                    "#909399",
+                                    "#CC9966",
+                                    "#FF6666",
+                                    "#99CCFF",
+                                    "#FF9999",
+                                    "#CC6633",
+                                    "#67C23A",
+                                    '#ef5b9c',
+                                    '#fcaf17',
+                                    '#009ad6',
+                                    '#003A8C',
+                                    '#f36c21'
+                                ]
+                            );
+                        });
+                    </script>
             </div>
                 {ape:advert row="3" type="2"}
                 <div class="aside-box">

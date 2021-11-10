@@ -367,7 +367,10 @@ function tpl_get_list($orderby, $pagesize, $cid, $type, $table = 'article', $whe
             break;
         case 'tag':
             //读取指定tag的文章
-            $documentListModel = $documentListModel->where('a.keywords', 'like', "%$where%");
+            $tag = substr(input('t'),0,strpos(input('t'),'.')); //搜索关键词
+            $tagModel = new \app\common\model\Tag();
+            $tagList = $tagModel->where('name',$tag)->select()->toArray();
+            $documentListModel = $documentListModel->where('a.id', 'in', array_column($tagList,'document_id'));
             break;
     }
     $documentListModel = $documentListModel->order($orderby);

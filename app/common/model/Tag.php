@@ -62,4 +62,37 @@ class Tag extends BaseModel
         }
         return $this->saveAll($saveAll);
     }
+
+
+
+    /**
+     * 列表
+     * @param $where
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @author 李玉坤
+     * @date 2021-02-15 23:24
+     */
+    public static function getList($where): array
+    {
+        $list =  cache('index:tagList');
+        if ($list){
+            return json_decode($list,true);
+        }else{
+            $tagList = self::systemPage($where);
+            $list = [];
+            foreach ($tagList['data'] as $tag){
+                $list[] = [
+                    "text" => $tag['name'],
+                    "href"  => url("/index/article/tag?t=".$tag['name'])->build()
+                ];
+            }
+            if ($list){
+                cache('index:tagList',json_encode($list),24*60*60);
+            }
+        }
+        return $list;
+    }
 }

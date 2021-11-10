@@ -5,6 +5,7 @@ use app\common\model\Document;
 use  app\common\model\DocumentCategory;
 use app\common\model\DocumentCategoryContent;
 use app\common\model\Comment as commentModel;
+use app\common\model\Tag as TagModel;
 use app\Request;
 use think\facade\Log;
 
@@ -235,6 +236,25 @@ class Article extends Base
             $this->error('模板文件不存在！');
         }
         return $this->fetch();
+    }
+
+    /**
+     * 标签列表
+     * @return mixed
+     * @author 李玉坤
+     * @date 2021-11-11 0:27
+     */
+    public function tagList()
+    {
+        $where = Util::postMore([
+            ['name',''],
+            ['document_id',''],
+            ['start_time',''],
+            ['end_time',''],
+            ['page',1],
+            ['limit',10]
+        ]);
+        return app("json")->layui(TagModel::getList($where));
     }
 
     /**
