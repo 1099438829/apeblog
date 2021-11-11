@@ -77,21 +77,17 @@
         showColumns: true,         // 是否显示所有的列
         showRefresh: true,         // 是否显示刷新按钮
         columns: [
-            // {
-            //     field: 'check',
-            //     checkbox: true
-            // },
-            {
-                field: 'title',
-                title: '名称',
-            },
             {
                 field: 'id',
                 title: 'ID',
             },
             {
+                field: 'title',
+                title: '名称',
+            },
+            {
                 field: 'display',
-                title: '可见性',
+                title: '是否可见',
                 formatter: function (value, row, index) {
                     if (value == 0) {
                         is_checked = '';
@@ -141,7 +137,7 @@
                         });
                     },
                     'click .category-edit': function (e, value, row, index) {
-                        iframe.createIframe('修改分类','/admin/category/edit?id='+row.id)
+                        location.href = '/admin/category/edit?id='+row.id;
                     }
                 },
                 formatter: operateFormatter
@@ -184,10 +180,10 @@
     // 操作按钮
     function operateFormatter(value, row, index) {
         return [
-            '<a type="button" class="category-add btn btn-xs btn-default m-r-5" title="编辑" data-toggle="tooltip"><i class="mdi mdi-plus"></i></a>',
+            '<a type="button" class="category-add btn btn-xs btn-default m-r-5" title="添加子分类" data-toggle="tooltip"><i class="mdi mdi-plus"></i></a>',
+            '<a type="button" class="category-edit btn btn-xs btn-default m-r-5" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>',
+            '<a type="button" class="category-delete btn btn-xs btn-default" title="删除" data-toggle="tooltip"><i class="mdi mdi-delete"></i></a>',
             '<a type="button" class="article-add btn btn-xs btn-default m-r-5" title="添加文章" data-toggle="tooltip"><i class="mdi mdi-pencil-box"></i></a>',
-            '<a type="button" class="category-edit btn btn-xs btn-default m-r-5" title="修改" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>',
-            '<a type="button" class="category-delete btn btn-xs btn-default" title="删除" data-toggle="tooltip"><i class="mdi mdi-delete"></i></a>'
         ].join('');
     }
 

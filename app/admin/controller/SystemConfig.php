@@ -2,6 +2,7 @@
 
 namespace app\admin\controller;
 
+use app\common\constant\Config;
 use app\common\model\SystemConfig as cModel;
 use app\common\model\SystemConfigTab as tModel;
 use app\Request;
@@ -184,7 +185,7 @@ class SystemConfig extends AuthController
             $res = cModel::update($data,['id'=>$id]);
         }
         //修改完需要更新缓存
-        cache('systemConfig',null);//清除缓存
+        cache(Config::DATA_SYSTEM_CONFIG,null);//清除缓存
         return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
     }
 
@@ -197,7 +198,7 @@ class SystemConfig extends AuthController
     {
         try {
             foreach ($request->param() as $k => $v) cModel::editValueByFormName($k,$v);
-            cache('systemConfig',null);//清除缓存
+            cache(Config::DATA_SYSTEM_CONFIG,null);//清除缓存
             return app("json")->success("操作成功");
         }catch (\Exception $e)
         {

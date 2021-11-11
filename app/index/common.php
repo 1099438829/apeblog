@@ -3,6 +3,11 @@
 // +----------------------------------------------------------------------
 use think\facade\Db;
 use think\Exception;
+use app\common\constant\Config;
+use app\common\model\DocumentCategoryContent;
+use app\common\model\DocumentCategory;
+use app\common\model\Document;
+use \app\common\model\FriendLink;
 
 // 应用公共文件
 /**
@@ -13,12 +18,6 @@ function cn_substr($str, $len)
     return mb_substr($str, 0, $len, 'utf-8');
 }
 
-/**
- * 时间戳格式化
- */
-//function date_format($ft,$data){
-//    return date($ft,$data);
-//}
 /**
  * 过滤html标签
  */
@@ -34,7 +33,7 @@ function html2text($str)
  */
 function get_type_content($id, $strip = false)
 {
-    $dc = \app\common\model\DocumentCategoryContent::find($id);
+    $dc = DocumentCategoryContent::find($id);
     if (!$dc) {
         return '';
     }
@@ -50,9 +49,9 @@ function get_type_content($id, $strip = false)
 function get_document_category_list()
 {
     //缓存文章菜单
-    $documentCategory = cache('DATA_DOCUMENT_CATEGORY_LIST');
+    $documentCategory = cache(Config::DATA_DOCUMENT_CATEGORY_LIST);
     if ($documentCategory === null) {
-        $documentCategoryList = \app\common\model\DocumentCategory::where('status', 1)->order('sort asc')->select()->toArray();
+        $documentCategoryList = DocumentCategory::where('status', 1)->order('sort asc')->select()->toArray();
         //转换，让id作为数组的键
         $documentCategory = [];
         foreach ($documentCategoryList as $key => $item) {
@@ -60,7 +59,7 @@ function get_document_category_list()
             $item['url'] = curl($item);
             $documentCategory[$item['id']] = $item;
         }
-        cache('DATA_DOCUMENT_CATEGORY_LIST', $documentCategory);
+        cache(Config::DATA_DOCUMENT_CATEGORY_LIST, $documentCategory);
     }
     return $documentCategory;
 }
@@ -122,7 +121,7 @@ function tpl_get_channel($type, $typeid, $row = 100, $where = '', $orderby = '',
     switch ($type) {
         case "all":
             //获取顶级分类
-            return get_document_category_all(0, $row, $display);
+            return get_document_category_all($display);
             break;
         case 'top':
             //获取顶级分类
@@ -155,7 +154,7 @@ function tpl_get_channel($type, $typeid, $row = 100, $where = '', $orderby = '',
             if (!$dc) {
                 throw new Exception('分类不存在或已删除！');
             }
-            $tempArr = \app\common\model\DocumentCategory::where('id', 'in', $dc['child'])->where('status', 1)->limit($row);
+            $tempArr = DocumentCategory::where('id', 'in', $dc['child'])->where('status', 1)->limit($row);
             if ($display) {
                 $tempArr = $tempArr->where('display', 1);
             }
@@ -185,7 +184,7 @@ function tpl_get_channel($type, $typeid, $row = 100, $where = '', $orderby = '',
             $dc = get_document_category($typeid);
             if ($dc['pid'] != 0) {
                 //获取根分类，此操作读取数据库，非缓存！
-                $dc = \app\common\model\DocumentCategory::where('pid', 0)->where('status', 1)
+                $dc = DocumentCategory::where('pid', 0)->where('status', 1)
                     ->where("CONCAT(',',child,',') like '%,$typeid,%'")->limit($row);
                 if ($display) {
                     $dc = $dc->where('display', 1);
@@ -202,7 +201,7 @@ function tpl_get_channel($type, $typeid, $row = 100, $where = '', $orderby = '',
             break;
         case 'where':
             //根据自定义条件获取分类（where语句），此操作读取数据库，非缓存！
-            $tempArr = \app\common\model\DocumentCategory::where('status', 1)->where($where)->order($orderby)->limit($row);
+            $tempArr = DocumentCategory::where('status', 1)->where($where)->order($orderby)->limit($row);
             if ($display) {
                 $tempArr = $tempArr->where('display', 1);
             }
@@ -216,7 +215,7 @@ function tpl_get_channel($type, $typeid, $row = 100, $where = '', $orderby = '',
             break;
         case 'ids':
             //根据多个栏目id，逗号隔开的那种，获得栏目列表
-            $tempArr = \app\common\model\DocumentCategory::where('status', 1)->where('id', 'in', $typeid)->order($orderby)->limit($row);
+            $tempArr = DocumentCategory::where('status', 1)->where('id', 'in', $typeid)->order($orderby)->limit($row);
             if ($display) {
                 $tempArr = $tempArr->where('display', 1);
             }
@@ -288,7 +287,7 @@ function tpl_get_prenext($get, $cid = false, $none)
         $get = 'next';
     }
 
-    $document = \app\common\model\Document::where('display', 1)->where('status', 1);
+    $document = Document::where('display', 1)->where('status', 1);
     $document = $get == 'pre' ? $document->where("id", '<', $id) : $document->where("id", '>', $id);
 
     //如果表明在同一分类下查询
@@ -320,7 +319,7 @@ function tpl_get_prenext($get, $cid = false, $none)
 function tpl_get_list($orderby, $pagesize, $cid, $type, $table = 'article', $where = false, $display = 1)
 {
 
-    $documentListModel = (new \app\common\model\Document())
+    $documentListModel = (new Document())
         ->alias('a')
         ->join(config('database.prefix') . 'document_category b', 'a.category_id=b.id', 'LEFT')
         ->join(config('database.prefix') . "document_$table c", 'a.id=c.id', 'LEFT')
@@ -439,7 +438,7 @@ function aurl($item)
  */
 function tpl_get_article($id, $table)
 {
-    $documentModel = \app\common\model\Document::alias('a')
+    $documentModel = Document::alias('a')
         ->join(config('database.prefix') . 'document_category b', 'a.category_id=b.id', 'LEFT')
         ->join(config('database.prefix') . "document_$table c", 'a.id=c.id', 'LEFT')
         ->where('a.status', 1)->where('a.id', $id)->where("a.type='$table'")
@@ -469,7 +468,7 @@ function tpl_get_article($id, $table)
 function tpl_get_article_list($cid, $row, $orderby, $table = 'article', $type = 'son', $where = false, $display = 1, $ids = '')
 {
 
-    $documentListModel = \app\common\model\Document::alias('a')
+    $documentListModel = Document::alias('a')
         ->join(config('database.prefix') . 'document_category b', 'a.category_id=b.id', 'LEFT')
         ->join(config('database.prefix') . "document_$table c", 'a.id=c.id', 'RIGHT')
         ->where("a.type='$table'")->where('a.status', 1)->where('b.status', 1)
@@ -538,10 +537,10 @@ function tpl_get_product_list($cid, $row, $orderby, $table = 'article', $type = 
  */
 function tpl_get_friend_link($type, $row)
 {
-    $flinkList = cache('DATA_FRIEND_LINK');
+    $flinkList = cache(Config::DATA_FRIEND_LINK);
     if ($flinkList === null) {
-        $flinkList = \app\common\model\FriendLink::where('status', 1)->order('sort asc')->limit($row)->select();
-        cache('DATA_FRIEND_LINK', $flinkList);
+        $flinkList = FriendLink::where('status', 1)->order('sort asc')->limit($row)->select();
+        cache(Config::DATA_FRIEND_LINK, $flinkList);
     }
     if ($type === 0) {
         return $flinkList;
@@ -560,10 +559,10 @@ function tpl_get_friend_link($type, $row)
  */
 function tpl_get_banner($type, $row)
 {
-    $bannerList = cache('DATA_BANNER');
+    $bannerList = cache(Config::DATA_BANNER);
     if ($bannerList === null) {
         $bannerList = Db::name('slides')->where('status', 1)->order('sort asc')->limit($row)->select();
-        cache('DATA_BANNER', $bannerList);
+        cache(Config::DATA_BANNER, $bannerList);
     }
     if ($type === 0) {
         return $bannerList;
@@ -608,24 +607,20 @@ function tpl_get_advert($type, $row)
     return $advertListTemp;
 }
 
-
 if (!function_exists('web_config')) {
     /**
      * 获取系统配置值
      * @param string $formName
      * @return string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      * @author 李玉坤
-     * @date 2021-02-14 22:41
+     * @date 2021-11-12 0:34
      */
     function web_config(string $formName): string
     {
-        $webConfig = cache('systemConfig');
+        $webConfig = cache(Config::DATA_SYSTEM_CONFIG);
         if (empty($webConfig)) {
             $webConfig = Db::name('system_config')->where("status", 1)->column('value', 'form_name');
-            cache('systemConfig', $webConfig);
+            cache(Config::DATA_SYSTEM_CONFIG, $webConfig);
         }
         return $webConfig[$formName] ?? '';
     }
@@ -633,6 +628,10 @@ if (!function_exists('web_config')) {
 
 /**
  * 模板-文章标签
+ * @param $tags
+ * @return array|bool
+ * @author 李玉坤
+ * @date 2021-11-12 0:34
  */
 function tpl_get_tags_list($tags)
 {
@@ -756,7 +755,7 @@ function IsActiveNav($curr_cid = false, $cid = false)
     }
 
     //判断是否在同一栏目树下。
-    $parent_id = cache('curr_category_patent_id');
+    $parent_id = cache(Config::CURR_CATEGORY_PATENT_ID);
 
     $parent_id = explode(',', $parent_id);
 

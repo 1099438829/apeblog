@@ -3,6 +3,7 @@
 namespace app\admin\controller;
 
 use app\admin\service\FormBuilderService as Form;
+use app\common\constant\Config;
 use app\common\model\Advert as aModel;
 use app\Request;
 use app\admin\service\UtilService as Util;
@@ -144,6 +145,7 @@ class Poster extends AuthController
         }else {
             $res = aModel::update($data,['id'=>$id]);
         }
+        cache(Config::DATA_ADVERT.'_'.$data['type'],null);//清除缓存
         return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
     }
 }

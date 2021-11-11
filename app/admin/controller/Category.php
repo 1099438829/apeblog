@@ -2,6 +2,7 @@
 
 namespace app\admin\controller;
 
+use app\common\constant\Config;
 use app\common\model\DocumentCategory as aModel;
 use app\common\model\DocumentCategoryContent;
 use app\Request;
@@ -87,6 +88,7 @@ class Category extends AuthController
                 $res =  DocumentCategoryContent::update(['content'=>$content],['id'=>$id]);
             }
         }
+        cache(Config::DATA_DOCUMENT_CATEGORY_LIST,null);
         return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
     }
 
@@ -100,7 +102,8 @@ class Category extends AuthController
         if (!$id) return app("json")->fail("参数有误，Id为空！");
         $where = Util::postMore([['field',''],['value','']]);
         if ($where['field'] == '' || $where['value'] =='') return app("json")->fail("参数有误！");
-        return aModel::update([$where['field']=>$where['value']],['id'=>$id]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+        cache(Config::DATA_DOCUMENT_CATEGORY_LIST,null);
+        return aModel::update([$where['field']=>$where['value']],['id'=>$id]) ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
     }
 
     /**
@@ -176,6 +179,7 @@ class Category extends AuthController
         $model = new aModel();
         $model->where('id',$where['id'])->delete();
         $res = DocumentCategoryContent::where('id',$where['id'])->delete();
+        cache(Config::DATA_DOCUMENT_CATEGORY_LIST,null);
         return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
     }
 }

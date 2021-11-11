@@ -2,6 +2,7 @@
 
 namespace app\admin\controller;
 
+use app\common\constant\Config;
 use app\common\model\FriendLink as aModel;
 use app\admin\service\FormBuilderService as Form;
 use app\Request;
@@ -123,6 +124,7 @@ class FriendLink extends AuthController
             $data['uid'] = $this->adminId;
             $res = aModel::update($data,['id'=>$id]);
         }
+        cache(Config::DATA_FRIEND_LINK,null);//清除缓存
         return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
     }
 
@@ -138,6 +140,7 @@ class FriendLink extends AuthController
         if (!$id) return app("json")->fail("参数有误，Id为空！");
         $where = Util::postMore([['field',''],['value','']]);
         if ($where['field'] == '' || $where['value'] =='') return app("json")->fail("参数有误！");
+        cache(Config::DATA_FRIEND_LINK,null);//清除缓存
         return aModel::update([$where['field']=>$where['value']],['id'=>$id]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 }

@@ -64,7 +64,7 @@ class Theme extends AuthController
         ]);
         if ($data['value'] == "") return app("json")->fail("主题不能为空");
         $res = cModel::update($data,['form_name'=>'web_template']);
-        cache('systemConfig',null);//清除缓存
+        cache(Config::DATA_SYSTEM_CONFIG,null);//清除缓存
         return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
     }
 }
