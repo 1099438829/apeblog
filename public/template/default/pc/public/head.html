@@ -2,25 +2,32 @@
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="Referrer" content="origin">
-	<style>.icon { width: 18px; height: 18px; vertical-align: -3px; fill: currentColor; overflow: hidden; }</style>
-	<style>html, body, #app { background-image: url("__IMG__/light_wool.png") !important; background-position: center center; background-attachment: fixed; }</style>
 	<link rel="icon" href="{:file_cdn(web_config('favicon'))}" type="image/x-icon">
-	<style>:root { --Maincolor: #409eff !important; --MaincolorHover: #409eff !important; --fontSelectedColor: #3390ff !important; } #nprogress .bar { background: var(--Maincolor) !important; }</style>
+	<style>:root{--Maincolor:#409eff!important;--MaincolorHover:#409eff!important;--fontSelectedColor:#3390ff!important}#nprogress .bar{background:var(--Maincolor)!important}.icon{width:18px;height:18px;vertical-align:-3px;fill:currentColor;overflow:hidden}</style>
 	<link rel="stylesheet" href="__CSS__/main-mobile.css">
 	<link rel="stylesheet" href="__LIB__/fontawesome5/css/all.min.css">
 	<link rel="stylesheet" href="__CSS__/main.css">
-	<script type="text/javascript" src="__JS__/jquery.min.js" id="corepress_jquery-js"></script>
-	<script type="text/javascript" src="__JS__/post-content.js"></script>
+	<link rel="stylesheet" id="pro_css_main-css" href="__CSS__/main-pro.css" type="text/css" media="all" />
+	<link rel="stylesheet" id="pro_main_mobile-css" href="__CSS__/main-mobile-pro.css" type="text/css" media="all" />
+	<script type="text/javascript" src="__JS__/jquery.min.js"  id="corepress_jquery-js"></script>
 	<script type="text/javascript" src="__JS__/jquery.lazyload.min.js" id="corepress_jquery_lazyload-js"></script>
 	<script type="text/javascript" src="__JS__/qrcode.min.js" id="corepress_jquery_qrcode-js"></script>
 	<script type="text/javascript" id="tools-js-extra">
 		/* <![CDATA[ */
-		var tools = {"index":"1","page":"","post":""};
+		var tools = { index: "1", page: "", post: "" };
 		/* ]]> */
 	</script>
+	<script type='text/javascript' src='__JS__/tools.js' id='tools-js'></script>
 	<link rel="EditURI" type="application/rsd+xml" title="RSD" href="/xmlrpc.php?rsd" />
 	<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="/wlwmanifest.xml" />
 	<link rel="stylesheet" href="__LIB__/nprogress/nprogress.min.css" />
 	<script type="text/javascript" src="__LIB__/nprogress/nprogress.min.js"></script>
+	<style>
+		@media screen and (max-width: 800px) {
+			body .go-top-plane {
+				display: unset!important;
+			}
+		}
+	</style>
 	<link rel="stylesheet" href="__LIB__/swiper/swiper.min.css" />
 	<script type="text/javascript" src="__LIB__/swiper/swiper.min.js"></script>

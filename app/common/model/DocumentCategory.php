@@ -25,7 +25,7 @@ class DocumentCategory extends BaseModel
     public static function systemPage($where): array
     {
         $model = new self;
-        $model = $model->field(['id','pid','title','sort','display'])->order('sort asc,id asc');
+        $model = $model->field(['id','pid','title','sort','status'])->order('sort asc,id asc');
         if (isset($where['title']) && $where['title'] != '') $model = $model->where("title|id","like","%$where[title]%");
         $data = $model->select()->toArray();
         return $data ?: [];

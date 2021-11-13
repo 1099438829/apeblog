@@ -2,7 +2,7 @@
 
 namespace app\admin\controller;
 
-use app\common\constant\Config;
+use app\common\constant\Data;
 use app\common\model\Slides as aModel;
 use app\admin\service\FormBuilderService as Form;
 use app\Request;
@@ -121,7 +121,7 @@ class Slides extends AuthController
         }else {
             $res = aModel::update($data,['id'=>$id]);
         }
-        cache(Config::DATA_BANNER,null);//清除缓存
+        cache(Data::DATA_BANNER,null);//清除缓存
         return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
     }
 }

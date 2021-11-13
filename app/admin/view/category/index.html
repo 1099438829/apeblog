@@ -86,7 +86,7 @@
                 title: '名称',
             },
             {
-                field: 'display',
+                field: 'status',
                 title: '是否可见',
                 formatter: function (value, row, index) {
                     if (value == 0) {
@@ -94,7 +94,7 @@
                     } else if (value == 1){
                         is_checked = 'checked="checked"';
                     }
-                    var field = "display";
+                    var field = "status";
                     result = '<label class="lyear-switch switch-primary switch-solid lyear-status"><input type="checkbox" '+ is_checked +'><span  onClick="updateStatus('+ row.id +', '+ value +', \''+ field +'\')"></span></label>';
                     return result;
                 },

@@ -1,66 +1,80 @@
-.hljs-comment, .hljs-quote {
-    color: #696969
+.hljs-comment,
+.hljs-quote {
+    color: #969896;
 }
 
-.hljs-deletion, .hljs-name, .hljs-regexp, .hljs-selector-class, .hljs-selector-id, .hljs-tag, .hljs-template-variable, .hljs-variable {
-    color: #d91e18
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+    color: #ff8383;
 }
 
-.hljs-built_in, .hljs-builtin-name, .hljs-link, .hljs-literal, .hljs-meta, .hljs-number, .hljs-params, .hljs-type {
-    color: #aa5d00
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+    color: #de935f;
 }
 
+/* Tomorrow Yellow */
 .hljs-attribute {
-    color: #aa5d00
+    color: #e9d27e;
 }
 
-.hljs-addition, .hljs-bullet, .hljs-string, .hljs-symbol {
-    color: green
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+    color: #b5f4a5;
 }
 
-.hljs-section, .hljs-title {
-    color: #007faa
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+    color: #93ddfd;
 }
-
-.hljs-keyword, .hljs-selector-tag {
-    color: #7928a1
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+    color: #d9a9ff;
 }
 
 .hljs {
     display: block;
     overflow-x: auto;
-    color: #545454;
-    padding: .5em
+    background: #2d3748;
+    color: #c5c8c6;
+    padding: 0.5em;
 }
 
 .hljs-emphasis {
-    font-style: italic
+    font-style: italic;
 }
 
 .hljs-strong {
-    font-weight: 700
-}
-
-@media screen and (-ms-high-contrast: active) {
-    .hljs-addition, .hljs-attribute, .hljs-built_in, .hljs-builtin-name, .hljs-bullet, .hljs-comment, .hljs-link, .hljs-literal, .hljs-meta, .hljs-number, .hljs-params, .hljs-quote, .hljs-string, .hljs-symbol, .hljs-type {
-        color: highlight
-    }
-
-    .hljs-keyword, .hljs-selector-tag {
-        font-weight: 700
-    }
+    font-weight: bold;
 }
 
 
 pre.corepress-code-pre code {
     position: relative;
     border-radius: 5px;
-    background: #fafafa;
     max-height: 500px;
     overflow: auto;
     padding: 10px 20px;
-    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, sans-serif;
-}
+   }
 
 .corepress-code-pre:hover .code-bar {
     visibility: visible;
@@ -86,6 +100,7 @@ pre.corepress-code-pre code {
     cursor: pointer;
 }
 .code-bar-btn-copy-fonticon {
+    color: #fff;
     cursor: pointer;
 }
 pre[class='corepress-code-pre'] {
@@ -96,8 +111,8 @@ pre[class='corepress-code-pre'] {
     padding: 0;
     max-height: unset;
     overflow: unset;
-    background-color: #fafafa;
 }
+
 
 .hljs ul {
     list-style: decimal;
@@ -112,4 +127,7 @@ pre[class='corepress-code-pre'] {
     line-height: 14px;
     word-break: break-all;
     word-wrap: break-word;
+}
+.hijs-line-number {
+
 }

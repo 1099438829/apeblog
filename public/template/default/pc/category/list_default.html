@@ -134,26 +134,32 @@
                       z-index: 100 !important;
                     }
                   </style>
-                  <script>
-                    var tag = TagCloud(
-                      ".corepress-tag-container-tag1",
-                      JSON.parse(
-                        '[{"text":"WordPress","href":"https:\/\/www.lovestu.com\/tag\/wordpress"},{"text":"WordPress\u7248\u672c","href":"https:\/\/www.lovestu.com\/tag\/wordpress%e7%89%88%e6%9c%ac"},{"text":"\u4e3b\u9898","href":"https:\/\/www.lovestu.com\/tag\/%e4%b8%bb%e9%a2%98"},{"text":"\u4ee3\u7801","href":"https:\/\/www.lovestu.com\/tag\/code"},{"text":"\u4f7f\u7528\u6559\u7a0b","href":"https:\/\/www.lovestu.com\/tag\/tutorial"}]'
-                      ),
-                      {},
-                      [
-                        "#67C23A",
-                        "#E6A23C",
-                        "#F56C6C",
-                        "#909399",
-                        "#CC9966",
-                        "#FF6666",
-                        "#99CCFF",
-                        "#FF9999",
-                        "#CC6633",
-                      ]
-                    );
-                  </script>
+                    <script>
+                        $.get("{:url('/index/article/taglist')}",function(data,status){
+                            TagCloud(
+                                ".corepress-tag-container-tag1",
+                                data.data,
+                                {},
+                                [
+                                    "#67C23A",
+                                    "#E6A23C",
+                                    "#F56C6C",
+                                    "#909399",
+                                    "#CC9966",
+                                    "#FF6666",
+                                    "#99CCFF",
+                                    "#FF9999",
+                                    "#CC6633",
+                                    "#67C23A",
+                                    '#ef5b9c',
+                                    '#fcaf17',
+                                    '#009ad6',
+                                    '#003A8C',
+                                    '#f36c21'
+                                ]
+                            );
+                        });
+                    </script>
                 </div>
                 {ape:advert row="3" type="2"}
                 <div class="aside-box">

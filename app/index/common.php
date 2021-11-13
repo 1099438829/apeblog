@@ -3,7 +3,7 @@
 // +----------------------------------------------------------------------
 use think\facade\Db;
 use think\Exception;
-use app\common\constant\Config;
+use app\common\constant\Data;
 use app\common\model\DocumentCategoryContent;
 use app\common\model\DocumentCategory;
 use app\common\model\Document;
@@ -49,7 +49,7 @@ function get_type_content($id, $strip = false)
 function get_document_category_list()
 {
     //缓存文章菜单
-    $documentCategory = cache(Config::DATA_DOCUMENT_CATEGORY_LIST);
+    $documentCategory = cache(Data::DATA_DOCUMENT_CATEGORY_LIST);
     if ($documentCategory === null) {
         $documentCategoryList = DocumentCategory::where('status', 1)->order('sort asc')->select()->toArray();
         //转换，让id作为数组的键
@@ -59,7 +59,7 @@ function get_document_category_list()
             $item['url'] = curl($item);
             $documentCategory[$item['id']] = $item;
         }
-        cache(Config::DATA_DOCUMENT_CATEGORY_LIST, $documentCategory);
+        cache(Data::DATA_DOCUMENT_CATEGORY_LIST, $documentCategory);
     }
     return $documentCategory;
 }
@@ -114,25 +114,37 @@ function get_document_category_by_name($name, $field = false)
 
 /**
  * 模板-获取文章分类
+ * @param $type
+ * @param $typeid
+ * @param int $row
+ * @param string $where
+ * @param string $orderby
+ * @return DocumentCategory[]|array|bool|\think\Collection
+ * @throws Exception
+ * @throws \think\db\exception\DataNotFoundException
+ * @throws \think\db\exception\DbException
+ * @throws \think\db\exception\ModelNotFoundException
+ * @author 李玉坤
+ * @date 2021-11-12 21:48
  */
-function tpl_get_channel($type, $typeid, $row = 100, $where = '', $orderby = '', $display = 1)
+function tpl_get_channel($type, $typeid, $row = 100, $where = '', $orderby = '')
 {
 
     switch ($type) {
         case "all":
             //获取顶级分类
-            return get_document_category_all($display);
+            return get_document_category_all();
             break;
         case 'top':
             //获取顶级分类
-            return get_document_category_by_parent(0, $row, $display);
+            return get_document_category_by_parent(0, $row);
             break;
         case 'son':
             //获取子级分类
             if (!$typeid) {
                 throw new Exception('请指定要获取的栏目分类id！');
             }
-            return get_document_category_by_parent($typeid, $row, $display);
+            return get_document_category_by_parent($typeid, $row);
             break;
         case 'self':
             //获取同级分类
@@ -143,7 +155,7 @@ function tpl_get_channel($type, $typeid, $row = 100, $where = '', $orderby = '',
             if (!$dc) {
                 return false;
             }
-            return get_document_category_by_parent($dc['pid'], $row, $display);;
+            return get_document_category_by_parent($dc['pid'], $row);;
             break;
         case 'find':
             //获取所有子孙分类，此操作读取数据库，非缓存！
@@ -155,9 +167,6 @@ function tpl_get_channel($type, $typeid, $row = 100, $where = '', $orderby = '',
                 throw new Exception('分类不存在或已删除！');
             }
             $tempArr = DocumentCategory::where('id', 'in', $dc['child'])->where('status', 1)->limit($row);
-            if ($display) {
-                $tempArr = $tempArr->where('display', 1);
-            }
             $tempArr = $tempArr->select();
             foreach ($tempArr as $key => $item) {
                 //根据栏目类型，生成栏目url
@@ -186,13 +195,8 @@ function tpl_get_channel($type, $typeid, $row = 100, $where = '', $orderby = '',
                 //获取根分类，此操作读取数据库，非缓存！
                 $dc = DocumentCategory::where('pid', 0)->where('status', 1)
                     ->where("CONCAT(',',child,',') like '%,$typeid,%'")->limit($row);
-                if ($display) {
-                    $dc = $dc->where('display', 1);
-                }
                 $dc = $dc->find();
             }
-
-
             //根据栏目类型，生成栏目url
             $dc['url'] = curl($dc);
             $tempArr = [];
@@ -202,9 +206,6 @@ function tpl_get_channel($type, $typeid, $row = 100, $where = '', $orderby = '',
         case 'where':
             //根据自定义条件获取分类（where语句），此操作读取数据库，非缓存！
             $tempArr = DocumentCategory::where('status', 1)->where($where)->order($orderby)->limit($row);
-            if ($display) {
-                $tempArr = $tempArr->where('display', 1);
-            }
             $tempArr = $tempArr->select();
             foreach ($tempArr as $key => $item) {
                 //根据栏目类型，生成栏目url
@@ -216,9 +217,6 @@ function tpl_get_channel($type, $typeid, $row = 100, $where = '', $orderby = '',
         case 'ids':
             //根据多个栏目id，逗号隔开的那种，获得栏目列表
             $tempArr = DocumentCategory::where('status', 1)->where('id', 'in', $typeid)->order($orderby)->limit($row);
-            if ($display) {
-                $tempArr = $tempArr->where('display', 1);
-            }
             $tempArr = $tempArr->select();
             foreach ($tempArr as $key => $item) {
                 //根据栏目类型，生成栏目url
@@ -239,7 +237,7 @@ function tpl_get_channel($type, $typeid, $row = 100, $where = '', $orderby = '',
  * $pid=父级id
  * $row=获取多少数目
  */
-function get_document_category_by_parent($pid, $row, $display = 1)
+function get_document_category_by_parent($pid, $row)
 {
     $documentCategoryList = get_document_category_list();
     $x = 1;
@@ -248,7 +246,7 @@ function get_document_category_by_parent($pid, $row, $display = 1)
         if ($x > $row) {
             break;
         }
-        if ($item['pid'] == $pid && ($display ? $item['display'] == 1 : true)) {
+        if ($item['pid'] == $pid) {
             $x = $x + 1;
             array_push($tempArr, $item);
         }
@@ -256,17 +254,15 @@ function get_document_category_by_parent($pid, $row, $display = 1)
     return $tempArr;
 }
 
-function get_document_category_all( $display = 1)
+function get_document_category_all()
 {
     $documentCategoryList = get_document_category_list();
     $tempArr = array();
     foreach ($documentCategoryList as $item) {
-        if (($display ? $item['display'] == 1 : true)) {
-            if ($item['pid'] == 0){
-                $tempArr[$item['id']] = $item;
-            }else{
-                $tempArr[$item['pid']]['child'][] = $item;
-            }
+        if ($item['pid'] == 0){
+            $tempArr[$item['id']] = $item;
+        }else{
+            $tempArr[$item['pid']]['child'][] = $item;
         }
     }
     return $tempArr;
@@ -537,10 +533,10 @@ function tpl_get_product_list($cid, $row, $orderby, $table = 'article', $type = 
  */
 function tpl_get_friend_link($type, $row)
 {
-    $flinkList = cache(Config::DATA_FRIEND_LINK);
+    $flinkList = cache(Data::DATA_FRIEND_LINK);
     if ($flinkList === null) {
         $flinkList = FriendLink::where('status', 1)->order('sort asc')->limit($row)->select();
-        cache(Config::DATA_FRIEND_LINK, $flinkList);
+        cache(Data::DATA_FRIEND_LINK, $flinkList);
     }
     if ($type === 0) {
         return $flinkList;
@@ -559,10 +555,10 @@ function tpl_get_friend_link($type, $row)
  */
 function tpl_get_banner($type, $row)
 {
-    $bannerList = cache(Config::DATA_BANNER);
+    $bannerList = cache(Data::DATA_BANNER);
     if ($bannerList === null) {
         $bannerList = Db::name('slides')->where('status', 1)->order('sort asc')->limit($row)->select();
-        cache(Config::DATA_BANNER, $bannerList);
+        cache(Data::DATA_BANNER, $bannerList);
     }
     if ($type === 0) {
         return $bannerList;
@@ -617,10 +613,10 @@ if (!function_exists('web_config')) {
      */
     function web_config(string $formName): string
     {
-        $webConfig = cache(Config::DATA_SYSTEM_CONFIG);
+        $webConfig = cache(Data::DATA_SYSTEM_CONFIG);
         if (empty($webConfig)) {
             $webConfig = Db::name('system_config')->where("status", 1)->column('value', 'form_name');
-            cache(Config::DATA_SYSTEM_CONFIG, $webConfig);
+            cache(Data::DATA_SYSTEM_CONFIG, $webConfig);
         }
         return $webConfig[$formName] ?? '';
     }
@@ -755,7 +751,7 @@ function IsActiveNav($curr_cid = false, $cid = false)
     }
 
     //判断是否在同一栏目树下。
-    $parent_id = cache(Config::CURR_CATEGORY_PATENT_ID);
+    $parent_id = cache(Data::CURR_CATEGORY_PATENT_ID);
 
     $parent_id = explode(',', $parent_id);
 

@@ -6,7 +6,7 @@ use app\common\model\FriendLink as friendLinkModel;
 use app\common\validate\MessageForm as MessageformValidate;
 use app\common\model\MessageForm as MessageFormModel;
 use app\Request;
-use app\common\constant\Config;
+use app\common\constant\Data;
 
 /**
  * 应用入口
@@ -26,7 +26,7 @@ class Index extends Base
             $this->urlrecord('网站首页');
         }
         //清除可能存在的栏目分类树id
-        cache(Config::CURR_CATEGORY_PATENT_ID,false);
+        cache(Data::CURR_CATEGORY_PATENT_ID,false);
         //模板兼容性标签
         $this->assign('id',false);
         $this->assign('cid',false);
@@ -70,7 +70,7 @@ class Index extends Base
             }
         } else {
             //清除可能存在的栏目分类树id
-            cache(Config::CURR_CATEGORY_PATENT_ID,false);
+            cache(Data::CURR_CATEGORY_PATENT_ID,false);
             //模板兼容性标签
             $this->assign('id',false);
             $this->assign('cid',false);
@@ -110,7 +110,7 @@ class Index extends Base
             }
         } else {
             //清除可能存在的栏目分类树id
-            cache(Config::CURR_CATEGORY_PATENT_ID,false);
+            cache(Data::CURR_CATEGORY_PATENT_ID,false);
             //模板兼容性标签
             $this->assign('id',false);
             $this->assign('cid',false);

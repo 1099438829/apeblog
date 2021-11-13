@@ -8,7 +8,7 @@ use app\common\model\Comment as commentModel;
 use app\common\model\Tag as TagModel;
 use app\Request;
 use think\facade\Log;
-use app\common\constant\Config;
+use app\common\constant\Data;
 
 /**
  * 应用入口
@@ -90,7 +90,7 @@ class Article extends Base
         //当前页面所属分类id
         $this->assign('cid',$id);
         //缓存当前页面栏目分类树ids
-        cache(Config::CURR_CATEGORY_PATENT_ID,$dc['pid']?$dc['pid'].','.$id:$id);
+        cache(Data::CURR_CATEGORY_PATENT_ID,$dc['pid']?$dc['pid'].','.$id:$id);
         //去除后缀
         $listTmp = substr($listTmp,0,strpos($listTmp,'.'));
         return $this->fetch('category/'.$listTmp);
@@ -156,7 +156,7 @@ class Article extends Base
         //当前页面所属分类id
         $this->assign('cid',$article['category_id']);
         //缓存当前页面栏目分类树ids
-        cache(Config::CURR_CATEGORY_PATENT_ID,$dc['pid']?$dc['pid'].','.$article['category_id']:$article['category_id']);
+        cache(Data::CURR_CATEGORY_PATENT_ID,$dc['pid']?$dc['pid'].','.$article['category_id']:$article['category_id']);
         //设置文章的url
         $article['link_str']=aurl($article);
         //判断后台统计配置是否开启 1 开启
@@ -228,7 +228,7 @@ class Article extends Base
         $this->assign('tag',$tag);
 
         //清除可能存在的栏目分类树id
-        cache(Config::CURR_CATEGORY_PATENT_ID,false);
+        cache(Data::CURR_CATEGORY_PATENT_ID,false);
         //模板兼容性标签
         $this->assign('id',false);
         $this->assign('cid',false);
@@ -285,7 +285,7 @@ class Article extends Base
         $this->assign('apeField',$apeField);
         $this->assign('kw',$kw);
         //清除可能存在的栏目分类树id
-        cache(Config::CURR_CATEGORY_PATENT_ID,false);
+        cache(Data::CURR_CATEGORY_PATENT_ID,false);
         //模板兼容性标签
         $this->assign('id',false);
         $this->assign('cid',false);

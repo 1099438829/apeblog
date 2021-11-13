@@ -1,18 +1,18 @@
 <header>
 	<div class="header-main-plane">
-		<div class="header-main container">
+		<div class="header-main container  header-main-location-left">
 			<script>
 				function openMenu() {
-					$('body').css('overflow', 'hidden');
+					$("body").css("overflow", "hidden");
 					$(".drawer-menu-plane").addClass("drawer-menu-plane-show");
 					$(".menu-plane").appendTo($(".drawer-menu-list"));
 					$(".user-menu-plane").appendTo($(".drawer-menu-list"));
-					$(".menu-item-has-children").append('<div class="m-dropdown" onclick="mobile_menuclick(event,this)" ><i class="fa fa-angle-down"></i></div>');
+					$(".menu-item-has-children").append('<div class="mobile-m-dropdown" onclick="mobile_menuclick(event,this)" ><i class="fa fa-angle-down"></i></div>');
 					$(".user-menu-main").not('.user-menu-main-notlogin').append('<div class="m-dropdown" onclick="mobile_menuclick(event,this)"><i class="fa fa-angle-down"></i></div>');
 				}
 
 				function closeMenu() {
-					$('body').css('overflow', 'auto');
+					$("body").css("overflow", "auto");
 					$(".drawer-menu-plane").removeClass("drawer-menu-plane-show");
 					$(".user-menu-plane").prependTo($(".header-menu"));
 					$(".menu-plane").prependTo($(".header-menu"));
@@ -33,13 +33,34 @@
 			</div>
 			<div class="drawer-menu-plane">
 				<div class="drawer-menu-list">
+					<div class="menu-mobile">
+						<ul class="menu-mobile-header-list">
+							<li id="menu-item-0" class="menu-item menu-item-0"><a href="/" aria-current="page">首页</a></li>
+							{ape:channel type="all"}
+							<li id="menu-item-{$field.id}" class="menu-item {notempty name="field['child']"}menu-item-has-children{/notempty} {:IsActiveNav($cid,$field['id'])?'current-menu-item current_page_item':''} menu-item-{$field['id']}">
+							{notempty name="field['child']"}
+								<a href="#" aria-current="page">{$field['title']}</a>
+							{else /}
+								<a href="{$field['url']}" aria-current="page">{$field['title']}</a>
+							{/notempty}
+							{notempty name="field['child']"}
+							<ul class="sub-menu">
+								{ape:channel type="son" typeid="$field['id']" void="vo"}
+								<li id="menu-item-{$vo.id}" class="menu-item menu-item-{$vo.id} {:IsActiveNav($cid,$vo['id'])?'current-menu-item':''}">
+									<a title="{$vo['title']}" aria-current="page" href="{$vo['url']}" {if $vo['link_str']} target="_blank"{/if}>{$vo['title']}</a>
+								</li>
+								{/ape:channel}
+							</ul>
+							{/notempty}
+							</li>
+							{/ape:channel}
+						</ul>
+					</div>
 				</div>
-				<div class="drawer-menu-write" onclick="closeMenu()">
-				</div>
+				<div class="drawer-menu-write" onclick="closeMenu()"></div>
 			</div>
 			<div class="header-logo-plane">
-				<div class="header-logo">
-					<a href="/"><img src="{:file_cdn(web_config('logo'))}" alt=""></a></div>
+				<div class="header-logo"><a href="/"><img src="{:file_cdn(web_config('logo'))}" alt=""></a></div>
 			</div>
 			<div class="mobile-search-btn" onclick="openSearch()">
 				<i class="fa fa-search"></i>
@@ -62,9 +83,9 @@
 				<div class="menu-plane">
 					<nav class="menu-header-plane">
 						<ul id="menu-header-list" class="menu-header-list">
-							<li id="menu-item-1" class="menu-item menu-item-1"><a href="/" aria-current="page">首页</a></li>
+							<li class="menu-item menu-item-0"><a href="/">首页</a></li>
 							{ape:channel type="all"}
-							<li id="menu-item-{$field.id}" class="menu-item {notempty name="field['child']"}menu-item-has-children{/notempty} {:IsActiveNav($cid,$field['id'])?'current-menu-item':''} menu-item-{$field['id']}">
+							<li class="menu-item {notempty name="field['child']"}menu-item-has-children{/notempty} {:IsActiveNav($cid,$field['id'])?'current-menu-item':''} menu-item-{$field['id']}">
 								{notempty name="field['child']"}
 								<a href="#" aria-current="page">{$field['title']}</a>
 								{else /}
@@ -74,7 +95,7 @@
 								<ul class="sub-menu">
 									{ape:channel type="son" typeid="$field['id']" void="vo"}
 									<li id="menu-item-{$vo.id}" class="menu-item menu-item-{$vo.id} {:IsActiveNav($cid,$vo['id'])?'current-menu-item':''}">
-										<a title="{$vo['title']}" href="{$vo['url']}" aria-current="page" {if $vo['link_str']} target="_blank"{/if}>{$vo['title']}</a>
+										<a title="{$vo['title']}" href="{$vo['url']}" {if $vo['link_str']} target="_blank"{/if}>{$vo['title']}</a>
 									</li>
 									{/ape:channel}
 								</ul>
@@ -89,7 +110,7 @@
 						<i class="fal fa-search"></i>
 					</div>
                     <span class="user-menu-main user-menu-main-notlogin">
-                 		<a href="login.html"><button class="login-btn-header">登录</button></a>
+                 		<a href="{:url('login')}"><button class="login-btn-header">登录</button></a>
                     </span>
 				</div>
 			</div>

@@ -1,0 +1,15 @@
+/**
+Pro-移动适配
+ */
+
+@media screen and (max-width: 800px) {
+    body .sidebarlist-main {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1040px) {
+    body .header-main-location-left {
+        justify-content: space-between;
+    }
+}

@@ -7,7 +7,7 @@
 namespace app\common\constant;
 
 
-class Config
+class Data
 {
 
     const DATA_FRIEND_LINK  = 'data_friend_link'; //友链

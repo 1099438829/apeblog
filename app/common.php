@@ -1,6 +1,6 @@
 <?php
 use app\common\model\SystemConfig;
-use app\common\constant\Config;
+use app\common\constant\Data;
 // 应用公共文件
 if (!function_exists('system_config_more'))
 {
@@ -14,10 +14,10 @@ if (!function_exists('system_config_more'))
      */
     function system_config_more(array $formNames): array
     {
-        $systemConfig = cache(Config::DATA_SYSTEM_CONFIG);
+        $systemConfig = cache(Data::DATA_SYSTEM_CONFIG);
         if (empty($systemConfig)){
             $systemConfig = SystemConfig::getSystemConfigValues();
-            cache(Config::DATA_SYSTEM_CONFIG,$systemConfig);
+            cache(Data::DATA_SYSTEM_CONFIG,$systemConfig);
         }
         $data = [];
         foreach ($formNames as $v){
@@ -74,10 +74,10 @@ if (!function_exists('system_config'))
      */
     function system_config(string $formName): string
     {
-        $systemConfig = cache(Config::DATA_SYSTEM_CONFIG);
+        $systemConfig = cache(Data::DATA_SYSTEM_CONFIG);
         if (empty($systemConfig)){
             $systemConfig = SystemConfig::getSystemConfigValues();
-            cache(Config::DATA_SYSTEM_CONFIG,$systemConfig);
+            cache(Data::DATA_SYSTEM_CONFIG,$systemConfig);
         }
         return $systemConfig[$formName]??'';
     }

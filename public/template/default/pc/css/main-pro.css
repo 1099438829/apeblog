@@ -1,0 +1,74 @@
+/**
+侧边栏模块
+ */
+.sidebarlist-item {
+    cursor: var(--cur-pointer), pointer !important;
+}
+
+.sidebarlist-main {
+    position: fixed;
+    bottom: 50%;
+    right: 40px;
+    transition: .30s;
+    z-index: 999;
+}
+
+.sidebarlist-main i {
+    font-size: 26px;
+}
+
+.sidebarlist-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.sidebarlist-item {
+    background: #fff;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 0 3px 1px rgba(0, 0, 0, .1);
+}
+
+.sidebarlist-item:hover .sidebarlist-item-content {
+    visibility: visible;
+    right: 120%;
+    opacity: 1;
+}
+
+.sidebarlist-item > a {
+    color: unset;
+}
+
+.sidebarlist-item-content {
+    visibility: hidden;
+    position: absolute;
+    background: #fff;
+    right: 90%;
+    opacity: 0;
+    top: 50%;
+    transition: all .3s ease;
+    width: 250px;
+    padding: 12px;
+    box-shadow: 0 0 3px 1px rgba(0, 0, 0, .1);
+    font-size: 14px;
+    line-height: 1.6;
+    z-index: 1000;
+    cursor: auto;
+    border-radius: var(--border-hd);
+}
+
+.sidebarlist-item-content img {
+    width: 100%;
+    height: auto;
+}
+.header-main-location-left {
+    justify-content: unset;
+}
+
+.header-main-location-left .header-menu {
+    justify-content: space-between;
+    flex: 1;
+}

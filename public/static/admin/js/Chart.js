@@ -2023,7 +2023,6 @@ module.exports = {
         this._config = config;
         // Lenient ordinal parsing accepts just a number in addition to
         // number + (possibly) stuff coming from _dayOfMonthOrdinalParse.
-        // TODO: Remove "ordinalParse" fallback in next major release.
         this._dayOfMonthOrdinalParseLenient = new RegExp(
             (this._dayOfMonthOrdinalParse.source || this._ordinalParse.source) +
                 '|' + (/\d{1,2}/).source);
@@ -2666,7 +2665,6 @@ module.exports = {
             this._shortMonthsParse = [];
         }
 
-        // TODO: add sorting
         // Sorting makes sure if one month (or abbr) is a prefix of another
         // see sorting in computeMonthsParse
         for (i = 0; i < 12; i++) {
@@ -2706,7 +2704,6 @@ module.exports = {
                 value = toInt(value);
             } else {
                 value = mom.localeData().monthsParse(value);
-                // TODO: Another silent failure?
                 if (!isNumber(value)) {
                     return mom;
                 }
@@ -3494,7 +3491,6 @@ module.exports = {
 
     function loadLocale(name) {
         var oldLocale = null;
-        // TODO: Find a better way to register and load all the locales in Node
         if (!locales[name] && (typeof module !== 'undefined') &&
                 module && module.exports) {
             try {
@@ -3774,7 +3770,6 @@ module.exports = {
             dow = 1;
             doy = 4;
 
-            // TODO: We need to take the current isoWeekYear, but that depends on
             // how we interpret now (local, utc, fixed offset). So create
             // a now version of current config (take local/utc/offset flags, and
             // create now).
@@ -3949,7 +3944,6 @@ module.exports = {
 
     function checkWeekday(weekdayStr, parsedInput, config) {
         if (weekdayStr) {
-            // TODO: Replace the vanilla JS Date object with an indepentent day-of-week check.
             var weekdayProvided = defaultLocaleWeekdaysShort.indexOf(weekdayStr),
                 weekdayActual = new Date(parsedInput[0], parsedInput[1], parsedInput[2]).getDay();
             if (weekdayProvided !== weekdayActual) {
@@ -4053,7 +4047,6 @@ module.exports = {
 
     // date from string and format string
     function configFromStringAndFormat(config) {
-        // TODO: Move this to another part of the creation flow to prevent circular deps
         if (config._f === hooks.ISO_8601) {
             configFromISO(config);
             return;
@@ -4348,7 +4341,6 @@ module.exports = {
         return res;
     }
 
-    // TODO: Use [].sort instead?
     function min () {
         var args = [].slice.call(arguments, 0);
 
