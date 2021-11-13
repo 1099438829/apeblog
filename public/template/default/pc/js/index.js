@@ -1,128 +1,254 @@
-document.body.oncopy = function() {
-    if (1 != set.isusercenter) {
-        var a = window.getSelection().toString();
-        if (1 == set.reprint.open) {
-            if (1 == set.reprint.copylenopen && a.length > set.reprint.copylen) return addarelt("\u590d\u5236\u5185\u5bb9\u592a\u957f\uff0c\u7981\u6b62\u590d\u5236", "erro"), event.preventDefault(), !1;
-            copyaddurl(a)
-        }
-    }
-};
-
-function copyaddurl(a) {
-    0 == set.reprint.addurl ? addarelt(set.reprint.msg, "succ") : 100 < a.length ? (addarelt(set.reprint.msg, "succ"), JScopyText(a + "\n \u3010\u6765\u6e90\uff1a" + set.reprint.siteurl + "\uff0c\u8f6c\u8f7d\u8bf7\u6ce8\u660e\u3011")) : addarelt(set.reprint.msg, "succ")
+document.body.oncopy = function () {
+	if (set.isusercenter == 1) {
+		return;
+	}
+	var copytext = window.getSelection().toString();
+	if (set.reprint.open == 1) {
+		if (set.reprint.copylenopen == 1) {
+			if (copytext.length > set.reprint.copylen) {
+				addarelt('复制内容太长，禁止复制', 'erro');
+				event.preventDefault();
+				return false;
+			} else {
+				copyaddurl(copytext);
+			}
+		} else {
+			copyaddurl(copytext);
+		}
+	}
 }
-$(document).scroll(function() {
-    var a = $(document).scrollTop();
-    $(window).height();
-    $(document).height();
-    100 < a ? $(".go-top-plane").addClass("go-top-plane-show") : $(".go-top-plane").removeClass("go-top-plane-show")
+
+function copyaddurl(content) {
+	if (set.reprint.addurl == 0) {
+		addarelt(set.reprint.msg, 'succ');
+	} else {
+		if (content.length > 100) {
+			addarelt(set.reprint.msg, 'succ');
+			JScopyText(content + '\n 【来源：' + set.reprint.siteurl + '，转载请注明】');
+		} else {
+			addarelt(set.reprint.msg, 'succ');
+		}
+	}
+}
+
+$(document).scroll(function () {
+	var scroH = $(document).scrollTop();  //滚动高度
+	var viewH = $(window).height();  //可见高度
+	var contentH = $(document).height();  //内容高度
+	if (scroH > 100) {  //距离顶部大于100px时
+		$('.go-top-plane').addClass('go-top-plane-show')
+	} else {
+		$('.go-top-plane').removeClass('go-top-plane-show')
+	}
+	if (contentH - (scroH + viewH) <= 100) {  //距离底部高度小于100px
+	}
+	if (contentH == (scroH + viewH)) {  //滚动条滑到底部啦
+	}
 });
 
-function mobile_menuclick(a, b) {
-    $(".sub-menu").css("visibility", "hidden");
-    $(".sub-menu").css("opacity", "0");
-    "hidden" == $(b).parent().find(".sub-menu").css("visibility") ? ($(b).parent().find(".sub-menu").css("opacity", "1"), $(b).parent().find(".sub-menu").css("visibility", "visible")) : "hidden" == $(b).parent().parent().find(".user-sub-menu").css("visibility") && ($(b).parent().parent().find(".sub-menu").css("opacity", "1"), $(b).parent().parent().find(".sub-menu").css("visibility", "visible"));
-    a.stopPropagation()
+function mobile_menuclick(e, ethis) {
+	$('.user-menu .sub-menu').css('visibility', 'hidden');
+	$('.user-menu .sub-menu').css('opacity', '0');
+	if ($(ethis).parent().find('.sub-menu').css('visibility') == 'hidden') {
+		$(ethis).parent().find('.sub-menu').css('opacity', '1');
+		$(ethis).parent().find('.sub-menu').css('visibility', 'visible');
+	} else if ($(ethis).parent().parent().find('.user-sub-menu').css('visibility') == 'hidden') {
+		$(ethis).parent().parent().find('.sub-menu').css('opacity', '1');
+		$(ethis).parent().parent().find('.sub-menu').css('visibility', 'visible');
+	}
+	e.stopPropagation();
 }
-$(document).ready(function() {
-    $(".go-top-plane").click(function() {
-        $("html,body").animate({
-            scrollTop: "0px"
-        }, 500)
-    });
-    $(".drawer-menu-list").click(function(a) {
-        $(".sub-menu").css("visibility", "hidden");
-        $(".sub-menu").css("opacity", "0");
-        $(".sub-menu").removeClass("sub-menu-hide");
-        $(".sub-menu").removeClass("sub-menu-show");
-        a.stopPropagation()
-    });
-    $(".tag-cloud-link").each(function() {
-        var a = "#67C23A #E6A23C #F56C6C #909399 #CC9966 #FF6666 #99CCFF #FF9999 #CC6633".split(" "),
-            a = a[Math.floor(Math.random() * a.length)];
-        $(this).css("background-color", a)
-    });
-    if (1 == set.module.imglightbox && (1 == set.is_page || 1 == set.is_single)) {
-        for (var a = $(".post-content-content").find("img").not(".c-downbtn-icon").not(".post-end-tools"), b = 0; b < a.length; b++) {
-            var c = 1 == set.module.imglazyload ? $(a[b]).attr("data-original") : $(a[b]).attr("src"),
-                d = a[b].outerHTML;
-            "A" != $(a[b]).parent()[0].tagName && $(a[b]).replaceWith('\x3ca data-fancybox\x3d"gallery" data-type\x3d"image" href\x3d"' + c + '"\x3e' + d + "\x3c/a\x3e")
-        }
-        $.fancybox.defaults.buttons = ["close"];
-        $('a[href*\x3d".jpg"],a[href*\x3d".webp"],a[href*\x3d".ico"],a[href*\x3d".svg"], a[href*\x3d".jpeg"], a[href*\x3d".png"], a[href*\x3d".gif"], a[href*\x3d".bmp"]').fancybox({})
-    }
-    $("img").lazyload({
-        effect: "fadeIn"
-    });
-    b = 0;
-    d = "";
-    $(".post-content h2,.post-content h3").each(function() {
-        var a = $(this)[0].tagName.toLowerCase();
-        console.log();
-        "zd-plane-content" != $(this).parent().attr("class") && ($(this).attr("catalog", "catalog-" + a + "-" + b), d = d + '\x3cp catalogtagName\x3d"' + a + '" catalog\x3d"catalog-' + a + "-" + b + '" class\x3d"catalog-item" onclick\x3d"' + ("go_catalog('catalog-" + a + "-" + b + "','" + a + "')") + '"\x3e' + $(this).html() + "\x3c/p\x3e", b++)
-    });
-    $("#post-catalog-list").html(d);
-    set_catalog_position();
-    $("#post-catalog").css("visibility", "visible");
-    $("#post-catalog").css("opacity", "1");
-    0 == $(".post-content h2").length && 0 == $(".post-content h3").length && $("#post-catalog").css("visibility", "hidden");
-    1 == set.module.imglazyload && endloadhtml();
-    1 == set.theme.loadbar && NProgress.done();
-    if (1 == set.is_home && 1 == set.index.linksicon) {
-        a = $(".frinds-links-list").children("li");
-        for (c = 0; c < a.length; c++) {
-            var f = $(a[c]).children("a").attr("href") + "/favicon.ico",
-                e = set.index.chromeiconurl;
-        }
-        setTimeout(function() {
-            endloadhtml()
-        }, 1E3)
-    }
+
+$(document).ready(function () {
+	//移动端
+	$('.menu-mobile .menu-item-has-children').append('<div class="mobile-m-dropdown"><i class="fa fa-angle-down"></i></div>')
+	$('.menu-mobile .mobile-m-dropdown').click(function() {
+		$(this).parent().children('.mobile-m-dropdown').children().toggleClass('m-dropdown-show-i')
+		$(this).parent().children('.sub-menu').slideToggle()
+	})
+
+
+
+	$('.go-top-plane').click(function () {
+		$('html,body').animate({scrollTop: '0px'}, 500);
+	});
+	$('.drawer-menu-list').click(function (e) {
+		$('.user-menu .sub-menu').css('visibility', 'hidden');
+		$('.user-menu .sub-menu').css('opacity', '0');
+		$('.user-menu .sub-menu').removeClass('sub-menu-hide');
+		$('.user-menu .sub-menu').removeClass('sub-menu-show');
+		e.stopPropagation();
+	});
+	$('.tag-cloud-link').each(function () {
+		var colors = ['#67C23A', '#E6A23C', '#F56C6C', '#909399', '#CC9966', '#FF6666', '#99CCFF', '#FF9999', '#CC6633'];
+		var backcolor = colors[Math.floor((Math.random() * colors.length))];
+		$(this).css('background-color', backcolor);
+	});
+
+	if (set.module.imglightbox == 1) {
+		if (set.is_page == true || set.is_single == true) {
+			var imgarr = $('.post-content-content').find('img').not('.c-downbtn-icon').not('.post-end-tools').not('.link-icon').not('.corepress-url-dh-icon img');
+			for (var i = 0; i < imgarr.length; i++) {
+				if (set.module.imglazyload == 1) {
+					var imgurl = $(imgarr[i]).attr('data-original');
+				} else {
+					var imgurl = $(imgarr[i]).attr('src');
+				}
+				var html = imgarr[i].outerHTML;
+				if ($(imgarr[i]).parent()[0].tagName != 'A') {
+					$(imgarr[i]).replaceWith('<a data-fancybox="gallery" data-type="image" href="' + imgurl + '">' + html + '</a>');
+				}
+			}
+			$.fancybox.defaults.buttons = [
+				"close"
+			];
+			$('a[href*=".jpg"],a[href*=".webp"],a[href*=".ico"],a[href*=".svg"], a[href*=".jpeg"], a[href*=".png"], a[href*=".gif"], a[href*=".bmp"]').fancybox({});
+		}
+	}
+
+
+	if (set.is_single == 1 || set.is_page == 1) {
+		if (set.corepress_post_meta.catalog == 1) {
+			var i = 0;
+			//文章目录
+			var html = '';
+			$(".post-content h2,.post-content h3").each(function () {
+				var tagName = $(this)[0].tagName.toLowerCase();
+				console.log();
+				if ($(this).parent().attr('class') == 'zd-plane-content') {
+					return;
+				}
+				$(this).attr('catalog', 'catalog-' + tagName + '-' + i);
+				var clickargs = "go_catalog('catalog-" + tagName + "-" + i + "','" + tagName + "')";
+				html = html + '<p catalogtagName="' + tagName + '" catalog="' + 'catalog-' + tagName + '-' + i + '" class="catalog-item" onclick="' + clickargs + '">' + $(this).html() + '</p>';
+				i++;
+			});
+			$('#post-catalog-list').html(html);
+			set_catalog_position();
+			$('#post-catalog').css('visibility', 'visible');
+			$('#post-catalog').css('opacity', '1');
+			if ($(".post-content h2").length == 0 && $(".post-content h3").length == 0) {
+				$('#post-catalog').css('visibility', 'hidden');
+			}
+		}
+		if (set.has_corepress_video == true) {
+			const player = new Plyr('.corepress-video', {
+				i18n: {
+					restart: '重播',
+					play: '播放',
+					pause: '暂停',
+					speed: '速度',
+					normal: '正常',
+					quality: '质量',
+
+				}
+			});
+		}
+
+	}
+	//图片延迟加载
+	$("img").lazyload({effect: "fadeIn"});
+	if (set.module.imglazyload == 1) {
+		endloadhtml();
+	}
+
+	//顶部加载
+	if (set.theme.loadbar == 1) {
+		NProgress.done();
+	}
+	//友链图标
+	if (set.is_home == true) {
+		if (set.index.linksicon == 1) {
+
+			var links_url_arr = $('.frinds-links-list').children('li');
+			for (let i = 0; i < links_url_arr.length; i++) {
+				var url = $(links_url_arr[i]).children('a').attr('href') + '/favicon.ico';
+				var default_url = set.index.chromeiconurl;
+				$(links_url_arr[i]).children('a').prepend(`<img class="frinds-links-icon img-lazyload" src="${default_url}" data-original="${url}" onerror="javascript:this.src='${default_url}'"> `);
+			}
+			setTimeout(function () {
+				endloadhtml();
+			}, 1000)
+		}
+	}
 });
 
 function endloadhtml() {
-    $("img.frinds-links-icon").lazyload({
-        effect: "fadeIn"
-    })
+	$("img.frinds-links-icon").lazyload({effect: "fadeIn"});
 }
-$(window).resize(function() {
-    set_catalog_position()
+
+$(window).resize(function () {
+	set_catalog_position();
 });
-$(document).scroll(function() {
-    "visible" == $("#post-catalog").css("visibility") && $(".post-content h2[catalog],.post-content h3[catalog]").each(function() {
-        var a = this.getBoundingClientRect().y;
-        100 > a && 0 < a && (a = $(this).attr("catalog"), set_catalog_css(), $("p[catalog\x3d" + a + "]").addClass("catalog-hover"))
-    })
+$(document).scroll(function () {
+	if ($('#post-catalog').css('visibility') != 'visible') {
+		return;
+	}
+	$(".post-content h2[catalog],.post-content h3[catalog]").each(function () {
+		var el_y = this.getBoundingClientRect().y;
+		if (el_y < 100 && el_y > 0) {
+			var name = $(this).attr('catalog');
+			set_catalog_css();
+			$('p[catalog=' + name + ']').addClass('catalog-hover');
+			return;
+		}
+
+	});
 });
 
-function close_show(a) {
-    1 == a ? ($("#post-catalog").removeClass("post-catalog-hide"), $("#post-catalog-bar").css("visibility", "hidden")) : ($("#post-catalog").addClass("post-catalog-hide"), $("#post-catalog-bar").css("visibility", "visible"))
+function close_show(type) {
+	if (type == 1) {
+		$('#post-catalog').removeClass('post-catalog-hide')
+		$('#post-catalog-bar').css('visibility', 'hidden')
+	} else {
+		$('#post-catalog').addClass('post-catalog-hide')
+		$('#post-catalog-bar').css('visibility', 'visible')
+	}
 }
+
 function set_catalog_css() {
-    $("p[catalog]").removeClass("catalog-hover")
+	$('p[catalog]').removeClass('catalog-hover');
 }
+
 function set_catalog_position() {
-    if (1 == set.is_page || 1 == set.is_single) if (1 == set.theme.sidebar_position) {
-        if (0 != $(".post-info").length) {
-            var a = $(".post-info").offset().left;
-            $("#post-catalog").css("left", a - 200 + "px");
-            a = $(".post-content-body").offset().left;
-            $("#post-catalog-bar").css("left", a - $("#post-catalog-bar").innerWidth() + "px")
-        }
-    } else a = $(".post-info").offset().left, a += $(".post-info")[0].getBoundingClientRect().width, $("#post-catalog").css("left", a + 40 + "px"), a = $(".post-content-body").offset().left + $(".post-content-body").innerWidth(), $("#post-catalog-bar").css("left", a + "px"), $("#post-catalog-bar").removeClass("post-catalog-bar-left-minborder"), $("#post-catalog-bar").addClass("post-catalog-bar-right-minborder")
+
+	if (set.is_page == true || set.is_single == true) {
+		if (set.theme.sidebar_position == 1) {
+			if ($('.post-info').length == 0 || $('.post-content-body').length == 0) {
+				return;
+			}
+			var title_x = $('.post-info').offset().left;
+			$('#post-catalog').css('left', title_x - 200 + 'px');
+
+			var post_body_x = $('.post-content-body').offset().left;
+			$('#post-catalog-bar').css('left', post_body_x - $("#post-catalog-bar").innerWidth() + 'px');
+		} else {
+			var title_x = $('.post-info').offset().left;
+			title_x = title_x + $('.post-info')[0].getBoundingClientRect().width
+			$('#post-catalog').css('left', title_x + 40 + 'px');
+			var post_body_x = $('.post-content-body').offset().left + $('.post-content-body').innerWidth();
+			$('#post-catalog-bar').css('left', post_body_x + 'px');
+			$('#post-catalog-bar').removeClass('post-catalog-bar-left-minborder');
+			$('#post-catalog-bar').addClass('post-catalog-bar-right-minborder');
+		}
+	}
 }
-function go_catalog(a, b) {
-    var c = $(b + "[catalog\x3d" + a + "]").offset().top;
-    $("html, body").animate({
-        scrollTop: c - 60
-    }, 500)
+
+function go_catalog(catalogname, tagName) {
+	var _scrolltop = $(tagName + '[catalog=' + catalogname + ']').offset().top;
+	$('html, body').animate({
+			scrollTop: _scrolltop - 60
+		}, 500
+	);
 }
-function widget_sentence_load(a, b) {
-    $.get(set.ajaxurl, {
-        action: "corepress_get_widget_sentence",
-        type: a
-    }, function(a) {
-        a = JSON.parse(a);
-        200 == a.code ? $(b).html("\x3cp\x3e" + a.data + "\x3c/p\x3e") : $(b).html("\x3cp\x3e\u53e5\u5b50\u52a0\u8f7d\u5931\u8d25\x3c/p\x3e")
-    })
-};
+
+function widget_sentence_load(type, el) {
+	$.get(set.ajaxurl, {action: 'corepress_get_widget_sentence', type}, function (data) {
+		var obj = JSON.parse(data);
+		if (obj.code == 200) {
+			$(el).html('<p>' + obj.data + '</p>');
+		} else {
+			$(el).html('<p>句子加载失败</p>');
+		}
+	})
+}
