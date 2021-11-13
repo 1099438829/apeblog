@@ -7,9 +7,7 @@ use app\common\model\Attachment;
 use app\common\model\AttachmentCategory;
 use FormBuilder\Factory\Elm;
 use app\admin\service\FormBuilderService as Form;
-use app\admin\service\storage\QcloudCoService;
 use app\admin\service\UtilService as Util;
-use app\common\utils\Json;
 
 /**
  * Class Images
@@ -68,6 +66,7 @@ class Images extends AuthController
      * @param $id
      * @return string
      * @throws \FormBuilder\Exception\FormBuilderException
+     * @throws \Exception
      */
     public function editCategory($id=0,$pid=0)
     {
@@ -90,7 +89,7 @@ class Images extends AuthController
     /**
      * 保存目录
      * @param string $id
-     * @return json
+     * @return mixed
      */
     public function saveCategory($id="")
     {

@@ -53,11 +53,10 @@ class FriendLink extends AuthController
 
     /**
      * 添加友链
-     * @param Request $request
      * @return string
      * @throws \FormBuilder\Exception\FormBuilderException
      */
-    public function add(Request $request)
+    public function add()
     {
         $form = array();
         $form[] = Elm::input('title','链接名称')->col(10);

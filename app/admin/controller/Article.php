@@ -32,7 +32,6 @@ class Article extends AuthController
 
     /**
      * 文章列表
-     * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -40,7 +39,7 @@ class Article extends AuthController
      * @author 李玉坤
      * @date 2021-02-15 23:26
      */
-    public function lst(Request $request)
+    public function lst()
     {
         $where = Util::postMore([
             ['name',''],
@@ -89,9 +88,12 @@ class Article extends AuthController
         try {
             $data['author'] =  $data['author']?:$this->adminInfo['nickname'];
             $data['uid'] = $this->adminId;
+            $content = '';
             if (!empty($data['content'])){
                 $content = $data['content'];
             }
+            //判断摘要是否为空，为空则从内容摘取
+            $data['abstract'] = $data['abstract']?:mb_substr($content,0,100);
             unset($data['content']);
             if ($data['is_recommend']) $data['is_recommend'] = 1;
             if ($data['is_hot']) $data['is_hot'] = 1;
@@ -191,7 +193,7 @@ class Article extends AuthController
      * @author 李玉坤
      * @date 2021-02-20 17:00
      */
-    public function edit(Request $request)
+    public function edit()
     {
         $where = Util::postMore([
             ['name',''],
@@ -219,7 +221,7 @@ class Article extends AuthController
      * @return string
      * @throws \Exception
      */
-    public function comment($article_id ='')
+    public function comment()
     {
         return $this->fetch();
     }

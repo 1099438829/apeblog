@@ -7,6 +7,7 @@
 
 namespace app\admin\controller;
 use app\BaseController;
+use Exception;
 
 
 class SystemBasic extends BaseController
@@ -14,11 +15,11 @@ class SystemBasic extends BaseController
     /**
      * 操作失败提示框
      * @param string $msg 提示信息
-     * @param string $backUrl 跳转地址
-     * @param string $title 标题
+     * @param int $backUrl 跳转地址
+     * @param string $info
      * @param int $duration 持续时间
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     protected function failedNotice($msg = '操作失败', $backUrl = 0, $info = '', $duration = 3)
     {
@@ -33,7 +34,7 @@ class SystemBasic extends BaseController
      * @param int $backUrl
      * @param string $title
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     protected function failedNoticeLast($msg = '操作失败', $backUrl = 0, $info = '')
     {
@@ -47,7 +48,7 @@ class SystemBasic extends BaseController
      * @param string $title 标题
      * @param int $duration 持续时间
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     protected function successfulNotice($msg = '操作成功',$backUrl = 0,$info = '',$duration = 3)
     {
@@ -62,7 +63,7 @@ class SystemBasic extends BaseController
      * @param int $backUrl
      * @param string $title
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     protected function successfulNoticeLast($msg = '操作成功',$backUrl = 0,$info = '')
     {
@@ -73,7 +74,7 @@ class SystemBasic extends BaseController
      * 错误提醒页面
      * @param string $msg
      * @param int $url
-     * @throws \Exception
+     * @throws Exception
      */
     protected function failed($msg = '哎呀…亲…您访问的页面出现错误', $url = 0)
     {
@@ -89,7 +90,7 @@ class SystemBasic extends BaseController
      * 成功提醒页面
      * @param string $msg
      * @param int $url
-     * @throws \Exception
+     * @throws Exception
      */
     protected function successful($msg, $url = 0)
     {
@@ -103,7 +104,7 @@ class SystemBasic extends BaseController
 
     /**异常抛出
      * @param $name
-     * @throws \Exception
+     * @throws Exception
      */
     protected function exception($msg = '无法打开页面')
     {
@@ -113,7 +114,7 @@ class SystemBasic extends BaseController
 
     /**找不到页面
      * @param $name
-     * @throws \Exception
+     * @throws Exception
      */
     public function _empty($name)
     {
