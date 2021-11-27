@@ -282,7 +282,6 @@ function tpl_get_prenext($get, $cid = false, $none)
     if (!$get) {
         $get = 'next';
     }
-
     $document = Document::where('display', 1)->where('status', 1);
     $document = $get == 'pre' ? $document->where("id", '<', $id) : $document->where("id", '>', $id);
 
@@ -664,6 +663,88 @@ function tpl_get_position($dc, $positionList = array())
     return tpl_get_position($parentDc, $positionList);
 }
 
+/**
+ * 获取文章评论列表
+ * @param $documentId
+ * @param $orderBy
+ * @param $pageSize
+ * @return array
+ * @throws \think\db\exception\DbException
+ * @author 李玉坤
+ * @date 2021-11-28 0:51
+ */
+function tpl_get_comment_list($documentId,$orderBy, $pageSize)
+{
+    $commentList = \app\common\model\Comment::where('document_id',$documentId)->where('status', 1)->order($orderBy);
+    //获取当前请求的请求参数，以确定分页是否要带上这些请求参数
+    $query = request()->query();
+    if ($query) {
+        $commentList = $commentList->paginate($pageSize, false, ['query' => getRouteQuery()]);
+    } else {
+        $commentList = $commentList->paginate($pageSize);
+    }
+    $lists = [];
+    foreach ($commentList as $key => $item) {
+        //生成文章url
+        $item['url'] = aurl($item);
+        $lists[$key] = $item;
+    }
+    $re = [
+        'model' => $commentList,
+        'lists' => $lists
+    ];
+    return $re;
+}
+
+/**
+ * 获取文章相关文章
+ * @param $documentId
+ * @param $row
+ * @param string $table
+ * @return Document[]|array|\think\Collection
+ * @throws \think\db\exception\DataNotFoundException
+ * @throws \think\db\exception\DbException
+ * @throws \think\db\exception\ModelNotFoundException
+ * @author 李玉坤
+ * @date 2021-11-28 1:02
+ */
+function tpl_get_relevant_list($documentId, $row, $table = 'article')
+{
+    $count = Document::where('type',$table)
+    ->where('status', 1)->count();    //获取总记录数
+    $id = (new Document())->getPK();
+    $min = Document::where('type',$table)
+        ->where('status', 1)->min($id);    //统计某个字段最小数据
+    if($count < $row){$row = $count;}
+    $i = 1;
+    $flag = 0;
+    $ary = array();
+    while($i<=$row){
+        $rundnum = rand($min, $count);//抽取随机数
+        if($flag != $rundnum){
+            //过滤重复
+            if(!in_array($rundnum,$ary)){
+                $ary[] = $rundnum;
+                $flag = $rundnum;
+            }else{
+                $i--;
+            }
+            $i++;
+        }
+    }
+    $relevantList = Document::where('type',$table)
+        ->where('status', 1)
+        ->where( $id,'<>',$documentId)
+        ->where($id,'in',$ary)
+        ->limit($row)->select();
+    $lists = [];
+    foreach ($relevantList as $key => $item) {
+        //生成文章url
+        $item['url'] = aurl($item);
+        $lists[$key] = $item;
+    }
+    return $relevantList;
+}
 
 //获取顶级栏目名
 function GetTopTypename($id = false)
@@ -797,3 +878,4 @@ function ismobile()
     }
     return false;
 }
+

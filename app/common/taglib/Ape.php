@@ -17,6 +17,8 @@ class Ape extends TagLib{
         'advert'=> ['attr' => 'type,row,void', 'close' => 1],
         'sql'=> ['attr' => 'sql', 'close' => 1],
         'article'=> ['attr' => 'id,void,model', 'close' => 1],
+        'comment'=> ['attr' => 'id,void,orderby,pagesize', 'close' => 1],
+        'relevant'=> ['attr' => 'id,model,void,row', 'close' => 1],
         'tags'=> ['attr' => 'tags,void', 'close' => 1],
     ];
 
@@ -180,7 +182,7 @@ class Ape extends TagLib{
     }
 
     /**
-     * poster
+     * tagBanner
      */
     public function tagBanner($tag,$content)
     {
@@ -280,4 +282,55 @@ class Ape extends TagLib{
         return $parse;
     }
 
+    /**
+     * 文章回复列表
+     * @param $tag
+     * @param $content
+     * @return bool|string
+     * @author 李玉坤
+     * @date 2021-11-27 23:44
+     */
+    public function tagComment($tag,$content)
+    {
+        if(!isset($tag['id'])){
+            return '';
+        }
+        $documentId  = $tag['id'];
+        $void=isset($tag['void'])?$tag['void']:'field';
+        $orderBy=isset($tag['orderby'])?$tag['orderby']:'sort asc,create_time desc';
+        $pageSize=isset($tag['pagesize'])?$tag['pagesize']:15;
+        $parse = '<?php ';
+        $parse .= '$__TAG_LIST__ ='."tpl_get_comment_list($documentId,$orderBy,$pageSize);";
+        $parse .= ' ?>';
+        $parse .= '{volist name="$__LIST__" id="'.$void.'"}';
+        $parse .= $content;
+        $parse .= '{/volist}';
+        return $parse;
+    }
+
+    /**
+     * 文章推荐列表
+     * @param $tag
+     * @param $content
+     * @return string
+     * @author 李玉坤
+     * @date 2021-11-28 0:52
+     */
+    public function tagRelevant($tag,$content)
+    {
+        if(!isset($tag['id'])){
+            return '';
+        }
+        $documentId  = $tag['id'];
+        $void=isset($tag['void'])?$tag['void']:'field';
+        $row=isset($tag['row'])?$tag['row']:100;
+        $model=isset($tag['model'])?$tag['model']:'article';
+        $parse = '<?php ';
+        $parse .= '$__LIST__ ='."tpl_get_relevant_list($documentId,$row,'$model');";
+        $parse .= ' ?>';
+        $parse .= '{volist name="$__LIST__" id="'.$void.'"}';
+        $parse .= $content;
+        $parse .= '{/volist}';
+        return $parse;
+    }
 }

@@ -190,7 +190,7 @@
                                         </div>
                                     </div>
                                     <div class="post-turn-page post-turn-page-next" >
-                                        {ape:prenext get="next" cid="$apeField['category_id']"}
+                                        {ape:prenext get="next" cid="$id"}
                                         <div class="post-turn-page-main">
                                             <a href="{:url('/index/article/detail')}?id={$field['id']}">{$field['title']}</a>
                                             <div class="post-turn-page-link-next">
@@ -209,18 +209,13 @@
                   <div class="plane-title">相关内容</div>
                   <div>
                     <ul class="relevant-list">
-                        <li><a href="../oracle-ebs-pl-sql-ar-receipt-detail/index.html">oracle-EBS-PL/sql AR
-                            收款的核销明细</a></li>
-                        <li><a href="../oracle-ebs-pl-sql-ap-aging/index.html">oracle-EBS-PL/sql AP 供应商的未清余额明细AP
-                            AGING</a></li>
-                        <li><a href="../oracle-ebs-pl-sql-ap-podetial/index.html">oracle-EBS-PL/sql AP
-                            发票中匹配的po明细按发票</a></li>
-                        <li><a href="../oracle-ebs-pl-sql-ap-pomatchdetails/index.html">oracle-EBS-PL/sql AP
-                            发票中匹配的po明细</a></li>
-                        <li><a href="">oracle-EBS-AP应付采购单匹配付款经历主要表(多图)</a></li>
+                        {ape:relevant row="5" id="$apeField['id']"}
+                        <li><a href="{$field['url']}">{$field['title']}</a></li>
+                        {/ape:relevant}
                     </ul>
                   </div>
                 </div>
+                {if web_config('comment_close') ==1}
                 <div id="comments" class="responsesWrapper">
                     <div class="reply-title">发表评论</div>
                         <div id="respond" class="comment-respond">
@@ -407,6 +402,7 @@
                     </script>
                     <nav class="comment-navigation pages"></nav>
                 </div>
+                {/if}
             </div>
             <div class="sidebar">
                 <div class="sidebar-box-list">
