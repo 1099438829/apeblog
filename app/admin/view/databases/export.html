@@ -202,14 +202,14 @@
     }
 
     $("#btn-optimize").click(function () {
-        var checkID = "";
+        var checkID = [];
         var selectedItem = $('#tb_departments').bootstrapTable('getAllSelections');
-        if (selectedItem=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        if (selectedItem.length == 0) return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         for (var i = 0 ; i<  selectedItem.length; i++)
         {
-            checkID += selectedItem[i]['name']+",";
+            checkID.push(selectedItem[i]['name'])
         }
-        if (checkID=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        if (checkID.length == 0) return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         $.confirm({
             title: '重要提醒!',
             content: '您确认要执行该操作吗？',
@@ -219,8 +219,8 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/databases/optimize",data={ids:checkID},function (res) {
-                            if (res.status == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
+                        $.post("/admin/databases/optimize",data={ids:checkID.toString()},function (res) {
+                            if (res.code == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                         })
                     }
@@ -234,14 +234,14 @@
     })
 
     $("#btn-repair").click(function () {
-        var checkID = "";
+        var checkID = [];
         var selectedItem = $('#tb_departments').bootstrapTable('getAllSelections');
-        if (selectedItem=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        if (selectedItem.length == 0) return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         for (var i = 0 ; i<  selectedItem.length; i++)
         {
-            checkID += selectedItem[i]['name']+",";
+            checkID.push(selectedItem[i]['name'])
         }
-        if (checkID=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        if (checkID.length == 0) return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         $.confirm({
             title: '重要提醒!',
             content: '您确认要执行该操作吗？',
@@ -251,8 +251,8 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/databases/repair",data={ids:checkID},function (res) {
-                            if (res.status == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
+                        $.post("/admin/databases/repair",data={ids:checkID.toString()},function (res) {
+                            if (res.code == 200)  {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                         })
                     }

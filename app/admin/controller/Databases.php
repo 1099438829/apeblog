@@ -130,10 +130,10 @@ class Databases extends AuthController
         $ids = $data['ids'];
         if(is_array($ids)){
             $ids = implode('`,`', $ids);
-            $list = Db::query("OPTIMIZE TABLE `{$ids}`");
+            $list = Db::query("OPTIMIZE TABLE {$ids}");
             return $list ? app("json")->success("数据表优化完成",'code') : app("json")->fail("数据表优化出错请重试");
         } else {
-            $list = Db::query("OPTIMIZE TABLE `{$ids}`");
+            $list = Db::query("OPTIMIZE TABLE {$ids}");
             return $list ? app("json")->success("数据表'{$ids}'优化完成",'code') : app("json")->fail("数据表'{$ids}'优化出错请重试");
         }
     }
@@ -152,10 +152,10 @@ class Databases extends AuthController
         $ids = $data['ids'];
         if(is_array($ids)){
             $ids = implode('`,`', $ids);
-            $list = Db::query("REPAIR TABLE `{$ids}`");
+            $list = Db::query("REPAIR TABLE {$ids}");
             return $list ? app("json")->success("数据表修复完成",'code') : app("json")->fail("数据表修复出错请重试");
         } else {
-            $list = Db::query("REPAIR TABLE `{$ids}`");
+            $list = Db::query("REPAIR TABLE {$ids}");
             return $list ? app("json")->success("数据表'{$ids}'修复完成",'code') : app("json")->fail("数据表'{$ids}'修复出错请重试");
         }
     }
