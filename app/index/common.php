@@ -879,3 +879,25 @@ function ismobile()
     return false;
 }
 
+function file_echo_svg($path)
+{
+    $svg = file_get_contents(public_path().$path);
+    print_r($svg);
+}
+
+function file_load_face()
+{
+
+    $files = scandir(THEME_PATH . "/static/img/face");
+    $html = null;
+    foreach ($files as $v) {
+        /* if(is_file($v)){
+             $fileItem[] = $v;
+         }*/
+        if (pathinfo($v, PATHINFO_EXTENSION) == 'gif') {
+            $html = '<img class="img-pace" src="' . THEME_IMG_PATH . '/face/' . $v . '" width="30" facename="' . basename($v, ".gif") . '">' . $html;
+        }
+
+    }
+    return $html;
+}
