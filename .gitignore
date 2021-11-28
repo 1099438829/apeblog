@@ -1,10 +1,7 @@
 /.idea
 /.vscode
-/public/uploads
 *.log
 */.DS_Store
 .env
 /runtime
 /composer.lock
-/vendor/.gitignore
-/vendor
