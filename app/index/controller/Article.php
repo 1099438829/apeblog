@@ -158,7 +158,7 @@ class Article extends Base
         //缓存当前页面栏目分类树ids
         cache(Data::CURR_CATEGORY_PATENT_ID,$dc['pid']?$dc['pid'].','.$article['category_id']:$article['category_id']);
         //设置文章的url
-        $article['link_str']=aurl($article);
+        $article['link_str']=make_detail_url($article);
         //判断后台统计配置是否开启 1 开启
         if(web_config("web_statistics") ==1){
                 //统计url

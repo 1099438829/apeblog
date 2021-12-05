@@ -7,17 +7,17 @@ class Ape extends TagLib{
      */
     protected $tags   =  [
         // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
-        'channel'=> ['attr' => 'type,typeid,row,void,where,orderby,display', 'close' => 1],
-        'arclist'=> ['attr' => 'typeid,orderby,row,void,model,type,where,display,ids,limit', 'close' => 1],
-        'type'=> ['attr' => 'typeid', 'close' => 1],
-        'list'=> ['attr' => 'orderby,pagesize,type,typeid,void,model,where,display', 'close' => 1],
+        'channel'=> ['attr' => 'type,typeId,row,void,where,orderBy,display', 'close' => 1],
+        'arclist'=> ['attr' => 'typeId,orderBy,row,void,model,type,where,display,ids,limit', 'close' => 1],
+        'type'=> ['attr' => 'typeId', 'close' => 1],
+        'list'=> ['attr' => 'orderBy,pageSize,type,typeId,void,model,where,display', 'close' => 1],
         'prenext'=> ['attr' => 'get,cid,void,none', 'close' => 1],
         'flink'=> ['attr' => 'type,row,void', 'close' => 1],
         'banner'=> ['attr' => 'type,row,void', 'close' => 1],
         'advert'=> ['attr' => 'type,row,void', 'close' => 1],
         'sql'=> ['attr' => 'sql', 'close' => 1],
         'article'=> ['attr' => 'id,void,model', 'close' => 1],
-        'comment'=> ['attr' => 'id,void,orderby,pagesize', 'close' => 1],
+        'comment'=> ['attr' => 'typeId,void,type,pageSize,orderBy', 'close' => 1],
         'relevant'=> ['attr' => 'id,model,void,row', 'close' => 1],
         'tags'=> ['attr' => 'tags,void', 'close' => 1],
     ];
@@ -26,16 +26,16 @@ class Ape extends TagLib{
     /**
      * 栏目列表
      * type,栏目分类数据读取分类
-     * typeid,栏目分类，数字，字符串，或者变量
+     * typeId,栏目分类，数字，字符串，或者变量
      */
     public function tagChannel($tag,$content)
     {
         $type=isset($tag['type'])?$tag['type']:'son';
-        $typeid=isset($tag['typeid'])?$tag['typeid']:'$cid';
+        $typeId=isset($tag['typeId'])?$tag['typeId']:'$cid';
         $row=isset($tag['row'])?$tag['row']:100;
         $void=isset($tag['void'])?$tag['void']:'field';
         $where=isset($tag['where'])?$tag['where']:'';
-        $orderby=isset($tag['orderby'])?$tag['orderby']:'sort asc';
+        $orderBy=isset($tag['orderBy'])?$tag['orderBy']:'sort asc';
 
         $display=isset($tag['display'])?$tag['display']:1;
         $display=$display==1?1:0;
@@ -45,11 +45,11 @@ class Ape extends TagLib{
         //2、多个栏目id，逗号隔开
         //3、变量
         //只有当多个栏目id时，才需要单引号加持。保证生成的为字符串
-        if(strpos($typeid,',')){
-            $typeid="'$typeid'";
+        if(strpos($typeId,',')){
+            $typeId="'$typeId'";
         }
         $parse = '<?php ';
-        $parse .= '$__LIST__ = '."tpl_get_channel(\"$type\",$typeid,$row,\"$where\",\"$orderby\",$display);";
+        $parse .= '$__LIST__ = '."tpl_get_channel(\"$type\",$typeId,$row,\"$where\",\"$orderBy\",$display);";
         $parse .= ' ?>';
         $parse .= '{volist name="__LIST__" id="'.$void.'"}';
         $parse .= $content;
@@ -62,15 +62,14 @@ class Ape extends TagLib{
      */
     public function tagArclist($tag,$content)
     {
-        $typeid = isset($tag['typeid'])?$tag['typeid']:'$cid';
-        $orderby=isset($tag['orderby'])?$tag['orderby']:'sort asc,create_time desc';
+        $typeId = isset($tag['typeId'])?$tag['typeId']:'$cid';
+        $orderBy=isset($tag['orderBy'])?$tag['orderBy']:'sort asc,create_time desc';
         $row=isset($tag['row'])?$tag['row']:'100';
         $void=isset($tag['void'])?$tag['void']:'field';
         $model=isset($tag['model'])?$tag['model']:'article';
         $type=isset($tag['type'])?$tag['type']:'find';
         $where=isset($tag['where'])?$tag['where']:'';
         $ids=isset($tag['ids'])?$tag['ids']:'';
-        $limit=isset($tag['limit'])?$tag['limit']:'100';
         //limit参数优先于row
         if(isset($tag['limit'])){
             $row=$tag['limit'];
@@ -84,12 +83,12 @@ class Ape extends TagLib{
         //2、多个栏目id，逗号隔开
         //3、变量
         //只有当多个栏目id时，才需要单引号加持。保证生成的为字符串
-        if(strpos($typeid,',')){
-            $typeid="'$typeid'";
+        if(strpos($typeId,',')){
+            $typeId="'$typeId'";
         }
 
         $parse = '<?php ';
-        $parse .= '$__LIST__ = '."tpl_get_article_list($typeid,\"$row\",\"$orderby\",\"$model\",\"$type\",\"$where\",$display,\"$ids\");";;
+        $parse .= '$__LIST__ = '."tpl_get_article_list($typeId,\"$row\",\"$orderBy\",\"$model\",\"$type\",\"$where\",$display,\"$ids\");";;
         $parse .= ' ?>';
         $parse .= '{volist name="__LIST__" id="'.$void.'"}';
         $parse .= $content;
@@ -102,13 +101,13 @@ class Ape extends TagLib{
      */
     public function tagType($tag,$content)
     {
-        if(!isset($tag['typeid'])){
+        if(!isset($tag['typeId'])){
             return '';
         }
-        $typeid = $tag['typeid'];
+        $typeId = $tag['typeId'];
 
         $parse = '<?php ';
-        $parse .= '$__LIST__ =[];array_push($__LIST__,get_document_category('.$typeid.'));';
+        $parse .= '$__LIST__ =[];array_push($__LIST__,get_document_category('.$typeId.'));';
         $parse .= ' ?>';
         $parse .= '{volist name="__LIST__" id="field"}';
         $parse .= $content;
@@ -122,17 +121,17 @@ class Ape extends TagLib{
      */
     public function tagList($tag,$content)
     {
-        $orderby=isset($tag['orderby'])?$tag['orderby']:'sort asc,create_time desc';
-        $pagesize=isset($tag['pagesize'])?$tag['pagesize']:15;
+        $orderBy=isset($tag['orderBy'])?$tag['orderBy']:'sort asc,create_time desc';
+        $pageSize=isset($tag['pageSize'])?$tag['pageSize']:15;
         $type=isset($tag['type'])?$tag['type']:'find';
-        $typeid=isset($tag['typeid'])?$tag['typeid']:'$cid';
+        $typeId=isset($tag['typeId'])?$tag['typeId']:'$cid';
         $void=isset($tag['void'])?$tag['void']:'field';
         $model=isset($tag['model'])?$tag['model']:'article';
         $where=isset($tag['where'])?$tag['where']:'';
         $display=isset($tag['display'])?$tag['display']:1;
         $display=$display==1?1:0;
         $parse = '<?php ';
-        $parse .= '$__FUN__ ='."tpl_get_list(\"$orderby\",$pagesize,$typeid,\"$type\",\"$model\",\"$where\",$display);";
+        $parse .= '$__FUN__ ='."tpl_get_list(\"$orderBy\",$pageSize,$typeId,\"$type\",\"$model\",\"$where\",$display);";
         $parse .= '$__LIST__ =$__FUN__["lists"];$pager = $__FUN__["model"]->render();';
         $parse .= ' ?>';
         $parse .= '{volist name="__LIST__" id="'.$void.'" key="i"}';
@@ -222,8 +221,6 @@ class Ape extends TagLib{
         return $parse;
     }
 
-
-
     /**
      * 执行SQL
      */
@@ -292,17 +289,16 @@ class Ape extends TagLib{
      */
     public function tagComment($tag,$content)
     {
-        if(!isset($tag['id'])){
-            return '';
-        }
-        $documentId  = $tag['id'];
+        $pageSize=isset($tag['pageSize'])?$tag['pageSize']:10;
+        $type=isset($tag['type'])?$tag['type']:'top';
+        $typeId=isset($tag['typeId'])?$tag['typeId']:0;
         $void=isset($tag['void'])?$tag['void']:'field';
-        $orderBy=isset($tag['orderby'])?$tag['orderby']:'sort asc,create_time desc';
-        $pageSize=isset($tag['pagesize'])?$tag['pagesize']:15;
+        $orderBy=isset($tag['orderBy'])?$tag['orderBy']:'id asc';
         $parse = '<?php ';
-        $parse .= '$__TAG_LIST__ ='."tpl_get_comment_list($documentId,$orderBy,$pageSize);";
+        $parse .= '$__FUN__ ='."tpl_get_comment_list($typeId,\"$type\",$pageSize,\"$orderBy\");";
+        $parse .= '$__LIST__ = $__FUN__["lists"];$pager = $__FUN__["model"]->render();';
         $parse .= ' ?>';
-        $parse .= '{volist name="$__LIST__" id="'.$void.'"}';
+        $parse .= '{volist name="__LIST__" id="'.$void.'" key="i"}';
         $parse .= $content;
         $parse .= '{/volist}';
         return $parse;

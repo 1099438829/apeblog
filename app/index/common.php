@@ -56,7 +56,7 @@ function get_document_category_list()
         $documentCategory = [];
         foreach ($documentCategoryList as $key => $item) {
             //根据栏目类型，生成栏目url
-            $item['url'] = curl($item);
+            $item['url'] = make_category_url($item);
             $documentCategory[$item['id']] = $item;
         }
         cache(Data::DATA_DOCUMENT_CATEGORY_LIST, $documentCategory);
@@ -115,7 +115,7 @@ function get_document_category_by_name($name, $field = false)
 /**
  * 模板-获取文章分类
  * @param $type
- * @param $typeid
+ * @param $typeId
  * @param int $row
  * @param string $where
  * @param string $orderby
@@ -127,7 +127,7 @@ function get_document_category_by_name($name, $field = false)
  * @author 李玉坤
  * @date 2021-11-12 21:48
  */
-function tpl_get_channel($type, $typeid, $row = 100, $where = '', $orderby = '')
+function tpl_get_channel($type, $typeId, $row = 100, $where = '', $orderby = '')
 {
 
     switch ($type) {
@@ -141,17 +141,17 @@ function tpl_get_channel($type, $typeid, $row = 100, $where = '', $orderby = '')
             break;
         case 'son':
             //获取子级分类
-            if (!$typeid) {
+            if (!$typeId) {
                 throw new Exception('请指定要获取的栏目分类id！');
             }
-            return get_document_category_by_parent($typeid, $row);
+            return get_document_category_by_parent($typeId, $row);
             break;
         case 'self':
             //获取同级分类
-            if (!$typeid) {
+            if (!$typeId) {
                 throw new Exception('请指定要获取的栏目分类id！');
             }
-            $dc = get_document_category($typeid);
+            $dc = get_document_category($typeId);
             if (!$dc) {
                 return false;
             }
@@ -159,10 +159,10 @@ function tpl_get_channel($type, $typeid, $row = 100, $where = '', $orderby = '')
             break;
         case 'find':
             //获取所有子孙分类，此操作读取数据库，非缓存！
-            if (!$typeid) {
+            if (!$typeId) {
                 throw new Exception('请指定要获取的栏目分类id！');
             }
-            $dc = get_document_category($typeid);
+            $dc = get_document_category($typeId);
             if (!$dc) {
                 throw new Exception('分类不存在或已删除！');
             }
@@ -170,35 +170,35 @@ function tpl_get_channel($type, $typeid, $row = 100, $where = '', $orderby = '')
             $tempArr = $tempArr->select();
             foreach ($tempArr as $key => $item) {
                 //根据栏目类型，生成栏目url
-                $item['url'] = curl($item);
+                $item['url'] = make_category_url($item);
                 $tempArr[$key] = $item;
             }
             return $tempArr;
             break;
         case 'parent':
             //获取父级分类
-            if (!$typeid) {
+            if (!$typeId) {
                 throw new Exception('请指定要获取的栏目分类id！');
             }
-            $dc = get_document_category($typeid);
+            $dc = get_document_category($typeId);
             $tempArr = array();
             $parent = get_document_category($dc['pid']);
             array_push($tempArr, $parent);
             return $tempArr;
             break;
         case 'root':
-            if (!$typeid) {
+            if (!$typeId) {
                 throw new Exception('请指定要获取的栏目分类id！');
             }
-            $dc = get_document_category($typeid);
+            $dc = get_document_category($typeId);
             if ($dc['pid'] != 0) {
                 //获取根分类，此操作读取数据库，非缓存！
                 $dc = DocumentCategory::where('pid', 0)->where('status', 1)
-                    ->where("CONCAT(',',child,',') like '%,$typeid,%'")->limit($row);
+                    ->where("CONCAT(',',child,',') like '%,$typeId,%'")->limit($row);
                 $dc = $dc->find();
             }
             //根据栏目类型，生成栏目url
-            $dc['url'] = curl($dc);
+            $dc['url'] = make_category_url($dc);
             $tempArr = [];
             array_push($tempArr, $dc);
             return $tempArr;
@@ -209,18 +209,18 @@ function tpl_get_channel($type, $typeid, $row = 100, $where = '', $orderby = '')
             $tempArr = $tempArr->select();
             foreach ($tempArr as $key => $item) {
                 //根据栏目类型，生成栏目url
-                $item['url'] = curl($item);
+                $item['url'] = make_category_url($item);
                 $tempArr[$key] = $item;
             }
             return $tempArr;
             break;
         case 'ids':
             //根据多个栏目id，逗号隔开的那种，获得栏目列表
-            $tempArr = DocumentCategory::where('status', 1)->where('id', 'in', $typeid)->order($orderby)->limit($row);
+            $tempArr = DocumentCategory::where('status', 1)->where('id', 'in', $typeId)->order($orderby)->limit($row);
             $tempArr = $tempArr->select();
             foreach ($tempArr as $key => $item) {
                 //根据栏目类型，生成栏目url
-                $item['url'] = curl($item);
+                $item['url'] = make_category_url($item);
                 $tempArr[$key] = $item;
             }
             return $tempArr;
@@ -305,13 +305,13 @@ function tpl_get_prenext($get, $cid = false, $none)
 /**
  * 模板-获取文章列表
  * $orderby=数据排序方式
- * $pagesize=每页显示的数据数目
+ * $pageSize=每页显示的数据数目
  * $cid=栏目分类id
  * $type=读取数据的方式（son:'获取栏目下文章以及所有子孙分类文章',self:'获取栏目下文章',search:'获取关键字搜索的文章',where:'根据自定义条件获取文章（where语句）'）
  * $table=文章内容扩展表名，默认article
  * $where=自定义条件
  */
-function tpl_get_list($orderby, $pagesize, $cid, $type, $table = 'article', $where = false, $display = 1)
+function tpl_get_list($orderby, $pageSize, $cid, $type, $table = 'article', $where = false, $display = 1)
 {
 
     $documentListModel = (new Document())
@@ -371,14 +371,14 @@ function tpl_get_list($orderby, $pagesize, $cid, $type, $table = 'article', $whe
     //获取当前请求的请求参数，以确定分页是否要带上这些请求参数
     $query = request()->query();
     if ($query) {
-        $documentListModel = $documentListModel->paginate($pagesize, false, ['query' => getRouteQuery()]);
+        $documentListModel = $documentListModel->paginate($pageSize, false, ['query' => get_route_query()]);
     } else {
-        $documentListModel = $documentListModel->paginate($pagesize);
+        $documentListModel = $documentListModel->paginate($pageSize);
     }
     $lists = [];
     foreach ($documentListModel as $key => $item) {
         //生成文章url
-        $item['url'] = aurl($item);
+        $item['url'] = make_detail_url($item);
         $lists[$key] = $item;
     }
     $re = [
@@ -392,7 +392,7 @@ function tpl_get_list($orderby, $pagesize, $cid, $type, $table = 'article', $whe
  * 获得当前路由及参数列表
  * @return mixed
  */
-function getRouteQuery()
+function get_route_query()
 {
     $request = request();
     $queryArr = $request->param();
@@ -403,7 +403,7 @@ function getRouteQuery()
 /**
  * 根据栏目类型，生成栏目url
  */
-function curl($item)
+function make_category_url($item)
 {
     if ((int)$item['type'] == 0) {
         return url('article/lists?id=' . $item['id'])->build();
@@ -417,7 +417,7 @@ function curl($item)
 /**
  * 生成文章url
  */
-function aurl($item)
+function make_detail_url($item)
 {
     //根据栏目类型，生成栏目url
     if ($item['link_str']) {
@@ -445,7 +445,7 @@ function tpl_get_article($id, $table)
         return false;
     }
 
-    $doc['url'] = aurl($doc);
+    $doc['url'] = make_detail_url($doc);
 
     return $doc;
 }
@@ -462,7 +462,6 @@ function tpl_get_article($id, $table)
  */
 function tpl_get_article_list($cid, $row, $orderby, $table = 'article', $type = 'son', $where = false, $display = 1, $ids = '')
 {
-
     $documentListModel = Document::alias('a')
         ->join(config('database.prefix') . 'document_category b', 'a.category_id=b.id', 'LEFT')
         ->join(config('database.prefix') . "document_$table c", 'a.id=c.id', 'RIGHT')
@@ -507,7 +506,7 @@ function tpl_get_article_list($cid, $row, $orderby, $table = 'article', $type = 
     $lists = [];
     foreach ($documentListModel as $key => $item) {
         //生成文章url
-        $item['url'] = aurl($item);
+        $item['url'] = make_detail_url($item);
         $lists[$key] = $item;
     }
     return $lists;
@@ -628,24 +627,31 @@ if (!function_exists('web_config')) {
  * @author 李玉坤
  * @date 2021-11-12 0:34
  */
-function tpl_get_tags_list($tags)
-{
-    if (!$tags) {
-        return false;
+if (!function_exists('tpl_get_tags_list')) {
+    function tpl_get_tags_list($tags)
+    {
+        if (!$tags) {
+            return false;
+        }
+        $tagArr = explode(',', $tags);
+        $tagTemp = [];
+        foreach ($tagArr as $item) {
+            $data['title'] = $item;
+            $data['url'] = url('article/tag?t=' . urlencode($item));
+            array_push($tagTemp, $data);
+        }
+        return $tagTemp;
     }
-    $tagArr = explode(',', $tags);
-    $tagTemp = [];
-    foreach ($tagArr as $item) {
-        $data['title'] = $item;
-        $data['url'] = url('article/tag?t=' . urlencode($item));
-        array_push($tagTemp, $data);
-    }
-    return $tagTemp;
 }
-
 
 /**
  * 模板-获取页面的面包屑导航
+ * @param $dc
+ * @param array $positionList
+ * @return string
+ * @throws Exception
+ * @author 李玉坤
+ * @date 2021-12-05 22:40
  */
 function tpl_get_position($dc, $positionList = array())
 {
@@ -665,36 +671,60 @@ function tpl_get_position($dc, $positionList = array())
 
 /**
  * 获取文章评论列表
- * @param $documentId
- * @param $orderBy
- * @param $pageSize
+ * @param $id
+ * @param $type
+ * @param int $pageSize
+ * @param string $orderBy
  * @return array
  * @throws \think\db\exception\DbException
  * @author 李玉坤
- * @date 2021-11-28 0:51
+ * @date 2021-12-05 23:54
  */
-function tpl_get_comment_list($documentId,$orderBy, $pageSize)
+function tpl_get_comment_list($id,$type,$pageSize = 10,$orderBy)
 {
-    $commentList = \app\common\model\Comment::where('document_id',$documentId)->where('status', 1)->order($orderBy);
+    $commentModel = \app\common\model\Comment::where('status', 1)->order($orderBy);
+    switch ($type) {
+        case 'top':
+            //根据自定义条件获取文章（where语句）
+            $commentModel = $commentModel->where('document_id', $id);
+            break;
+        case 'son':
+            //获取栏目下文章
+            $commentModel = $commentModel->where('pid', $id);
+            break;
+    }
     //获取当前请求的请求参数，以确定分页是否要带上这些请求参数
     $query = request()->query();
     if ($query) {
-        $commentList = $commentList->paginate($pageSize, false, ['query' => getRouteQuery()]);
+        $commentModel = $commentModel->paginate( $pageSize,false, ['query' => get_route_query()]);
     } else {
-        $commentList = $commentList->paginate($pageSize);
+        $commentModel = $commentModel->paginate($pageSize);
     }
     $lists = [];
-    foreach ($commentList as $key => $item) {
-        //生成文章url
-        $item['url'] = aurl($item);
+    foreach ($commentModel as $key => $item) {
+        $item['reply_url'] = url('article/comment_reply?pid=' . $item['id'])->build();;
         $lists[$key] = $item;
     }
     $re = [
-        'model' => $commentList,
+        'model' => $commentModel,
         'lists' => $lists
     ];
     return $re;
 }
+
+/**
+ * 获取评论数量
+ * @param $documentId
+ * @return int
+ * @author 李玉坤
+ * @date 2021-12-05 23:16
+ */
+function get_comment_count($documentId)
+{
+    return \app\common\model\Comment::where('document_id',$documentId)->where('status', 1)->count();
+}
+
+
 
 /**
  * 获取文章相关文章
@@ -740,7 +770,7 @@ function tpl_get_relevant_list($documentId, $row, $table = 'article')
     $lists = [];
     foreach ($relevantList as $key => $item) {
         //生成文章url
-        $item['url'] = aurl($item);
+        $item['url'] = make_detail_url($item);
         $lists[$key] = $item;
     }
     return $relevantList;
@@ -759,7 +789,7 @@ function GetTopTypename($id = false)
 }
 
 //获取顶级id
-function GetTopTypeid($id = false)
+function GetToptypeId($id = false)
 {
     $id = $id ? $id : input('id');
     $dc = get_document_category($id);
@@ -767,7 +797,7 @@ function GetTopTypeid($id = false)
         return $dc['id'];
     }
 
-    return GetTopTypeid($dc['pid']);
+    return GetToptypeId($dc['pid']);
 }
 
 //获取顶级栏目图片
@@ -811,13 +841,13 @@ function GetTopTypenameen($id = false)
  * $cid=栏目id,首页可不填此参数
  * $curr_id=当前页面栏目id,首页可不填此参数
  */
-function IsActiveNav($curr_cid = false, $cid = false)
+function is_active_nav($currCid = false, $cid = false)
 {
     if (request()->action() == 'search') {
         return false;
     }
     //首页
-    if (!$curr_cid && !$cid) {
+    if (!$currCid && !$cid) {
         return true;
     }
 
@@ -827,16 +857,16 @@ function IsActiveNav($curr_cid = false, $cid = false)
     }
 
     //如果分类id相等，是在同一页面中
-    if ($cid == $curr_cid) {
+    if ($cid == $currCid) {
         return true;
     }
 
     //判断是否在同一栏目树下。
-    $parent_id = cache(Data::CURR_CATEGORY_PATENT_ID);
+    $parentId = cache(Data::CURR_CATEGORY_PATENT_ID);
 
-    $parent_id = explode(',', $parent_id);
+    $parentId = explode(',', $parentId);
 
-    if (in_array($cid, $parent_id)) {
+    if (in_array($cid, $parentId)) {
         return true;
     }
 
@@ -845,7 +875,7 @@ function IsActiveNav($curr_cid = false, $cid = false)
 
 // 查看是否为手机端的方法
 //判断是手机登录还是电脑登录
-function ismobile()
+function is_mobile()
 {
     // 如果有HTTP_X_WAP_PROFILE则一定是移动设备
     if (isset ($_SERVER['HTTP_X_WAP_PROFILE']))
@@ -879,23 +909,35 @@ function ismobile()
     return false;
 }
 
+/**
+ * 加载svg
+ * @param $path
+ * @author 李玉坤
+ * @date 2021-12-05 21:35
+ */
 function file_echo_svg($path)
 {
     $svg = file_get_contents(public_path().$path);
     print_r($svg);
 }
 
-function file_load_face()
+/**
+ * 加载表情
+ * @param $path
+ * @return string|null
+ * @author 李玉坤
+ * @date 2021-12-05 21:36
+ */
+function file_load_face($path)
 {
-
-    $files = scandir(THEME_PATH . "/static/img/face");
-    $html = null;
+    $files = scandir(public_path().$path);
+    $html = '';
     foreach ($files as $v) {
         /* if(is_file($v)){
              $fileItem[] = $v;
          }*/
         if (pathinfo($v, PATHINFO_EXTENSION) == 'gif') {
-            $html = '<img class="img-pace" src="' . THEME_IMG_PATH . '/face/' . $v . '" width="30" facename="' . basename($v, ".gif") . '">' . $html;
+            $html = '<img class="img-pace" src="' . $path . $v . '" width="30" facename="' . basename($v, ".gif") . '">' . $html;
         }
 
     }

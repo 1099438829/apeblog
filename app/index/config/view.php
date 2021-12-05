@@ -9,7 +9,7 @@ if (file_exists(public_path("template/{$theme}"))){
     $theme = 'default';
 }
 //检查是否切换模板
-if(ismobile() == "wap"  && file_exists(public_path("template/{$theme}/mobile"))) {
+if(is_mobile() == "wap"  && file_exists(public_path("template/{$theme}/mobile"))) {
     $mode = "mobile";
 } else {
     $mode = "pc";
