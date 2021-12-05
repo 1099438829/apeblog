@@ -104,8 +104,8 @@
                             <div id="qrcode-img"></div>
                           </div>
                           <div id="reward-plane" class="post-pop-plane">
-                                <img src="{:file_cdn(web_config('web_weixin_pay'))}" alt="">
-                                <img src="{:file_cdn(web_config('web_zhifubao_pay'))}" alt="" />
+                              {notempty name="(web_config('web_weixin_pay'))"}<img src="{:file_cdn(web_config('web_weixin_pay'))}" alt="">{/notempty}
+                              {notempty name="(web_config('web_zhifubao_pay'))"}<img src="{:file_cdn(web_config('web_zhifubao_pay'))}" alt="" />{/notempty}
                           </div>
                         </div>
                                 <div class="post-turn-page-plane">
@@ -170,102 +170,7 @@
                                               <i class="far fa-smile-wink">
                                               </i>添加表情</button>
                                         <div class="conment-face-plane">
-                                            <img class="img-pace" src="__IMG__/face/yun.gif" width="30"
-                                                 facename="yun">
-                                            <img class="img-pace" src="__IMG__/face/youling.gif" width="30"
-                                                 facename="youling">
-                                            <img class="img-pace" src="__IMG__/face/yiwen.gif" width="30"
-                                                 facename="yiwen">
-                                            <img class="img-pace" src="__IMG__/face/yinxian.gif" width="30"
-                                                 facename="yinxian">
-                                            <img class="img-pace" src="__IMG__/face/xigua.gif" width="30"
-                                                 facename="xigua">
-                                            <img class="img-pace" src="__IMG__/face/xieyanxiao.gif"
-                                                 width="30" facename="xieyanxiao">
-                                            <img class="img-pace" src="__IMG__/face/xiaoku.gif" width="30"
-                                                 facename="xiaoku">
-                                            <img class="img-pace" src="__IMG__/face/xiaojiujie.gif"
-                                                 width="30" facename="xiaojiujie">
-                                            <img class="img-pace" src="__IMG__/face/wunai.gif" width="30"
-                                                 facename="wunai">
-                                            <img class="img-pace" src="__IMG__/face/wozuimei.gif" width="30"
-                                                 facename="wozuimei">
-                                            <img class="img-pace" src="__IMG__/face/woshou.gif" width="30"
-                                                 facename="woshou">
-                                            <img class="img-pace" src="__IMG__/face/weiqu.gif" width="30"
-                                                 facename="weiqu">
-                                            <img class="img-pace" src="__IMG__/face/tuosai.gif" width="30"
-                                                 facename="tuosai">
-                                            <img class="img-pace" src="__IMG__/face/touxiao.gif" width="30"
-                                                 facename="touxiao">
-                                            <img class="img-pace" src="__IMG__/face/tiaopi.gif" width="30"
-                                                 facename="tiaopi">
-                                            <img class="img-pace" src="__IMG__/face/shuai.gif" width="30"
-                                                 facename="shuai">
-                                            <img class="img-pace" src="__IMG__/face/shengli.gif" width="30"
-                                                 facename="shengli">
-                                            <img class="img-pace" src="__IMG__/face/se.gif" width="30"
-                                                 facename="se">
-                                            <img class="img-pace" src="__IMG__/face/quantou.gif" width="30"
-                                                 facename="quantou">
-                                            <img class="img-pace" src="__IMG__/face/qinqin.gif" width="30"
-                                                 facename="qinqin">
-                                            <img class="img-pace" src="__IMG__/face/qiang.gif" width="30"
-                                                 facename="qiang">
-                                            <img class="img-pace" src="__IMG__/face/piezui.gif" width="30"
-                                                 facename="piezui">
-                                            <img class="img-pace" src="__IMG__/face/penxue.gif" width="30"
-                                                 facename="penxue">
-                                            <img class="img-pace" src="__IMG__/face/nanguo.gif" width="30"
-                                                 facename="nanguo">
-                                            <img class="img-pace" src="__IMG__/face/liuhan.gif" width="30"
-                                                 facename="liuhan">
-                                            <img class="img-pace" src="__IMG__/face/lenghan.gif" width="30"
-                                                 facename="lenghan">
-                                            <img class="img-pace" src="__IMG__/face/leiben.gif" width="30"
-                                                 facename="leiben">
-                                            <img class="img-pace" src="__IMG__/face/ku.gif" width="30"
-                                                 facename="ku">
-                                            <img class="img-pace" src="__IMG__/face/koubi.gif" width="30"
-                                                 facename="koubi">
-                                            <img class="img-pace" src="__IMG__/face/keai.gif" width="30"
-                                                 facename="keai">
-                                            <img class="img-pace" src="__IMG__/face/jingkong.gif" width="30"
-                                                 facename="jingkong">
-                                            <img class="img-pace" src="__IMG__/face/jie.gif" width="30"
-                                                 facename="jie">
-                                            <img class="img-pace" src="__IMG__/face/huaixiao.gif" width="30"
-                                                 facename="huaixiao">
-                                            <img class="img-pace" src="__IMG__/face/hanxiao.gif" width="30"
-                                                 facename="hanxiao">
-                                            <img class="img-pace" src="__IMG__/face/haixiu.gif" width="30"
-                                                 facename="haixiu">
-                                            <img class="img-pace" src="__IMG__/face/guzhang.gif" width="30"
-                                                 facename="guzhang">
-                                            <img class="img-pace" src="__IMG__/face/ganga.gif" width="30"
-                                                 facename="ganga">
-                                            <img class="img-pace" src="__IMG__/face/fadai.gif" width="30"
-                                                 facename="fadai">
-                                            <img class="img-pace" src="__IMG__/face/doge.gif" width="30"
-                                                 facename="doge">
-                                            <img class="img-pace" src="__IMG__/face/dabing.gif" width="30"
-                                                 facename="dabing">
-                                            <img class="img-pace" src="__IMG__/face/ciya.gif" width="30"
-                                                 facename="ciya">
-                                            <img class="img-pace" src="__IMG__/face/caidao.gif" width="30"
-                                                 facename="caidao">
-                                            <img class="img-pace" src="__IMG__/face/cahan.gif" width="30"
-                                                 facename="cahan">
-                                            <img class="img-pace" src="__IMG__/face/bizui.gif" width="30"
-                                                 facename="bizui">
-                                            <img class="img-pace" src="__IMG__/face/baoquan.gif" width="30"
-                                                 facename="baoquan">
-                                            <img class="img-pace" src="__IMG__/face/aoman.gif" width="30"
-                                                 facename="aoman">
-                                            <img class="img-pace" src="__IMG__/face/aixin.gif" width="30"
-                                                 facename="aixin">
-                                            <img class="img-pace" src="__IMG__/face/OK.gif" width="30"
-                                                 facename="OK">
+                                        {:file_load_face('__IMG__/face/')}
                                         </div>
                                     </div>
                                 </div>
@@ -295,12 +200,63 @@
                     </div>
                     <!-- #respond -->
                     <meta content="UserComments:0" itemprop="interactionCount">
-                    <h3 class="comments-title">共有<span class="commentCount">0</span>条评论</h3>
+                <h3 class="comments-title">共有<span class="commentCount">{:get_comment_count($apeField['id'])}</span>条评论</h3>
                     <div class="comment-sofa">
-                        <i class="fas fa-couch">
-                        </i>
-                        沙发空余
+                    {if get_comment_count($apeField['id']) ==0}
+                    <i class="fas fa-couch"></i>沙发空余
+                    {/if}
+                </div>
+
+                <ol class="commentlist">
+                    {ape:comment typeId="$apeField['id']" void='field'}
+                    <li class="comment">
+                        <div class="comment-item" id="comment-{$field['id']}">
+                            <div class="comment-media">
+                                <div class="avatar-img">
+                                    <img src="https://sdn.geekzu.org/avatar/077fbf9053ac9adf86bbe4af06cd9193?s=48&amp;d=mm&amp;r=g" alt="">
                     </div>
+                            </div>
+                            <div class="comment-metadata">
+                                <div class="media-body">
+                                    <p class="author_name">{$field['author']}<a href="{$field['url']}" rel="external nofollow ugc" target="_blank" class="url"></a><span class="comment-zhan"><img title="网站主" src="__IMG__/zhan.svg" alt=""></span></p>
+                                    <div class="comment-text">
+                                      <p>{$field['content']}</p>
+                                    </div>
+                                </div>
+                                <span class="comment-pub-time">{$field['create_time']}</span>
+                                <span class="comment-btn-reply">
+                                    <a rel="nofollow" class="comment-reply-link" href="{$field['reply_url']}" data-commentid="{$field['id']}" data-postid="{$apeField['id']}" data-belowelement="comment-{$field['id']}" data-respondelement="respond" data-replyto="回复给{$field['author']}" aria-label="回复给{$field['author']}"><i class="fa fa-reply"></i> 回复</a>
+                                </span>
+                            </div>
+                        </div>
+                        {ape:comment  type="top" typeId="$field['id']" void="vo"}
+                        <ol class="children">
+                            <li class="comment">
+                                <div class="comment-item" id="comment-{$vo.id}">
+                                    <div class="comment-media">
+                                        <div class="avatar-img">
+                                            <img src="https://sdn.geekzu.org/avatar/17ed02eb0367e16c4f964f4c9b1bfe38?s=48&amp;d=mm&amp;r=g" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="comment-metadata">
+                                        <div class="media-body">
+                                            <p class="author_name">{$vo['author']}<span class="user-identity user-admin" title="{$vo['author']}"></span><span class="comment-from">@<a href="#comment-2264">{$field['author']}</a></span></p>
+                                            <div class="comment-text">
+                                                <p>{$vo['content']}</p>
+                                            </div>
+                                        </div>
+                                        <span class="comment-pub-time">{$vo.create_time}</span>
+                                        <span class="comment-btn-reply">
+                                            <a rel="nofollow" class="comment-reply-link" href="{$vo['reply_url']}" data-commentid="{$vo.id}" data-postid="{$apeField['id']}" data-belowelement="comment-{$vo.id}" data-respondelement="respond" data-replyto="回复给{$vo['author']}" aria-label="回复给{$vo['author']}"><i class="fa fa-reply"></i> 回复</a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </li><!-- #comment-## -->
+                        </ol><!-- .children -->
+                        {/ape:comment}
+                    </li><!-- #comment-## -->
+                    {/ape:comment}
+                </ol>
                     <script type='text/javascript' src='__JS__/comment-reply.min.js'></script>
                     <script type='text/javascript'>
                         $("body").on("click", ".comment-reply-link",
