@@ -22,7 +22,7 @@
                 <div>{$apeField['title']}</div>
               </div>
               <ul class="post-list">
-                {ape:list orderby="create_time desc" type="where" pagesize="10"}
+                {ape:list orderBy="create_time desc" type="where" pagesize="10"}
                 <li class="post-item">
                   <div class="post-item-container">
                     <div class="post-item-thumbnail">
@@ -88,7 +88,7 @@
                 </div>
                 <div class="aside-box">
                   <h2 class="widget-title">热门阅读</h2>
-                  {ape:arclist row="6" typeid="$id" orderby="view desc"}
+                  {ape:arclist row="6" typeId="$id" orderBy="view desc"}
                   <div class="hot-post-widget-item">
                     <div>
                       <span class="hot-post-widget-item-num">{$i}</span>

@@ -129,7 +129,6 @@ function get_document_category_by_name($name, $field = false)
  */
 function tpl_get_channel($type, $typeId, $row = 100, $where = '', $orderby = '')
 {
-
     switch ($type) {
         case "all":
             //获取顶级分类

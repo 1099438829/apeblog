@@ -39,7 +39,6 @@ class Ape extends TagLib{
 
         $display=isset($tag['display'])?$tag['display']:1;
         $display=$display==1?1:0;
-
         //3中传参类型
         //1、栏目id，数字类型
         //2、多个栏目id，逗号隔开

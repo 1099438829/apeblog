@@ -45,7 +45,7 @@
 							{/notempty}
 							{notempty name="field['child']"}
 							<ul class="sub-menu">
-								{ape:channel type="son" typeid="$field['id']" void="vo"}
+								{ape:channel type="son" typeId="$field['id']" void="vo"}
 								<li id="menu-item-{$vo.id}" class="menu-item menu-item-{$vo.id} {:is_active_nav($cid,$vo['id'])?'current-menu-item':''}">
 									<a title="{$vo['title']}" aria-current="page" href="{$vo['url']}" {if $vo['link_str']} target="_blank"{/if}>{$vo['title']}</a>
 								</li>
@@ -93,7 +93,7 @@
 								{/notempty}
 								{notempty name="field['child']"}
 								<ul class="sub-menu">
-									{ape:channel type="son" typeid="$field['id']" void="vo"}
+									{ape:channel type="son" typeId="$field['id']" void="vo"}
 									<li id="menu-item-{$vo.id}" class="menu-item menu-item-{$vo.id} {:is_active_nav($cid,$vo['id'])?'current-menu-item':''}">
 										<a title="{$vo['title']}" href="{$vo['url']}" {if $vo['link_str']} target="_blank"{/if}>{$vo['title']}</a>
 									</li>
