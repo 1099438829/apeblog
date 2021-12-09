@@ -548,28 +548,6 @@ function tpl_get_friend_link($type, $row)
 }
 
 /**
- * 模板-poster
- */
-function tpl_get_banner($type, $row)
-{
-    $bannerList = cache(Data::DATA_BANNER);
-    if ($bannerList === null) {
-        $bannerList = Db::name('slides')->where('status', 1)->order('sort asc')->limit($row)->select();
-        cache(Data::DATA_BANNER, $bannerList);
-    }
-    if ($type === 0) {
-        return $bannerList;
-    }
-    $bannerListTemp = [];
-    foreach ($bannerList as $key => $item) {
-        if ($item['image']) {
-            array_push($bannerListTemp, $item);
-        }
-    }
-    return $bannerListTemp;
-}
-
-/**
  * 广告
  * @param $type
  * @param $row
@@ -593,7 +571,7 @@ function tpl_get_advert($type, $row)
     }
     $advertListTemp = [];
     foreach ($advertList as $key => $item) {
-        if ($item['image']) {
+        if ($item['cover_path']) {
             array_push($advertListTemp, $item);
         }
     }
