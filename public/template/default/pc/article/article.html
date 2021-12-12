@@ -208,7 +208,7 @@
                 </div>
 
                 <ol class="commentlist">
-                    {ape:comment typeId="$apeField['id']" void='field'}
+                    {ape:comment type="top" typeId="$apeField['id']" void='field'}
                     <li class="comment">
                         <div class="comment-item" id="comment-{$field['id']}">
                             <div class="comment-media">
@@ -229,7 +229,7 @@
                                 </span>
                             </div>
                         </div>
-                        {ape:comment  type="top" typeId="$field['id']" void="vo"}
+                        {ape:comment  type="son" typeId="$field['id']" void="vo"}
                         <ol class="children">
                             <li class="comment">
                                 <div class="comment-item" id="comment-{$vo.id}">

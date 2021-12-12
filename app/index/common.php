@@ -662,7 +662,7 @@ function tpl_get_comment_list($id, $type, $pageSize = 10, $orderBy)
     switch ($type) {
         case 'top':
             //根据自定义条件获取文章（where语句）
-            $commentModel = $commentModel->where('document_id', $id);
+            $commentModel = $commentModel->where('document_id', $id)->where('pid', 0);
             break;
         case 'son':
             //获取栏目下文章
