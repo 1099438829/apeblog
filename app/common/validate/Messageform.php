@@ -8,19 +8,20 @@
 // +----------------------------------------------------------------------
 
 namespace app\common\validate;
+
 use think\Validate;
 
 /**
  * 后台菜单验证器
  */
+class MessageForm extends Validate
+{
 
-class MessageForm extends Validate {
-
-    protected $rule =   [
+    protected $rule = [
         'content' => 'require',
         'tel' => 'number|max:11',
     ];
-    protected $message  =   [
+    protected $message = [
         'content.require' => '请输入留言内容！',
         'tel.number' => '手机号必须是数字！',
         'tel.max' => '手机号不得超过11位！',

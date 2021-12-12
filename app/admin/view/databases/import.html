@@ -10,7 +10,7 @@
         <div class="card">
             <ul class="nav nav-tabs page-tabs">
                 <li><a href="/admin/databases/index?type=export">备份数据库</a></li>
-                <li class="active"><a href="#!">还原数据库</a> </li>
+                <li class="active"><a href="#!">还原数据库</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active">
@@ -27,7 +27,7 @@
         classes: 'table table-bordered table-hover table-striped',
         url: '/admin/databases/Lst?type=import',
         method: 'post',
-        dataType : 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
+        dataType: 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
         uniqueId: 'id',
         idField: 'id',             // 每行的唯一标识字段
         toolbar: '#toolbar',       // 工具按钮容器
@@ -40,7 +40,7 @@
             };
         },
         pagination: false,
-        queryParams: function(params) {
+        queryParams: function (params) {
             let temp = toArrayList($(".searchForm").serializeArray());
             return temp;
         },
@@ -53,19 +53,19 @@
         }, {
             field: 'compress',
             title: '压缩'
-        },{
+        }, {
             field: 'size',
             title: '数据大小',
-            formatter:function (value,row,index) {
+            formatter: function (value, row, index) {
                 return renderSize(value);
             }
-        },{
+        }, {
             field: 'status',
             title: '状态',
         }, {
             field: 'operate',
             title: '操作',
-            formatter:function (value,row,index) {
+            formatter: function (value, row, index) {
                 let html = '<a href="#!" class="btn btn-xs btn-default m-r-5 btn-import" title="还原" data-toggle="tooltip" data-trigger="hover"><i class="mdi mdi-lock-reset"></i></a> \n' +
                     '<a class="btn btn-xs btn-default btn-delete" href="#!" title="删除" data-toggle="tooltip" data-trigger="hover"><i class="mdi mdi-delete"></i></a>';
                 return html;
@@ -73,37 +73,42 @@
             events: {
                 'click .btn-import': function (event, value, row, index) {
                     var self = this, status = ".";
-                    $.post("/admin/databases/import", {"key":row.key}, success, "json");
-                    window.onbeforeunload = function(){ return "正在还原数据库，请不要关闭！" }
+                    $.post("/admin/databases/import", {"key": row.key}, success, "json");
+                    window.onbeforeunload = function () {
+                        return "正在还原数据库，请不要关闭！"
+                    }
                     return false;
-                    function success(data){
-                        if(data.status){
+
+                    function success(data) {
+                        if (data.status) {
                             console.log(data)
-                            if(data.gz){
+                            if (data.gz) {
                                 data.msg += status;
-                                if(status.length === 5){
+                                if (status.length === 5) {
                                     status = ".";
                                 } else {
                                     status += ".";
                                 }
                             }
-                            $('#tb_departments').bootstrapTable('updateRow',{
+                            $('#tb_departments').bootstrapTable('updateRow', {
                                 index: index,
                                 row: {
                                     status: data.msg,
                                 }
                             })
-                            if(data.data.part){
+                            if (data.data.part) {
                                 $.post("/admin/databases/import",
-                                    {"key":row.key,"part" : data.data.part, "start" : data.data.start},
+                                    {"key": row.key, "part": data.data.part, "start": data.data.start},
                                     success,
                                     "json"
                                 );
-                            }  else {
-                                window.onbeforeunload = function(){ return null; }
+                            } else {
+                                window.onbeforeunload = function () {
+                                    return null;
+                                }
                             }
                         } else {
-                            parent.lightyear.notify(data.msg?data.msg:'操作失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                            parent.lightyear.notify(data.msg ? data.msg : '操作失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                             return false;
                         }
                     }
@@ -112,12 +117,12 @@
                     $.ajax({
                         type: "post",
                         url: "/admin/databases/delOne",
-                        data: {key:row.key},
+                        data: {key: row.key},
                         success: function (res) {
                             if (res.code == 200 || res.status == 200) {
                                 parent.lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                                 $("#tb_departments").bootstrapTable('refresh');
-                            } else{
+                            } else {
                                 parent.lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                             }
                         },
@@ -127,23 +132,23 @@
                 }
             }
         }],
-        onLoadSuccess: function(data){
+        onLoadSuccess: function (data) {
             $("[data-toggle='tooltip']").tooltip();
         }
     });
 
     //格式化文件大小
-    function renderSize(value){
-        if(null==value||value==''){
+    function renderSize(value) {
+        if (null == value || value == '') {
             return "0 Bytes";
         }
-        var unitArr = new Array("Bytes","KB","MB","GB","TB","PB","EB","ZB","YB");
-        var index=0;
+        var unitArr = new Array("Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB");
+        var index = 0;
         var srcsize = parseFloat(value);
-        index=Math.floor(Math.log(srcsize)/Math.log(1024));
-        var size =srcsize/Math.pow(1024,index);
-        size=size.toFixed(2);//保留的小数位数
-        return size+unitArr[index];
+        index = Math.floor(Math.log(srcsize) / Math.log(1024));
+        var size = srcsize / Math.pow(1024, index);
+        size = size.toFixed(2);//保留的小数位数
+        return size + unitArr[index];
     }
 </script>
 </body>

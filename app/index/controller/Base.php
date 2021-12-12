@@ -1,7 +1,8 @@
 <?php
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace app\index\controller;
+
 use app\BaseController;
 use app\common\model\PvLog;
 use app\common\model\UrlLog;
@@ -12,16 +13,17 @@ use app\common\model\UrlLog;
 class Base extends BaseController
 {
     // 初始化
-    protected function initialize(){
+    protected function initialize()
+    {
         parent::initialize();
         //判断是否关闭站点。
-        if(!web_config('web_close')){
-            $this->error('网站暂时关闭！','','stop');
+        if (!web_config('web_close')) {
+            $this->error('网站暂时关闭！', '', 'stop');
         }
         //判断后台统计配置是否开启  1 开启
         if (web_config("web_statistics") == 1) {
-             //pv表   zz_pv_log  栏目存在 点击进入页面后
-            $pvLogModel=new PvLog();
+            //pv表   zz_pv_log  栏目存在 点击进入页面后
+            $pvLogModel = new PvLog();
             $pvLogModel->set_view();
         }
         //判断是否开启了伪静态
@@ -42,9 +44,9 @@ class Base extends BaseController
      */
     protected function urlrecord($title)
     {
-        $urlLogModel=new UrlLog();
+        $urlLogModel = new UrlLog();
         //获取url
         $urlInfo = $this->request->url(true);
-        $urlLogModel->set_url($title,$urlInfo);
+        $urlLogModel->set_url($title, $urlInfo);
     }
 }

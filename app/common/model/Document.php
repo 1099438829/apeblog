@@ -25,17 +25,17 @@ class Document extends BaseModel
     {
         $model = new self;
         $count = self::counts($model);
-        if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'],(int)$where['limit']);
+        if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'], (int)$where['limit']);
         $data = $model->select();
         if ($data) $data = $data->toArray();
-        $categoryList = DocumentCategory::where('id','in',array_column($data,'category_id'))->column('title','id');
-        foreach ($data as &$item){
-            if (!empty($categoryList[$item['category_id']])){
+        $categoryList = DocumentCategory::where('id', 'in', array_column($data, 'category_id'))->column('title', 'id');
+        foreach ($data as &$item) {
+            if (!empty($categoryList[$item['category_id']])) {
                 $item['category_title'] = $categoryList[$item['category_id']];
-            }else{
+            } else {
                 $item['category_title'] = '';
             }
         }
-        return compact('data','count');
+        return compact('data', 'count');
     }
 }

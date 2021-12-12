@@ -1,9 +1,10 @@
 <?php
+
 use app\common\model\SystemConfig;
 use app\common\constant\Data;
+
 // 应用公共文件
-if (!function_exists('system_config_more'))
-{
+if (!function_exists('system_config_more')) {
     /**
      * 获取系统配置值
      * @param array $formNames
@@ -15,20 +16,19 @@ if (!function_exists('system_config_more'))
     function system_config_more(array $formNames): array
     {
         $systemConfig = cache(Data::DATA_SYSTEM_CONFIG);
-        if (empty($systemConfig)){
+        if (empty($systemConfig)) {
             $systemConfig = SystemConfig::getSystemConfigValues();
-            cache(Data::DATA_SYSTEM_CONFIG,$systemConfig);
+            cache(Data::DATA_SYSTEM_CONFIG, $systemConfig);
         }
         $data = [];
-        foreach ($formNames as $v){
-            $data[$v] = $systemConfig[$v]??'';
+        foreach ($formNames as $v) {
+            $data[$v] = $systemConfig[$v] ?? '';
         }
         return $data;
     }
 }
 
-if (!function_exists('param_to_array'))
-{
+if (!function_exists('param_to_array')) {
     /**
      * 参数分割成数组
      * @param string $param
@@ -38,17 +38,15 @@ if (!function_exists('param_to_array'))
     function param_to_array(string $param, string $delimiter = "&"): array
     {
         $arr = [];
-        foreach (explode($delimiter,$param) as $value)
-        {
-            $tmp = explode("=",$value);
+        foreach (explode($delimiter, $param) as $value) {
+            $tmp = explode("=", $value);
             $arr[$tmp[0]] = $tmp[1];
         }
         return $arr;
     }
 }
 
-if (!function_exists('get_File_type'))
-{
+if (!function_exists('get_File_type')) {
     /**
      * 获取文件类型
      * @param string $mime
@@ -56,14 +54,13 @@ if (!function_exists('get_File_type'))
      */
     function get_File_type(string $mime): string
     {
-        if (stristr($mime,'image')) return 'image';
-        elseif (stristr($mime,'video')) return 'video';
-        elseif (stristr($mime,'audio')) return 'audio';
+        if (stristr($mime, 'image')) return 'image';
+        elseif (stristr($mime, 'video')) return 'video';
+        elseif (stristr($mime, 'audio')) return 'audio';
     }
 }
 
-if (!function_exists('system_config'))
-{
+if (!function_exists('system_config')) {
     /**
      * 获取系统配置值
      * @param string $formName
@@ -75,28 +72,26 @@ if (!function_exists('system_config'))
     function system_config(string $formName): string
     {
         $systemConfig = cache(Data::DATA_SYSTEM_CONFIG);
-        if (empty($systemConfig)){
+        if (empty($systemConfig)) {
             $systemConfig = SystemConfig::getSystemConfigValues();
-            cache(Data::DATA_SYSTEM_CONFIG,$systemConfig);
+            cache(Data::DATA_SYSTEM_CONFIG, $systemConfig);
         }
-        return $systemConfig[$formName]??'';
+        return $systemConfig[$formName] ?? '';
     }
 }
 
-if (!function_exists('create_order_id'))
-{
+if (!function_exists('create_order_id')) {
     /**
      * 创建订单id
      * @return string
      */
     function create_order_id(): string
     {
-        return "O".date("YmdHis").rand(1000,9999);
+        return "O" . date("YmdHis") . rand(1000, 9999);
     }
 }
 
-if (!function_exists('unicode_encode'))
-{
+if (!function_exists('unicode_encode')) {
     /**
      * 中文转unicode
      * @param $str
@@ -106,8 +101,7 @@ if (!function_exists('unicode_encode'))
     {
         $strArr = preg_split('/(?<!^)(?!$)/u', $str);
         $resUnicode = '';
-        foreach ($strArr as $str)
-        {
+        foreach ($strArr as $str) {
             $bin_str = '';
             $arr = is_array($str) ? $str : str_split($str);
             foreach ($arr as $value) $bin_str .= decbin(ord($value));
@@ -115,15 +109,14 @@ if (!function_exists('unicode_encode'))
             $unicode = dechex(bindec($bin_str));
             $_sup = '';
             for ($i = 0; $i < 4 - strlen($unicode); $i++) $_sup .= '0';
-            $str =  '\\u' . $_sup . $unicode;
+            $str = '\\u' . $_sup . $unicode;
             $resUnicode .= $str;
         }
         return $resUnicode;
     }
 }
 
-if (!function_exists('unicode_decode'))
-{
+if (!function_exists('unicode_decode')) {
     /**
      * unicode转中文
      * @param $unicode_str
@@ -131,15 +124,14 @@ if (!function_exists('unicode_decode'))
      */
     function unicode_decode($unicode_str)
     {
-        $json = '{"str":"'.$unicode_str.'"}';
-        $arr = json_decode($json,true);
-        if(empty($arr)) return '';
+        $json = '{"str":"' . $unicode_str . '"}';
+        $arr = json_decode($json, true);
+        if (empty($arr)) return '';
         return $arr['str'];
     }
 }
 
-if (!function_exists('file_cdn'))
-{
+if (!function_exists('file_cdn')) {
     /**
      * 文件cdn
      * @param $path
@@ -149,18 +141,18 @@ if (!function_exists('file_cdn'))
      */
     function file_cdn($path)
     {
-        if (empty($path)){
+        if (empty($path)) {
             return $path;
         }
         if (strpos($path, 'http') !== false) {
             //是网址开头的不处理
             return $path;
         }
-        $path = str_replace(public_path(),'',$path);
-        if (!(substr($path, 0,1) == '/')){
+        $path = str_replace(public_path(), '', $path);
+        if (!(substr($path, 0, 1) == '/')) {
             //统一路径
-            $path = '/'.$path;
+            $path = '/' . $path;
         }
-        return  config("app.cdn_url").$path;
+        return config("app.cdn_url") . $path;
     }
 }

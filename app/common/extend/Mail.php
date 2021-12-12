@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\common\service;
+namespace app\common\extend;
 
 /**
  * 宝塔邮件发送
@@ -85,6 +85,6 @@ class Mail
             'content' => $this->Body,
             'subtype' => $this->subtype,
         ];
-        return Curl::app($this->host,"POST",$param)->run();
+        return Curl::app($this->host, "POST", $param)->run();
     }
 }

@@ -14,14 +14,16 @@
                 <ul id="myTabs" class="nav nav-tabs" role="tablist">
                     <li class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab">基本信息</a></li>
                     <li><a href="#profile" role="tab" id="profile-tab" data-toggle="tab">文章设置</a></li>
-                    <li class="tab-right"><a data-toggle="tooltip" data-original-title="返回" onclick="javascript:history.back(-1);return false;">返 回</a></li>
+                    <li class="tab-right"><a data-toggle="tooltip" data-original-title="返回"
+                                             onclick="javascript:history.back(-1);return false;">返 回</a></li>
                 </ul>
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade active in" id="home">
                         <form action="#!" method="post" class="row add-form" onsubmit="return false;">
                             <div class="form-group col-md-12">
                                 <label>文章名称</label>
-                                <input type="text" class="form-control" id="title" name="title" value="" placeholder="文章名称" />
+                                <input type="text" class="form-control" id="title" name="title" value=""
+                                       placeholder="文章名称"/>
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="category_id">栏目分类</label>
@@ -29,14 +31,17 @@
                                     <select name="category_id" id="category_id" class="form-control">
                                         <option value="0">请选择</option>
                                         {volist name="category" id="vo"}
-                                        <option value="{$vo.id}" {notempty name="pid"}{if $vo.id == $category_id}selected{/if}{/notempty}>{$vo.html}{$vo.title}</option>
+                                        <option value="{$vo.id}" {notempty name="pid" }{if $vo.id==
+                                                $category_id}selected{
+                                        /if}{/notempty}>{$vo.html}{$vo.title}</option>
                                         {/volist}
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="writer">作者</label>
-                                <input type="text" class="form-control" id="writer" name="writer" value="" placeholder="原作者" />
+                                <input type="text" class="form-control" id="writer" name="writer" value=""
+                                       placeholder="原作者"/>
                             </div>
                             <div class="form-group col-md-12">
                                 <label>主图</label>
@@ -45,20 +50,25 @@
                                         <li class="col-xs-4 col-sm-3 col-md-2" id="pic-image" style="display: none;">
                                         </li>
                                         <li class="col-xs-4 col-sm-3 col-md-2" id="pic-upload">
-                                            <input type="hidden" class="form-control" name="cover_path" id="cover_path" value="" />
-                                            <input type="file" id="file_cover_path" style="display: none;" onchange="upload('cover_path')"/>
-                                            <a class="pic-add" href="#!" onclick="btnClick('cover_path')" title="上传"></a>
+                                            <input type="hidden" class="form-control" name="cover_path" id="cover_path"
+                                                   value=""/>
+                                            <input type="file" id="file_cover_path" style="display: none;"
+                                                   onchange="upload('cover_path')"/>
+                                            <a class="pic-add" href="#!" onclick="btnClick('cover_path')"
+                                               title="上传"></a>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="abstract">摘要</label>
-                                <input type="text" class="form-control"  name="abstract" id="abstract" placeholder="请输入摘要">
+                                <input type="text" class="form-control" name="abstract" id="abstract"
+                                       placeholder="请输入摘要">
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="abstract">标签</label>
-                                <input class="form-control js-tags-input" type="text" name="tags" data-height="38px" placeholder="请输入标签">
+                                <input class="form-control js-tags-input" type="text" name="tags" data-height="38px"
+                                       placeholder="请输入标签">
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="content">文章内容</label>
@@ -66,10 +76,13 @@
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="show_time">发布时间</label>
-                                <input class="form-control js-datetimepicker" type="text" id="show_time" name="show_time" placeholder="请选择具体时间" value="" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD HH:mm:ss" />
+                                <input class="form-control js-datetimepicker" type="text" id="show_time"
+                                       name="show_time" placeholder="请选择具体时间" value="" data-side-by-side="true"
+                                       data-locale="zh-cn" data-format="YYYY-MM-DD HH:mm:ss"/>
                             </div>
                             <div class="form-group col-md-12">
-                                <button type="submit" class="btn btn-primary ajax-post" target-form="add-form">立即提交</button>
+                                <button type="submit" class="btn btn-primary ajax-post" target-form="add-form">立即提交
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -113,7 +126,7 @@
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="abstract">排序</label>
-                                <input type="text" class="form-control"  name="sort" placeholder="请输入排序" value="99">
+                                <input type="text" class="form-control" name="sort" placeholder="请输入排序" value="99">
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="link_str">外链</label>
@@ -121,14 +134,17 @@
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="keywords">seo关键字</label>
-                                <input type="text" class="form-control" id="keywords" name="keywords" placeholder="请输入seo关键字">
+                                <input type="text" class="form-control" id="keywords" name="keywords"
+                                       placeholder="请输入seo关键字">
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="description">seo描述</label>
-                                <input type="text" class="form-control" name="description" id="description"  placeholder="seo描述" >
+                                <input type="text" class="form-control" name="description" id="description"
+                                       placeholder="seo描述">
                             </div>
                             <div class="form-group col-md-12">
-                                <button type="submit" class="btn btn-primary ajax-post" target-form="add-form">立即提交</button>
+                                <button type="submit" class="btn btn-primary ajax-post" target-form="add-form">立即提交
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -148,7 +164,7 @@
     $(function () {
         $('#tag').select2();
     });
-    $(document).ready(function(){
+    $(document).ready(function () {
         tinymce.init({
             selector: '#content',
             language: 'zh_CN',
@@ -166,53 +182,56 @@
             images_upload_url: '/admin/files/tinymce',
         });
     });
+
     /**
      * 选择文件
      * @param inputName
      */
     function btnClick(inputName) {
-        $("#file_"+inputName).click()
+        $("#file_" + inputName).click()
     }
+
     /**
      * 异步上传
      * @param inputName
      */
     function upload(inputName) {
         var formData = new FormData();
-        formData.append("type",'images');
-        formData.append("file",$("#file_"+inputName)[0].files[0]);
+        formData.append("type", 'images');
+        formData.append("file", $("#file_" + inputName)[0].files[0]);
         $.ajax({
-            type:'POST',
-            url:'/admin/files/upload',
+            type: 'POST',
+            url: '/admin/files/upload',
             data: formData,
             cache: false,
             processData: false,
             contentType: false,
             success: function (res) {
-                if (res.code == 200){
-                    $("#"+inputName).val(res.data.filePath);
-                    let html =' <figure>\n' +
-                        '         <img src="'+res.data.filePath+'" alt="'+res.data.name+'">\n' +
+                if (res.code == 200) {
+                    $("#" + inputName).val(res.data.filePath);
+                    let html = ' <figure>\n' +
+                        '         <img src="' + res.data.filePath + '" alt="' + res.data.name + '">\n' +
                         '         <figcaption>\n' +
                         '             <a class="btn btn-round btn-square btn-danger btn-image-delete" href="#!"><i class="mdi mdi-delete"></i></a>\n' +
                         '         </figcaption>\n' +
                         '       </figure>';
                     $('#pic-image').html(html);
                     $('#pic-image').show().next('li').hide();
-                }else{
+                } else {
                     lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                     return false;
                 }
             }
         });
     }
+
     $(".add-form").submit(function () {
         let Arr = $('.add-form').serializeArray();
         let checkResult = true;
-        let content=  tinyMCE.activeEditor.getContent();
+        let content = tinyMCE.activeEditor.getContent();
         $("#content").val(content);
 
-        $.each(Arr,function (index,item) {
+        $.each(Arr, function (index, item) {
             try {
                 switch (item.name) {
                     case 'category_id':
@@ -241,15 +260,19 @@
         if (!checkResult) {
             return false;
         }
-        $.post(url="/admin/article/save",$('.add-form').serialize(),function (res) {
-            if (res.code == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');setTimeout(function () {location.href='/admin/article/index';},2000)}
-            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+        $.post(url = "/admin/article/save", $('.add-form').serialize(), function (res) {
+            if (res.code == 200) {
+                lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                setTimeout(function () {
+                    location.href = '/admin/article/index';
+                }, 2000)
+            } else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
         });
         return true;
     })
 
     //删除事件
-    $('body').on('click','.btn-image-delete',function(){
+    $('body').on('click', '.btn-image-delete', function () {
         $('#pic-image').hide().next('li').show();
         $('#cover_path').val('');
     })

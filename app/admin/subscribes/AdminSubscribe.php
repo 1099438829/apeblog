@@ -18,7 +18,7 @@ class AdminSubscribe
      */
     public function onAdminLog($event)
     {
-        list($adminInfo,$module,$controller,$action) = $event;
-        AdminLog::saveLog($adminInfo,$module,$controller,$action);
+        list($adminInfo, $module, $controller, $action) = $event;
+        AdminLog::saveLog($adminInfo, $module, $controller, $action);
     }
 }

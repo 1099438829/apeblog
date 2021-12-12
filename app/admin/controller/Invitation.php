@@ -4,7 +4,7 @@ namespace app\admin\controller;
 
 use app\common\model\InvitationCode as aModel;
 use app\Request;
-use app\admin\service\UtilService as Util;
+use app\admin\extend\Util as Util;
 
 /**
  * Class Invitation
@@ -23,6 +23,7 @@ class Invitation extends AuthController
         //修正因为修改model名称和原来不能对应导致的model功能异常
         $this->model = new aModel();
     }
+
     /**
      * 邀请码列表
      * @return string
@@ -48,9 +49,9 @@ class Invitation extends AuthController
     public function lst(Request $request)
     {
         $where = Util::postMore([
-            ['code',''],
-            ['page',1],
-            ['limit',20],
+            ['code', ''],
+            ['page', 1],
+            ['limit', 20],
         ]);
         return app("json")->layui(aModel::systemPage($where));
     }
@@ -65,26 +66,26 @@ class Invitation extends AuthController
      * @author 李玉坤
      * @date 2021-02-20 14:32
      */
-    public function save($id="")
+    public function save($id = "")
     {
         $data = Util::postMore([
-            ['code',''],
-            ['status',0],
+            ['code', ''],
+            ['status', 0],
         ]);
         if ($data['code'] == "") return app("json")->fail("邀请码不能为空");
-        if ($id=="") {
+        if ($id == "") {
             //判断下用户是否存在
-            $info = aModel::where('code',$data['code'])->find();
-            if ($info){
+            $info = aModel::where('code', $data['code'])->find();
+            if ($info) {
                 return app("json")->fail("邀请码已存在");
             }
             $data['user'] = $this->adminId;
             $res = aModel::create($data);
-        }else {
+        } else {
             $data['user'] = $this->adminId;
-            $res = aModel::update($data,['id'=>$id]);
+            $res = aModel::update($data, ['id' => $id]);
         }
-        return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败");
     }
 
     /**
@@ -97,27 +98,27 @@ class Invitation extends AuthController
      * @author 李玉坤
      * @date 2021-02-20 14:35
      */
-    public function addMultiple($id="")
+    public function addMultiple($id = "")
     {
         $data = Util::postMore([
-            ['name',''],
-            ['number',1],
+            ['name', ''],
+            ['number', 1],
         ]);
         if ($data['name'] == "") return app("json")->fail("邀请码前缀不能为空");
         if ($data['number'] == "") return app("json")->fail("数量不是数字或者小于1");
-        $count =intval($data['number']);
-        for ($i=0; $i <$count; $i++) {
-            $code['code'] = ($data['name'].substr(time(),-6).rand(0,9999));
+        $count = intval($data['number']);
+        for ($i = 0; $i < $count; $i++) {
+            $code['code'] = ($data['name'] . substr(time(), -6) . rand(0, 9999));
             $code['status'] = 0;
-            $code['user']  = $this->adminId;
+            $code['user'] = $this->adminId;
             $check = aModel::where('code')->find();
-            if($check ==null || $check ==false){
+            if ($check == null || $check == false) {
                 $res = aModel::create($code);
-            }else{
+            } else {
                 continue;
             }
         }
-        return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败");
     }
 
 }

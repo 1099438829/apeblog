@@ -28,9 +28,9 @@ class DocumentArticle extends BaseModel
     {
         $model = new self;
         $count = self::counts($model);
-        if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'],(int)$where['limit']);
+        if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'], (int)$where['limit']);
         $data = $model->select();
         if ($data) $data = $data->toArray();
-        return compact('data','count');
+        return compact('data', 'count');
     }
 }

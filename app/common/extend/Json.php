@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\common\service;
+namespace app\common\extend;
 
 use think\Response;
 
@@ -55,7 +55,7 @@ class Json
      * @param int $count
      * @return Response
      */
-    public function instance(int $status, string $msg, $data = [], int $count=0): Response
+    public function instance(int $status, string $msg, $data = [], int $count = 0): Response
     {
         $res['msg'] = $msg;
         $res[$this->type] = $status;
@@ -86,18 +86,15 @@ class Json
      */
     public function success($msg = '', $data = []): Response
     {
-        if (is_array($msg))
-        {
+        if (is_array($msg)) {
             $data = $msg;
             $msg = self::$DEFAULT_SUCCESS;
-        }
-        elseif (!empty($data) && is_string($data))
-        {
+        } elseif (!empty($data) && is_string($data)) {
             $this->type = $data;
             $data = [];
         }
         if ($msg == '') $msg = self::$DEFAULT_SUCCESS;
-        return $this->instance(self::$SUCCESS_CODE,$msg,$data);
+        return $this->instance(self::$SUCCESS_CODE, $msg, $data);
     }
 
     /**
@@ -108,13 +105,12 @@ class Json
      */
     public function fail($msg = '', $data = []): Response
     {
-        if (is_array($msg))
-        {
+        if (is_array($msg)) {
             $data = $msg;
             $msg = self::$DEFAULT_FAIL;
         }
         if ($msg == '') $msg = self::$DEFAULT_SUCCESS;
-        return $this->instance(self::$FAIL_CODE,$msg,$data);
+        return $this->instance(self::$FAIL_CODE, $msg, $data);
     }
 
     /**
@@ -127,26 +123,24 @@ class Json
     {
         $this->type = 'code';
         $count = 0;
-        $data=[];
-        if (is_array($msg))
-        {
+        $data = [];
+        if (is_array($msg)) {
             if (!isset($msg['count']) && !isset($msg['data'])) $data = $msg;
-            else
-            {
+            else {
                 if (isset($msg['count'])) $count = $msg['count'];
                 if (isset($msg['data'])) $data = $msg['data'];
             }
             $msg = self::$DEFAULT_SUCCESS;
         }
         if ($msg == '') $msg = self::$DEFAULT_SUCCESS;
-        return $this->instance(self::$LAYUI_CODE,$msg,$data,$count);
+        return $this->instance(self::$LAYUI_CODE, $msg, $data, $count);
     }
 
     /**
      * 返回code字段
      * @return $this
      */
-    public function code():self
+    public function code(): self
     {
         $this->type = 'code';
         return $this;

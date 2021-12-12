@@ -4,7 +4,7 @@ namespace app\admin\controller;
 
 use app\common\model\MessageForm as aModel;
 use app\Request;
-use app\admin\service\UtilService as Util;
+use app\admin\extend\Util as Util;
 
 /**
  * Class Message
@@ -49,13 +49,13 @@ class Message extends AuthController
     public function lst(Request $request)
     {
         $where = Util::postMore([
-            ['author',''],
-            ['tel',''],
-            ['email',''],
-            ['start_time',''],
-            ['end_time',''],
-            ['page',1],
-            ['limit',20],
+            ['author', ''],
+            ['tel', ''],
+            ['email', ''],
+            ['start_time', ''],
+            ['end_time', ''],
+            ['page', 1],
+            ['limit', 20],
         ]);
         return app("json")->layui(aModel::systemPage($where));
     }

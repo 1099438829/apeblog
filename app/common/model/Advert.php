@@ -24,18 +24,18 @@ class Advert extends BaseModel
     public static function systemPage($where): array
     {
         $model = new self;
-        if ($where['title'] != '') $model = $model->where("title|url","like","%$where[title]%");
-        if ($where['start_time'] != '') $model = $model->where("create_time",">",strtotime($where['start_time']." 00:00:00"));
-        if ($where['end_time'] != '') $model = $model->where("create_time","<", strtotime($where['end_time']." 23:59:59"));
-        if ($where['status'] != '') $model = $model->where("status",$where['status']);
+        if ($where['title'] != '') $model = $model->where("title|url", "like", "%$where[title]%");
+        if ($where['start_time'] != '') $model = $model->where("create_time", ">", strtotime($where['start_time'] . " 00:00:00"));
+        if ($where['end_time'] != '') $model = $model->where("create_time", "<", strtotime($where['end_time'] . " 23:59:59"));
+        if ($where['status'] != '') $model = $model->where("status", $where['status']);
         $count = self::counts($model);
-        if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'],(int)$where['limit']);
-        $data = $model->select()->each(function ($item){
-            if (!empty($item->pic)){
+        if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'], (int)$where['limit']);
+        $data = $model->select()->each(function ($item) {
+            if (!empty($item->pic)) {
                 $item->pic = file_cdn($item->pic);
             }
         });
         if ($data) $data = $data->toArray();
-        return compact('data','count');
+        return compact('data', 'count');
     }
 }

@@ -24,12 +24,12 @@ class SystemConfig extends BaseModel
     public static function lst($where): array
     {
         $model = new self;
-        if ($where['tab_id']) $model = $model->where('tab_id',$where['tab_id']);
+        if ($where['tab_id']) $model = $model->where('tab_id', $where['tab_id']);
         $count = self::counts($model);
-        if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'],(int)$where['limit']);
+        if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'], (int)$where['limit']);
         $data = $model->select();
         if ($data) $data = $data->toArray();
-        return compact('data','count');
+        return compact('data', 'count');
     }
 
     /**
@@ -43,8 +43,8 @@ class SystemConfig extends BaseModel
     public static function getValueByFormName(string $formName): string
     {
         $model = new self;
-        $model = $model->where("form_name",$formName);
-        $model = $model->where("status",1);
+        $model = $model->where("form_name", $formName);
+        $model = $model->where("status", 1);
         $info = $model->find();
         return $info ? $info['value'] : '';
     }
@@ -56,7 +56,7 @@ class SystemConfig extends BaseModel
     public static function getSystemConfigValues(): array
     {
         $model = new self;
-        return $model->where("status",1)->column('value', 'form_name');
+        return $model->where("status", 1)->column('value', 'form_name');
     }
 
     /**
@@ -70,8 +70,8 @@ class SystemConfig extends BaseModel
     public static function getValuesByFormNames(array $formNames): array
     {
         $model = new self;
-        $model = $model->where("form_name",'in', $formNames);
-        $model = $model->where("status",1);
+        $model = $model->where("form_name", 'in', $formNames);
+        $model = $model->where("status", 1);
         $info = $model->select();
         return $info ? $info->toArray() : [];
     }
@@ -87,9 +87,9 @@ class SystemConfig extends BaseModel
     public static function getLstByTabId(int $tab_id = 0): array
     {
         $model = new self;
-        $model = $model->where("tab_id",$tab_id);
-        $model = $model->where("status",1);
-        $model = $model->where("is_show",1);
+        $model = $model->where("tab_id", $tab_id);
+        $model = $model->where("status", 1);
+        $model = $model->where("is_show", 1);
         $model = $model->order("rank desc");
         $info = $model->select();
         return $info ? $info->toArray() : [];
@@ -105,6 +105,6 @@ class SystemConfig extends BaseModel
     {
         $model = new self;
         $model = $model->where("form_name", $form_name);
-        return $model->update(['value'=>$value]);
+        return $model->update(['value' => $value]);
     }
 }

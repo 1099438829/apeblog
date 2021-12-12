@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\common\service;
+namespace app\common\extend;
 
 use think\facade\Session as systemSession;
 

@@ -5,9 +5,9 @@ namespace app\admin\controller;
 use app\common\model\Admin as aModel;
 use app\common\model\AdminRole as rModel;
 use app\Request;
-use app\admin\service\UtilService as Util;
+use app\admin\extend\Util as Util;
 use FormBuilder\Factory\Elm;
-use app\admin\service\FormBuilderService as Form;
+use app\admin\extend\FormBuilder as Form;
 use think\facade\Route as Url;
 
 /**
@@ -24,7 +24,7 @@ class Admin extends AuthController
      */
     public function index()
     {
-        $this->assign("auths",rModel::getAuthLst());
+        $this->assign("auths", rModel::getAuthLst());
         return $this->fetch();
     }
 
@@ -39,14 +39,14 @@ class Admin extends AuthController
     public function lst(Request $request)
     {
         $where = Util::postMore([
-            ['name',''],
-            ['tel',''],
-            ['start_time',''],
-            ['end_time',''],
-            ['role_id',''],
-            ['status',''],
-            ['page',1],
-            ['limit',20],
+            ['name', ''],
+            ['tel', ''],
+            ['start_time', ''],
+            ['end_time', ''],
+            ['role_id', ''],
+            ['status', ''],
+            ['page', 1],
+            ['limit', 20],
         ]);
         return app("json")->layui(aModel::systemPage($where));
     }
@@ -60,22 +60,22 @@ class Admin extends AuthController
     public function add(Request $request)
     {
         $form = array();
-        $form[] = Elm::input('name','登录账号')->col(10);
-        $form[] = Elm::input('nickname','昵称')->col(10);
-        $form[] = Elm::frameImage('avatar','头像',Url::buildUrl('admin/images/index',array('fodder'=>'avatar','limit'=>1)))->icon("ios-image")->width('96%')->height('440px')->col(10);
-        $form[] = Elm::password('pwd','密码')->col(10);
-        $form[] = Elm::input('realname','真实姓名')->col(10);
-        $form[] = Elm::select('role_id','角色')->options(function(){
+        $form[] = Elm::input('name', '登录账号')->col(10);
+        $form[] = Elm::input('nickname', '昵称')->col(10);
+        $form[] = Elm::frameImage('avatar', '头像', Url::buildUrl('admin/images/index', array('fodder' => 'avatar', 'limit' => 1)))->icon("ios-image")->width('96%')->height('440px')->col(10);
+        $form[] = Elm::password('pwd', '密码')->col(10);
+        $form[] = Elm::input('realname', '真实姓名')->col(10);
+        $form[] = Elm::select('role_id', '角色')->options(function () {
             $list = rModel::getAuthLst();
-            $menus=[];
-            foreach ($list as $menu){
-                $menus[] = ['value'=>$menu['id'],'label'=>$menu['name']];//,'disabled'=>$menu['pid']== 0];
+            $menus = [];
+            foreach ($list as $menu) {
+                $menus[] = ['value' => $menu['id'], 'label' => $menu['name']];//,'disabled'=>$menu['pid']== 0];
             }
             return $menus;
         })->col(10);
-        $form[] = Elm::input('tel','电话')->col(10);
-        $form[] = Elm::email('mail','邮箱')->col(10);
-        $form[] = Elm::radio('status','状态',1)->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(10);
+        $form[] = Elm::input('tel', '电话')->col(10);
+        $form[] = Elm::email('mail', '邮箱')->col(10);
+        $form[] = Elm::radio('status', '状态', 1)->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(10);
         $form = Form::make_post_form($form, url('save')->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
@@ -86,29 +86,29 @@ class Admin extends AuthController
      * @return string
      * @throws \FormBuilder\Exception\FormBuilderException
      */
-    public function edit($id="")
+    public function edit($id = "")
     {
         if (!$id) return app("json")->fail("账号id不能为空");
         $ainfo = aModel::get($id);
         if (!$ainfo) return app("json")->fail("没有该账号");
         $form = array();
-        $form[] = Elm::input('name','登录账号',$ainfo['name'])->col(10);
-        $form[] = Elm::input('nickname','昵称',$ainfo['nickname'])->col(10);
-        $form[] = Elm::frameImage('avatar','头像',Url::buildUrl('admin/images/index',array('fodder'=>'avatar','limit'=>1)),$ainfo['avatar'])->icon("ios-image")->width('96%')->height('440px')->col(10);
-        $form[] = Elm::password('pwd','密码',$ainfo['pwd'])->col(10);
-        $form[] = Elm::input('realname','真实姓名',$ainfo['realname'])->col(10);
-        $form[] = Elm::select('role_id','角色',$ainfo['role_id'])->options(function(){
+        $form[] = Elm::input('name', '登录账号', $ainfo['name'])->col(10);
+        $form[] = Elm::input('nickname', '昵称', $ainfo['nickname'])->col(10);
+        $form[] = Elm::frameImage('avatar', '头像', Url::buildUrl('admin/images/index', array('fodder' => 'avatar', 'limit' => 1)), $ainfo['avatar'])->icon("ios-image")->width('96%')->height('440px')->col(10);
+        $form[] = Elm::password('pwd', '密码', $ainfo['pwd'])->col(10);
+        $form[] = Elm::input('realname', '真实姓名', $ainfo['realname'])->col(10);
+        $form[] = Elm::select('role_id', '角色', $ainfo['role_id'])->options(function () {
             $list = rModel::getAuthLst();
-            $menus=[];
-            foreach ($list as $menu){
-                $menus[] = ['value'=>$menu['id'],'label'=>$menu['name']];//,'disabled'=>$menu['pid']== 0];
+            $menus = [];
+            foreach ($list as $menu) {
+                $menus[] = ['value' => $menu['id'], 'label' => $menu['name']];//,'disabled'=>$menu['pid']== 0];
             }
             return $menus;
         })->col(10);
-        $form[] = Elm::input('tel','电话',$ainfo['tel'])->col(10);
-        $form[] = Elm::email('mail','邮箱',$ainfo['mail'])->col(10);
-        $form[] = Elm::radio('status','状态',$ainfo['status'])->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(10);
-        $form = Form::make_post_form($form, url('save',['id'=>$id])->build());
+        $form[] = Elm::input('tel', '电话', $ainfo['tel'])->col(10);
+        $form[] = Elm::email('mail', '邮箱', $ainfo['mail'])->col(10);
+        $form[] = Elm::radio('status', '状态', $ainfo['status'])->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(10);
+        $form = Form::make_post_form($form, url('save', ['id' => $id])->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
@@ -118,29 +118,28 @@ class Admin extends AuthController
      * @param string $id
      * @return mixed
      */
-    public function save($id="")
+    public function save($id = "")
     {
         $data = Util::postMore([
-            ['name',''],
-            ['nickname',''],
-            ['avatar',''],
-            ['pwd',''],
-            ['realname',''],
-            ['role_id',''],
-            ['tel',''],
-            ['mail',''],
-            ['status','']
+            ['name', ''],
+            ['nickname', ''],
+            ['avatar', ''],
+            ['pwd', ''],
+            ['realname', ''],
+            ['role_id', ''],
+            ['tel', ''],
+            ['mail', ''],
+            ['status', '']
         ]);
         if ($data['name'] == "") return app("json")->fail("登录账号不能为空");
         if ($data['pwd'] == "") return app("json")->fail("密码不能为空");
         if ($data['tel'] == "") return app("json")->fail("手机号不能为空");
         if ($data['mail'] == "") return app("json")->fail("邮箱不能为空");
         if (is_array($data['avatar'])) $data['avatar'] = $data['avatar'][0];
-        if ($id=="")
-        {
+        if ($id == "") {
             //判断下用户是否存在
-            $info = aModel::where('name',$data['name'])->find();
-            if ($info){
+            $info = aModel::where('name', $data['name'])->find();
+            if ($info) {
                 return app("json")->fail("用户已存在");
             }
             $data['pwd'] = md5(md5($data['pwd']));
@@ -148,15 +147,14 @@ class Admin extends AuthController
             $data['create_user'] = $this->adminId;
             $data['create_time'] = time();
             $res = aModel::insert($data);
-        }else
-        {
+        } else {
             $ainfo = aModel::get($id);
             if ($ainfo['pwd'] != $data['pwd']) $data['pwd'] = md5(md5($data['pwd']));
             $data['update_user'] = $this->adminId;
             $data['update_time'] = time();
-            $res = aModel::update($data,['id'=>$id]);
+            $res = aModel::update($data, ['id' => $id]);
         }
-        return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败");
     }
 
     /**
@@ -178,12 +176,12 @@ class Admin extends AuthController
     public function changePwd(Request $request)
     {
         $data = Util::postMore([
-            ['oldpwd',''],
-            ['newpwd','']
+            ['oldpwd', ''],
+            ['newpwd', '']
         ]);
         if ($data['oldpwd'] == '' || $data['newpwd'] == '') return app("json")->fail("参数有误，新旧密码为空！");
         $adminInfo = aModel::get($this->adminId);
-        if ($adminInfo['pwd'] == md5(md5($data['oldpwd']))) return aModel::update(['pwd'=>md5(md5($data['newpwd']))],['id'=>$this->adminId]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+        if ($adminInfo['pwd'] == md5(md5($data['oldpwd']))) return aModel::update(['pwd' => md5(md5($data['newpwd']))], ['id' => $this->adminId]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
         return app("json")->fail("密码不正确！");
     }
 
@@ -194,7 +192,7 @@ class Admin extends AuthController
      */
     public function profile()
     {
-        $this->assign("info",aModel::get($this->adminId));
+        $this->assign("info", aModel::get($this->adminId));
         return $this->fetch();
     }
 
@@ -206,13 +204,13 @@ class Admin extends AuthController
     public function changProfile(Request $request)
     {
         $data = Util::postMore([
-            ['nickname',''],
-            ['avatar',''],
-            ['tel',''],
-            ['mail',''],
-            ['remark','']
+            ['nickname', ''],
+            ['avatar', ''],
+            ['tel', ''],
+            ['mail', ''],
+            ['remark', '']
         ]);
         if ($data['nickname'] == '' || $data['avatar'] == '' || $data['tel'] == '' || $data['mail'] == '') return app("json")->fail("必选项不能为空！");
-        return aModel::update(['nickname'=>$data['nickname'],'avatar'=>$data['avatar'],'tel'=>$data['tel'],'mail'=>$data['mail'],'remark'=>$data['remark']],['id'=>$this->adminId]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+        return aModel::update(['nickname' => $data['nickname'], 'avatar' => $data['avatar'], 'tel' => $data['tel'], 'mail' => $data['mail'], 'remark' => $data['remark']], ['id' => $this->adminId]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 }

@@ -1,16 +1,16 @@
 <?php
 
 
-namespace app\admin\service;
+namespace app\admin\extend;
 
 use FormBuilder\Form\IviewForm;
 
 /**
  * 表单构建
- * Class FormBuilderService
+ * Class FormBuilder
  * @package app\admin\service
  */
-class FormBuilderService
+class FormBuilder
 {
     /**
      * 生成表单

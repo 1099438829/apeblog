@@ -15,7 +15,10 @@
                 </div>
                 <div class="card-body">
                     <div id="toolbar2" class="toolbar-btn-action">
-                        <button type="button" class="btn btn-primary m-r-5" onclick="iframe.createIframe('添加角色','/admin/admin_role/add')"><span class="mdi mdi-plus" aria-hidden="true"></span>新增</button>
+                        <button type="button" class="btn btn-primary m-r-5"
+                                onclick="iframe.createIframe('添加角色','/admin/admin_role/add')"><span class="mdi mdi-plus"
+                                                                                                    aria-hidden="true"></span>新增
+                        </button>
                     </div>
                     <table class="tree-table"></table>
                 </div>
@@ -28,7 +31,8 @@
 <!--以下是tree-grid的使用示例-->
 <link href="__ADMIN_PATH__js/jquery-treegrid/jquery.treegrid.min.css" rel="stylesheet">
 <script type="text/javascript" src="__ADMIN_PATH__js/jquery-treegrid/jquery.treegrid.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-table/extensions/treegrid/bootstrap-table-treegrid.min.js"></script>
+<script type="text/javascript"
+        src="__ADMIN_PATH__js/bootstrap-table/extensions/treegrid/bootstrap-table-treegrid.min.js"></script>
 <script type="text/javascript">
     // tree-grid使用
     var $treeTable = $('.tree-table');
@@ -73,11 +77,11 @@
                 formatter: function (value, row, index) {
                     if (value == 0) {
                         is_checked = '';
-                    } else if (value == 1){
+                    } else if (value == 1) {
                         is_checked = 'checked="checked"';
                     }
                     var field = "status";
-                    result = '<label class="lyear-switch switch-primary switch-solid lyear-status"><input type="checkbox" '+ is_checked +'><span  onClick="updateStatus('+ row.id +', '+ value +', \''+ field +'\')"></span></label>';
+                    result = '<label class="lyear-switch switch-primary switch-solid lyear-status"><input type="checkbox" ' + is_checked + '><span  onClick="updateStatus(' + row.id + ', ' + value + ', \'' + field + '\')"></span></label>';
                     return result;
                 },
             },
@@ -85,9 +89,9 @@
                 field: 'operate',
                 title: '操作',
                 align: 'center',
-                events : {
+                events: {
                     'click .role-add': function (e, value, row, index) {
-                        iframe.createIframe('添加权限','/admin/admin_role/add?pid='+row.id);
+                        iframe.createIframe('添加权限', '/admin/admin_role/add?pid=' + row.id);
                     },
                     'click .role-delete': function (e, value, row, index) {
                         $.alert({
@@ -97,10 +101,12 @@
                                 confirm: {
                                     text: '确认',
                                     btnClass: 'btn-primary',
-                                    action: function(){
-                                        $.post(url="/admin/admin_role/del",data={"id":row.id},function (res) {
-                                            if (res.status == 200) {parent.lightyear.notify('删除成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');$(".tree-table").bootstrapTable('refresh');}
-                                            else parent.lightyear.notify('删除失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                                    action: function () {
+                                        $.post(url = "/admin/admin_role/del", data = {"id": row.id}, function (res) {
+                                            if (res.status == 200) {
+                                                parent.lightyear.notify('删除成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                                                $(".tree-table").bootstrapTable('refresh');
+                                            } else parent.lightyear.notify('删除失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                                         });
                                     }
                                 },
@@ -111,7 +117,7 @@
                         });
                     },
                     'click .role-edit': function (e, value, row, index) {
-                        iframe.createIframe('修改权限','/admin/admin_role/edit?id='+row.id)
+                        iframe.createIframe('修改权限', '/admin/admin_role/edit?id=' + row.id)
                     }
                 },
                 formatter: operateFormatter
@@ -121,13 +127,13 @@
         treeShowField: 'name',
         parentIdField: 'pid',
 
-        onResetView: function(data) {
+        onResetView: function (data) {
             $treeTable.treegrid({
                 initialState: 'collapsed', // 所有节点都折叠
                 treeColumn: 1,
                 //expanderExpandedClass: 'mdi mdi-folder-open',  // 可自定义图标样式
                 //expanderCollapsedClass: 'mdi mdi-folder',
-                onChange: function() {
+                onChange: function () {
                     $treeTable.bootstrapTable('resetWidth');
                 }
             });
@@ -135,7 +141,7 @@
             // 只展开树形的第一集节点
             $treeTable.treegrid('getRootNodes').treegrid('expand');
         },
-        onCheck: function(row) {
+        onCheck: function (row) {
             var datas = $treeTable.bootstrapTable('getData');
 
             selectChilds(datas, row, 'id', 'pid', true); // 选择子类
@@ -145,7 +151,7 @@
             $treeTable.bootstrapTable('load', datas);
         },
 
-        onUncheck: function(row) {
+        onUncheck: function (row) {
             var datas = $treeTable.bootstrapTable('getData');
             selectChilds(datas, row, 'id', 'pid', false);
             $treeTable.bootstrapTable('load', datas);
@@ -168,21 +174,23 @@
      * @param id id 字段名
      * @param pid 父id字段名
      */
-    function selectChilds(datas,row,id,pid,checked) {
-        for(var i in datas){
-            if(datas[i][pid] == row[id]){
-                datas[i].check=checked;
-                selectChilds(datas,datas[i],id,pid,checked);
-            };
+    function selectChilds(datas, row, id, pid, checked) {
+        for (var i in datas) {
+            if (datas[i][pid] == row[id]) {
+                datas[i].check = checked;
+                selectChilds(datas, datas[i], id, pid, checked);
+            }
+            ;
         }
     }
 
-    function selectParentChecked(datas,row,id,pid){
-        for(var i in datas){
-            if(datas[i][id] == row[pid]){
-                datas[i].check=true;
-                selectParentChecked(datas,datas[i],id,pid);
-            };
+    function selectParentChecked(datas, row, id, pid) {
+        for (var i in datas) {
+            if (datas[i][id] == row[pid]) {
+                datas[i].check = true;
+                selectParentChecked(datas, datas[i], id, pid);
+            }
+            ;
         }
     }
 
@@ -190,12 +198,14 @@
         var newstate = (value == 1) ? 0 : 1; // 发送参数值跟当前参数值相反
         $.ajax({
             type: "post",
-            url: "/admin/admin_role/field?id="+id,
+            url: "/admin/admin_role/field?id=" + id,
             data: {field: field, value: newstate},
             dataType: 'json',
             success: function (res) {
-                if (res.status == 200) {parent.lightyear.notify('修改成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');$(".tree-table").bootstrapTable('refresh');}
-                else parent.lightyear.notify('修改失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                if (res.status == 200) {
+                    parent.lightyear.notify('修改成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                    $(".tree-table").bootstrapTable('refresh');
+                } else parent.lightyear.notify('修改失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
             },
             error: function () {
                 parent.lightyear.notify('修改失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');

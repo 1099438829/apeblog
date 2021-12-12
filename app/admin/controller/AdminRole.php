@@ -6,9 +6,9 @@ use app\common\model\AdminRole as rModel;
 use app\common\model\AdminAuth as aModel;
 use app\Request;
 use FormBuilder\Exception\FormBuilderException;
-use app\admin\service\UtilService as Util;
+use app\admin\extend\Util as Util;
 use FormBuilder\Factory\Elm;
-use app\admin\service\FormBuilderService as Form;
+use app\admin\extend\FormBuilder as Form;
 
 class AdminRole extends AuthController
 {
@@ -42,12 +42,12 @@ class AdminRole extends AuthController
     public function add($pid = 0)
     {
         $form = array();
-        $form[] = Elm::select('pid','所属上级',(int)$pid)->options(rModel::returnOptions())->filterable(true)->col(18);
-        $form[] = Elm::input('name','角色名称')->col(18);
-        $form[] = Elm::treeChecked('tree_data','选择权限')->data(aModel::selectAndBuildTree(0,$pid != 0 ? explode(",",rModel::get($pid)['auth']) : ($this->adminId == 1 ? aModel::getIds() : $this->auth)))->col(18);
-        $form[] = Elm::number('rank','排序')->col(18);
-        $form[] = Elm::radio('status','状态',1)->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(18);
-        $form =  Form::make_post_form($form, url('save')->build());
+        $form[] = Elm::select('pid', '所属上级', (int)$pid)->options(rModel::returnOptions())->filterable(true)->col(18);
+        $form[] = Elm::input('name', '角色名称')->col(18);
+        $form[] = Elm::treeChecked('tree_data', '选择权限')->data(aModel::selectAndBuildTree(0, $pid != 0 ? explode(",", rModel::get($pid)['auth']) : ($this->adminId == 1 ? aModel::getIds() : $this->auth)))->col(18);
+        $form[] = Elm::number('rank', '排序')->col(18);
+        $form[] = Elm::radio('status', '状态', 1)->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(18);
+        $form = Form::make_post_form($form, url('save')->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
@@ -67,12 +67,12 @@ class AdminRole extends AuthController
         $rinfo = rModel::get($id);
         if (!$rinfo) return app("json")->fail("没有该权限");
         $form = array();
-        $form[] = Elm::select('pid','所属上级',$rinfo['pid'])->options(rModel::returnOptions())->filterable(true)->col(18);
-        $form[] = Elm::input('name','角色名称',$rinfo['name'])->col(18);
-        $form[] = Elm::treeChecked('tree_data','选择权限',to_int_array(explode(",",$rinfo['tree_data'])))->data(aModel::selectAndBuildTree(0,$rinfo['pid'] == 0 ? aModel::getIds() : explode(",",rModel::get($rinfo['pid'])['auth'])))->col(18);
-        $form[] = Elm::number('rank','排序',$rinfo['rank'])->col(18);
-        $form[] = Elm::radio('status','状态',$rinfo['status'])->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(18);
-        $form = Form::make_post_form($form, url('save',['id'=>$id])->build());
+        $form[] = Elm::select('pid', '所属上级', $rinfo['pid'])->options(rModel::returnOptions())->filterable(true)->col(18);
+        $form[] = Elm::input('name', '角色名称', $rinfo['name'])->col(18);
+        $form[] = Elm::treeChecked('tree_data', '选择权限', to_int_array(explode(",", $rinfo['tree_data'])))->data(aModel::selectAndBuildTree(0, $rinfo['pid'] == 0 ? aModel::getIds() : explode(",", rModel::get($rinfo['pid'])['auth'])))->col(18);
+        $form[] = Elm::number('rank', '排序', $rinfo['rank'])->col(18);
+        $form[] = Elm::radio('status', '状态', $rinfo['status'])->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(18);
+        $form = Form::make_post_form($form, url('save', ['id' => $id])->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
@@ -82,32 +82,30 @@ class AdminRole extends AuthController
      * @param string $id
      * @return mixed
      */
-    public function save($id="")
+    public function save($id = "")
     {
         $data = Util::postMore([
-            ['name',''],
-            ['pid',0],
-            ['tree_data',''],
-            ['rank',0],
-            ['status',1]
+            ['name', ''],
+            ['pid', 0],
+            ['tree_data', ''],
+            ['rank', 0],
+            ['status', 1]
         ]);
         if ($data['name'] == "") return app("json")->fail("角色名称不能为空");
         if ($data['pid'] == "") return app("json")->fail("上级归属不能为空");
         if ($data['tree_data'] == "") return app("json")->fail("权限不能为空");
         $data['auth'] = aModel::getIds($data['tree_data']);
-        $data['auth'] = implode(",",array_diff(array_unique($data['auth']),[0]));
-        $data['tree_data'] = implode(",",$data['tree_data']);
-        if ($id=="")
-        {
+        $data['auth'] = implode(",", array_diff(array_unique($data['auth']), [0]));
+        $data['tree_data'] = implode(",", $data['tree_data']);
+        if ($id == "") {
             $data['create_user'] = $this->adminId;
             $data['create_time'] = time();
             $res = rModel::insert($data);
-        }else
-        {
+        } else {
             $data['update_user'] = $this->adminId;
             $data['update_time'] = time();
-            $res = rModel::update($data,['id'=>$id]);
+            $res = rModel::update($data, ['id' => $id]);
         }
-        return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败");
     }
 }

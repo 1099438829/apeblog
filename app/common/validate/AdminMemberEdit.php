@@ -8,20 +8,21 @@
 // +----------------------------------------------------------------------
 
 namespace app\common\validate;
+
 use think\Validate;
 
 /**
  * 管理员验证器
  */
+class AdminMemberEdit extends Validate
+{
 
-class AdminMemberEdit extends Validate {
-
-    protected $rule =   [
+    protected $rule = [
         'username' => 'require|max:16',
         'nickname' => 'max:10',
     ];
 
-    protected $message  =   [
+    protected $message = [
         'username.require' => '请输入用户名',
         'username.max' => '用户名最多不能超过16个字符',
         'nickname.max' => '用户名最多不能超过10个字符',

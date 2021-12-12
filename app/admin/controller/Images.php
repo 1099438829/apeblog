@@ -6,8 +6,8 @@ namespace app\admin\controller;
 use app\common\model\Attachment;
 use app\common\model\AttachmentCategory;
 use FormBuilder\Factory\Elm;
-use app\admin\service\FormBuilderService as Form;
-use app\admin\service\UtilService as Util;
+use app\admin\extend\FormBuilder as Form;
+use app\admin\extend\Util as Util;
 
 /**
  * Class Images
@@ -34,7 +34,7 @@ class Images extends AuthController
      */
     public function category()
     {
-        return app("json")->success(AttachmentCategory::buildNodes("images",0,$this->request->param("title","")));
+        return app("json")->success(AttachmentCategory::buildNodes("images", 0, $this->request->param("title", "")));
     }
 
     /**
@@ -44,18 +44,18 @@ class Images extends AuthController
      * @return string
      * @throws \FormBuilder\Exception\FormBuilderException
      */
-    public function addCategory($id=0, $pid=0)
+    public function addCategory($id = 0, $pid = 0)
     {
         $form = array();
-        $form[] = Elm::select('pid','上级分类',(int)$pid?: (int)$id)->options(function (){
+        $form[] = Elm::select('pid', '上级分类', (int)$pid ?: (int)$id)->options(function () {
             $menu = [];
-            $menu[] = ['label'=>"顶级分类","value"=>0];
+            $menu[] = ['label' => "顶级分类", "value" => 0];
             $list = AttachmentCategory::getCategoryLst();
-            foreach ($list as $value) $menu[] = ['label'=>$value['name'],"value"=>$value['id']];
+            foreach ($list as $value) $menu[] = ['label' => $value['name'], "value" => $value['id']];
             return $menu;
         })->col(18);
-        $form[] = Elm::input('name','分类名称')->col(18);
-        $form[] = Elm::hidden('type','images')->col(18);
+        $form[] = Elm::input('name', '分类名称')->col(18);
+        $form[] = Elm::hidden('type', 'images')->col(18);
         $form = Form::make_post_form($form, url('saveCategory')->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
@@ -68,20 +68,20 @@ class Images extends AuthController
      * @throws \FormBuilder\Exception\FormBuilderException
      * @throws \Exception
      */
-    public function editCategory($id=0,$pid=0)
+    public function editCategory($id = 0, $pid = 0)
     {
-        if ($id==0) return app("json")->fail("没有选中分类");
+        if ($id == 0) return app("json")->fail("没有选中分类");
         $form = array();
-        $form[] = Elm::select('pid','上级分类',(int)$pid)->options(function (){
+        $form[] = Elm::select('pid', '上级分类', (int)$pid)->options(function () {
             $menu = [];
-            $menu[] = ['label'=>"顶级分类","value"=>0];
+            $menu[] = ['label' => "顶级分类", "value" => 0];
             $list = AttachmentCategory::getCategoryLst();
-            foreach ($list as $value) $menu[] = ['label'=>$value['name'],"value"=>$value['id']];
+            foreach ($list as $value) $menu[] = ['label' => $value['name'], "value" => $value['id']];
             return $menu;
         })->col(18);
-        $form[] = Elm::input('name','分类名称',AttachmentCategory::getNameById($id))->col(18);
-        $form[] = Elm::hidden('type','images')->col(18);
-        $form = Form::make_post_form($form, Url('saveCategory',['id'=>$id])->build());
+        $form[] = Elm::input('name', '分类名称', AttachmentCategory::getNameById($id))->col(18);
+        $form[] = Elm::hidden('type', 'images')->col(18);
+        $form = Form::make_post_form($form, Url('saveCategory', ['id' => $id])->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
@@ -91,25 +91,22 @@ class Images extends AuthController
      * @param string $id
      * @return mixed
      */
-    public function saveCategory($id="")
+    public function saveCategory($id = "")
     {
         $data = Util::postMore([
-            ['pid',0],
-            ['type','images'],
-            ['name','']
+            ['pid', 0],
+            ['type', 'images'],
+            ['name', '']
         ]);
         if ($data['name'] == '') return app("json")->fail("分类名称不能为空");
-        if ($id == "")
-        {
+        if ($id == "") {
             $data['create_user'] = $this->adminId;
             $res = AttachmentCategory::create($data);
-        }
-        else
-        {
+        } else {
             $data['update_user'] = $this->adminId;
-            $res = AttachmentCategory::update($data,['id'=>$id]);
+            $res = AttachmentCategory::update($data, ['id' => $id]);
         }
-        return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败");
     }
 
     /**
@@ -120,8 +117,8 @@ class Images extends AuthController
     public function delCategory($id)
     {
         if ($id == 0) return app("json")->fail("未选择分类");
-        if (Attachment::be($id,"cid")) return app("json")->fail("该分类下有图片不能删除");
-        if (AttachmentCategory::be($id,"pid")) return app("json")->fail("该分类下有子分类不能删除");
+        if (Attachment::be($id, "cid")) return app("json")->fail("该分类下有图片不能删除");
+        if (AttachmentCategory::be($id, "pid")) return app("json")->fail("该分类下有子分类不能删除");
         return AttachmentCategory::del($id) ? app("json")->success("删除成功") : app("json")->fail("删除失败");
     }
 
@@ -131,10 +128,10 @@ class Images extends AuthController
     public function getImageList()
     {
         $where = Util::postMore([
-            ['cid',''],
-            ['type',$this->type],
-            ['page',1],
-            ['limit',12]
+            ['cid', ''],
+            ['type', $this->type],
+            ['page', 1],
+            ['limit', 12]
         ]);
         return app("json")->layui(Attachment::pagination($where));
     }
@@ -149,12 +146,12 @@ class Images extends AuthController
      */
     public function editImage($id)
     {
-        if ($id==0) return app("json")->fail("没有选中图片");
+        if ($id == 0) return app("json")->fail("没有选中图片");
         $image = Attachment::get($id);
         $form = array();
-        $form[] = Elm::select('cid','选中分类',(int)$image['cid'])->options(AttachmentCategory::returnOptions())->col(18);
-        $form[] = Elm::hidden('type','images')->col(18);
-        $form = Form::make_post_form($form, Url('saveImage',['id'=>$id])->build());
+        $form[] = Elm::select('cid', '选中分类', (int)$image['cid'])->options(AttachmentCategory::returnOptions())->col(18);
+        $form[] = Elm::hidden('type', 'images')->col(18);
+        $form = Form::make_post_form($form, Url('saveImage', ['id' => $id])->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
@@ -166,7 +163,7 @@ class Images extends AuthController
      */
     public function saveImage($id)
     {
-        return Attachment::update(['cid'=>$this->request->param('cid')],['id'=>$id]) ? app("json")->success("修改成功",'code') : app("json")->fail("修改失败");
+        return Attachment::update(['cid' => $this->request->param('cid')], ['id' => $id]) ? app("json")->success("修改成功", 'code') : app("json")->fail("修改失败");
     }
 
     /**
@@ -179,19 +176,17 @@ class Images extends AuthController
         if ($id == 0) return app("json")->fail("未选择图片");
         $image = Attachment::get($id);
         try {
-            switch ($image['storage'])
-            {
+            switch ($image['storage']) {
                 case 1:
-                    unlink(app()->getRootPath() . 'public'.$image['path']);
+                    unlink(app()->getRootPath() . 'public' . $image['path']);
                     break;
                 case 2:
-                    QcloudCoService::del(str_replace(system_config("storage_domain"),"",$image['path']));
+                    QcloudCoService::del(str_replace(system_config("storage_domain"), "", $image['path']));
                     break;
             }
             return Attachment::del($id) ? app("json")->success("删除成功") : app("json")->fail("删除失败");
-        }catch (\Exception $e)
-        {
-            return app("json")->fail("删除失败".$e);
+        } catch (\Exception $e) {
+            return app("json")->fail("删除失败" . $e);
         }
     }
 }

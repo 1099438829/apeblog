@@ -11,7 +11,7 @@
     <script type="text/javascript" src="__ADMIN_PATH__js/formbuilder/province_city.js"></script>
     <script type="text/javascript" src="__ADMIN_PATH__js/formbuilder/province_city_area.js"></script>
     <style>
-        .ivu-modal-footer{
+        .ivu-modal-footer {
             display: none;
         }
     </style>
@@ -20,20 +20,20 @@
 <script>
     window.$f = null;
     // 回调
-    formCreate.formSuccess = function(res){
-        setTimeout(function (){
+    formCreate.formSuccess = function (res) {
+        setTimeout(function () {
             parent.location.reload();
         }, 2000);
     };
 
     // 构建表单
     (function () {
-        var create = (function() {
-                var e = function(l, k) {
+        var create = (function () {
+                var e = function (l, k) {
                     return Object.prototype.toString.call(l) === ("[object " + k + "]")
                 };
-                var g = function(k) {
-                    k.forEach(function(n) {
+                var g = function (k) {
+                    k.forEach(function (n) {
                         var m = n.type ? ("" + n.type).toLocaleLowerCase() : ""
                             , l = e(k.children, "Array") ? k.children : [];
                         if ((m === "cascader" || m === "tree") && n.props) {
@@ -51,7 +51,7 @@
                     });
                     return k
                 };
-                var i = function(k, l, m, n) {
+                var i = function (k, l, m, n) {
                     $.ajax({
                         url: k,
                         type: ("" + l).toLocaleUpperCase(),
@@ -59,16 +59,18 @@
                         headers: c,
                         contentType: j,
                         data: m,
-                        success: function(o) {
+                        success: function (o) {
                             n(1, o)
                         },
-                        error: function() {
+                        error: function () {
                             n(0, {})
                         }
                     })
                 };
-                var h = g(<?=$form->parseFormRule()?>)
-                    , c = {}
+                var h = g( < ? = $form->parseFormRule() ?
+            >)
+            ,
+                c = {}
                     , d = {}
                     , j = "<?=$form->getFormContentType()?>"
                     , f = "<?=$form->getAction()?>"
@@ -77,19 +79,19 @@
                 if (!b.$Message && b.$message) {
                     Vue.prototype.$Message = b.$message
                 }
-                return function(l) {
+                return function (l) {
                     if (!l) {
                         l = {}
                     }
                     if (l.el) {
                         d.el = l.el
                     }
-                    d.onSubmit = function(m) {
+                    d.onSubmit = function (m) {
                         k.submitBtnProps({
                             loading: true,
                             disabled: true
                         });
-                        i(f, a, m, function(n, o) {
+                        i(f, a, m, function (n, o) {
                             if (l.callback) {
                                 return l.callback(n, o, k)
                             }
@@ -109,16 +111,16 @@
                     d.global = {
                         upload: {
                             props: {
-                                onExceededSize: function(m) {
+                                onExceededSize: function (m) {
                                     b.$Message.error(m.name + "超出指定大小限制")
                                 },
-                                onFormatError: function() {
+                                onFormatError: function () {
                                     b.$Message.error(file.name + "格式验证失败")
                                 },
-                                onError: function(m) {
+                                onError: function (m) {
                                     b.$Message.error(file.name + "上传失败,(" + m + ")")
                                 },
-                                onSuccess: function(n, m) {
+                                onSuccess: function (n, m) {
                                     if (n.code === 200) {
                                         m.url = n.data.filePath
                                     } else {

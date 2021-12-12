@@ -8,15 +8,16 @@
 // +----------------------------------------------------------------------
 
 namespace app\common\validate;
+
 use think\Validate;
 
 /**
  * 后台菜单验证器
  */
+class Config extends Validate
+{
 
-class Config extends Validate {
-
-    protected $rule =   [
+    protected $rule = [
         'name' => 'require|max:30',
         'title' => 'require|max:50',
         'extra' => 'max:255',
@@ -25,7 +26,7 @@ class Config extends Validate {
         'sort' => 'require|number',
     ];
 
-    protected $message  =   [
+    protected $message = [
         'title.require' => '请输入菜单名称',
         'title.max' => '菜单名称最多不能超过50个字符',
         'extra.max' => '配置值最多不能超过255个字符',
@@ -38,7 +39,7 @@ class Config extends Validate {
 
     //更新排序
     protected $scene = [
-        'sort'  =>  ['sort']
+        'sort' => ['sort']
     ];
 
 }

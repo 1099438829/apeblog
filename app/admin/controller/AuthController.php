@@ -88,8 +88,8 @@ abstract class AuthController extends SystemBasic
         $this->module = App::getInstance()->http->getName();
         $this->controller = un_camelize($this->request->controller());
         $this->action = $this->request->action();
-        $this->auth = explode(",", $this->adminInfo['role_auth']??'');
-        $this->nowAuthId = AdminAuth::getAuthId($this->module,$this->controller,$this->action);
+        $this->auth = explode(",", $this->adminInfo['role_auth'] ?? '');
+        $this->nowAuthId = AdminAuth::getAuthId($this->module, $this->controller, $this->action);
         $this->model = $this->buildModel();
         // 鉴权
         $this->checkAuth();
@@ -105,11 +105,11 @@ abstract class AuthController extends SystemBasic
     protected function checkAuth()
     {
         // 不需要登录
-        if (in_array($this->action,$this->noNeedLogin) || $this->noNeedLogin == ['*'] || $this->noNeedLogin == "*") return true;
+        if (in_array($this->action, $this->noNeedLogin) || $this->noNeedLogin == ['*'] || $this->noNeedLogin == "*") return true;
         // 验证登录
-        if (!self::isActive()) exit($this->failedNotice(lang("未登录"),"/admin/login/login"));
+        if (!self::isActive()) exit($this->failedNotice(lang("未登录"), "/admin/login/login"));
         // 权限验证
-        if ($this->nowAuthId == -1 || in_array($this->nowAuthId,$this->auth)) return true;
+        if ($this->nowAuthId == -1 || in_array($this->nowAuthId, $this->auth)) return true;
         exit($this->failed(lang('没有权限访问!')));
     }
 
@@ -137,11 +137,11 @@ abstract class AuthController extends SystemBasic
     protected function createLog()
     {
         // 不需要登录不能记录日志
-        if (in_array($this->action,$this->noNeedLogin) || $this->noNeedLogin == ['*'] || $this->noNeedLogin == "*") return true;
+        if (in_array($this->action, $this->noNeedLogin) || $this->noNeedLogin == ['*'] || $this->noNeedLogin == "*") return true;
         // 无需记录日志
-        if (in_array($this->action,$this->noNeedLog) || $this->noNeedLog == ['*'] || $this->noNeedLog == "*") return true;
+        if (in_array($this->action, $this->noNeedLog) || $this->noNeedLog == ['*'] || $this->noNeedLog == "*") return true;
         // 有操作权限，记录日志
-        if (in_array($this->nowAuthId,$this->auth)) event("AdminLog",[$this->adminInfo,$this->module,$this->controller,$this->action]);
+        if (in_array($this->nowAuthId, $this->auth)) event("AdminLog", [$this->adminInfo, $this->module, $this->controller, $this->action]);
         return false;
     }
 
@@ -153,7 +153,7 @@ abstract class AuthController extends SystemBasic
     {
         $path = explode(".", $this->request->controller());
         $modelPath = "app\\common\\model"; //全部为common
-        foreach ($path as $v) $modelPath .= "\\".$v;
+        foreach ($path as $v) $modelPath .= "\\" . $v;
         if (class_exists($modelPath)) return app($modelPath);
         return null;
     }

@@ -529,8 +529,8 @@ CREATE TABLE `ape_document_category`  (
 -- ----------------------------
 -- Records of ape_document_category
 -- ----------------------------
-INSERT INTO `ape_document_category` VALUES (1, '编程文章', '', '', 1, 0, 0, '', '', '', 1, 'list_default.html', '', 12, 0, 1636646746);
-INSERT INTO `ape_document_category` VALUES (2, 'php', '', '', 1, 1, 0, '', '', '', 1, 'list_default.html', '', 38, 0, 0);
+INSERT INTO `ape_document_category` VALUES (1, '编程文章', '', '', 1, 0, 0, '', '', '', 1, 'list_detail.html', '', 12, 0, 1636646746);
+INSERT INTO `ape_document_category` VALUES (2, 'php', '', '', 1, 1, 0, '', '', '', 1, 'list_detail.html', '', 38, 0, 0);
 
 -- ----------------------------
 -- Table structure for ape_document_category_content

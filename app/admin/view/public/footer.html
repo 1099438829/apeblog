@@ -4,8 +4,10 @@
 <script type="text/javascript" src="__ADMIN_PATH__js/perfect-scrollbar.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-table/bootstrap-table.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-table/extensions/editable/bootstrap-table-editable.min.js"></script>
+<script type="text/javascript"
+        src="__ADMIN_PATH__js/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+<script type="text/javascript"
+        src="__ADMIN_PATH__js/bootstrap-table/extensions/editable/bootstrap-table-editable.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/main.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-datetimepicker/moment.min.js"></script>
@@ -15,7 +17,7 @@
 <script type="text/javascript" src="__ADMIN_PATH__js/lightyear.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/layer/layer.js"></script>
 <script type="text/javascript">
-    Array.prototype.remove = function(val) {
+    Array.prototype.remove = function (val) {
         var index = this.indexOf(val);
         if (index > -1) {
             this.splice(index, 1);
@@ -28,7 +30,7 @@
      */
     function toArrayList(fields) {
         var f = {};//声明一个对象
-        $.each(fields,function(index,field){
+        $.each(fields, function (index, field) {
             f[field.name] = field.value;
         });
         return f;

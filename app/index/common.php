@@ -258,15 +258,14 @@ function get_document_category_all()
     $documentCategoryList = get_document_category_list();
     $tempArr = array();
     foreach ($documentCategoryList as $item) {
-        if ($item['pid'] == 0){
+        if ($item['pid'] == 0) {
             $tempArr[$item['id']] = $item;
-        }else{
+        } else {
             $tempArr[$item['pid']]['child'][] = $item;
         }
     }
     return $tempArr;
 }
-
 
 
 /**
@@ -360,10 +359,10 @@ function tpl_get_list($orderby, $pageSize, $cid, $type, $table = 'article', $whe
             break;
         case 'tag':
             //读取指定tag的文章
-            $tag = substr(input('t'),0,strpos(input('t'),'.')); //搜索关键词
+            $tag = substr(input('t'), 0, strpos(input('t'), '.')); //搜索关键词
             $tagModel = new \app\common\model\Tag();
-            $tagList = $tagModel->where('name',$tag)->select()->toArray();
-            $documentListModel = $documentListModel->where('a.id', 'in', array_column($tagList,'document_id'));
+            $tagList = $tagModel->where('name', $tag)->select()->toArray();
+            $documentListModel = $documentListModel->where('a.id', 'in', array_column($tagList, 'document_id'));
             break;
     }
     $documentListModel = $documentListModel->order($orderby);
@@ -560,14 +559,14 @@ function tpl_get_friend_link($type, $row)
  */
 function tpl_get_advert($type, $row)
 {
-    $advertList = cache('DATA_ADVERT'.'_'.$type);
+    $advertList = cache('DATA_ADVERT' . '_' . $type);
     if ($advertList === null) {
         if ($type > 0) {
-            $advertList = Db::name('advert')->where('position',$type)->where('status', 1)->order('sort desc')->limit($row)->select();
-        }else{
+            $advertList = Db::name('advert')->where('position', $type)->where('status', 1)->order('sort desc')->limit($row)->select();
+        } else {
             $advertList = Db::name('advert')->where('status', 1)->order('sort desc')->limit($row)->select();
         }
-        cache('DATA_ADVERT'.'_'.$type, $advertList);
+        cache('DATA_ADVERT' . '_' . $type, $advertList);
     }
     $advertListTemp = [];
     foreach ($advertList as $key => $item) {
@@ -657,7 +656,7 @@ function tpl_get_position($dc, $positionList = array())
  * @author 李玉坤
  * @date 2021-12-05 23:54
  */
-function tpl_get_comment_list($id,$type,$pageSize = 10,$orderBy)
+function tpl_get_comment_list($id, $type, $pageSize = 10, $orderBy)
 {
     $commentModel = \app\common\model\Comment::where('status', 1)->order($orderBy);
     switch ($type) {
@@ -673,7 +672,7 @@ function tpl_get_comment_list($id,$type,$pageSize = 10,$orderBy)
     //获取当前请求的请求参数，以确定分页是否要带上这些请求参数
     $query = request()->query();
     if ($query) {
-        $commentModel = $commentModel->paginate( $pageSize,false, ['query' => get_route_query()]);
+        $commentModel = $commentModel->paginate($pageSize, false, ['query' => get_route_query()]);
     } else {
         $commentModel = $commentModel->paginate($pageSize);
     }
@@ -698,9 +697,8 @@ function tpl_get_comment_list($id,$type,$pageSize = 10,$orderBy)
  */
 function get_comment_count($documentId)
 {
-    return \app\common\model\Comment::where('document_id',$documentId)->where('status', 1)->count();
+    return \app\common\model\Comment::where('document_id', $documentId)->where('status', 1)->count();
 }
-
 
 
 /**
@@ -717,32 +715,34 @@ function get_comment_count($documentId)
  */
 function tpl_get_relevant_list($documentId, $row, $table = 'article')
 {
-    $count = Document::where('type',$table)
-    ->where('status', 1)->count();    //获取总记录数
+    $count = Document::where('type', $table)
+        ->where('status', 1)->count();    //获取总记录数
     $id = (new Document())->getPK();
-    $min = Document::where('type',$table)
+    $min = Document::where('type', $table)
         ->where('status', 1)->min($id);    //统计某个字段最小数据
-    if($count < $row){$row = $count;}
+    if ($count < $row) {
+        $row = $count;
+    }
     $i = 1;
     $flag = 0;
     $ary = array();
-    while($i<=$row){
+    while ($i <= $row) {
         $rundnum = rand($min, $count);//抽取随机数
-        if($flag != $rundnum){
+        if ($flag != $rundnum) {
             //过滤重复
-            if(!in_array($rundnum,$ary)){
+            if (!in_array($rundnum, $ary)) {
                 $ary[] = $rundnum;
                 $flag = $rundnum;
-            }else{
+            } else {
                 $i--;
             }
             $i++;
         }
     }
-    $relevantList = Document::where('type',$table)
+    $relevantList = Document::where('type', $table)
         ->where('status', 1)
-        ->where( $id,'<>',$documentId)
-        ->where($id,'in',$ary)
+        ->where($id, '<>', $documentId)
+        ->where($id, 'in', $ary)
         ->limit($row)->select();
     $lists = [];
     foreach ($relevantList as $key => $item) {
@@ -894,7 +894,7 @@ function is_mobile()
  */
 function file_echo_svg($path)
 {
-    $svg = file_get_contents(public_path().$path);
+    $svg = file_get_contents(public_path() . $path);
     print_r($svg);
 }
 
@@ -907,7 +907,7 @@ function file_echo_svg($path)
  */
 function file_load_face($path)
 {
-    $files = scandir(public_path().$path);
+    $files = scandir(public_path() . $path);
     $html = '';
     foreach ($files as $v) {
         /* if(is_file($v)){

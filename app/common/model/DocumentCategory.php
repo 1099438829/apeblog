@@ -4,6 +4,7 @@
 namespace app\common\model;
 
 use think\facade\Db;
+
 /**
  * Class DocumentCategory
  * @package app\admin\model\system
@@ -25,8 +26,8 @@ class DocumentCategory extends BaseModel
     public static function systemPage($where): array
     {
         $model = new self;
-        $model = $model->field(['id','pid','title','sort','status'])->order('sort asc,id asc');
-        if (isset($where['title']) && $where['title'] != '') $model = $model->where("title|id","like","%$where[title]%");
+        $model = $model->field(['id', 'pid', 'title', 'sort', 'status'])->order('sort asc,id asc');
+        if (isset($where['title']) && $where['title'] != '') $model = $model->where("title|id", "like", "%$where[title]%");
         $data = $model->select()->toArray();
         return $data ?: [];
     }
@@ -40,12 +41,12 @@ class DocumentCategory extends BaseModel
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public static function selectByType(int $type = 0,array $ids = [])
+    public static function selectByType(int $type = 0, array $ids = [])
     {
         $model = new self;
-        if (!empty($ids)) $model = $model->where("id","not in", $ids);
-        if ($type != 0) $model = $model->where("type",$type);
-        $model = $model->where("status",1);
+        if (!empty($ids)) $model = $model->where("id", "not in", $ids);
+        if ($type != 0) $model = $model->where("type", $type);
+        $model = $model->where("status", 1);
         $model = $model->field("id,title");
         $data = $model->select();
         return $data ? $data->toArray() : [];

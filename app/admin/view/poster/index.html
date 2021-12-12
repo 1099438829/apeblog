@@ -16,19 +16,25 @@
                             <label for="title">广告名称</label>
                             <div class="input-group">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="title" name="title" placeholder="请输入广告名称">
+                                    <input type="text" class="form-control" id="title" name="title"
+                                           placeholder="请输入广告名称">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="start_time">操作时间</label>
                             <div class="input-group">
-                                <input class="form-control js-datetimepicker" type="text" id="start_time" name="start_time" autocomplete="off" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD" placeholder="开始时间">
+                                <input class="form-control js-datetimepicker" type="text" id="start_time"
+                                       name="start_time" autocomplete="off" data-side-by-side="true" data-locale="zh-cn"
+                                       data-format="YYYY-MM-DD" placeholder="开始时间">
                                 <span class="input-group-addon">~</span>
-                                <input class="form-control js-datetimepicker" type="text" id="end_time" name="end_time" autocomplete="off" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD" placeholder="结束时间">
+                                <input class="form-control js-datetimepicker" type="text" id="end_time" name="end_time"
+                                       autocomplete="off" data-side-by-side="true" data-locale="zh-cn"
+                                       data-format="YYYY-MM-DD" placeholder="结束时间">
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-success" style="margin: -10px 0 0 10px;" id="search">搜索</button>
+                        <button type="submit" class="btn btn-success" style="margin: -10px 0 0 10px;" id="search">搜索
+                        </button>
                     </form>
                 </div>
             </div>
@@ -37,10 +43,12 @@
             <div class="card">
                 <div class="card-toolbar clearfix">
                     <div id="toolbar" class="toolbar-btn-action">
-                        <button id="btn_add" type="button" class="btn btn-primary m-r-5" onclick="iframe.createIframe('添加广告','/admin/poster/add')">
+                        <button id="btn_add" type="button" class="btn btn-primary m-r-5"
+                                onclick="iframe.createIframe('添加广告','/admin/poster/add')">
                             <span class="mdi mdi-plus" aria-hidden="true"></span>新增
                         </button>
-                        <a class="btn btn-warning" href="#!" onclick="delSelect()"><i class="mdi mdi-window-close"></i> 删除</a>
+                        <a class="btn btn-warning" href="#!" onclick="delSelect()"><i class="mdi mdi-window-close"></i>
+                            删除</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -56,7 +64,7 @@
         classes: 'table table-bordered table-hover table-striped',
         url: '/admin/poster/Lst',
         method: 'post',
-        dataType : 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
+        dataType: 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
         uniqueId: 'id',
         idField: 'id',             // 每行的唯一标识字段
         toolbar: '#toolbar',       // 工具按钮容器
@@ -69,7 +77,7 @@
             };
         },
         pagination: true,
-        queryParams: function(params) {
+        queryParams: function (params) {
             let temp = toArrayList($(".searchForm").serializeArray());
             temp['limit'] = params.limit;
             temp['page'] = (params.offset / params.limit) + 1;
@@ -81,35 +89,35 @@
         pageList: [10, 20, 50, 100],
         columns: [{
             checkbox: true,    // 是否显示复选框
-        },{
+        }, {
             field: 'id',
             title: 'ID'
-        },{
+        }, {
             field: 'title',
             title: '广告名称'
-        },{
+        }, {
             field: 'image',
             title: '广告图片',
-            formatter:function (value,row,index) {
-                let html ='<img src="'+value+'" alt="" width="50px;">';
+            formatter: function (value, row, index) {
+                let html = '<img src="' + value + '" alt="" width="50px;">';
                 return html;
             }
-        },{
+        }, {
             field: 'position',
             title: '广告图片',
-            formatter:function (value,row,index) {
-              switch (value) {
-                case 1:
-                    return '顶部页签';
-                case 2:
-                    return '右侧广告位';
-                case 3:
-                    return '文章页面';
-                default:
-                    return '顶部页签';
-              }
+            formatter: function (value, row, index) {
+                switch (value) {
+                    case 1:
+                        return '顶部页签';
+                    case 2:
+                        return '右侧广告位';
+                    case 3:
+                        return '文章页面';
+                    default:
+                        return '顶部页签';
+                }
             }
-        },{
+        }, {
             field: 'url',
             title: '链接地址',
         }, {
@@ -118,10 +126,10 @@
         }, {
             field: 'operate',
             title: '操作',
-            formatter:operateFormatter,
+            formatter: operateFormatter,
             events: {
                 'click .btn-edit': function (event, value, row, index) {
-                    iframe.createIframe('修改广告','/admin/poster/edit?id='+row.id)
+                    iframe.createIframe('修改广告', '/admin/poster/edit?id=' + row.id)
                 },
                 'click .btn-del': function (event, value, row, index) {
                     $.alert({
@@ -131,10 +139,12 @@
                             confirm: {
                                 text: '确认',
                                 btnClass: 'btn-primary',
-                                action: function(){
-                                    $.post(url="/admin/poster/del",data={"id":row.id},function (res) {
-                                        if (res.status == 200) {parent.lightyear.notify('删除成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');$("#tb_departments").bootstrapTable('refresh');}
-                                        else parent.lightyear.notify('删除失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                                action: function () {
+                                    $.post(url = "/admin/poster/del", data = {"id": row.id}, function (res) {
+                                        if (res.status == 200) {
+                                            parent.lightyear.notify('删除成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                                            $("#tb_departments").bootstrapTable('refresh');
+                                        } else parent.lightyear.notify('删除失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                                     });
                                 }
                             },
@@ -146,7 +156,7 @@
                 }
             }
         }],
-        onLoadSuccess: function(data){
+        onLoadSuccess: function (data) {
             $("[data-toggle='tooltip']").tooltip();
         }
     });
@@ -155,11 +165,11 @@
     $("#search").click(function () {
         let start_time = $('#start_time').val();
         let end_time = $('#end_time').val();
-        if(start_time && end_time && start_time > end_time ){
+        if (start_time && end_time && start_time > end_time) {
             alert('开始时间不能大于结束时间');
             return false;
         }
-        $("#tb_departments").bootstrapTable('refresh',{query:{page:1},pageNumber:1});
+        $("#tb_departments").bootstrapTable('refresh', {query: {page: 1}, pageNumber: 1});
     });
 
     // 操作按钮
@@ -180,7 +190,7 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/poster/del",data={id:id},function (res) {
+                        $.post("/admin/poster/del", data = {id: id}, function (res) {
                             if (res.status == 200 || res.code == 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                             location.reload();
@@ -198,12 +208,11 @@
     function delSelect() {
         var checkID = "";
         var selectedItem = $('#tb_departments').bootstrapTable('getSelections');
-        if (selectedItem=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
-        for (var i = 0 ; i<  selectedItem.length; i++)
-        {
-            checkID += selectedItem[i]['id']+",";
+        if (selectedItem == "") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        for (var i = 0; i < selectedItem.length; i++) {
+            checkID += selectedItem[i]['id'] + ",";
         }
-        if (checkID=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        if (checkID == "") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         $.confirm({
             title: '重要提醒!',
             content: '选中项删除后将不可恢复，请谨慎操作!',
@@ -213,9 +222,11 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/poster/del",data={id:checkID},function (res) {
-                            if (res.status == 200 || res.code == 200) { lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
-                            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        $.post("/admin/poster/del", data = {id: checkID}, function (res) {
+                            if (res.status == 200 || res.code == 200) {
+                                lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                                location.reload();
+                            } else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                         })
                     }
                 },

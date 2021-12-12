@@ -2,12 +2,16 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
     <title>首页 - {:system_config("title")}后台管理系统</title>
-    <link rel="icon" href="{:system_config("favicon")}" type="image/ico">
-	<meta name="keywords" content="{:system_config("keywords")}">
-	<meta name="description" content="{:system_config("description")}">
-	<meta name="author" content="{:system_config("author")}">
+    <link rel="icon" href="{:system_config(" favicon
+    ")}" type="image/ico">
+    <meta name="keywords" content="{:system_config(" keywords
+    ")}">
+    <meta name="description" content="{:system_config(" description
+    ")}">
+    <meta name="author" content="{:system_config(" author
+    ")}">
     <link href="__ADMIN_PATH__css/bootstrap.min.css" rel="stylesheet">
     <link href="__ADMIN_PATH__css/materialdesignicons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="__ADMIN_PATH__js/bootstrap-multitabs/multitabs.min.css">
@@ -15,10 +19,11 @@
     <link href="__ADMIN_PATH__css/style.min.css" rel="stylesheet">
     <link rel="stylesheet" href="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.css">
     <style>
-        body{
+        body {
             opacity: 0;
             animation: page-fade-in 1s forwards;
         }
+
         @keyframes page-fade-in {
             0% {
                 opacity: 0
@@ -37,7 +42,9 @@
         <aside class="lyear-layout-sidebar">
             <!-- logo -->
             <div id="logo" class="sidebar-header">
-                <a href="/admin/index/index.html"><img src="__ADMIN_PATH__images/logo-sidebar.png" title="{:system_config("title")}后台管理系统" alt="{:system_config("title")}后台管理系统" /></a>
+                <a href="/admin/index/index.html"><img src="__ADMIN_PATH__images/logo-sidebar.png"
+                                                       title="{:system_config(" title")}后台管理系统"
+                    alt="{:system_config("title")}后台管理系统" /></a>
             </div>
             <div class="lyear-layout-sidebar-scroll">
                 <nav class="sidebar-main">
@@ -50,21 +57,24 @@
                                 {foreach $vo['children'] as $key=>$val}
                                 {if !empty($val['children'])}
                                 <li class="nav-item nav-item-has-subnav">
-                                    <a href="javascript:void(0)"><i class="{$val.icon}"></i> <span>{$val.title}</span></a>
+                                    <a href="javascript:void(0)"><i class="{$val.icon}"></i>
+                                        <span>{$val.title}</span></a>
                                     <ul class="nav nav-subnav">
                                         {foreach $val['children'] as $key2=>$val2}
-                                        <li><a class="multitabs" href="{$val2.href}">{$val2.title}</a> </li>
+                                        <li><a class="multitabs" href="{$val2.href}">{$val2.title}</a></li>
                                         {/foreach}
                                     </ul>
                                 </li>
                                 {else /}
-                                <li><a class="multitabs" href="{$val.href}{if $val.params}{$val.params}{/if}">{$val.title}</a> </li>
+                                <li><a class="multitabs" href="{$val.href}{if $val.params}{$val.params}{/if}">{$val.title}</a>
+                                </li>
                                 {/if}
                                 {/foreach}
                             </ul>
                         </li>
                         {else /}
-                        <li class="nav-item"> <a class="multitabs" href="{$vo.href}"><i class="{$vo.icon}"></i> <span>{$vo.title}</span></a> </li>
+                        <li class="nav-item"><a class="multitabs" href="{$vo.href}"><i class="{$vo.icon}"></i> <span>{$vo.title}</span></a>
+                        </li>
                         {/if}
                         {/volist}
                     </ul>
@@ -89,14 +99,18 @@
                     <ul class="topbar-right">
                         <li class="dropdown dropdown-profile">
                             <a href="javascript:void(0)" data-toggle="dropdown">
-                                <img class="img-avatar img-avatar-48 m-r-10" src="{$adminInfo.avatar}" alt="{$adminInfo.nickname}" style="width: 32px;height: 32px;"/>
+                                <img class="img-avatar img-avatar-48 m-r-10" src="{$adminInfo.avatar}"
+                                     alt="{$adminInfo.nickname}" style="width: 32px;height: 32px;"/>
                                 <span>{$adminInfo.nickname} <span class="caret"></span></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                <li> <a class="multitabs" data-url="/admin/admin/profile" href="javascript:void(0)"><i class="mdi mdi-account"></i> 个人信息</a> </li>
-                                <li> <a class="multitabs" data-url="/admin/admin/pwd" href="javascript:void(0)"><i class="mdi mdi-lock-outline"></i> 修改密码</a> </li>
+                                <li><a class="multitabs" data-url="/admin/admin/profile" href="javascript:void(0)"><i
+                                        class="mdi mdi-account"></i> 个人信息</a></li>
+                                <li><a class="multitabs" data-url="/admin/admin/pwd" href="javascript:void(0)"><i
+                                        class="mdi mdi-lock-outline"></i> 修改密码</a></li>
                                 <li class="divider"></li>
-                                <li> <a href="/admin/login/logout.html"><i class="mdi mdi-logout-variant"></i> 退出登录</a> </li>
+                                <li><a href="/admin/login/logout.html"><i class="mdi mdi-logout-variant"></i> 退出登录</a>
+                                </li>
                             </ul>
                         </li>
                         <!--切换主题配色-->
@@ -225,13 +239,17 @@
                                         {volist name="message.data" id="vo"}
                                         <li>
                                             <a data-url="/admin/admin_notify/index" data-title="我的消息" class="multitabs">
-                                                {if $vo.type=='timer'}<i class="mdi mdi-timer-sand-empty text-primary"></i>{elseif $vo.type=='system'/}<i class="mdi mdi-access-point text-primary"></i>{else/}<i class="mdi mdi-timer-sand text-primary"></i>{/if} {$vo.title}
+                                                {if $vo.type=='timer'}<i
+                                                    class="mdi mdi-timer-sand-empty text-primary"></i>{elseif
+                                                $vo.type=='system'/}<i class="mdi mdi-access-point text-primary"></i>{else/}<i
+                                                    class="mdi mdi-timer-sand text-primary"></i>{/if} {$vo.title}
                                             </a>
                                         </li>
                                         {/volist}
                                     </ul>
                                 </li>
-                                <li class="text-center"><a data-url="/admin/adminNotify/index" class="multitabs" style="cursor: pointer;">我的消息</a></li>
+                                <li class="text-center"><a data-url="/admin/adminNotify/index" class="multitabs"
+                                                           style="cursor: pointer;">我的消息</a></li>
                             </ul>
                         </li>
                         <!--end 消息-->

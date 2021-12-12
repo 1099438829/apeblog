@@ -8,15 +8,16 @@
 // +----------------------------------------------------------------------
 
 namespace app\common\validate;
+
 use think\Validate;
 
 /**
  * 后台菜单验证器
  */
+class AdminMenu extends Validate
+{
 
-class AdminMenu extends Validate {
-
-    protected $rule =   [
+    protected $rule = [
         'title' => 'require|max:50',
         'url' => 'max:255',
         'pid' => 'require|number',
@@ -24,7 +25,7 @@ class AdminMenu extends Validate {
         'is_dev' => 'require|number',
     ];
 
-    protected $message  =   [
+    protected $message = [
         'title.require' => '请输入菜单名称',
         'title.max' => '菜单名称最多不能超过50个字符',
         'url.max' => '链接地址最多不能超过50个字符',
@@ -38,7 +39,7 @@ class AdminMenu extends Validate {
 
     //更新排序
     protected $scene = [
-        'sort'  =>  ['sort']
+        'sort' => ['sort']
     ];
 
 }

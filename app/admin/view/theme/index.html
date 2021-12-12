@@ -14,12 +14,13 @@
                 <div class="card-header"><h4>{$vo.title}</h4></div>
                 <div class="card-body clearfix lyear-uploads-pic">
                     <figure>
-                    <img src="{$vo.preview_file}" alt="{$vo.title}">
-                    <figcaption class="pic-tool">
-                        {if !$vo.is_default}
-                        <a class="btn btn-round btn-square btn-primary btn-set" data-value="{$vo.dir_name}" href="#!" title="启用"><i class="mdi mdi-settings"></i></a>
-                        {/if}
-                    </figcaption>
+                        <img src="{$vo.preview_file}" alt="{$vo.title}">
+                        <figcaption class="pic-tool">
+                            {if !$vo.is_default}
+                            <a class="btn btn-round btn-square btn-primary btn-set" data-value="{$vo.dir_name}"
+                               href="#!" title="启用"><i class="mdi mdi-settings"></i></a>
+                            {/if}
+                        </figcaption>
                     </figure>
                 </div>
             </div>
@@ -39,9 +40,13 @@
             lightyear.notify('主题值不能为空', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
             return false;
         }
-        $.post(url="/admin/theme/change_theme",{value:value},function (res) {
-            if (res.code == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');setTimeout(function () {location.reload();},2000)}
-            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+        $.post(url = "/admin/theme/change_theme", {value: value}, function (res) {
+            if (res.code == 200) {
+                lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                setTimeout(function () {
+                    location.reload();
+                }, 2000)
+            } else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
         });
         return true;
     })

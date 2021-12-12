@@ -238,17 +238,17 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.1.7",
-            "version_normalized": "1.1.7.0",
+            "version": "1.1.9",
+            "version_normalized": "1.1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "3ca8f158ee21efa4bbd4f74bea5730c9b9261e2d"
+                "reference": "094defdb4a7001845300334e7c1ee2335925ef99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/3ca8f158ee21efa4bbd4f74bea5730c9b9261e2d",
-                "reference": "3ca8f158ee21efa4bbd4f74bea5730c9b9261e2d",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/094defdb4a7001845300334e7c1ee2335925ef99",
+                "reference": "094defdb4a7001845300334e7c1ee2335925ef99",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -284,7 +284,7 @@
                 "spatie/flysystem-dropbox": "Allows you to use Dropbox storage",
                 "srmklive/flysystem-dropbox-v2": "Allows you to use Dropbox storage for PHP 5 applications"
             },
-            "time": "2021-11-25T19:40:58+00:00",
+            "time": "2021-12-09T09:40:50+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -329,7 +329,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/1.1.7"
+                "source": "https://github.com/thephpleague/flysystem/tree/1.1.9"
             },
             "funding": [
                 {
@@ -922,17 +922,17 @@
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v5.3.11",
-            "version_normalized": "5.3.11.0",
+            "version": "v5.4.1",
+            "version_normalized": "5.4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "d1e7059ebeb0b8f9fe5eb5b26eacd2e3c1f371cc"
+                "reference": "5dad3780023a707f4c24beac7d57aead85c1ce3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/d1e7059ebeb0b8f9fe5eb5b26eacd2e3c1f371cc",
-                "reference": "d1e7059ebeb0b8f9fe5eb5b26eacd2e3c1f371cc",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/5dad3780023a707f4c24beac7d57aead85c1ce3c",
+                "reference": "5dad3780023a707f4c24beac7d57aead85c1ce3c",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -943,20 +943,20 @@
             },
             "require": {
                 "php": ">=7.2.5",
-                "symfony/deprecation-contracts": "^2.1",
+                "symfony/deprecation-contracts": "^2.1|^3",
                 "symfony/polyfill-mbstring": "~1.1",
                 "symfony/polyfill-php80": "^1.16"
             },
             "require-dev": {
                 "predis/predis": "~1.0",
-                "symfony/cache": "^4.4|^5.0",
-                "symfony/expression-language": "^4.4|^5.0",
-                "symfony/mime": "^4.4|^5.0"
+                "symfony/cache": "^4.4|^5.0|^6.0",
+                "symfony/expression-language": "^4.4|^5.0|^6.0",
+                "symfony/mime": "^4.4|^5.0|^6.0"
             },
             "suggest": {
                 "symfony/mime": "To use the file extension guesser"
             },
-            "time": "2021-11-04T16:37:19+00:00",
+            "time": "2021-12-09T12:46:57+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -984,7 +984,7 @@
             "description": "Defines an object-oriented layer for the HTTP specification",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/http-foundation/tree/v5.3.11"
+                "source": "https://github.com/symfony/http-foundation/tree/v5.4.1"
             },
             "funding": [
                 {
@@ -1613,17 +1613,17 @@
         },
         {
             "name": "topthink/think-orm",
-            "version": "v2.0.44",
-            "version_normalized": "2.0.44.0",
+            "version": "v2.0.45",
+            "version_normalized": "2.0.45.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-orm.git",
-                "reference": "5d3d5c1ebf8bfccf34bacd90edb42989b16ea409"
+                "reference": "3dcf9af447b048103093840833e8c74ab849152f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-orm/zipball/5d3d5c1ebf8bfccf34bacd90edb42989b16ea409",
-                "reference": "5d3d5c1ebf8bfccf34bacd90edb42989b16ea409",
+                "url": "https://api.github.com/repos/top-think/think-orm/zipball/3dcf9af447b048103093840833e8c74ab849152f",
+                "reference": "3dcf9af447b048103093840833e8c74ab849152f",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1643,7 +1643,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^7|^8|^9.5"
             },
-            "time": "2021-07-21T02:22:31+00:00",
+            "time": "2021-11-30T14:31:05+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1671,7 +1671,7 @@
             ],
             "support": {
                 "issues": "https://github.com/top-think/think-orm/issues",
-                "source": "https://github.com/top-think/think-orm/tree/v2.0.44"
+                "source": "https://github.com/top-think/think-orm/tree/v2.0.45"
             },
             "install-path": "../topthink/think-orm"
         },

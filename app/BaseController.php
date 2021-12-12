@@ -1,5 +1,5 @@
 <?php
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace app;
 
@@ -41,11 +41,11 @@ abstract class BaseController
     /**
      * 构造方法
      * @access public
-     * @param  App  $app  应用对象
+     * @param App $app 应用对象
      */
     public function __construct(App $app)
     {
-        $this->app     = $app;
+        $this->app = $app;
         $this->request = $this->app->request;
 
         // 控制器初始化
@@ -54,15 +54,16 @@ abstract class BaseController
 
     // 初始化
     protected function initialize()
-    {}
+    {
+    }
 
     /**
      * 验证数据
      * @access protected
-     * @param  array        $data     数据
-     * @param  string|array $validate 验证器名或者验证规则数组
-     * @param  array        $message  提示信息
-     * @param  bool         $batch    是否批量验证
+     * @param array $data 数据
+     * @param string|array $validate 验证器名或者验证规则数组
+     * @param array $message 提示信息
+     * @param bool $batch 是否批量验证
      * @return array|string|true
      * @throws ValidateException
      */
@@ -77,7 +78,7 @@ abstract class BaseController
                 [$validate, $scene] = explode('.', $validate);
             }
             $class = false !== strpos($validate, '\\') ? $validate : $this->app->parseClass('validate', $validate);
-            $v     = new $class();
+            $v = new $class();
             if (!empty($scene)) {
                 $v->scene($scene);
             }
@@ -95,17 +96,17 @@ abstract class BaseController
 
     public function __call($method, $args)
     {
-        return json(['status'=>'01','msg'=>'方法不存在']);
+        return json(['status' => '01', 'msg' => '方法不存在']);
     }
 
     /**
      * 操作成功跳转的快捷方法
      * @access protected
-     * @param  mixed     $msg 提示信息
-     * @param  string    $url 跳转的URL地址
-     * @param  mixed     $data 返回的数据
-     * @param  integer   $wait 跳转等待时间
-     * @param  array     $header 发送的Header信息
+     * @param mixed $msg 提示信息
+     * @param string $url 跳转的URL地址
+     * @param mixed $data 返回的数据
+     * @param integer $wait 跳转等待时间
+     * @param array $header 发送的Header信息
      * @return void
      */
     protected function success($msg = '', string $url = null, $data = '', int $wait = 3, array $header = [])
@@ -118,14 +119,14 @@ abstract class BaseController
 
         $result = [
             'code' => 1,
-            'msg'  => $msg,
+            'msg' => $msg,
             'data' => $data,
-            'url'  => $url,
+            'url' => $url,
             'wait' => $wait,
         ];
 
         $type = $this->getResponseType();
-        if ($type == 'html'){
+        if ($type == 'html') {
             $response = view(config('app.dispatch_success_tmpl'), $result);
         } else if ($type == 'json') {
             $response = json($result);
@@ -137,11 +138,11 @@ abstract class BaseController
     /**
      * 操作错误跳转的快捷方法
      * @access protected
-     * @param  mixed     $msg 提示信息
-     * @param  string    $url 跳转的URL地址
-     * @param  mixed     $data 返回的数据
-     * @param  integer   $wait 跳转等待时间
-     * @param  array     $header 发送的Header信息
+     * @param mixed $msg 提示信息
+     * @param string $url 跳转的URL地址
+     * @param mixed $data 返回的数据
+     * @param integer $wait 跳转等待时间
+     * @param array $header 发送的Header信息
      * @return void
      */
     protected function error($msg = '', string $url = null, $data = '', int $wait = 3, array $header = [])
@@ -154,14 +155,14 @@ abstract class BaseController
 
         $result = [
             'code' => 0,
-            'msg'  => $msg,
+            'msg' => $msg,
             'data' => $data,
-            'url'  => $url,
+            'url' => $url,
             'wait' => $wait,
         ];
 
         $type = $this->getResponseType();
-        if ($type == 'html'){
+        if ($type == 'html') {
             $response = view(config('app.dispatch_success_tmpl'), $result);
         } else if ($type == 'json') {
             $response = json($result);
@@ -203,7 +204,8 @@ abstract class BaseController
      * 页面
      * @param mixed ...$args
      */
-    protected function redirect(...$args){
+    protected function redirect(...$args)
+    {
         throw new HttpResponseException(redirect(...$args));
     }
 }

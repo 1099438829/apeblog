@@ -27,12 +27,12 @@ class InvitationCode extends BaseModel
     public static function systemPage($where): array
     {
         $model = new self;
-        $model = $model->order('id','desc');
+        $model = $model->order('id', 'desc');
         if (isset($where['code']) && $where['code'] !== '') $model->where('code', "like", "%$where[code]%");
         $count = self::counts($model);
-        if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'],(int)$where['limit']);
+        if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'], (int)$where['limit']);
         $data = $model->select();
         if ($data) $data = $data->toArray();
-        return compact('data','count');
+        return compact('data', 'count');
     }
 }

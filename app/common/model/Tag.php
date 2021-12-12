@@ -24,16 +24,16 @@ class Tag extends BaseModel
     public static function systemPage($where): array
     {
         $model = new self;
-        if ($where['name'] != '') $model = $model->where("title|url","like","%$where[name]%");
-        if ($where['document_id'] != '') $model = $model->where("document_id",$where['document_id']);
-        if ($where['start_time'] != '') $model = $model->where("create_time",">",strtotime($where['start_time']." 00:00:00"));
-        if ($where['end_time'] != '') $model = $model->where("create_time","<", strtotime($where['end_time']." 23:59:59"));
+        if ($where['name'] != '') $model = $model->where("title|url", "like", "%$where[name]%");
+        if ($where['document_id'] != '') $model = $model->where("document_id", $where['document_id']);
+        if ($where['start_time'] != '') $model = $model->where("create_time", ">", strtotime($where['start_time'] . " 00:00:00"));
+        if ($where['end_time'] != '') $model = $model->where("create_time", "<", strtotime($where['end_time'] . " 23:59:59"));
         $count = self::counts($model);
-        if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'],(int)$where['limit']);
-        $data = $model->select()->each(function ($item){
+        if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'], (int)$where['limit']);
+        $data = $model->select()->each(function ($item) {
         });
         if ($data) $data = $data->toArray();
-        return compact('data','count');
+        return compact('data', 'count');
     }
 
     /**
@@ -46,14 +46,15 @@ class Tag extends BaseModel
      * @author 李玉坤
      * @date 2021-11-08 0:53
      */
-    public function createTags($tags,$document_id,$user_id){
-        if (!is_array($tags)){
-            $tags = explode(',',$tags);
+    public function createTags($tags, $document_id, $user_id)
+    {
+        if (!is_array($tags)) {
+            $tags = explode(',', $tags);
         }
         $saveAll = [];
-        foreach ($tags as $tag){
+        foreach ($tags as $tag) {
             //先删除原有的数据
-            $this->where( 'document_id',$document_id)->delete();
+            $this->where('document_id', $document_id)->delete();
             $saveAll[] = [
                 'name' => $tag,
                 'document_id' => $document_id,
@@ -62,7 +63,6 @@ class Tag extends BaseModel
         }
         return $this->saveAll($saveAll);
     }
-
 
 
     /**
@@ -77,20 +77,20 @@ class Tag extends BaseModel
      */
     public static function getList($where): array
     {
-        $list =  cache('index:tagList');
-        if ($list){
-            return json_decode($list,true);
-        }else{
+        $list = cache('index:tagList');
+        if ($list) {
+            return json_decode($list, true);
+        } else {
             $tagList = self::systemPage($where);
             $list = [];
-            foreach ($tagList['data'] as $tag){
+            foreach ($tagList['data'] as $tag) {
                 $list[] = [
                     "text" => $tag['name'],
-                    "href"  => url("/index/article/tag?t=".$tag['name'])->build()
+                    "href" => url("/index/article/tag?t=" . $tag['name'])->build()
                 ];
             }
-            if ($list){
-                cache('index:tagList',json_encode($list),24*60*60);
+            if ($list) {
+                cache('index:tagList', json_encode($list), 24 * 60 * 60);
             }
         }
         return $list;

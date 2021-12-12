@@ -8,20 +8,21 @@
 // +----------------------------------------------------------------------
 
 namespace app\common\validate;
+
 use think\Validate;
 
 /**
  * 后台菜单验证器
  */
+class AdminAuthGroup extends Validate
+{
 
-class AdminAuthGroup extends Validate {
-
-    protected $rule =   [
+    protected $rule = [
         'title' => 'require|max:20',
         'description' => 'max:80',
     ];
 
-    protected $message  =   [
+    protected $message = [
         'title.require' => '请输入用户组名称!',
         'title.max' => '用户组名称最多输入20个字符',
         'remark.max' => '描述信息最多输入80个字符',

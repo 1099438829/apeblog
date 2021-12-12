@@ -2,12 +2,16 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
     <title>ICON - {:system_config("title")}后台管理系统</title>
-    <link rel="icon" href="{:system_config("favicon")}" type="image/ico">
-    <meta name="keywords" content="{:system_config("keywords")}">
-    <meta name="description" content="{:system_config("description")}">
-    <meta name="author" content="{:system_config("author")}">
+    <link rel="icon" href="{:system_config(" favicon
+    ")}" type="image/ico">
+    <meta name="keywords" content="{:system_config(" keywords
+    ")}">
+    <meta name="description" content="{:system_config(" description
+    ")}">
+    <meta name="author" content="{:system_config(" author
+    ")}">
     <link href="__ADMIN_PATH__css/bootstrap.min.css" rel="stylesheet">
     <link href="__ADMIN_PATH__css/materialdesignicons.min.css" rel="stylesheet">
     <link href="__ADMIN_PATH__css/style.min.css" rel="stylesheet">
@@ -25,9 +29,11 @@
             -moz-column-gap: 20px;
             column-gap: 20px;
         }
+
         .example-icons div {
             line-height: 3em;
         }
+
         .example-icons div span {
             cursor: pointer;
             font-size: 14px;
@@ -38,14 +44,17 @@
             vertical-align: middle;
             white-space: nowrap;
         }
+
         .example-icons div code:hover,
         .example-icons div span:hover,
         .example-icons div i:hover {
             color: #33cabb;
         }
+
         .example-icons div code:hover {
             border-color: #33cabb;
         }
+
         .example-icons div code {
             border: 1px solid #DDD;
             width: 46px;
@@ -58,6 +67,7 @@
             line-height: 24px;
             cursor: pointer;
         }
+
         .example-icons div i {
             display: inline-block;
             width: 32px;
@@ -67,6 +77,7 @@
             cursor: pointer;
             line-height: 24px;
         }
+
         .example-icons .mdi:before {
             font-size: 24px;
         }
@@ -2152,18 +2163,18 @@
         var className = $(this).find('i').get(0).className;
         if (className) {
             console.log(className);
-            parent.$f.changeField(parentinputname,className);
+            parent.$f.changeField(parentinputname, className);
             parent.$f.closeModal(parentinputname);
         }
     });
 
     //搜索图标
-    $("#search").on('input',function () {
+    $("#search").on('input', function () {
         var keyword = $(this).val();
-        if(keyword){
+        if (keyword) {
             $(".example-icons div i").hide();
-            $("i[class*='"+keyword+"']").show();
-        }else{
+            $("i[class*='" + keyword + "']").show();
+        } else {
             $(".example-icons div i").show();
         }
     });

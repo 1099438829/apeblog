@@ -22,13 +22,12 @@ class AdminNotify extends BaseModel
     public static function systemPage(array $where)
     {
         $model = new self;
-        if ($where['start_time'] != "" && $where['end_time'] != "")
-        {
-            $model = $model->where("create_time","between",[strtotime($where['start_time']." 00:00:00"),strtotime($where['end_time']." 23:59:59")]);
+        if ($where['start_time'] != "" && $where['end_time'] != "") {
+            $model = $model->where("create_time", "between", [strtotime($where['start_time'] . " 00:00:00"), strtotime($where['end_time'] . " 23:59:59")]);
         }
-        if ($where['title'] != '') $model = $model->where("title|content","like","%$where[title]%");
-        if ($where['is_read'] != '') $model = $model->where("is_read",$where['is_read']);
-        if ($where['aid'] != '') $model = $model->where("aid",$where['aid']);
+        if ($where['title'] != '') $model = $model->where("title|content", "like", "%$where[title]%");
+        if ($where['is_read'] != '') $model = $model->where("is_read", $where['is_read']);
+        if ($where['aid'] != '') $model = $model->where("aid", $where['aid']);
         $model = $model->order("is_read");
         $model = $model->order("create_time desc");
         return $model->paginate(10)->appends($where);
@@ -55,12 +54,12 @@ class AdminNotify extends BaseModel
     public static function pageList(int $num)
     {
         $model = new self;
-        $model = $model->where("is_read",0);
+        $model = $model->where("is_read", 0);
         $count = self::counts($model);
         $model = $model->order("create_time desc");
-        $model = $model->page(1,$num);
+        $model = $model->page(1, $num);
         $data = $model->select();
         if ($data) $data = $data->toArray();
-        return compact("data","count");
+        return compact("data", "count");
     }
 }

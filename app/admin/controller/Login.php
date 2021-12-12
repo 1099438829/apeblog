@@ -5,7 +5,7 @@ namespace app\admin\controller;
 
 use app\common\model\Admin;
 use app\common\model\Admin as adminModel;
-use app\admin\service\UtilService as Util;
+use app\admin\extend\Util as Util;
 
 class Login extends AuthController
 {
@@ -13,7 +13,7 @@ class Login extends AuthController
      * 无需登录
      * @var array
      */
-    protected $noNeedLogin = ['login','register','forget','captcha','verify'];
+    protected $noNeedLogin = ['login', 'register', 'forget', 'captcha', 'verify'];
 
     /**
      * 登录
@@ -34,12 +34,12 @@ class Login extends AuthController
      */
     public function verify()
     {
-        list($account,$pwd,$verify) = Util::postMore(['account','pwd','verify'],null,true);
+        list($account, $pwd, $verify) = Util::postMore(['account', 'pwd', 'verify'], null, true);
         if (empty($account) || empty($pwd)) return app("json")->fail("账号、密码和验证码不能为空！");
         // 验证码验证
         if (!captcha_check($verify)) return app("json")->fail("验证码不正确！");
         // 验证登录
-        if (!adminModel::login($account,$pwd)) return app("json")->fail("登录失败！");
+        if (!adminModel::login($account, $pwd)) return app("json")->fail("登录失败！");
         return app("json")->success("登录成功！");
     }
 
@@ -75,7 +75,7 @@ class Login extends AuthController
      */
     public function logout()
     {
-        return Admin::clearLoginInfo() ? $this->successfulNotice("操作成功","/admin/login/login") : $this->failedNotice("操作失败","/admin/index/index");
+        return Admin::clearLoginInfo() ? $this->successfulNotice("操作成功", "/admin/login/login") : $this->failedNotice("操作失败", "/admin/index/index");
     }
 
     /**

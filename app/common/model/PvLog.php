@@ -1,5 +1,7 @@
 <?php
+
 namespace app\common\model;
+
 use app\common\model\UrlLog as UrlLogModel;
 use app\common\model\UvLog as UvLogModel;
 
@@ -8,8 +10,9 @@ use app\common\model\UvLog as UvLogModel;
  * Class {$TABLE.Name}
  * @package app\common\model
  */
-class PvLog extends BaseModel {
-    
+class PvLog extends BaseModel
+{
+
     //自动时间戳
     protected $autoWriteTimestamp = true;
 
@@ -20,23 +23,24 @@ class PvLog extends BaseModel {
         //转换为时间戳
         $shijianchuo = strtotime($dateinfo);
         //删除pv
-        $this->where('create_time','<',$shijianchuo)->delete();
+        $this->where('create_time', '<', $shijianchuo)->delete();
         //删除url
-        $urlLogModel=new UrlLogModel();
-        $urlLogModel->where('create_time','<',$shijianchuo)->delete();
+        $urlLogModel = new UrlLogModel();
+        $urlLogModel->where('create_time', '<', $shijianchuo)->delete();
         //删除uv
-        $uvLogModel=new UvLogModel();
-        $uvLogModel->where('create_time','<',$shijianchuo)->delete();
+        $uvLogModel = new UvLogModel();
+        $uvLogModel->where('create_time', '<', $shijianchuo)->delete();
     }
 
-    public function set_view(){
+    public function set_view()
+    {
         //判断 时间 0-1点 为time=0  H 24小时制
         $date_data = date("Y-m-d");
         $hour = date('H');
-        $pvWhere[] =['date','=',$date_data];
-        $pvWhere[] =['time','=',$hour];
+        $pvWhere[] = ['date', '=', $date_data];
+        $pvWhere[] = ['time', '=', $hour];
 
-        $pvInfo =$this->where($pvWhere)->field('id')->find();
+        $pvInfo = $this->where($pvWhere)->field('id')->find();
         if ($pvInfo) {
             $this->where($pvWhere)->inc('view')->update();
         } else {
@@ -46,13 +50,13 @@ class PvLog extends BaseModel {
             $this->save($pvData);
         }
         //uv表
-        $uvLogModel=new UvLogModel();
+        $uvLogModel = new UvLogModel();
 
         //获取ip
         $ipData = request()->ip();
         //查询该ip今天是否存在过
-        $uvWhere[] =['date','=',$date_data];
-        $uvWhere[] =['ip','=',$ipData];
+        $uvWhere[] = ['date', '=', $date_data];
+        $uvWhere[] = ['ip', '=', $ipData];
 
         $uvInfo = $uvLogModel->where($uvWhere)->field('id')->find();
         //不存在 添加数据

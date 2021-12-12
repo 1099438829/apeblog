@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\common\service;
+namespace app\common\extend;
 
 /**
  * Class Curl
@@ -55,7 +55,7 @@ class Curl
      */
     public static function app(string $url, string $type = 'GET', $params = "")
     {
-        return new self( $url, $type, $params);
+        return new self($url, $type, $params);
     }
 
     /**
@@ -84,8 +84,10 @@ class Curl
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         $data = curl_exec($curl);
-        if (!curl_error($curl)) {curl_close($curl);return $data;}
-        else print "Error: " . curl_error($curl);
+        if (!curl_error($curl)) {
+            curl_close($curl);
+            return $data;
+        } else print "Error: " . curl_error($curl);
     }
 
     /**
@@ -100,13 +102,15 @@ class Curl
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_TIMEOUT, 10);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $this->header);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE );
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE );
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
         curl_setopt($curl, CURLOPT_POST, 1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $this->params);
         $data = curl_exec($curl);
-        if (!curl_error($curl)) {curl_close($curl);return $data;}
-        else print "Error: " . curl_error($curl);
+        if (!curl_error($curl)) {
+            curl_close($curl);
+            return $data;
+        } else print "Error: " . curl_error($curl);
     }
 
     /**
@@ -115,8 +119,7 @@ class Curl
      */
     public function run()
     {
-        switch ($this->type)
-        {
+        switch ($this->type) {
             case 'GET':
                 return $this->get();
             case 'POST':
@@ -132,8 +135,8 @@ class Curl
     {
         $sign = $client_secret;
         ksort($this->params);
-        foreach ($this->params as $k=>$v) $sign .=$k.$v;
-        $sign.=$client_secret;
+        foreach ($this->params as $k => $v) $sign .= $k . $v;
+        $sign .= $client_secret;
         $this->params['sign'] = strtoupper(md5($sign));
         return $this;
     }

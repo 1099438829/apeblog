@@ -16,7 +16,8 @@
                             <label for="author">姓名</label>
                             <div class="input-group">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="author" name="author" placeholder="请输入姓名">
+                                    <input type="text" class="form-control" id="author" name="author"
+                                           placeholder="请输入姓名">
                                 </div>
                             </div>
                         </div>
@@ -39,12 +40,17 @@
                         <div class="form-group">
                             <label for="start_time">操作时间</label>
                             <div class="input-group">
-                                <input class="form-control js-datetimepicker" type="text" id="start_time" name="start_time" autocomplete="off" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD" placeholder="开始时间">
+                                <input class="form-control js-datetimepicker" type="text" id="start_time"
+                                       name="start_time" autocomplete="off" data-side-by-side="true" data-locale="zh-cn"
+                                       data-format="YYYY-MM-DD" placeholder="开始时间">
                                 <span class="input-group-addon">~</span>
-                                <input class="form-control js-datetimepicker" type="text" id="end_time" name="end_time" autocomplete="off" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD" placeholder="结束时间">
+                                <input class="form-control js-datetimepicker" type="text" id="end_time" name="end_time"
+                                       autocomplete="off" data-side-by-side="true" data-locale="zh-cn"
+                                       data-format="YYYY-MM-DD" placeholder="结束时间">
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-success" style="margin: -10px 0 0 10px;" id="search">搜索</button>
+                        <button type="submit" class="btn btn-success" style="margin: -10px 0 0 10px;" id="search">搜索
+                        </button>
                     </form>
                 </div>
             </div>
@@ -53,7 +59,8 @@
             <div class="card">
                 <div class="card-toolbar clearfix">
                     <div class="toolbar-btn-action">
-                        <a class="btn btn-warning" href="#!" onclick="delSelect()"><i class="mdi mdi-window-close"></i> 删除</a>
+                        <a class="btn btn-warning" href="#!" onclick="delSelect()"><i class="mdi mdi-window-close"></i>
+                            删除</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -68,9 +75,9 @@
     var id = GetQueryString("id");
     $('#tb_departments').bootstrapTable({
         classes: 'table table-bordered table-hover table-striped',
-        url: '/admin/article/commentList?id='+id,
+        url: '/admin/article/commentList?id=' + id,
         method: 'post',
-        dataType : 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
+        dataType: 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
         uniqueId: 'id',
         idField: 'id',             // 每行的唯一标识字段
         toolbar: '#toolbar',       // 工具按钮容器
@@ -83,7 +90,7 @@
             };
         },
         pagination: true,
-        queryParams: function(params) {
+        queryParams: function (params) {
             let temp = toArrayList($(".searchForm").serializeArray());
             temp['document_id'] = id;
             temp['limit'] = params.limit;
@@ -96,10 +103,10 @@
         pageList: [10, 20, 50, 100],
         columns: [{
             checkbox: true,    // 是否显示复选框
-        },{
+        }, {
             field: 'id',
             title: 'ID'
-        },{
+        }, {
             field: 'author',
             title: '姓名'
         }, {
@@ -114,22 +121,22 @@
             formatter: function (value, row, index) {
                 if (value == 0) {
                     is_checked = '';
-                } else if (value == 1){
+                } else if (value == 1) {
                     is_checked = 'checked="checked"';
                 }
                 var field = "display";
-                result = '<label class="lyear-switch switch-primary switch-solid lyear-status"><input type="checkbox" '+ is_checked +'><span  onClick="updateStatus('+ row.id +', '+ value +', \''+ field +'\')"></span></label>';
+                result = '<label class="lyear-switch switch-primary switch-solid lyear-status"><input type="checkbox" ' + is_checked + '><span  onClick="updateStatus(' + row.id + ', ' + value + ', \'' + field + '\')"></span></label>';
                 return result;
             },
-        },{
+        }, {
             field: 'create_time',
             title: '留言时间',
         }, {
             field: 'operate',
             title: '操作',
-            formatter:function (value,row,index) {
+            formatter: function (value, row, index) {
                 let html = '<a href="#!" class="btn btn-xs btn-default m-r-5 btn-detail" title="详情" data-toggle="tooltip" data-trigger="hover"><i class="mdi mdi-eye-outline"></i></a> \n' +
-                    '<a class="btn btn-xs btn-default btn-del" href="#!" title="删除" data-toggle="tooltip" onclick="delOne('+row.id+')"><i class="mdi mdi-window-close"></i></a>';
+                    '<a class="btn btn-xs btn-default btn-del" href="#!" title="删除" data-toggle="tooltip" onclick="delOne(' + row.id + ')"><i class="mdi mdi-window-close"></i></a>';
                 return html;
             },
             events: {
@@ -138,19 +145,19 @@
                     let content = ' <div class="p-lr-15">\n' +
                         '               <div class="row show-grid">\n' +
                         '                   <div class="col-xs-12 col-md-4">姓名:</div>\n' +
-                        '                   <div class="col-xs-12 col-md-8">'+row.author+'</div>\n' +
+                        '                   <div class="col-xs-12 col-md-8">' + row.author + '</div>\n' +
                         '               </div>\n' +
                         '               <div class="row show-grid">\n' +
                         '                   <div class="col-xs-12 col-md-4">网址:</div>\n' +
-                        '                   <div class="col-xs-12 col-md-8">'+row.url+'</div>\n' +
+                        '                   <div class="col-xs-12 col-md-8">' + row.url + '</div>\n' +
                         '               </div>\n' +
                         '               <div class="row show-grid">\n' +
                         '                   <div class="col-xs-12 col-md-4">邮箱:</div>\n' +
-                        '                   <div class="col-xs-12 col-md-8">'+row.email+'</div>\n' +
+                        '                   <div class="col-xs-12 col-md-8">' + row.email + '</div>\n' +
                         '               </div>\n' +
                         '               <div class="row show-grid">\n' +
                         '                   <div class="col-xs-12 col-md-4">评论内容:</div>\n' +
-                        '                   <div class="col-xs-12 col-md-8" style="white-space: pre-wrap;">'+row.content+'</div>\n' +
+                        '                   <div class="col-xs-12 col-md-8" style="white-space: pre-wrap;">' + row.content + '</div>\n' +
                         '               </div>\n' +
                         '          </div>';
                     $.alert({
@@ -167,7 +174,7 @@
                 }
             }
         }],
-        onLoadSuccess: function(data){
+        onLoadSuccess: function (data) {
             $("[data-toggle='tooltip']").tooltip();
         }
     });
@@ -176,23 +183,25 @@
     $("#search").click(function () {
         let start_time = $('#start_time').val();
         let end_time = $('#end_time').val();
-        if(start_time && end_time && start_time > end_time ){
+        if (start_time && end_time && start_time > end_time) {
             alert('开始时间不能大于结束时间');
             return false;
         }
-        $("#tb_departments").bootstrapTable('refresh',{query:{page:1},pageNumber:1});
+        $("#tb_departments").bootstrapTable('refresh', {query: {page: 1}, pageNumber: 1});
     });
 
-    function updateStatus(id, value,field) {
+    function updateStatus(id, value, field) {
         var newstate = (value == 1) ? 0 : 1; // 发送参数值跟当前参数值相反
         $.ajax({
             type: "post",
-            url: "/admin/article/commentField?id="+id,
+            url: "/admin/article/commentField?id=" + id,
             data: {field: field, value: newstate},
             dataType: 'json',
             success: function (res) {
-                if (res.status == 200) {parent.lightyear.notify('修改成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');$(".tree-table").bootstrapTable('refresh');}
-                else parent.lightyear.notify('修改失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                if (res.status == 200) {
+                    parent.lightyear.notify('修改成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                    $(".tree-table").bootstrapTable('refresh');
+                } else parent.lightyear.notify('修改失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
             },
             error: function () {
                 parent.lightyear.notify('修改失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
@@ -210,7 +219,7 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/message/del",data={id:id},function (res) {
+                        $.post("/admin/message/del", data = {id: id}, function (res) {
                             if (res.status == 200 || res.code == 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                             location.reload();
@@ -228,12 +237,11 @@
     function delSelect() {
         var checkID = "";
         var selectedItem = $('#tb_departments').bootstrapTable('getSelections');
-        if (selectedItem=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
-        for (var i = 0 ; i<  selectedItem.length; i++)
-        {
-            checkID += selectedItem[i]['id']+",";
+        if (selectedItem == "") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        for (var i = 0; i < selectedItem.length; i++) {
+            checkID += selectedItem[i]['id'] + ",";
         }
-        if (checkID=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        if (checkID == "") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         $.confirm({
             title: '重要提醒!',
             content: '选中项删除后将不可恢复，请谨慎操作!',
@@ -243,9 +251,11 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/message/del",data={id:checkID},function (res) {
-                            if (res.status == 200 || res.code == 200) { lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
-                            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        $.post("/admin/message/del", data = {id: checkID}, function (res) {
+                            if (res.status == 200 || res.code == 200) {
+                                lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                                location.reload();
+                            } else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                         })
                     }
                 },
@@ -256,11 +266,12 @@
             }
         });
     }
-    function GetQueryString(name)
-    {
-        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);
-        if(r!=null)return  unescape(r[2]); return null;
+        if (r != null) return unescape(r[2]);
+        return null;
     }
 </script>
 </body>

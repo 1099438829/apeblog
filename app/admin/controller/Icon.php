@@ -3,7 +3,6 @@
 namespace app\admin\controller;
 
 
-
 /**
  * Class Icon
  * @package app\admin\controller\widget

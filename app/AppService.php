@@ -1,9 +1,9 @@
 <?php
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace app;
 
-use app\common\service\Json;
+use app\common\extend\Json;
 use think\Service;
 
 /**

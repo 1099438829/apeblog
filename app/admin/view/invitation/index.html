@@ -16,19 +16,25 @@
                             <label for="code">邀请码</label>
                             <div class="input-group">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="code" name="code" placeholder="请输入操作人名称，ID">
+                                    <input type="text" class="form-control" id="code" name="code"
+                                           placeholder="请输入操作人名称，ID">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="start_time">操作时间</label>
                             <div class="input-group">
-                                <input class="form-control js-datetimepicker" type="text" id="start_time" name="start_time" autocomplete="off" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD" placeholder="开始时间">
+                                <input class="form-control js-datetimepicker" type="text" id="start_time"
+                                       name="start_time" autocomplete="off" data-side-by-side="true" data-locale="zh-cn"
+                                       data-format="YYYY-MM-DD" placeholder="开始时间">
                                 <span class="input-group-addon">~</span>
-                                <input class="form-control js-datetimepicker" type="text" id="end_time" name="end_time" autocomplete="off" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD" placeholder="结束时间">
+                                <input class="form-control js-datetimepicker" type="text" id="end_time" name="end_time"
+                                       autocomplete="off" data-side-by-side="true" data-locale="zh-cn"
+                                       data-format="YYYY-MM-DD" placeholder="结束时间">
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-success" style="margin: -10px 0 0 10px;" id="search">搜索</button>
+                        <button type="submit" class="btn btn-success" style="margin: -10px 0 0 10px;" id="search">搜索
+                        </button>
                     </form>
                 </div>
             </div>
@@ -43,7 +49,8 @@
                         <button id="btn_add_multiple" type="button" class="btn btn-primary m-r-5">
                             <span class="mdi mdi-plus" aria-hidden="true"></span>批量新增
                         </button>
-                        <a class="btn btn-warning" href="#!" onclick="delSelect()"><i class="mdi mdi-window-close"></i> 删除</a>
+                        <a class="btn btn-warning" href="#!" onclick="delSelect()"><i class="mdi mdi-window-close"></i>
+                            删除</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -59,7 +66,7 @@
         classes: 'table table-bordered table-hover table-striped',
         url: '/admin/invitation/Lst',
         method: 'post',
-        dataType : 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
+        dataType: 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
         uniqueId: 'id',
         idField: 'id',             // 每行的唯一标识字段
         toolbar: '#toolbar',       // 工具按钮容器
@@ -72,7 +79,7 @@
             };
         },
         pagination: true,
-        queryParams: function(params) {
+        queryParams: function (params) {
             let temp = toArrayList($(".searchForm").serializeArray());
             temp['limit'] = params.limit;
             temp['page'] = (params.offset / params.limit) + 1;
@@ -84,34 +91,34 @@
         pageList: [10, 20, 50, 100],
         columns: [{
             checkbox: true,    // 是否显示复选框
-        },{
+        }, {
             field: 'id',
             title: '序号'
-        },{
+        }, {
             field: 'code',
             title: '邀请码'
-        },{
+        }, {
             field: 'status',
             title: '状态',
-            formatter:function (value,row,index) {
-                if (value){
+            formatter: function (value, row, index) {
+                if (value) {
                     return '已使用';
-                }else{
+                } else {
                     return "未使用";
                 }
             }
-        },{
+        }, {
             field: 'user',
             title: '使用人',
-        },{
+        }, {
             field: 'operate',
             title: '操作',
-            formatter:function (value,row,index) {
-                let html ='<a class="btn btn-xs btn-default btn-del" href="#!" title="删除" data-toggle="tooltip" onclick="delOne('+row.id+')"><i class="mdi mdi-window-close"></i></a>';
+            formatter: function (value, row, index) {
+                let html = '<a class="btn btn-xs btn-default btn-del" href="#!" title="删除" data-toggle="tooltip" onclick="delOne(' + row.id + ')"><i class="mdi mdi-window-close"></i></a>';
                 return html;
             }
         }],
-        onLoadSuccess: function(data){
+        onLoadSuccess: function (data) {
             $("[data-toggle='tooltip']").tooltip();
         }
     });
@@ -120,16 +127,16 @@
     $("#search").click(function () {
         let start_time = $('#start_time').val();
         let end_time = $('#end_time').val();
-        if(start_time && end_time && start_time > end_time ){
+        if (start_time && end_time && start_time > end_time) {
             alert('开始时间不能大于结束时间');
             return false;
         }
-        $("#tb_departments").bootstrapTable('refresh',{query:{page:1},pageNumber:1});
+        $("#tb_departments").bootstrapTable('refresh', {query: {page: 1}, pageNumber: 1});
     });
 
 
     //新增邀请码
-    $('body').on('click','#btn_add',function(){
+    $('body').on('click', '#btn_add', function () {
         $.confirm({
             title: '新增邀请码',
             content: '' +
@@ -144,15 +151,15 @@
                     btnClass: 'btn-primary',
                     action: function () {
                         var name = this.$content.find('.name').val();
-                        if(!name){
+                        if (!name) {
                             $.alert('请输入邀请码');
                             return false;
                         }
-                        $.post(url="/admin/invitation/save",this.$content.find('form').serialize(),function (res) {
+                        $.post(url = "/admin/invitation/save", this.$content.find('form').serialize(), function (res) {
                             if (res.code == 200 || res.status == 200) {
                                 parent.lightyear.notify('操作成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
-                                $("#tb_departments").bootstrapTable('refresh',{query:{page:1},pageNumber:1});
-                            } else{
+                                $("#tb_departments").bootstrapTable('refresh', {query: {page: 1}, pageNumber: 1});
+                            } else {
                                 parent.lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                             }
                         });
@@ -173,7 +180,7 @@
     });
 
     //批量新增邀请码
-    $('body').on('click','#btn_add_multiple',function(){
+    $('body').on('click', '#btn_add_multiple', function () {
         $.confirm({
             title: '新增邀请码',
             content: '' +
@@ -193,17 +200,17 @@
                     btnClass: 'btn-primary',
                     action: function () {
                         let field = this.$content.find('form').serializeArray();
-                        for(j = 0;j < field.length; j++) {
-                            if(!field[j].value){
+                        for (j = 0; j < field.length; j++) {
+                            if (!field[j].value) {
                                 $.alert('请检查填写！');
                                 return false;
                             }
                         }
-                        $.post(url="/admin/invitation/addMultiple",this.$content.find('form').serialize(),function (res) {
+                        $.post(url = "/admin/invitation/addMultiple", this.$content.find('form').serialize(), function (res) {
                             if (res.code == 200 || res.status == 200) {
                                 parent.lightyear.notify('操作成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
-                                $("#tb_departments").bootstrapTable('refresh',{query:{page:1},pageNumber:1});
-                            } else{
+                                $("#tb_departments").bootstrapTable('refresh', {query: {page: 1}, pageNumber: 1});
+                            } else {
                                 parent.lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                             }
                         });
@@ -234,7 +241,7 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/invitation/del",data={id:id},function (res) {
+                        $.post("/admin/invitation/del", data = {id: id}, function (res) {
                             if (res.status == 200 || res.code == 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                             location.reload();
@@ -252,12 +259,11 @@
     function delSelect() {
         var checkID = "";
         var selectedItem = $('#tb_departments').bootstrapTable('getSelections');
-        if (selectedItem=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
-        for (var i = 0 ; i<  selectedItem.length; i++)
-        {
-            checkID += selectedItem[i]['id']+",";
+        if (selectedItem == "") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        for (var i = 0; i < selectedItem.length; i++) {
+            checkID += selectedItem[i]['id'] + ",";
         }
-        if (checkID=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        if (checkID == "") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         $.confirm({
             title: '重要提醒!',
             content: '选中项删除后将不可恢复，请谨慎操作!',
@@ -267,9 +273,11 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/invitation/del",data={id:checkID},function (res) {
-                            if (res.status == 200 || res.code == 200) { lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
-                            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        $.post("/admin/invitation/del", data = {id: checkID}, function (res) {
+                            if (res.status == 200 || res.code == 200) {
+                                lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                                location.reload();
+                            } else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                         })
                     }
                 },

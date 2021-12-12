@@ -5,12 +5,13 @@ namespace app\admin\controller;
 use app\common\model\AdminAuth;
 use app\common\model\AdminNotify;
 use app\Request;
-use app\admin\service\UtilService as Util;
+use app\admin\extend\Util as Util;
 
 class Index extends AuthController
 {
     // 无需登录的
-    protected $noNeedLogin = ['test','accessauth','pddlogin'];
+    protected $noNeedLogin = ['test', 'accessauth', 'pddlogin'];
+
     /**
      * 后台首页
      * @return string
@@ -18,15 +19,15 @@ class Index extends AuthController
      */
     public function index()
     {
-        $this->assign("adminInfo",$this->adminInfo);
+        $this->assign("adminInfo", $this->adminInfo);
         $menuList = cache(AdminAuth::getMenuCacheKey($this->adminId));
-        if($menuList === null){
-            $menuList = AdminAuth::getMenu(0,$this->auth);
-            cache(AdminAuth::getMenuCacheKey($this->adminId),$menuList,1*60*60);
+        if ($menuList === null) {
+            $menuList = AdminAuth::getMenu(0, $this->auth);
+            cache(AdminAuth::getMenuCacheKey($this->adminId), $menuList, 1 * 60 * 60);
         }
-        $this->assign("menu",$menuList);
-        $message = ['data'=>[],'count'=>0];
-        $this->assign("message",$message);
+        $this->assign("menu", $menuList);
+        $message = ['data' => [], 'count' => 0];
+        $this->assign("message", $message);
         return $this->fetch();
     }
 
@@ -49,9 +50,9 @@ class Index extends AuthController
     public function menu()
     {
         $menuList = cache(AdminAuth::getMenuCacheKey($this->adminId));
-        if($menuList === null){
-            $menuList = AdminAuth::getMenu(0,$this->auth);
-            cache(AdminAuth::getMenuCacheKey($this->adminId),$menuList,1*60*60);
+        if ($menuList === null) {
+            $menuList = AdminAuth::getMenu(0, $this->auth);
+            cache(AdminAuth::getMenuCacheKey($this->adminId), $menuList, 1 * 60 * 60);
         }
         return app("json")->success($menuList);
     }

@@ -2,8 +2,9 @@
 
 namespace app\admin\controller;
 
-use app\admin\service\UtilService as Util;
+use app\admin\extend\Util as Util;
 use app\common\model\AdminNotify as nModel;
+
 /**
  * 消息提醒
  * Class AdminNotify
@@ -19,14 +20,14 @@ class AdminNotify extends AuthController
     public function index()
     {
         $where = Util::postMore([
-            ['title',''],
-            ['start_time',''],
-            ['end_time',''],
-            ['is_read',''],
-            ['aid',$this->adminId],
+            ['title', ''],
+            ['start_time', ''],
+            ['end_time', ''],
+            ['is_read', ''],
+            ['aid', $this->adminId],
         ]);
-        $this->assign("where",$where);
-        $this->assign("list",nModel::systemPage($where));
+        $this->assign("where", $where);
+        $this->assign("list", nModel::systemPage($where));
         return $this->fetch();
     }
 }

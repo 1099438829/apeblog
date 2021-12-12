@@ -36,7 +36,7 @@
             "learn\\": "learn"
         },
         "psr-0": {
-            "": "extend/"
+            "": "app/common/extend/"
         }
     },
     "config": {

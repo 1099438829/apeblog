@@ -1,4 +1,5 @@
 <?php
+
 namespace app\common\paginator;
 
 use think\Paginator;
@@ -37,7 +38,7 @@ class Layer extends Paginator
         }
 
         $url = $this->url($this->currentPage() + 1);
-        $temp=$this->getPageLinkWrapper($url, $text);
+        $temp = $this->getPageLinkWrapper($url, $text);
         return $temp;
     }
 
@@ -51,26 +52,26 @@ class Layer extends Paginator
             return '';
 
         $block = [
-            'first'  => null,
+            'first' => null,
             'slider' => null,
-            'last'   => null
+            'last' => null
         ];
 
-        $side   = 3;
+        $side = 3;
         $window = $side * 2;
 
         if ($this->lastPage < $window + 6) {
             $block['first'] = $this->getUrlRange(1, $this->lastPage);
         } elseif ($this->currentPage <= $window) {
             $block['first'] = $this->getUrlRange(1, $window + 2);
-            $block['last']  = $this->getUrlRange($this->lastPage - 1, $this->lastPage);
+            $block['last'] = $this->getUrlRange($this->lastPage - 1, $this->lastPage);
         } elseif ($this->currentPage > ($this->lastPage - $window)) {
             $block['first'] = $this->getUrlRange(1, 2);
-            $block['last']  = $this->getUrlRange($this->lastPage - ($window + 2), $this->lastPage);
+            $block['last'] = $this->getUrlRange($this->lastPage - ($window + 2), $this->lastPage);
         } else {
-            $block['first']  = $this->getUrlRange(1, 2);
+            $block['first'] = $this->getUrlRange(1, 2);
             $block['slider'] = $this->getUrlRange($this->currentPage - $side, $this->currentPage + $side);
-            $block['last']   = $this->getUrlRange($this->lastPage - 1, $this->lastPage);
+            $block['last'] = $this->getUrlRange($this->lastPage - 1, $this->lastPage);
         }
 
         $html = '';
@@ -119,8 +120,8 @@ class Layer extends Paginator
     /**
      * 生成一个可点击的按钮
      *
-     * @param  string $url
-     * @param  int    $page
+     * @param string $url
+     * @param int $page
      * @return string
      */
     protected function getAvailablePageWrapper($url, $page)
@@ -131,7 +132,7 @@ class Layer extends Paginator
     /**
      * 生成一个禁用的按钮
      *
-     * @param  string $text
+     * @param string $text
      * @return string
      */
     protected function getDisabledTextWrapper($text)
@@ -142,7 +143,7 @@ class Layer extends Paginator
     /**
      * 生成一个激活的按钮
      *
-     * @param  string $text
+     * @param string $text
      * @return string
      */
     protected function getActivePageWrapper($text)
@@ -163,7 +164,7 @@ class Layer extends Paginator
     /**
      * 批量生成页码按钮.
      *
-     * @param  array $urls
+     * @param array $urls
      * @return string
      */
     protected function getUrlLinks(array $urls)
@@ -180,8 +181,8 @@ class Layer extends Paginator
     /**
      * 生成普通页码按钮
      *
-     * @param  string $url
-     * @param  int    $page
+     * @param string $url
+     * @param int $page
      * @return string
      */
     protected function getPageLinkWrapper($url, $page)

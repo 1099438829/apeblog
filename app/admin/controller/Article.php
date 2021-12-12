@@ -8,7 +8,7 @@ use app\common\model\Tag as TagModel;
 use app\common\model\DocumentArticle;
 use app\common\model\Comment as CommentModel;
 use app\Request;
-use app\admin\service\UtilService as Util;
+use app\admin\extend\Util as Util;
 use think\Exception;
 use think\facade\Log;
 
@@ -42,12 +42,12 @@ class Article extends AuthController
     public function lst()
     {
         $where = Util::postMore([
-            ['name',''],
-            ['start_time',''],
-            ['end_time',''],
-            ['status',''],
-            ['page',1],
-            ['limit',20],
+            ['name', ''],
+            ['start_time', ''],
+            ['end_time', ''],
+            ['status', ''],
+            ['page', 1],
+            ['limit', 20],
         ]);
         return app("json")->layui(aModel::systemPage($where));
     }
@@ -59,92 +59,90 @@ class Article extends AuthController
      * @author 李玉坤
      * @date 2021-02-28 22:43
      */
-    public function save($id="")
+    public function save($id = "")
     {
         $data = Util::postMore([
-            ['id',''],
-            ['author',''],
-            ['title',''],
-            ['category_id',''],
-            ['type','article'],
-            ['abstract',''],
-            ['keywords',''],
-            ['content',''],
-            ['description',''],
-            ['is_recommend',0],
-            ['is_top',0],
-            ['is_hot',0],
-            ['link_str',''],
-            ['cover_path',''],
-            ['display',1],
-            ['tags',''],
-            ['sort',''],
-            ['status',1],
+            ['id', ''],
+            ['author', ''],
+            ['title', ''],
+            ['category_id', ''],
+            ['type', 'article'],
+            ['abstract', ''],
+            ['keywords', ''],
+            ['content', ''],
+            ['description', ''],
+            ['is_recommend', 0],
+            ['is_top', 0],
+            ['is_hot', 0],
+            ['link_str', ''],
+            ['cover_path', ''],
+            ['display', 1],
+            ['tags', ''],
+            ['sort', ''],
+            ['status', 1],
         ]);
 
         if ($data['title'] == "") return app("json")->fail("文章名称不能为空");
         if ($data['category_id'] == "") return app("json")->fail("栏目分类不能为空");
         if ($data['cover_path'] == "") return app("json")->fail("主图不能为空");
         try {
-            $data['author'] =  $data['author']?:$this->adminInfo['nickname'];
+            $data['author'] = $data['author'] ?: $this->adminInfo['nickname'];
             $data['uid'] = $this->adminId;
             $content = '';
-            if (!empty($data['content'])){
+            if (!empty($data['content'])) {
                 $content = $data['content'];
             }
             //判断摘要是否为空，为空则从内容摘取
-            $data['abstract'] = $data['abstract']?:mb_substr($content,0,100);
+            $data['abstract'] = $data['abstract'] ?: mb_substr($content, 0, 100);
             unset($data['content']);
             if ($data['is_recommend']) $data['is_recommend'] = 1;
             if ($data['is_hot']) $data['is_hot'] = 1;
             if ($data['display']) $data['display'] = 1;
             if ($data['is_top']) $data['is_top'] = 1;
-            if ($id=="")
-            {
-                $data['author'] =  $data['author']?:$this->adminInfo['nickname'];
+            if ($id == "") {
+                $data['author'] = $data['author'] ?: $this->adminInfo['nickname'];
                 $data['create_time'] = time();
                 $data['update_time'] = time();
                 $id = aModel::insertGetId($data);
-                if (!empty($content)){
+                if (!empty($content)) {
                     $updateData = [
                         'id' => $id,
                         'content' => $content
                     ];
                     DocumentArticle::insert($updateData);
                 }
-                if (!empty($data['tags'])){
+                if (!empty($data['tags'])) {
                     $tagModel = new TagModel();
-                    $tagModel->createTags($data['tags'],$id,$this->adminId);
+                    $tagModel->createTags($data['tags'], $id, $this->adminId);
                 }
-            }else
-            {
+            } else {
                 $ainfo = aModel::get($id);
-                if (!$ainfo)return app("json")->fail("数据不存在");
-                aModel::where('id',$id)->save($data);
-                if (!empty($content)){
-                    $contentInfo = DocumentArticle::where('id',$id)->find();
-                    if (!$contentInfo){
+                if (!$ainfo) return app("json")->fail("数据不存在");
+                aModel::where('id', $id)->save($data);
+                if (!empty($content)) {
+                    $contentInfo = DocumentArticle::where('id', $id)->find();
+                    if (!$contentInfo) {
                         $updateData = [
                             'id' => $id,
                             'content' => $content
                         ];
                         DocumentArticle::insert($updateData);
-                    }else{
+                    } else {
                         //更新文档
-                        DocumentArticle::where('id',$id)->save(['content'=>$content]);
+                        DocumentArticle::where('id', $id)->save(['content' => $content]);
                     }
                 }
-                if (!empty($data['tags'])){
+                if (!empty($data['tags'])) {
                     $tagModel = new TagModel();
-                    $tagModel->createTags($data['tags'],$id,$this->adminId);
+                    $tagModel->createTags($data['tags'], $id, $this->adminId);
                 }
             }
             $res = true;
-        }catch (Exception $e){
-            Log::error('文章修改失败：失败原因：'.$e->getMessage());
+        } catch (Exception $e) {
+            Log::error('文章修改失败：失败原因：' . $e->getMessage());
             $res = false;
         }
-        return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败");
     }
 
 
@@ -158,9 +156,9 @@ class Article extends AuthController
     public function field($id)
     {
         if (!$id) return app("json")->fail("参数有误，Id为空！");
-        $where = Util::postMore([['field',''],['value','']]);
-        if ($where['field'] == '' || $where['value'] =='') return app("json")->fail("参数有误！");
-        return aModel::update([$where['field']=>$where['value']],['id'=>$id]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+        $where = Util::postMore([['field', ''], ['value', '']]);
+        if ($where['field'] == '' || $where['value'] == '') return app("json")->fail("参数有误！");
+        return aModel::update([$where['field'] => $where['value']], ['id' => $id]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 
     /**
@@ -173,7 +171,7 @@ class Article extends AuthController
      * @author 李玉坤
      * @date 2021-03-10 14:46
      */
-    public function add($category_id ='')
+    public function add($category_id = '')
     {
         $where = [
             'name' => '',
@@ -181,8 +179,8 @@ class Article extends AuthController
         ];
         $category = cModel::systemPage($where);
         $category = get_tree_list($category);
-        $this->assign("category",$category);
-        $this->assign("category_id",$category_id);
+        $this->assign("category", $category);
+        $this->assign("category_id", $category_id);
         return $this->fetch();
     }
 
@@ -196,23 +194,23 @@ class Article extends AuthController
     public function edit()
     {
         $where = Util::postMore([
-            ['name',''],
-            ['id','']
+            ['name', ''],
+            ['id', '']
         ]);
-        if ($where['id'] ==''){
-           return $this->error('数据不存在');
+        if ($where['id'] == '') {
+            return $this->error('数据不存在');
         }
         $category = cModel::systemPage($where);
         $category = get_tree_list($category);
         $info = aModel::get($where['id']);
         $content = DocumentArticle::get($where['id']);
-        if ($content){
+        if ($content) {
             $info->content = $content->content;
-        }else{
+        } else {
             $info->content = '';
         }
-        $this->assign("category",$category);
-        $this->assign("info",$info);
+        $this->assign("category", $category);
+        $this->assign("info", $info);
         return $this->fetch();
     }
 
@@ -238,14 +236,14 @@ class Article extends AuthController
     public function commentList()
     {
         $where = Util::postMore([
-            ['document_id',''],
-            ['name',''],
-            ['tel',''],
-            ['email',''],
-            ['start_time',''],
-            ['end_time',''],
-            ['page',1],
-            ['limit',20],
+            ['document_id', ''],
+            ['name', ''],
+            ['tel', ''],
+            ['email', ''],
+            ['start_time', ''],
+            ['end_time', ''],
+            ['page', 1],
+            ['limit', 20],
         ]);
         if ($where['document_id'] == "") return app("json")->fail("参数错误");
         return app("json")->layui(CommentModel::systemPage($where));
@@ -262,9 +260,9 @@ class Article extends AuthController
     public function commentField($id)
     {
         if (!$id) return app("json")->fail("参数有误，Id为空！");
-        $where = Util::postMore([['field',''],['value','']]);
-        if ($where['field'] == '' || $where['value'] =='') return app("json")->fail("参数有误！");
-        return CommentModel::update([$where['field']=>$where['value']],['id'=>$id]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+        $where = Util::postMore([['field', ''], ['value', '']]);
+        if ($where['field'] == '' || $where['value'] == '') return app("json")->fail("参数有误！");
+        return CommentModel::update([$where['field'] => $where['value']], ['id' => $id]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 
 }

@@ -4,12 +4,13 @@
     <title>{$mate_title} - {:system_config("title")}</title>
     {include file="public/header" /}
     <style>
-        .div-backdata{
-            width:400px;
-            padding:60px 20px;
+        .div-backdata {
+            width: 400px;
+            padding: 60px 20px;
             text-align: center;
         }
-        .div-backdata .layui-icon{
+
+        .div-backdata .layui-icon {
             font-size: 50px;
             margin-bottom: 10px;
         }
@@ -20,8 +21,8 @@
     <div class="col-lg-12">
         <div class="card">
             <ul class="nav nav-tabs page-tabs">
-                <li class="active"><a href="#!">备份数据库</a> </li>
-                <li><a href="/admin/databases/index?type=import">还原数据库</a> </li>
+                <li class="active"><a href="#!">备份数据库</a></li>
+                <li><a href="/admin/databases/index?type=import">还原数据库</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active">
@@ -50,7 +51,7 @@
         classes: 'table table-bordered table-hover table-striped',
         url: '/admin/databases/Lst',
         method: 'post',
-        dataType : 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
+        dataType: 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
         uniqueId: 'id',
         idField: 'id',             // 每行的唯一标识字段
         toolbar: '#toolbar',       // 工具按钮容器
@@ -63,13 +64,13 @@
             };
         },
         pagination: false,
-        queryParams: function(params) {
+        queryParams: function (params) {
             let temp = toArrayList($(".searchForm").serializeArray());
             return temp;
         },
         columns: [{
             checkbox: true,    // 是否显示复选框
-        },{
+        }, {
             field: 'name',
             title: '表名'
         }, {
@@ -78,16 +79,16 @@
         }, {
             field: 'data_length',
             title: '数据大小',
-            formatter:function (value,row,index) {
+            formatter: function (value, row, index) {
                 return renderSize(value);
             }
-        },{
+        }, {
             field: 'create_time',
             title: '创建时间',
         }, {
             field: 'operate',
             title: '操作',
-            formatter:function (value,row,index) {
+            formatter: function (value, row, index) {
                 let html = '<a href="#!" class="btn btn-xs btn-default m-r-5 btn-optimize" title="优化表" data-toggle="tooltip" data-trigger="hover"><i class="mdi mdi-rotate-3d"></i></a> \n' +
                     '<a class="btn btn-xs btn-default btn-repair" href="#!" title="修复表" data-toggle="tooltip" data-trigger="hover"><i class="mdi mdi-rotate-right-variant"></i></a>';
                 return html;
@@ -97,11 +98,11 @@
                     $.ajax({
                         type: "post",
                         url: "/admin/databases/optimize",
-                        data: {ids:row.name},
+                        data: {ids: row.name},
                         success: function (res) {
                             if (res.code == 200 || res.status == 200) {
                                 parent.lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
-                            } else{
+                            } else {
                                 parent.lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                             }
                         },
@@ -113,11 +114,11 @@
                     $.ajax({
                         type: "post",
                         url: "/admin/databases/repair",
-                        data: {ids:row.name},
+                        data: {ids: row.name},
                         success: function (res) {
                             if (res.code == 200 || res.status == 200) {
                                 parent.lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
-                            } else{
+                            } else {
                                 parent.lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                             }
                         },
@@ -127,54 +128,55 @@
                 }
             }
         }],
-        onLoadSuccess: function(data){
+        onLoadSuccess: function (data) {
             $("[data-toggle='tooltip']").tooltip();
         }
     });
 
     //格式化文件大小
-    function renderSize(value){
-        if(null==value||value==''){
+    function renderSize(value) {
+        if (null == value || value == '') {
             return "0 Bytes";
         }
-        var unitArr = new Array("Bytes","KB","MB","GB","TB","PB","EB","ZB","YB");
-        var index=0;
+        var unitArr = new Array("Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB");
+        var index = 0;
         var srcsize = parseFloat(value);
-        index=Math.floor(Math.log(srcsize)/Math.log(1024));
-        var size =srcsize/Math.pow(1024,index);
-        size=size.toFixed(2);//保留的小数位数
-        return size+unitArr[index];
+        index = Math.floor(Math.log(srcsize) / Math.log(1024));
+        var size = srcsize / Math.pow(1024, index);
+        size = size.toFixed(2);//保留的小数位数
+        return size + unitArr[index];
     }
 
     $("#btn-export").click(function () {
         var checkID = [];
         var selectedItem = $('#tb_departments').bootstrapTable('getAllSelections');
-        if (selectedItem=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
-        for (var i = 0 ; i<  selectedItem.length; i++)
-        {
+        if (selectedItem == "") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        for (var i = 0; i < selectedItem.length; i++) {
             checkID.push(selectedItem[i]['name']);
         }
-        if (checkID.length == 0 ) return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        if (checkID.length == 0) return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         loadIndex = layer.open({
             type: 1,
-            title:'',
-            area:'440px',
+            title: '',
+            area: '440px',
             skin: 'layui-layer-demo', //样式类名
             closeBtn: 0, //不显示关闭按钮
             anim: 2,
             content: '<div id="div-backdata" class="div-backdata"><span class="mdi mdi-36px mdi-spin mdi-loading"></span><div class="content">正在备份数据库，请稍等...</div></div>'
         });
 
-        $.post("/admin/databases/export",data={ids:checkID.join(',')},function (res) {
+        $.post("/admin/databases/export", data = {ids: checkID.join(',')}, function (res) {
             if (res.status == 200) {
                 updateBackDataInfo("开始备份，请不要关闭本页面！");
                 backup(res.data.tab);
-                window.onbeforeunload = function(){ return "正在备份数据库，请不要关闭！" }
-            } else{
+                window.onbeforeunload = function () {
+                    return "正在备份数据库，请不要关闭！"
+                }
+            } else {
                 layer.close(loadIndex);
-                layer.msg(res.msg?res.msg:'操作失败',{icon: 2,time:3*1000});
+                layer.msg(res.msg ? res.msg : '操作失败', {icon: 2, time: 3 * 1000});
             }
-        },"json")
+        }, "json")
         return false;
     })
 
@@ -182,21 +184,23 @@
         $('#div-backdata>.content', parent.document).text(info);
     }
 
-    function backup(tab){
-        $.get("/admin/databases/export", tab, function(res){
-            if(res.status == 200){
+    function backup(tab) {
+        $.get("/admin/databases/export", tab, function (res) {
+            if (res.status == 200) {
                 updateBackDataInfo(res.msg);
-                if(res.data.length == 0){
-                    console.log(res.msg,res.data)
+                if (res.data.length == 0) {
+                    console.log(res.msg, res.data)
                     layer.close(loadIndex);
-                    layer.msg(res.msg?res.msg:'操作成功',{icon: 1,time:3*1000});
-                    window.onbeforeunload = function(){ return null }
+                    layer.msg(res.msg ? res.msg : '操作成功', {icon: 1, time: 3 * 1000});
+                    window.onbeforeunload = function () {
+                        return null
+                    }
                     return;
                 }
                 backup(res.data.tab);
             } else {
                 layer.close(loadIndex);
-                layer.msg(res.msg?res.msg:'操作失败',{icon: 2,time:3*1000});
+                layer.msg(res.msg ? res.msg : '操作失败', {icon: 2, time: 3 * 1000});
             }
         }, "json");
     }
@@ -205,8 +209,7 @@
         var checkID = [];
         var selectedItem = $('#tb_departments').bootstrapTable('getAllSelections');
         if (selectedItem.length == 0) return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
-        for (var i = 0 ; i<  selectedItem.length; i++)
-        {
+        for (var i = 0; i < selectedItem.length; i++) {
             checkID.push(selectedItem[i]['name'])
         }
         if (checkID.length == 0) return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
@@ -219,9 +222,11 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/databases/optimize",data={ids:checkID.toString()},function (res) {
-                            if (res.code == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
-                            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        $.post("/admin/databases/optimize", data = {ids: checkID.toString()}, function (res) {
+                            if (res.code == 200) {
+                                lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                                location.reload();
+                            } else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                         })
                     }
                 },
@@ -237,8 +242,7 @@
         var checkID = [];
         var selectedItem = $('#tb_departments').bootstrapTable('getAllSelections');
         if (selectedItem.length == 0) return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
-        for (var i = 0 ; i<  selectedItem.length; i++)
-        {
+        for (var i = 0; i < selectedItem.length; i++) {
             checkID.push(selectedItem[i]['name'])
         }
         if (checkID.length == 0) return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
@@ -251,9 +255,11 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/databases/repair",data={ids:checkID.toString()},function (res) {
-                            if (res.code == 200)  {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
-                            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        $.post("/admin/databases/repair", data = {ids: checkID.toString()}, function (res) {
+                            if (res.code == 200) {
+                                lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                                location.reload();
+                            } else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                         })
                     }
                 },
