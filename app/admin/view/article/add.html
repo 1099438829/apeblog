@@ -31,9 +31,9 @@
                                     <select name="category_id" id="category_id" class="form-control">
                                         <option value="0">请选择</option>
                                         {volist name="category" id="vo"}
-                                        <option value="{$vo.id}" {notempty name="pid" }{if $vo.id==
-                                                $category_id}selected{
-                                        /if}{/notempty}>{$vo.html}{$vo.title}</option>
+                                        <option value="{$vo.id}"
+                                                {notempty name="pid" }{if $vo.id==$category_id}selected{/if} {/notempty}
+                                            >{$vo.html}{$vo.title}</option>
                                         {/volist}
                                     </select>
                                 </div>

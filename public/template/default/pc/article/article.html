@@ -206,7 +206,6 @@
                     <i class="fas fa-couch"></i>沙发空余
                     {/if}
                 </div>
-
                 <ol class="commentlist">
                     {ape:comment type="top" typeId="$apeField['id']" void='field'}
                     <li class="comment">
@@ -251,7 +250,6 @@
                                         </span>
                                     </div>
                                 </div>
-
                             </li><!-- #comment-## -->
                         </ol><!-- .children -->
                         {/ape:comment}
@@ -260,32 +258,29 @@
                 </ol>
                 <script type='text/javascript' src='__JS__/comment-reply.min.js'></script>
                 <script type='text/javascript'>
-                    $("body").on("click", ".comment-reply-link",
-                    function(e) {
-                      addComment.moveForm("li-comment-" + $(this).attr("data-commentid"), $(this).attr("data-commentid"), "respond", $(this).attr("data-postid"));
-                      console.log("li-comment-" + $(this).attr("data-commentid"), $(this).attr("data-commentid"), "respond", $(this).attr("data-postid"));
-                      e.stopPropagation();
-                      return false;
+                    $('body').on('click', '.comment-reply-link', function (e) {
+                        addComment.moveForm("li-comment-" + $(this).attr('data-commentid'), $(this).attr('data-commentid'), "respond", $(this).attr('data-postid'));
+                        console.log("li-comment-" + $(this).attr('data-commentid'), $(this).attr('data-commentid'), "respond", $(this).attr('data-postid'));
+                        e.stopPropagation();
+                        return false;
                     });
-                    $(document).click(function(e) {
-                      $(".conment-face-plane").css("opacity", "0");
-                      $(".conment-face-plane").css("visibility", "hidden");
-                      e.stopPropagation();
+                    $(document).click(function (e) {
+                        $('.conment-face-plane').css("opacity", "0");
+                        $('.conment-face-plane').css("visibility", "hidden");
+                        e.stopPropagation();
                     });
-                    $("body").on("click", ".img-pace",
-                    function(e) {
-                      $(".comment_form_textarea").val($(".comment_form_textarea").val() + "[f=" + $(this).attr("facename") + "]");
+                    $('body').on('click', '.img-pace', function (e) {
+                        $('.comment_form_textarea').val($('.comment_form_textarea').val() + '[f=' + $(this).attr('facename') + ']')
                     });
-                    $("body").on("click", ".popover-btn-face",
-                    function(e) {
-                      if ($(".conment-face-plane").css("visibility") == "visible") {
-                        $(".conment-face-plane").css("opacity", "0");
-                        $(".conment-face-plane").css("visibility", "hidden");
-                      } else {
-                        $(".conment-face-plane").css("opacity", "1");
-                        $(".conment-face-plane").css("visibility", "visible");
-                      }
-                      e.stopPropagation();
+                    $('body').on('click', '.popover-btn-face', function (e) {
+                        if ($('.conment-face-plane').css("visibility") == 'visible') {
+                            $('.conment-face-plane').css("opacity", "0");
+                            $('.conment-face-plane').css("visibility", "hidden");
+                        } else {
+                            $('.conment-face-plane').css("opacity", "1");
+                            $('.conment-face-plane').css("visibility", "visible");
+                        }
+                        e.stopPropagation();
                     });
                 </script>
                 <nav class="comment-navigation pages"></nav>

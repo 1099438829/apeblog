@@ -4,14 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
     <title>页面提醒 - {:system_config("title")}后台管理系统</title>
-    <link rel="icon" href="{:system_config(" favicon
-    ")}" type="image/ico">
-    <meta name="keywords" content="{:system_config(" keywords
-    ")}">
-    <meta name="description" content="{:system_config(" description
-    ")}">
-    <meta name="author" content="{:system_config(" author
-    ")}">
+    <link rel="icon" href="{:system_config(" favicon")}" type="image/ico">
+    <meta name="keywords" content="{:system_config(" keywords")}">
+    <meta name="description" content="{:system_config(" description")}">
+    <meta name="author" content="{:system_config("author")}">
     <link href="__ADMIN_PATH__css/bootstrap.min.css" rel="stylesheet">
     <link href="__ADMIN_PATH__css/materialdesignicons.min.css" rel="stylesheet">
     <link href="__ADMIN_PATH__css/style.min.css" rel="stylesheet">
@@ -56,8 +52,7 @@
             <h4>This page will be re-directed in <span id="wait" style="font-size: large;color: #f96868">3</span>
                 seconds</h4>
             {/if}
-            <a href="{$backUrl}" class="btn {eq name=" type" value="success"}btn-success{else/}btn
-            btn-danger{/eq}">返回页面</a>
+            <a href="{$backUrl}" class="btn {eq name="type" value="success"}btn-success{else/}btn btn-danger{/eq}">返回页面</a>
         </div>
     </div>
 </section>

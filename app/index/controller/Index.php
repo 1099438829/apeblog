@@ -80,7 +80,7 @@ class Index extends Base
     }
 
     /**
-     * 友链申请
+     * 留言
      * @param Request $request
      * @return string
      * @throws \think\db\exception\DataNotFoundException

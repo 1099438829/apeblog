@@ -188,10 +188,10 @@ class Article extends Base
         if ($data['email'] == "") $this->error("邮箱不能为空");
         if ($data['url'] == "") $this->error("url不能为空");
         if ($data['content'] == "") $this->error("内容能为空");
-        $data['status'] = 0;
+        $data['status'] = web_config('comment_review')?0:1;
         $res = commentModel::create($data);
         if ($res) {
-            $this->success('申请成功，请耐心等待审核');
+            $this->success('提交成功');
         } else {
             $this->error('提交失败，请联系站长查看', null);
         }
