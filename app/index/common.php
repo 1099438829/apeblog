@@ -678,7 +678,7 @@ function tpl_get_comment_list($id, $type, $pageSize = 10, $orderBy)
     }
     $lists = [];
     foreach ($commentModel as $key => $item) {
-        $item['reply_url'] = url('article/comment_reply?pid=' . $item['id'])->build();;
+        $item['reply_url'] = url('article/create_comment?pid=' . $item['id'])->build();;
         $lists[$key] = $item;
     }
     $re = [
