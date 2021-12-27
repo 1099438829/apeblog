@@ -191,7 +191,7 @@ class Article extends Base
         $data['status'] = web_config('comment_review')?0:1;
         $res = commentModel::create($data);
         if ($res) {
-            $this->success('提交成功');
+            $this->success('提交成功',url('detail',['id'=>$data['document_id']]));
         } else {
             $this->error('提交失败，请联系站长查看', null);
         }

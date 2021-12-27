@@ -661,7 +661,7 @@ function tpl_get_comment_list($id, $type, $pageSize = 10, $orderBy)
     $commentModel = \app\common\model\Comment::where('status', 1)->order($orderBy);
     switch ($type) {
         case 'top':
-            //根据自定义条件获取文章（where语句）
+            //获取所有的一级评论
             $commentModel = $commentModel->where('document_id', $id)->where('pid', 0);
             break;
         case 'son':
