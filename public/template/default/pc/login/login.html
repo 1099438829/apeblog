@@ -76,7 +76,7 @@
             $("#login-note").text("登录中，请稍后");
             $("#login-note").css("visibility", "visible");
             $.post(
-                "{:url(/index/login/verify)}",
+                "{:url('/index/login/verify')}",
                 {
                     action: "corepress_login",
                     user: user,
