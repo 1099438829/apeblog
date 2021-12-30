@@ -1,17 +1,20 @@
 <?php
-// +----------------------------------------------------------------------
-// +----------------------------------------------------------------------
+
 use think\facade\Db;
 use think\Exception;
 use app\common\constant\Data;
 use app\common\model\DocumentCategoryContent;
 use app\common\model\DocumentCategory;
 use app\common\model\Document;
+use app\common\model\Comment;
 use \app\common\model\FriendLink;
 
 // 应用公共文件
 /**
  * 中文字符截取
+ * @param $str
+ * @param $len
+ * @return string
  */
 function cn_substr($str, $len)
 {
@@ -154,7 +157,7 @@ function tpl_get_channel($type, $typeId, $row = 100, $where = '', $orderby = '')
             if (!$dc) {
                 return false;
             }
-            return get_document_category_by_parent($dc['pid'], $row);;
+            return get_document_category_by_parent($dc['pid'], $row);
             break;
         case 'find':
             //获取所有子孙分类，此操作读取数据库，非缓存！
@@ -302,20 +305,25 @@ function tpl_get_prenext($get, $cid = false, $none)
 
 /**
  * 模板-获取文章列表
- * $orderby=数据排序方式
- * $pageSize=每页显示的数据数目
- * $cid=栏目分类id
- * $type=读取数据的方式（son:'获取栏目下文章以及所有子孙分类文章',self:'获取栏目下文章',search:'获取关键字搜索的文章',where:'根据自定义条件获取文章（where语句）'）
- * $table=文章内容扩展表名，默认article
- * $where=自定义条件
+ * @param $orderBy string 数据排序方式
+ * @param $pageSize int 每页显示的数据数目
+ * @param $cid int 栏目分类id
+ * @param $type string 读取数据的方式（son:'获取栏目下文章以及所有子孙分类文章',self:'获取栏目下文章',search:'获取关键字搜索的文章',where:'根据自定义条件获取文章（where语句）'）
+ * @param string $table  文章内容扩展表名，默认article
+ * @param bool $where 自定义条件
+ * @param int $display
+ * @return array
+ * @throws Exception
+ * @throws \think\db\exception\DataNotFoundException
+ * @throws \think\db\exception\DbException
+ * @throws \think\db\exception\ModelNotFoundException
  */
-function tpl_get_list($orderby, $pageSize, $cid, $type, $table = 'article', $where = false, $display = 1)
+function tpl_get_list($orderBy, $pageSize, $cid, $type, $table = 'article', $where = false, $display = 1)
 {
-
     $documentListModel = (new Document())
         ->alias('a')
-        ->join(config('database.prefix') . 'document_category b', 'a.category_id=b.id', 'LEFT')
-        ->join(config('database.prefix') . "document_$table c", 'a.id=c.id', 'LEFT')
+        ->leftJoin(config('database.prefix') . 'document_category b', 'a.category_id=b.id')
+        ->leftJoin(config('database.prefix') . "document_$table c", 'a.id=c.id')
         ->where("a.type='$table'")
         ->where('a.status', 1)
         ->where('b.status', 1)
@@ -365,7 +373,7 @@ function tpl_get_list($orderby, $pageSize, $cid, $type, $table = 'article', $whe
             $documentListModel = $documentListModel->where('a.id', 'in', array_column($tagList, 'document_id'));
             break;
     }
-    $documentListModel = $documentListModel->order($orderby);
+    $documentListModel = $documentListModel->order($orderBy);
     //获取当前请求的请求参数，以确定分页是否要带上这些请求参数
     $query = request()->query();
     if ($query) {
@@ -400,6 +408,8 @@ function get_route_query()
 
 /**
  * 根据栏目类型，生成栏目url
+ * @param $item
+ * @return mixed|string
  */
 function make_category_url($item)
 {
@@ -410,10 +420,13 @@ function make_category_url($item)
     } elseif ((int)$item['type'] == 2) {
         return $item['link_str'];
     }
+    return false;
 }
 
 /**
  * 生成文章url
+ * @param $item
+ * @return mixed|string
  */
 function make_detail_url($item)
 {
@@ -432,8 +445,8 @@ function make_detail_url($item)
 function tpl_get_article($id, $table)
 {
     $documentModel = Document::alias('a')
-        ->join(config('database.prefix') . 'document_category b', 'a.category_id=b.id', 'LEFT')
-        ->join(config('database.prefix') . "document_$table c", 'a.id=c.id', 'LEFT')
+        ->leftJoin(config('database.prefix') . 'document_category b', 'a.category_id=b.id')
+        ->leftJoin(config('database.prefix') . "document_$table c", 'a.id=c.id')
         ->where('a.status', 1)->where('a.id', $id)->where("a.type='$table'")
         ->field('a.*,b.title as category_title,c.*');
 
@@ -633,16 +646,28 @@ function tpl_get_position($dc, $positionList = array())
 {
     array_push($positionList, $dc);
     if ($dc['pid'] == 0) {
-        $htmlstr = '<a href="/">首页</a>';
+        $htmlStr = '<a href="/">首页</a>';
         $positionListCount = count($positionList);
         for ($x = $positionListCount - 1; $x >= 0; $x--) {
-            $htmlstr = $htmlstr . '<span>&gt;</span><a href="' . $positionList[$x]['url'] . '">' . $positionList[$x]['title'] . '</a>';
+            $htmlStr = $htmlStr . '<span>&gt;</span><a href="' . $positionList[$x]['url'] . '">' . $positionList[$x]['title'] . '</a>';
         }
-        return $htmlstr;
+        return $htmlStr;
     }
     //获取父级栏目分类
     $parentDc = get_document_category($dc['pid']);
     return tpl_get_position($parentDc, $positionList);
+}
+
+function get_comment_children($parentIds){
+    $list = $commentModel = Comment::where('status', 1)->where('pid','in', $parentIds)->select()->toArray();
+    if (empty($list)){
+        return $list;
+    }
+    foreach ($list as &$item){
+        $item['reply_url'] = url('article/create_comment?pid=' . $item['id'])->build();;
+    }
+    unset($item);
+    return  array_merge($list,get_comment_children(array_column($list,'id')));
 }
 
 /**
@@ -656,9 +681,9 @@ function tpl_get_position($dc, $positionList = array())
  * @author 李玉坤
  * @date 2021-12-05 23:54
  */
-function tpl_get_comment_list($id, $type, $pageSize = 10, $orderBy)
+function tpl_get_comment_list($id, $type, $pageSize, $orderBy)
 {
-    $commentModel = \app\common\model\Comment::where('status', 1)->order($orderBy);
+    $commentModel = Comment::where('status', 1)->order($orderBy);
     switch ($type) {
         case 'top':
             //获取所有的一级评论
@@ -666,13 +691,16 @@ function tpl_get_comment_list($id, $type, $pageSize = 10, $orderBy)
             break;
         case 'son':
             //获取栏目下文章
-            $commentModel = $commentModel->where('pid', $id);
+            return [
+                'model' => $commentModel,
+                'lists' => get_comment_children([$id])
+            ];
             break;
     }
     //获取当前请求的请求参数，以确定分页是否要带上这些请求参数
     $query = request()->query();
     if ($query) {
-        $commentModel = $commentModel->paginate($pageSize, false, ['query' => get_route_query()]);
+        $commentModel = $commentModel->paginate($pageSize, false);
     } else {
         $commentModel = $commentModel->paginate($pageSize);
     }
@@ -681,23 +709,34 @@ function tpl_get_comment_list($id, $type, $pageSize = 10, $orderBy)
         $item['reply_url'] = url('article/create_comment?pid=' . $item['id'])->build();;
         $lists[$key] = $item;
     }
-    $re = [
+    return [
         'model' => $commentModel,
         'lists' => $lists
     ];
-    return $re;
 }
 
 /**
  * 获取评论数量
  * @param $documentId
+ * @param string $type
  * @return int
  * @author 李玉坤
  * @date 2021-12-05 23:16
  */
-function get_comment_count($documentId)
+function get_comment_count($documentId, $type = 'top')
 {
-    return \app\common\model\Comment::where('document_id', $documentId)->where('status', 1)->count();
+    $commentModel = Comment::where('status', 1);
+    switch ($type) {
+        case 'top':
+            //获取所有的一级评论
+            $commentModel = $commentModel->where('document_id', $documentId)->where('pid', 0);
+            break;
+        case 'son':
+            //获取栏目下文章
+            $commentModel = $commentModel->where('pid', $documentId);
+            break;
+    }
+    return $commentModel->count();
 }
 
 

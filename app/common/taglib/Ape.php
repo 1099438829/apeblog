@@ -61,6 +61,9 @@ class Ape extends TagLib
 
     /**
      * 文章列表
+     * @param $tag
+     * @param $content
+     * @return string
      */
     public function tagArclist($tag, $content)
     {
@@ -100,6 +103,9 @@ class Ape extends TagLib
 
     /**
      * 栏目分类-单个
+     * @param $tag
+     * @param $content
+     * @return string
      */
     public function tagType($tag, $content)
     {
@@ -120,6 +126,9 @@ class Ape extends TagLib
 
     /**
      * 列表分页
+     * @param $tag
+     * @param $content
+     * @return string
      */
     public function tagList($tag, $content)
     {
@@ -165,6 +174,9 @@ class Ape extends TagLib
 
     /**
      * 友情链接
+     * @param $tag
+     * @param $content
+     * @return string
      */
     public function tagFlink($tag, $content)
     {
@@ -205,25 +217,10 @@ class Ape extends TagLib
     }
 
     /**
-     * 执行SQL
-     */
-    public function tagSql($tag, $content)
-    {
-        if (!isset($tag['sql'])) {
-            return '';
-        }
-        $sql = $tag['sql'];
-        $parse = '<?php ';
-        $parse .= '$__LIST__ =' . "db()->query(\"$sql\");";
-        $parse .= ' ?>';
-        $parse .= '{volist name="__LIST__" id="field"}';
-        $parse .= $content;
-        $parse .= '{/volist}';
-        return $parse;
-    }
-
-    /**
      * 获取单篇文章
+     * @param $tag
+     * @param $content
+     * @return string
      */
     public function tagArticle($tag, $content)
     {
@@ -244,6 +241,9 @@ class Ape extends TagLib
 
     /**
      * 文章标签
+     * @param $tag
+     * @param $content
+     * @return bool|string
      */
     public function tagTags($tag, $content)
     {
@@ -279,7 +279,11 @@ class Ape extends TagLib
         $orderBy = isset($tag['orderBy']) ? $tag['orderBy'] : 'id asc';
         $parse = '<?php ';
         $parse .= '$__FUN__ =' . "tpl_get_comment_list($typeId,\"$type\",$pageSize,\"$orderBy\");";
-        $parse .= '$__LIST__ = $__FUN__["lists"];$pager = $__FUN__["model"]->render();';
+        if ($type == 'top') {
+            $parse .= '$__LIST__ = $__FUN__["lists"];$pager = $__FUN__["model"]->render();';
+        } else {
+            $parse .= '$__LIST__ = $__FUN__["lists"];';
+        }
         $parse .= ' ?>';
         $parse .= '{volist name="__LIST__" id="' . $void . '" key="i"}';
         $parse .= $content;
