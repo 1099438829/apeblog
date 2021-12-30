@@ -39,7 +39,7 @@ class Env implements ArrayAccess
      */
     public function load(string $file): void
     {
-        $env = parse_ini_file($file, true) ?: [];
+        $env = parse_ini_file($file, true, INI_SCANNER_RAW) ?: [];
         $this->set($env);
     }
 
@@ -159,21 +159,25 @@ class Env implements ArrayAccess
     }
 
     // ArrayAccess
+    #[\ReturnTypeWillChange]
     public function offsetSet($name, $value): void
     {
         $this->set($name, $value);
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetExists($name): bool
     {
         return $this->__isset($name);
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetUnset($name)
     {
         throw new Exception('not support: unset');
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetGet($name)
     {
         return $this->get($name);

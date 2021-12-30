@@ -13,8 +13,8 @@ class ComposerStaticInit179ad4390eaa61356c3a52b9b610e467
         '35fab96057f1bf5e7aba31a8a6d5fdde' => __DIR__ . '/..' . '/topthink/think-orm/stubs/load_stubs.php',
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
-        '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '1cfd2761b63b0a29ed23657ea394cb2d' => __DIR__ . '/..' . '/topthink/think-captcha/src/helper.php',
+        '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -46,6 +46,7 @@ class ComposerStaticInit179ad4390eaa61356c3a52b9b610e467
         array (
             'Psr\\SimpleCache\\' => 16,
             'Psr\\Log\\' => 8,
+            'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
             'Psr\\Cache\\' => 10,
             'PHPMailer\\PHPMailer\\' => 20,
@@ -83,10 +84,10 @@ class ComposerStaticInit179ad4390eaa61356c3a52b9b610e467
         ),
         'think\\' => 
         array (
-            0 => __DIR__ . '/..' . '/topthink/framework/src/think',
-            1 => __DIR__ . '/..' . '/topthink/think-helper/src',
+            0 => __DIR__ . '/..' . '/topthink/think-helper/src',
+            1 => __DIR__ . '/..' . '/topthink/think-template/src',
             2 => __DIR__ . '/..' . '/topthink/think-orm/src',
-            3 => __DIR__ . '/..' . '/topthink/think-template/src',
+            3 => __DIR__ . '/..' . '/topthink/framework/src/think',
         ),
         'learn\\' => 
         array (
@@ -127,6 +128,10 @@ class ComposerStaticInit179ad4390eaa61356c3a52b9b610e467
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
+        'Psr\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Container\\' => 
         array (
