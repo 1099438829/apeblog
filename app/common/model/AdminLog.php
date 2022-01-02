@@ -26,7 +26,7 @@ class AdminLog extends BaseModel
     {
         return self::create([
             'admin_id' => $adminInfo['id'],
-            'admin_name' => $adminInfo['name'],
+            'admin_name' => $adminInfo['username'],
             'module' => $module,
             'controller' => $controller,
             'action' => $action,

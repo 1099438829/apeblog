@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 13/12/2021 00:49:24
+ Date: 03/01/2022 04:00:40
 */
 
 SET NAMES utf8mb4;
@@ -24,9 +24,9 @@ DROP TABLE IF EXISTS `ape_admin`;
 CREATE TABLE `ape_admin`  (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `uid` int(10) NOT NULL DEFAULT 0 COMMENT '前台用户ID',
-  `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名',
+  `username` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名',
   `nickname` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '昵称',
-  `pwd` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
+  `password` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
   `realname` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '真实姓名',
   `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '头像',
   `role_id` int(4) NOT NULL DEFAULT 0 COMMENT '角色id',
@@ -219,12 +219,13 @@ CREATE TABLE `ape_attachment`  (
   `create_time` int(10) NOT NULL COMMENT '上传时间',
   `update_time` int(10) NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_attachment
 -- ----------------------------
 INSERT INTO `ape_attachment` VALUES (1, 1, 'images/20211114\\9d6e563a56429ffb126044e7669a70ba.jpg', '/uploads/images/20211114\\9d6e563a56429ffb126044e7669a70ba.jpg', 'images', 'image/jpeg', '1919593', 1, 1636822168, 1636822168);
+INSERT INTO `ape_attachment` VALUES (2, 2, 'images/20220103\\a05f958f10c840bc08be541daa2328b7.png', '/uploads/images/20220103\\a05f958f10c840bc08be541daa2328b7.png', 'images', 'image/png', '6807', 1, 1641150412, 1641150412);
 
 -- ----------------------------
 -- Table structure for ape_attachment_category
@@ -240,12 +241,13 @@ CREATE TABLE `ape_attachment_category`  (
   `create_time` int(11) NOT NULL COMMENT '添加时间',
   `update_time` int(11) NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件分类' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件分类' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_attachment_category
 -- ----------------------------
 INSERT INTO `ape_attachment_category` VALUES (1, 0, '广告文件', 'images', 1, 0, 1636649478, 1636649478);
+INSERT INTO `ape_attachment_category` VALUES (2, 0, '头像', 'images', 1, 0, 1641150394, 1641150394);
 
 -- ----------------------------
 -- Table structure for ape_comment
@@ -265,11 +267,17 @@ CREATE TABLE `ape_comment`  (
   `status` int(11) NOT NULL DEFAULT 0 COMMENT '状态 1不显示 1显示',
   `update_time` int(11) NOT NULL COMMENT '评论时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '评论表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '评论表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of ape_comment
 -- ----------------------------
+INSERT INTO `ape_comment` VALUES (1, '看看', '121221@qq.com', 'www.baidu.com', '21321321312', 0, '', 0, 1640528720, 1, 0, 1640528720);
+INSERT INTO `ape_comment` VALUES (2, '看看', '121221@qq.com', 'www.baidu.com', '驱蚊驱蚊', 0, '', 0, 1640529428, 1, 1, 1640529428);
+INSERT INTO `ape_comment` VALUES (3, 'qw', '121221@qq.com', 'www.baidu.com', '去问驱蚊器我', 0, '', 2, 1640619720, 1, 1, 1640619720);
+INSERT INTO `ape_comment` VALUES (4, '看看', 'admin@qq.com', 'www.baidu.com', '测试你', 0, '', 3, 1640619881, 1, 1, 1640619881);
+INSERT INTO `ape_comment` VALUES (5, '看看', '121221@qq.com', 'www.baidu.com', '啊飒飒的撒旦', 0, '', 3, 1640619973, 1, 1, 1640619973);
+INSERT INTO `ape_comment` VALUES (6, '看看', 'lyk911026@gmail.com', 'www.baidu.com', '测试回复', 0, '', 5, 1640880843, 1, 1, 1640880843);
 
 -- ----------------------------
 -- Table structure for ape_document
@@ -302,11 +310,12 @@ CREATE TABLE `ape_document`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_category_status`(`category_id`, `status`) USING BTREE,
   INDEX `idx_status_type_pid`(`status`, `uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文档模型基础表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文档模型基础表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ape_document
 -- ----------------------------
+INSERT INTO `ape_document` VALUES (1, 1, '超级管理员', '每日必应图片接口', 1, '/uploads/images/20211226\\8635d7429bfffd07ddd0f4ef891b9669.jpg', 'article', '', 0, 0, 0, '', 1, 72, '必应,必应图片,api', '<p>必应</p>', '', '', 99, 1640528547, 1640528547, 1, '');
 
 -- ----------------------------
 -- Table structure for ape_document_article
@@ -321,6 +330,7 @@ CREATE TABLE `ape_document_article`  (
 -- ----------------------------
 -- Records of ape_document_article
 -- ----------------------------
+INSERT INTO `ape_document_article` VALUES (1, '<p>必应</p>');
 
 -- ----------------------------
 -- Table structure for ape_document_category
@@ -344,11 +354,12 @@ CREATE TABLE `ape_document_category`  (
   `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '分类表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '分类表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ape_document_category
 -- ----------------------------
+INSERT INTO `ape_document_category` VALUES (1, '编程资料', '', '', 1, 0, 99, '', '', '', 1, 'list_default.html', '', 0, 0, 0);
 
 -- ----------------------------
 -- Table structure for ape_document_category_content
@@ -363,6 +374,7 @@ CREATE TABLE `ape_document_category_content`  (
 -- ----------------------------
 -- Records of ape_document_category_content
 -- ----------------------------
+INSERT INTO `ape_document_category_content` VALUES (1, '');
 
 -- ----------------------------
 -- Table structure for ape_document_product
@@ -413,7 +425,7 @@ CREATE TABLE `ape_invitation_code`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '邀请码',
   `status` int(11) NOT NULL DEFAULT 0 COMMENT '状态 0未使用 1 使用',
-  `user` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '使用用户',
+  `uid` int(11) NULL DEFAULT NULL COMMENT '使用用户',
   `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
@@ -457,51 +469,11 @@ CREATE TABLE `ape_pv_log`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_pv_log
 -- ----------------------------
-INSERT INTO `ape_pv_log` VALUES (1, 1, 3, '2021-11-08', '2021-11-08 01:05:55', '2021-11-08 01:05:55');
-INSERT INTO `ape_pv_log` VALUES (2, 23, 1, '2021-11-10', '2021-11-10 23:06:10', '2021-11-10 23:06:10');
-INSERT INTO `ape_pv_log` VALUES (3, 0, 41, '2021-11-11', '2021-11-11 00:27:18', '2021-11-11 00:27:18');
-INSERT INTO `ape_pv_log` VALUES (4, 1, 74, '2021-11-11', '2021-11-11 01:06:07', '2021-11-11 01:06:07');
-INSERT INTO `ape_pv_log` VALUES (5, 21, 8, '2021-11-11', '2021-11-11 21:39:11', '2021-11-11 21:39:11');
-INSERT INTO `ape_pv_log` VALUES (6, 23, 11, '2021-11-11', '2021-11-11 23:40:31', '2021-11-11 23:40:31');
-INSERT INTO `ape_pv_log` VALUES (7, 0, 2, '2021-11-12', '2021-11-12 00:50:56', '2021-11-12 00:50:56');
-INSERT INTO `ape_pv_log` VALUES (8, 21, 15, '2021-11-12', '2021-11-12 21:00:14', '2021-11-12 21:00:14');
-INSERT INTO `ape_pv_log` VALUES (9, 22, 54, '2021-11-12', '2021-11-12 22:01:33', '2021-11-12 22:01:33');
-INSERT INTO `ape_pv_log` VALUES (10, 23, 26, '2021-11-12', '2021-11-12 23:01:13', '2021-11-12 23:01:13');
-INSERT INTO `ape_pv_log` VALUES (11, 0, 23, '2021-11-13', '2021-11-13 00:33:08', '2021-11-13 00:33:08');
-INSERT INTO `ape_pv_log` VALUES (12, 21, 42, '2021-11-13', '2021-11-13 21:34:52', '2021-11-13 21:34:52');
-INSERT INTO `ape_pv_log` VALUES (13, 22, 14, '2021-11-13', '2021-11-13 22:09:34', '2021-11-13 22:09:34');
-INSERT INTO `ape_pv_log` VALUES (14, 23, 32, '2021-11-13', '2021-11-13 23:04:29', '2021-11-13 23:04:29');
-INSERT INTO `ape_pv_log` VALUES (15, 0, 24, '2021-11-14', '2021-11-14 00:00:48', '2021-11-14 00:00:48');
-INSERT INTO `ape_pv_log` VALUES (16, 18, 10, '2021-11-14', '2021-11-14 18:31:45', '2021-11-14 18:31:45');
-INSERT INTO `ape_pv_log` VALUES (17, 19, 15, '2021-11-14', '2021-11-14 19:00:16', '2021-11-14 19:00:16');
-INSERT INTO `ape_pv_log` VALUES (18, 20, 2, '2021-11-14', '2021-11-14 20:46:14', '2021-11-14 20:46:14');
-INSERT INTO `ape_pv_log` VALUES (19, 22, 2, '2021-11-21', '2021-11-21 22:26:44', '2021-11-21 22:26:44');
-INSERT INTO `ape_pv_log` VALUES (20, 22, 2, '2021-11-22', '2021-11-22 22:28:51', '2021-11-22 22:28:51');
-INSERT INTO `ape_pv_log` VALUES (21, 23, 3, '2021-11-24', '2021-11-24 23:38:40', '2021-11-24 23:38:40');
-INSERT INTO `ape_pv_log` VALUES (22, 22, 3, '2021-11-27', '2021-11-27 22:26:28', '2021-11-27 22:26:28');
-INSERT INTO `ape_pv_log` VALUES (23, 1, 49, '2021-11-28', '2021-11-28 01:08:30', '2021-11-28 01:08:30');
-INSERT INTO `ape_pv_log` VALUES (24, 2, 23, '2021-11-28', '2021-11-28 02:00:01', '2021-11-28 02:00:01');
-INSERT INTO `ape_pv_log` VALUES (25, 20, 6, '2021-11-28', '2021-11-28 20:35:33', '2021-11-28 20:35:33');
-INSERT INTO `ape_pv_log` VALUES (26, 23, 20, '2021-11-28', '2021-11-28 23:19:20', '2021-11-28 23:19:20');
-INSERT INTO `ape_pv_log` VALUES (27, 0, 30, '2021-11-29', '2021-11-29 00:00:14', '2021-11-29 00:00:14');
-INSERT INTO `ape_pv_log` VALUES (28, 23, 32, '2021-12-04', '2021-12-04 23:20:50', '2021-12-04 23:20:50');
-INSERT INTO `ape_pv_log` VALUES (29, 15, 7, '2021-12-05', '2021-12-05 15:47:54', '2021-12-05 15:47:54');
-INSERT INTO `ape_pv_log` VALUES (30, 16, 2, '2021-12-05', '2021-12-05 16:30:37', '2021-12-05 16:30:37');
-INSERT INTO `ape_pv_log` VALUES (31, 17, 1, '2021-12-05', '2021-12-05 17:24:01', '2021-12-05 17:24:01');
-INSERT INTO `ape_pv_log` VALUES (32, 21, 11, '2021-12-05', '2021-12-05 21:37:58', '2021-12-05 21:37:58');
-INSERT INTO `ape_pv_log` VALUES (33, 22, 4, '2021-12-05', '2021-12-05 22:08:30', '2021-12-05 22:08:30');
-INSERT INTO `ape_pv_log` VALUES (34, 23, 14, '2021-12-05', '2021-12-05 23:13:18', '2021-12-05 23:13:18');
-INSERT INTO `ape_pv_log` VALUES (35, 0, 32, '2021-12-06', '2021-12-06 00:09:55', '2021-12-06 00:09:55');
-INSERT INTO `ape_pv_log` VALUES (36, 1, 1, '2021-12-06', '2021-12-06 01:01:26', '2021-12-06 01:01:26');
-INSERT INTO `ape_pv_log` VALUES (37, 23, 30, '2021-12-06', '2021-12-06 23:19:01', '2021-12-06 23:19:01');
-INSERT INTO `ape_pv_log` VALUES (38, 23, 12, '2021-12-09', '2021-12-09 23:37:45', '2021-12-09 23:37:45');
-INSERT INTO `ape_pv_log` VALUES (39, 0, 14, '2021-12-10', '2021-12-10 00:01:15', '2021-12-10 00:01:15');
-INSERT INTO `ape_pv_log` VALUES (40, 0, 38, '2021-12-13', '2021-12-13 00:09:05', '2021-12-13 00:09:05');
 
 -- ----------------------------
 -- Table structure for ape_system_config
@@ -526,7 +498,7 @@ CREATE TABLE `ape_system_config`  (
   `create_time` int(10) NOT NULL DEFAULT 0 COMMENT '添加时间',
   `update_time` int(10) NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统配置表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统配置表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_system_config
@@ -557,6 +529,7 @@ INSERT INTO `ape_system_config` VALUES (23, 1, '微信收款码', 'web_weixin_pa
 INSERT INTO `ape_system_config` VALUES (24, 1, '支付宝收款码', 'web_zhifubao_pay', 'file', 'input', 0, '', '/uploads/images/20211129\\65eb4dd90488eb082d93d8f1163ed840.jpg', '支付宝收款码', 76, 1, 1, '1', '1', 1582793305, 1582792265);
 INSERT INTO `ape_system_config` VALUES (25, 4, '是否登录', 'comment_need_login', 'radio', 'input', 0, '1=>是\n0=>否', '1', '', 91, 1, 1, '1', '1', 1583126643, 1582792265);
 INSERT INTO `ape_system_config` VALUES (26, 4, '敏感词', 'comment_sensitive_word', 'text', 'input', 0, '', '新疆,华为', '多个逗号隔开', 81, 1, 1, '1', '1', 1582793305, 1582792265);
+INSERT INTO `ape_system_config` VALUES (27, 1, '评论审核', 'comment_review', 'radio', 'input', 0, '1=>开启\n0=>关闭', '1', '', 91, 1, 1, '1', '1', 1583126643, 1582792265);
 
 -- ----------------------------
 -- Table structure for ape_system_config_tab
@@ -594,11 +567,14 @@ CREATE TABLE `ape_tag`  (
   `create_time` int(11) NOT NULL,
   `update_time` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '标签表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '标签表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_tag
 -- ----------------------------
+INSERT INTO `ape_tag` VALUES (1, '必应', 1, 1, 1640528547, 1640528547);
+INSERT INTO `ape_tag` VALUES (2, '必应图片', 1, 1, 1640528547, 1640528547);
+INSERT INTO `ape_tag` VALUES (3, 'api', 1, 1, 1640528547, 1640528547);
 
 -- ----------------------------
 -- Table structure for ape_url_log
@@ -613,12 +589,11 @@ CREATE TABLE `ape_url_log`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'pv记录表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'pv记录表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_url_log
 -- ----------------------------
-INSERT INTO `ape_url_log` VALUES (1, 'http://apeblog.io/', 1, '网站首页', '2021-12-13', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for ape_user
@@ -630,10 +605,11 @@ CREATE TABLE `ape_user`  (
   `nickname` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '里程密' COMMENT '昵称',
   `password` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户密码',
   `avatar` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户头像',
-  `email` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '邮箱',
+  `mail` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '邮箱',
   `tel` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '手机号',
   `ip` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '注册IP地址',
   `status` int(11) NOT NULL DEFAULT 0 COMMENT '状态 0启用 1禁用',
+  `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '简介',
   `is_admin` int(11) NOT NULL DEFAULT 0 COMMENT '是否是管理员',
   `create_time` int(11) NOT NULL COMMENT '创建时间',
   `update_time` int(11) NOT NULL COMMENT '上次登录时间',
@@ -656,11 +632,10 @@ CREATE TABLE `ape_uv_log`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Uv记录表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Uv记录表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_uv_log
 -- ----------------------------
-INSERT INTO `ape_uv_log` VALUES (1, '127.0.0.1', 0, '2021-12-13', '2021-12-13 00:48:26', '2021-12-13 00:48:26');
 
 SET FOREIGN_KEY_CHECKS = 1;

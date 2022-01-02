@@ -15,6 +15,9 @@ use think\facade\Session;
  */
 class User extends BaseModel
 {
+    public static  $adminColumn = [ "username", "nickname", "password", "avatar", "mail", "tel",
+        "ip", "status", "remark", "is_admin", "create_time", "update_time"];
+
     /**
      * 登录
      * @param $name
@@ -45,6 +48,51 @@ class User extends BaseModel
         Session::set("adminInfo", $info->toArray());
         event("AdminLog", [$info->toArray(), "admin", "login", "login"]);
         return true;
+    }
+
+    /**
+     * 添加后台用户信息
+     * @param $data
+     * @return bool|int|string
+     * @author 李玉坤
+     * @date 2022-01-03 3:46
+     */
+    public static function addAdminUser($data)
+    {
+        $insertData = [];
+        foreach (self::$adminColumn as $key){
+            if (isset($data[$key])) {
+                $insertData[$key] = $data[$key];
+            }
+        }
+        if (!empty($insertData)){
+            //标识后台用户
+            $insertData['is_admin'] = 1;
+            return self::insert($insertData,true);
+        }
+        return false;
+    }
+
+    /**
+     * 更新后台用户信息
+     * @param $id
+     * @param $data
+     * @return bool|int|string
+     * @author 李玉坤
+     * @date 2022-01-03 3:48
+     */
+    public static function updateAdminUser($id ,$data)
+    {
+        $updateData = [];
+        foreach (self::$adminColumn as $key){
+            if (isset($data[$key])) {
+                $updateData[$key] = $data[$key];
+            }
+        }
+        if (!empty($updateData)){
+            return self::update($updateData,['id'=>$id]);
+        }
+        return false;
     }
 
     /**

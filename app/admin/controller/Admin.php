@@ -4,11 +4,15 @@ namespace app\admin\controller;
 
 use app\common\model\Admin as aModel;
 use app\common\model\AdminRole as rModel;
+use app\common\model\User as userModel;
 use app\Request;
 use app\admin\extend\Util as Util;
 use FormBuilder\Factory\Elm;
 use app\admin\extend\FormBuilder as Form;
+use think\Exception;
+use think\facade\Db;
 use think\facade\Route as Url;
+use think\Facade\Log;
 
 /**
  * 账号管理
@@ -39,7 +43,7 @@ class Admin extends AuthController
     public function lst(Request $request)
     {
         $where = Util::postMore([
-            ['name', ''],
+            ['username', ''],
             ['tel', ''],
             ['start_time', ''],
             ['end_time', ''],
@@ -60,7 +64,7 @@ class Admin extends AuthController
     public function add(Request $request)
     {
         $form = array();
-        $form[] = Elm::input('name', '登录账号')->col(10);
+        $form[] = Elm::input('username', '登录账号')->col(10);
         $form[] = Elm::input('nickname', '昵称')->col(10);
         $form[] = Elm::frameImage('avatar', '头像', Url::buildUrl('admin/images/index', array('fodder' => 'avatar', 'limit' => 1)))->icon("ios-image")->width('96%')->height('440px')->col(10);
         $form[] = Elm::password('password', '密码')->col(10);
@@ -92,7 +96,7 @@ class Admin extends AuthController
         $ainfo = aModel::get($id);
         if (!$ainfo) return app("json")->fail("没有该账号");
         $form = array();
-        $form[] = Elm::input('name', '登录账号', $ainfo['name'])->col(10);
+        $form[] = Elm::input('username', '登录账号', $ainfo['username'])->col(10);
         $form[] = Elm::input('nickname', '昵称', $ainfo['nickname'])->col(10);
         $form[] = Elm::frameImage('avatar', '头像', Url::buildUrl('admin/images/index', array('fodder' => 'avatar', 'limit' => 1)), $ainfo['avatar'])->icon("ios-image")->width('96%')->height('440px')->col(10);
         $form[] = Elm::password('password', '密码', $ainfo['password'])->col(10);
@@ -121,7 +125,7 @@ class Admin extends AuthController
     public function save($id = "")
     {
         $data = Util::postMore([
-            ['name', ''],
+            ['username', ''],
             ['nickname', ''],
             ['avatar', ''],
             ['password', ''],
@@ -131,28 +135,45 @@ class Admin extends AuthController
             ['mail', ''],
             ['status', '']
         ]);
-        if ($data['name'] == "") return app("json")->fail("登录账号不能为空");
+        if ($data['username'] == "") return app("json")->fail("登录账号不能为空");
         if ($data['password'] == "") return app("json")->fail("密码不能为空");
         if ($data['tel'] == "") return app("json")->fail("手机号不能为空");
         if ($data['mail'] == "") return app("json")->fail("邮箱不能为空");
         if (is_array($data['avatar'])) $data['avatar'] = $data['avatar'][0];
-        if ($id == "") {
-            //判断下用户是否存在
-            $info = aModel::where('name', $data['name'])->find();
-            if ($info) {
-                return app("json")->fail("用户已存在");
+        // 启动事务
+        Db::startTrans();
+        try {
+            if ($id == "") {
+                //判断下用户是否存在
+                $info = aModel::where('username', $data['username'])->find();
+                if ($info) {
+                    return app("json")->fail("用户已存在");
+                }
+                $data['password'] = md5(md5($data['password']));
+                $data['ip'] = $this->request->ip();
+                $data['create_user'] = $this->adminId;
+                $data['create_time'] = time();
+                $data['update_time'] = time();
+                aModel::insert($data);
+                //添加前台用户
+                $userId = userModel::addAdminUser($data);
+                $res = aModel::update(['uid'=>$userId], ['id' => $id]);
+            } else {
+                $userInfo = aModel::get($id);
+                if ($userInfo['password'] != $data['password']) $data['password'] = md5(md5($data['password']));
+                $data['update_user'] = $this->adminId;
+                $data['update_time'] = time();
+                aModel::update($data, ['id' => $id]);
+                //同步更新前台用户
+                $res = userModel::updateAdminUser($userInfo['uid'],$data);
             }
-            $data['password'] = md5(md5($data['password']));
-            $data['ip'] = $this->request->ip();
-            $data['create_user'] = $this->adminId;
-            $data['create_time'] = time();
-            $res = aModel::insert($data);
-        } else {
-            $ainfo = aModel::get($id);
-            if ($ainfo['password'] != $data['password']) $data['password'] = md5(md5($data['password']));
-            $data['update_user'] = $this->adminId;
-            $data['update_time'] = time();
-            $res = aModel::update($data, ['id' => $id]);
+            // 提交事务
+            Db::commit();
+        }catch (Exception $exception){
+            Log::error('用户添加失败,失败原因'.$exception->getMessage());
+            // 回滚事务
+            Db::rollback();
+            $res = false;
         }
         return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败");
     }
