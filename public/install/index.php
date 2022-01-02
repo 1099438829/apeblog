@@ -328,7 +328,7 @@ switch ($step) {
             $time = time();
             $password = md5(md5(trim($_POST['manager_pwd'])));
             mysqli_query($conn,"truncate table {$dbPrefix}system_admin");
-            $addadminsql = "INSERT INTO `{$dbPrefix}admin` (`id`, `name`, `nickname`, `pwd`, `role_id`, `status`, `create_time`, `create_user`) VALUES
+            $addadminsql = "INSERT INTO `{$dbPrefix}admin` (`id`, `name`, `nickname`, `password`, `role_id`, `status`, `create_time`, `create_user`) VALUES
 (1, '".$username."', 'admin' ,'".$password."', 1, 1, $time, '1')";
 			$res = mysqli_query($conn,$addadminsql);
 			if($res){

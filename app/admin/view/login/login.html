@@ -3,15 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-    <title>登录页面 - {:system_config("title")}后台管理系统</title>
-    <link rel="icon" href="{:system_config(" favicon
-    ")}" type="image/ico">
-    <meta name="keywords" content="{:system_config(" keywords
-    ")}">
-    <meta name="description" content="{:system_config(" description
-    ")}">
-    <meta name="author" content="{:system_config(" author
-    ")}">
+    <title>登录页面 - {:system_config('title')}后台管理系统</title>
+    <link rel="icon" href="{:system_config('favicon')}" type="image/ico">
+    <meta name="keywords" content="{:system_config('keywords')}">
+    <meta name="description" content="{:system_config('description')}">
+    <meta name="author" content="{:system_config('author')}">
     <link href="__ADMIN_PATH__css/bootstrap.min.css" rel="stylesheet">
     <link href="__ADMIN_PATH__css/materialdesignicons.min.css" rel="stylesheet">
     <link href="__ADMIN_PATH__css/style.min.css" rel="stylesheet">
@@ -67,7 +63,7 @@
             <div class="login-header">
                 <div class="row" style="line-height: 36px;">
                     <div class="col-xs-8 text-left">
-                        <a href="/index" style="font-size: 20px;color: #1c1e2f;">{:system_config("title")}后台管理系统</a>
+                        <a href="/index" style="font-size: 20px;color: #1c1e2f;">{:system_config('title')}后台管理系统</a>
                     </div>
                     <!--          <div class="col-xs-4 text-right">-->
                     <!--            <a onclick="changeLoginType()" style="cursor: pointer;" id="loginLabel">扫码登录</a>-->
@@ -112,7 +108,7 @@
             </form>
             <hr>
             <footer class="col-sm-12 text-center">
-                <p class="m-b-0">{:system_config("copyright")}</p>
+                <p class="m-b-0">{:system_config('copyright')}</p>
             </footer>
         </div>
     </div>

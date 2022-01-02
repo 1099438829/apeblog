@@ -27,7 +27,7 @@ class Admin extends BaseModel
     {
         $info = self::where("name|tel", "=", $name)->find();
         if (!$info) return self::setErrorInfo("登录账号不存在");
-        if ($info['pwd'] != md5(md5($pwd))) return self::setErrorInfo("密码不正确！");
+        if ($info['password'] != md5(md5($pwd))) return self::setErrorInfo("密码不正确！");
         if ($info['status'] != 1) return self::setErrorInfo("账号已被冻结！");
         self::setLoginInfo($info);
         return true;
@@ -61,7 +61,7 @@ class Admin extends BaseModel
      */
     public static function setLoginInfo($info)
     {
-        unset($info->pwd);//去除密码字段
+        unset($info->password);//去除密码字段
         $info->role_auth = AdminRole::getAuth($info['role_id'] ?? 0);//提前缓存auth字段避免频繁查询
         Session::set("adminId", $info['id']);
         Session::set("adminInfo", $info->toArray());
@@ -109,7 +109,7 @@ class Admin extends BaseModel
         $count = self::counts($model);
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'], (int)$where['limit']);
         $data = $model->select()->each(function ($item) {
-            unset($item['pwd']);
+            unset($item['password']);
             // 用户信息
             $info = self::getAdminInfoById((int)$item['create_user']);
             $item['create_user'] = $info ? $info['nickname'] : $item['create_user'];
@@ -134,7 +134,7 @@ class Admin extends BaseModel
         $model = $model->where("id", $id);
         $model = $model->field($field);
         $info = $model->find();
-        unset($info->pwd);
+        unset($info->password);
         return $info ? $info->toArray() : [];
     }
 

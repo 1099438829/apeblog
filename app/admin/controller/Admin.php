@@ -63,7 +63,7 @@ class Admin extends AuthController
         $form[] = Elm::input('name', '登录账号')->col(10);
         $form[] = Elm::input('nickname', '昵称')->col(10);
         $form[] = Elm::frameImage('avatar', '头像', Url::buildUrl('admin/images/index', array('fodder' => 'avatar', 'limit' => 1)))->icon("ios-image")->width('96%')->height('440px')->col(10);
-        $form[] = Elm::password('pwd', '密码')->col(10);
+        $form[] = Elm::password('password', '密码')->col(10);
         $form[] = Elm::input('realname', '真实姓名')->col(10);
         $form[] = Elm::select('role_id', '角色')->options(function () {
             $list = rModel::getAuthLst();
@@ -95,7 +95,7 @@ class Admin extends AuthController
         $form[] = Elm::input('name', '登录账号', $ainfo['name'])->col(10);
         $form[] = Elm::input('nickname', '昵称', $ainfo['nickname'])->col(10);
         $form[] = Elm::frameImage('avatar', '头像', Url::buildUrl('admin/images/index', array('fodder' => 'avatar', 'limit' => 1)), $ainfo['avatar'])->icon("ios-image")->width('96%')->height('440px')->col(10);
-        $form[] = Elm::password('pwd', '密码', $ainfo['pwd'])->col(10);
+        $form[] = Elm::password('password', '密码', $ainfo['password'])->col(10);
         $form[] = Elm::input('realname', '真实姓名', $ainfo['realname'])->col(10);
         $form[] = Elm::select('role_id', '角色', $ainfo['role_id'])->options(function () {
             $list = rModel::getAuthLst();
@@ -124,7 +124,7 @@ class Admin extends AuthController
             ['name', ''],
             ['nickname', ''],
             ['avatar', ''],
-            ['pwd', ''],
+            ['password', ''],
             ['realname', ''],
             ['role_id', ''],
             ['tel', ''],
@@ -132,7 +132,7 @@ class Admin extends AuthController
             ['status', '']
         ]);
         if ($data['name'] == "") return app("json")->fail("登录账号不能为空");
-        if ($data['pwd'] == "") return app("json")->fail("密码不能为空");
+        if ($data['password'] == "") return app("json")->fail("密码不能为空");
         if ($data['tel'] == "") return app("json")->fail("手机号不能为空");
         if ($data['mail'] == "") return app("json")->fail("邮箱不能为空");
         if (is_array($data['avatar'])) $data['avatar'] = $data['avatar'][0];
@@ -142,14 +142,14 @@ class Admin extends AuthController
             if ($info) {
                 return app("json")->fail("用户已存在");
             }
-            $data['pwd'] = md5(md5($data['pwd']));
+            $data['password'] = md5(md5($data['password']));
             $data['ip'] = $this->request->ip();
             $data['create_user'] = $this->adminId;
             $data['create_time'] = time();
             $res = aModel::insert($data);
         } else {
             $ainfo = aModel::get($id);
-            if ($ainfo['pwd'] != $data['pwd']) $data['pwd'] = md5(md5($data['pwd']));
+            if ($ainfo['password'] != $data['password']) $data['password'] = md5(md5($data['password']));
             $data['update_user'] = $this->adminId;
             $data['update_time'] = time();
             $res = aModel::update($data, ['id' => $id]);
@@ -181,7 +181,7 @@ class Admin extends AuthController
         ]);
         if ($data['oldpwd'] == '' || $data['newpwd'] == '') return app("json")->fail("参数有误，新旧密码为空！");
         $adminInfo = aModel::get($this->adminId);
-        if ($adminInfo['pwd'] == md5(md5($data['oldpwd']))) return aModel::update(['pwd' => md5(md5($data['newpwd']))], ['id' => $this->adminId]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+        if ($adminInfo['password'] == md5(md5($data['oldpwd']))) return aModel::update(['password' => md5(md5($data['newpwd']))], ['id' => $this->adminId]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
         return app("json")->fail("密码不正确！");
     }
 
