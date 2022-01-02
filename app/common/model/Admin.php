@@ -26,7 +26,6 @@ class Admin extends BaseModel
     public static function login(string $name, string $pwd): bool
     {
         $info = self::where("name|tel", "=", $name)->find();
-        if(!empty($info->avatar)) $info->avatar = url($info->avatar);
         if (empty($info)) return self::setErrorInfo("登录账号不存在");
         if ($info['password'] != md5(md5($pwd))) return self::setErrorInfo("密码不正确！");
         if ($info['status'] != 1) return self::setErrorInfo("账号已被冻结！");
