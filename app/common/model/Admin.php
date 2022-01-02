@@ -26,32 +26,12 @@ class Admin extends BaseModel
     public static function login(string $name, string $pwd): bool
     {
         $info = self::where("name|tel", "=", $name)->find();
-        if (!$info) return self::setErrorInfo("登录账号不存在");
+        if(!empty($info->avatar)) $info->avatar = url($info->avatar);
+        if (empty($info)) return self::setErrorInfo("登录账号不存在");
         if ($info['password'] != md5(md5($pwd))) return self::setErrorInfo("密码不正确！");
         if ($info['status'] != 1) return self::setErrorInfo("账号已被冻结！");
         self::setLoginInfo($info);
         return true;
-    }
-
-    /**
-     * 微信扫码登录后台
-     * @param array $message
-     * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     */
-    public static function wechatLogin(array $message)
-    {
-        $param = param_to_array(str_replace("qrscene_", "", $message['EventKey']));
-        // 查找用户uid
-        $uid = WechatUser::getUidByOpenId($message['FromUserName']);
-        if (!$uid) return ['status' => 101];
-        $adminInfo = self::where("uid", $uid)->find();
-        if (!$adminInfo) return ['status' => 102];
-        Cache::store('redis')->set("info_" . $param['token'], $adminInfo, 60);
-        return ['status' => 100];
     }
 
     /**

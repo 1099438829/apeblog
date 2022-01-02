@@ -26,6 +26,7 @@ trait TemplateTrait
         $ids = $request->param("id", 0);
         if (empty($ids) || !$ids) return app("json")->fail("参数有误，Id为空！");
         if (!is_array($ids)) $ids = explode(",", $ids);
+        if (in_array(1, $ids)) return app("json")->fail("参数有误，初始ID不允许操作！");
         return $this->model->where($this->model->getPk(), "in", $ids)->delete() ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 
@@ -39,6 +40,7 @@ trait TemplateTrait
         $ids = $request->param("id", 0);
         if (empty($ids) || !$ids) return app("json")->fail("参数有误，Id为空！");
         if (!is_array($ids)) $ids = explode(",", $ids);
+        if (in_array(1, $ids)) return app("json")->fail("参数有误，初始ID不允许操作！");
         return $this->model->where($this->model->getPk(), "in", $ids)->update(['status' => 1]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 
@@ -52,6 +54,7 @@ trait TemplateTrait
         $ids = $request->param("id", 0);
         if (empty($ids) || !$ids) return app("json")->fail("参数有误，Id为空！");
         if (!is_array($ids)) $ids = explode(",", $ids);
+        if (in_array(1, $ids)) return app("json")->fail("参数有误，初始ID不允许操作！");
         return $this->model->where($this->model->getPk(), "in", $ids)->update(['status' => 0]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 

@@ -16,11 +16,11 @@ class SystemBasic extends BaseController
     /**
      * 操作失败提示框
      * @param string $msg 提示信息
-     * @param int $backUrl 跳转地址
-     * @param string $info
+     * @param string $backUrl 跳转地址
+     * @param string $title 标题
      * @param int $duration 持续时间
      * @return mixed
-     * @throws Exception
+     * @throws \Exception
      */
     protected function failedNotice($msg = '操作失败', $backUrl = 0, $info = '', $duration = 3)
     {

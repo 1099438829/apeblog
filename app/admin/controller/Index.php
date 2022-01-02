@@ -9,9 +9,6 @@ use app\admin\extend\Util as Util;
 
 class Index extends AuthController
 {
-    // 无需登录的
-    protected $noNeedLogin = ['test', 'accessauth', 'pddlogin'];
-
     /**
      * 后台首页
      * @return string
@@ -26,8 +23,8 @@ class Index extends AuthController
             cache(AdminAuth::getMenuCacheKey($this->adminId), $menuList, 1 * 60 * 60);
         }
         $this->assign("menu", $menuList);
-        $message = ['data' => [], 'count' => 0];
-        $this->assign("message", $message);
+        $messageList = ['data' => [], 'count' => 0];
+        $this->assign("message", $messageList);
         return $this->fetch();
     }
 

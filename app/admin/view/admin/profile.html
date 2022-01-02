@@ -8,11 +8,11 @@
     <meta name="keywords" content="{:system_config('keywords')}">
     <meta name="description" content="{:system_config('description')}">
     <meta name="author" content="{:system_config('author')}">
-    <link href="__ADMIN_PATH__css/bootstrap.min.css" rel="stylesheet">
-    <link href="__ADMIN_PATH__css/materialdesignicons.min.css" rel="stylesheet">
-    <link href="__ADMIN_PATH__css/style.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.css">
-    <link href="__ADMIN_PATH__css/cropper.min.css" rel="stylesheet">
+    <link href="/static/admin/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/admin/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="/static/admin/css/style.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/admin/js/jconfirm/jquery-confirm.min.css">
+    <link href="/static/admin/css/cropper.min.css" rel="stylesheet">
     <style type="text/css">
         /* 裁剪样式 */
         .image-wrapper {
@@ -226,14 +226,14 @@
     </div>
 </div>
 <!--图片裁剪END-->
-<script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/main.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/cropper.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-notify.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/lightyear.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/jquery.lyear.loading.js"></script>
-<script src="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/main.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/cropper.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/lightyear.js"></script>
+<script type="text/javascript" src="/static/admin/js/jquery.lyear.loading.js"></script>
+<script src="/static/admin/js/jconfirm/jquery-confirm.min.js"></script>
 <script>
     $(".site-form").submit(function () {
         if ($("input[name='nickname']").val() == '') lightyear.notify('昵称不能为空', 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');

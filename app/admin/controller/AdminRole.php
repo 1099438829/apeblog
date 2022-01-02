@@ -106,6 +106,8 @@ class AdminRole extends AuthController
             $data['update_time'] = time();
             $res = rModel::update($data, ['id' => $id]);
         }
+        //清理缓存
+        aModel::clearCache($this->adminId);
         return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败");
     }
 }

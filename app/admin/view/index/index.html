@@ -8,12 +8,12 @@
     <meta name="keywords" content="{:system_config('keywords')}">
     <meta name="description" content="{:system_config('description')}">
     <meta name="author" content="{:system_config('author')}">
-    <link href="__ADMIN_PATH__css/bootstrap.min.css" rel="stylesheet">
-    <link href="__ADMIN_PATH__css/materialdesignicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="__ADMIN_PATH__js/bootstrap-multitabs/multitabs.min.css">
-    <link href="__ADMIN_PATH__css/animate.css" rel="stylesheet">
-    <link href="__ADMIN_PATH__css/style.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.css">
+    <link href="/static/admin/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/admin/css/materialdesignicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/admin/js/bootstrap-multitabs/multitabs.min.css">
+    <link href="/static/admin/css/animate.css" rel="stylesheet">
+    <link href="/static/admin/css/style.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/admin/js/jconfirm/jquery-confirm.min.css">
     <style>
         body {
             opacity: 0;
@@ -38,9 +38,8 @@
         <aside class="lyear-layout-sidebar">
             <!-- logo -->
             <div id="logo" class="sidebar-header">
-                <a href="/admin/index/index.html"><img src="__ADMIN_PATH__images/logo-sidebar.png"
-                                                       title="{:system_config('title")}后台管理系统"
-                    alt="{:system_config('title")}后台管理系统" /></a>
+                <a href="/admin/index/index.html"><img src="/static/admin/images/logo-sidebar.png" title="{:system_config('title')}后台管理系统"
+                    alt="{:system_config('title')}后台管理系统" /></a>
             </div>
             <div class="lyear-layout-sidebar-scroll">
                 <nav class="sidebar-main">
@@ -95,9 +94,9 @@
                     <ul class="topbar-right">
                         <li class="dropdown dropdown-profile">
                             <a href="javascript:void(0)" data-toggle="dropdown">
-                                <img class="img-avatar img-avatar-48 m-r-10" src="{$adminInfo.avatar}"
-                                     alt="{$adminInfo.nickname}" style="width: 32px;height: 32px;"/>
-                                <span>{$adminInfo.nickname} <span class="caret"></span></span>
+                                <img class="img-avatar img-avatar-48 m-r-10" src="{$admin_info.avatar}"
+                                     alt="{$admin_info.nickname}" style="width: 32px;height: 32px;"/>
+                                <span>{$admin_info.nickname} <span class="caret"></span></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <li><a class="multitabs" data-url="/admin/admin/profile" href="javascript:void(0)"><i
@@ -261,14 +260,14 @@
         <!--End 页面主要内容-->
     </div>
 </div>
-<script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/perfect-scrollbar.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-multitabs/multitabs.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-notify.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/jquery.cookie.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/index.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/lightyear.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/bootstrap-multitabs/multitabs.js"></script>
+<script type="text/javascript" src="/static/admin/js/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/index.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/lightyear.js"></script>
+<script type="text/javascript" src="/static/admin/js/jconfirm/jquery-confirm.min.js"></script>
 </body>
 </html>

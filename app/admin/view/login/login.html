@@ -8,9 +8,9 @@
     <meta name="keywords" content="{:system_config('keywords')}">
     <meta name="description" content="{:system_config('description')}">
     <meta name="author" content="{:system_config('author')}">
-    <link href="__ADMIN_PATH__css/bootstrap.min.css" rel="stylesheet">
-    <link href="__ADMIN_PATH__css/materialdesignicons.min.css" rel="stylesheet">
-    <link href="__ADMIN_PATH__css/style.min.css" rel="stylesheet">
+    <link href="/static/admin/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/admin/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="/static/admin/css/style.min.css" rel="stylesheet">
     <style>
         .lyear-wrapper {
             position: relative;
@@ -56,7 +56,7 @@
     </style>
 </head>
 
-<body style="background: url('__ADMIN_PATH__images/back.jpg')">
+<body style="background: url('/static/admin/images/back.jpg')">
 <div class="row lyear-wrapper">
     <div class="lyear-login">
         <div class="login-center">
@@ -65,22 +65,7 @@
                     <div class="col-xs-8 text-left">
                         <a href="/index" style="font-size: 20px;color: #1c1e2f;">{:system_config('title')}后台管理系统</a>
                     </div>
-                    <!--          <div class="col-xs-4 text-right">-->
-                    <!--            <a onclick="changeLoginType()" style="cursor: pointer;" id="loginLabel">扫码登录</a>-->
-                    <!--          </div>-->
                 </div>
-            </div>
-            <div style="height: 212px;width: 100%;display: none;" id="scan">
-                <div style="padding: 10px;text-align: center;position: relative;">
-                    <img src="__ADMIN_PATH__images/wechat.png" id="qrcode" width="160" height="160" alt="请打开微信扫一扫登录"
-                         title="请打开微信扫一扫登录">
-                    <div style="position: absolute;top: 0;left: 0;width: 100%;padding: 10px;display: none;"
-                         class="lab_qrcode_text">
-                        <p style="height: 160px;width: 160px;margin: auto;line-height: 160px;background: rgba(0, 0, 0, 0.6);color: #fff;font-size: 16px;cursor: pointer;"
-                           title="点击重新加载" onclick="openws();">二维码已过期</p>
-                    </div>
-                </div>
-                <p style="text-align: center;margin-top: 10px;font-size: 20px;">请打开微信扫一扫登录</p>
             </div>
             <form action="#" method="post" style="height: 212px;width: 100%;" id="loginFrm">
                 <div class="form-group has-feedback feedback-left has-username" style="margin-bottom: 20px;">
@@ -113,106 +98,21 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/login.js"></script>
+<script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/bootstrap.min.js"></script>
 <script>
-    let scand = false;
-    let type = false;
-    let protocol = location.protocol === 'https:' ? "wss://" + window.location.host + "/wss" : "ws://" + window.location.host + ":1996";
-
-    // 切换登录
-    function changeLoginType() {
-        $("#loginFrm").toggle();
-        $("#scan").toggle();
-        type = !type;
-        if (type) $("#loginLabel").text("账号登录");
-        else $("#loginLabel").text("扫码登录");
-        if (!scand && type) {
-            scand = true;
-            openws();
-        }
-    }
-
-    /**
-     * 获取cookie,单个或者多个
-     * @param name
-     * @returns {any[]|any}
-     */
-    function getCookies(name) {
-        var _cookies = document.cookie.split(";");
-        const value = new Array();
-        if (!Array.isArray(name)) _name = new Array(name);
-        for (var i = 0; i < _cookies.length; i++) {
-            var _cookie = _cookies[i].trim().split("=");
-            if (_name.includes(_cookie[0].trim())) value[_cookie[0].trim()] = _cookie[1].trim();
-        }
-        if (Array.isArray(name)) return value;
-        else return value[name];
-    }
-
-    let ws = new WebSocket(protocol);
-
-    // 打开 ws
-    function openws() {
-        let time = null, tryNum = 10;
-        if (ws.readyState == 3) ws = new WebSocket(protocol);
-        // 关闭遮罩
-        $(".lab_qrcode_text").hide();
-        try {
-            ws.send('{"type":"qrcode","token":"' + getCookies("PHPSESSID") + '"}');
-        } catch (err) {
-            // 重试10次，每次之间间隔3秒
-            time = setTimeout(function () {
-                if (tryNum > 0) {
-                    tryNum--;
-                    if (ws.readyState == 1) {
-                        clearTimeout(time);
-                        ws.send('{"type":"qrcode","token":"' + getCookies("PHPSESSID") + '"}');
-                    }
-                } else {
-                    clearTimeout(time);
-                    scand = false;
-                    console.error("连接超时.");
-                }
-            }, 100);
-        }
-        ws.onmessage = function (e) {
-            data = JSON.parse(e.data);
-            event(data['type'], data['data'])
-        }
-    }
-
-    let t1;
-
-    // 事件处理
-    function event(type, data) {
-        switch (type) {
-            case 'qrcode':
-                t1 = setInterval(function () {
-                    ws.send('{"type":"valid","token":"' + getCookies("PHPSESSID") + '"}');
-                }, 2000);
-                $("#qrcode").attr("src", data['src']);
-                break;
-            case 'valid':
-                switch (data['status']) {
-                    case 200:
-                        clearInterval(t1);
-                        window.location = "/admin/index/index";
-                        break;
-                    case 300:
-                        break;
-                    case 400:
-                        clearInterval(t1);
-                        scand = false;
-                        $(".lab_qrcode_text").show();
-                        break;
-                }
-                break;
-            case 'timeout':
-                clearInterval(t1);
-                scand = false;
-        }
+    // 账号登录
+    function btnLogin() {
+        if ($("#username").val() == "") {$(".has-username").addClass("has-error");return false;}
+        if ($("#password").val() == "") {$(".has-password").addClass("has-error");return false;}
+        if ($("#captchas").val() == "") {$(".has-captchas").addClass("has-error");return false;}
+        $.post(url="/admin/login/verify",$("#loginFrm").serialize(),function (res) {
+            if (res.status == 200) window.location = "/admin/index/index";
+            else alert(res.msg);
+            return true;
+        });
+        $("#captcha").attr("src",'/admin/login/captcha?d='+Math.random());
+        return false;
     }
 </script>
 </body>

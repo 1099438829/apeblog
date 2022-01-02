@@ -171,72 +171,6 @@
             "install-path": "../doctrine/lexer"
         },
         {
-            "name": "firebase/php-jwt",
-            "version": "v5.5.1",
-            "version_normalized": "5.5.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/firebase/php-jwt.git",
-                "reference": "83b609028194aa042ea33b5af2d41a7427de80e6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/83b609028194aa042ea33b5af2d41a7427de80e6",
-                "reference": "83b609028194aa042ea33b5af2d41a7427de80e6",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": ">=4.8 <=9"
-            },
-            "suggest": {
-                "paragonie/sodium_compat": "Support EdDSA (Ed25519) signatures when libsodium is not present"
-            },
-            "time": "2021-11-08T20:18:51+00:00",
-            "type": "library",
-            "installation-source": "dist",
-            "autoload": {
-                "psr-4": {
-                    "Firebase\\JWT\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Neuman Vong",
-                    "email": "neuman+pear@twilio.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Anant Narayanan",
-                    "email": "anant@php.net",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
-            "homepage": "https://github.com/firebase/php-jwt",
-            "keywords": [
-                "jwt",
-                "php"
-            ],
-            "support": {
-                "issues": "https://github.com/firebase/php-jwt/issues",
-                "source": "https://github.com/firebase/php-jwt/tree/v5.5.1"
-            },
-            "install-path": "../firebase/php-jwt"
-        },
-        {
             "name": "league/flysystem",
             "version": "1.1.9",
             "version_normalized": "1.1.9.0",
@@ -1435,12 +1369,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/framework.git",
-                "reference": "109ade68d6ad3b10af5c8d9d8f53161a513eec18"
+                "reference": "d9cadb6971ae92ff85ba5f2be77a40b0ad5718fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/framework/zipball/109ade68d6ad3b10af5c8d9d8f53161a513eec18",
-                "reference": "109ade68d6ad3b10af5c8d9d8f53161a513eec18",
+                "url": "https://api.github.com/repos/top-think/framework/zipball/d9cadb6971ae92ff85ba5f2be77a40b0ad5718fb",
+                "reference": "d9cadb6971ae92ff85ba5f2be77a40b0ad5718fb",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1468,7 +1402,7 @@
                 "mockery/mockery": "^1.2",
                 "phpunit/phpunit": "^7.0"
             },
-            "time": "2021-12-30T13:54:49+00:00",
+            "time": "2021-12-31T09:14:28+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1568,17 +1502,17 @@
         },
         {
             "name": "topthink/think-helper",
-            "version": "v3.1.5",
-            "version_normalized": "3.1.5.0",
+            "version": "v3.1.6",
+            "version_normalized": "3.1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-helper.git",
-                "reference": "f98e3ad44acd27ae85a4d923b1bdfd16c6d8d905"
+                "reference": "769acbe50a4274327162f9c68ec2e89a38eb2aff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-helper/zipball/f98e3ad44acd27ae85a4d923b1bdfd16c6d8d905",
-                "reference": "f98e3ad44acd27ae85a4d923b1bdfd16c6d8d905",
+                "url": "https://api.github.com/repos/top-think/think-helper/zipball/769acbe50a4274327162f9c68ec2e89a38eb2aff",
+                "reference": "769acbe50a4274327162f9c68ec2e89a38eb2aff",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1590,7 +1524,10 @@
             "require": {
                 "php": ">=7.1.0"
             },
-            "time": "2021-06-21T06:17:31+00:00",
+            "require-dev": {
+                "phpunit/phpunit": "^9.5"
+            },
+            "time": "2021-12-15T04:27:55+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1614,7 +1551,7 @@
             "description": "The ThinkPHP6 Helper Package",
             "support": {
                 "issues": "https://github.com/top-think/think-helper/issues",
-                "source": "https://github.com/top-think/think-helper/tree/v3.1.5"
+                "source": "https://github.com/top-think/think-helper/tree/v3.1.6"
             },
             "install-path": "../topthink/think-helper"
         },
@@ -1677,17 +1614,17 @@
         },
         {
             "name": "topthink/think-orm",
-            "version": "v2.0.46",
-            "version_normalized": "2.0.46.0",
+            "version": "v2.0.47",
+            "version_normalized": "2.0.47.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-orm.git",
-                "reference": "51ec287abdb99521dbbc66526b114f2e32b8fff4"
+                "reference": "e69151fba9dd21f86e392a0ae208825904d6d49a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-orm/zipball/51ec287abdb99521dbbc66526b114f2e32b8fff4",
-                "reference": "51ec287abdb99521dbbc66526b114f2e32b8fff4",
+                "url": "https://api.github.com/repos/top-think/think-orm/zipball/e69151fba9dd21f86e392a0ae208825904d6d49a",
+                "reference": "e69151fba9dd21f86e392a0ae208825904d6d49a",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1707,7 +1644,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^7|^8|^9.5"
             },
-            "time": "2021-12-29T05:48:27+00:00",
+            "time": "2021-12-31T06:12:13+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1735,7 +1672,7 @@
             ],
             "support": {
                 "issues": "https://github.com/top-think/think-orm/issues",
-                "source": "https://github.com/top-think/think-orm/tree/v2.0.46"
+                "source": "https://github.com/top-think/think-orm/tree/v2.0.47"
             },
             "install-path": "../topthink/think-orm"
         },

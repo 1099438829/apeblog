@@ -22,7 +22,20 @@ class AdminAuth extends BaseModel
      */
     public static function getAuthId(string $module, string $controller, string $action): int
     {
-        return self::where("module", $module)->where("controller", $controller)->where("action", $action)->value('id') ?: -1;
+        //先检查缓存是否存在
+        $authList = cache(AdminAuth::getAuthCacheKey());
+        //不存在则更新缓存
+        if ($authList === null) {
+            $authList = self::column('module,controller,action', 'id');
+            $temp = [];
+            foreach ($authList as $key => $value) {
+                $temp[$value['module'] . '_' . $value['controller'] . '_' . $value['action']] = $key;
+            }
+            $authList = $temp;
+            cache(AdminAuth::getAuthCacheKey(), $authList, 24 * 60 * 60);
+            unset($temp);
+        }
+        return $authList[$module . '_' . $controller . '_' . $action] ?? -1;
     }
 
     /**
@@ -49,18 +62,6 @@ class AdminAuth extends BaseModel
             $item['spreed'] = $item['spreed'] ? true : false;
         });
         return $data->toArray() ?: [];
-    }
-
-    /**
-     * 获取菜单列表缓存key
-     * @param $adminId
-     * @return string
-     * @author 李玉坤
-     * @date 2021-06-09 17:24
-     */
-    public static function getMenuCacheKey($adminId)
-    {
-        return 'menu:List:' . $adminId;
     }
 
     /**
@@ -102,6 +103,34 @@ class AdminAuth extends BaseModel
             $item['children'] = self::lst($item['id'], $auth);
         });
         return $data->toArray() ?: [];
+    }
+
+    /**
+     * 获取菜单列表缓存key
+     * @param $adminId
+     * @return string
+     * @author 李玉坤
+     * @date 2021-06-09 17:24
+     */
+    public static function getMenuCacheKey($adminId)
+    {
+        return 'menu:List:' . $adminId;
+    }
+
+    /**
+     * @return string
+     * @author 李玉坤
+     * @date 2021-06-15 11:11
+     */
+    public static function getAuthCacheKey()
+    {
+        return 'auth:key:list';
+    }
+
+    public static function clearCache($adminId)
+    {
+        cache(AdminAuth::getMenuCacheKey($adminId), null);
+        cache(AdminAuth::getAuthCacheKey(), null);
     }
 
     /**

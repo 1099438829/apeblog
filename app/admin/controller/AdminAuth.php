@@ -130,6 +130,8 @@ class AdminAuth extends AuthController
             $data['update_time'] = time();
             $res = aModel::update($data, ['id' => $id]);
         }
+        //清理缓存
+        aModel::clearCache($this->adminId);
         return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败");
     }
 
@@ -143,6 +145,8 @@ class AdminAuth extends AuthController
         if (!$id) return app("json")->fail("参数有误，Id为空！");
         $where = Util::postMore([['field', ''], ['value', '']]);
         if ($where['field'] == '' || $where['value'] == '') return app("json")->fail("参数有误！");
+        //清理缓存
+        aModel::clearCache($this->adminId);
         return aModel::update([$where['field'] => $where['value']], ['id' => $id]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 }
