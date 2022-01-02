@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <title>{$apeField['title']} - {:web_config("title")}</title>
+    <title>{$apeField['title']} - {:web_config('title')}</title>
     <meta name="keywords" content="{$apeField['keywords']}" />
     <meta name="description" content="{$apeField['description']}"/>
     {include file="public/head" /}
@@ -70,7 +70,7 @@
                                         <a href="{$Request.domain . $Request.url}" target="_blank">{$Request.domain . $Request.url}</a>
                                       </u>
                                     </span>
-                                    <br />来源：{:web_config("title")}
+                                    <br />来源：{:web_config('title')}
                                     <br />文章版权归作者所有，未经允许请勿转载。</p>
                                 </div>
                                 <div class="post-end-dividing">THE END</div>
