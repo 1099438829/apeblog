@@ -6,15 +6,20 @@
 
 namespace app\index\controller;
 
-use app\common\model\User as userModel;
 use app\admin\extend\Util;
+use app\common\model\User as userModel;
+use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
+use think\Response;
 
 class Login extends Base
 {
     /**
      * 登录
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function login()
     {
@@ -25,9 +30,9 @@ class Login extends Base
     /**
      * 验证登录
      * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function verify()
     {
@@ -43,7 +48,7 @@ class Login extends Base
     /**
      * 注册
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function register()
     {
@@ -53,7 +58,7 @@ class Login extends Base
     /**
      * 忘记密码
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function forget()
     {
@@ -63,7 +68,7 @@ class Login extends Base
     /**
      * 退出登陆
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function logout()
     {
@@ -78,7 +83,7 @@ class Login extends Base
 
     /**
      * 验证码
-     * @return \think\Response
+     * @return Response
      */
     public function captcha()
     {

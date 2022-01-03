@@ -3,14 +3,18 @@
 namespace app\index\controller;
 
 use app\admin\extend\Util as Util;
-use app\common\model\Document;
-use  app\common\model\DocumentCategory;
-use app\common\model\DocumentCategoryContent;
+use app\common\constant\Data;
 use app\common\model\Comment as commentModel;
+use app\common\model\Document;
+use app\common\model\DocumentCategory;
+use app\common\model\DocumentCategoryContent;
 use app\common\model\Tag as TagModel;
 use app\Request;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
+use think\Exception;
 use think\facade\Log;
-use app\common\constant\Data;
 
 /**
  * 应用入口
@@ -22,10 +26,10 @@ class Article extends Base
     /**
      * 列表页
      * @return string
-     * @throws \think\Exception
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws Exception
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 李玉坤
      * @date 2021-10-29 0:17
      */
@@ -101,10 +105,10 @@ class Article extends Base
     /**
      * 详情页
      * @return string
-     * @throws \think\Exception
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws Exception
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 李玉坤
      * @date 2021-10-29 0:17
      */
@@ -140,7 +144,7 @@ class Article extends Base
         $article['position'] = tpl_get_position($dc);
         //更新浏览次数
         $documentModel->where('id', $article['id'])->inc('view')->update();
-        $templateFile = config('view.view_path') . 'article/' . $articleType.'.html';
+        $templateFile = config('view.view_path') . 'article/' . $articleType . '.html';
         if (!is_file($templateFile)) {
             $this->error('模板文件不存在！');
         }
@@ -188,10 +192,10 @@ class Article extends Base
         if ($data['email'] == "") $this->error("邮箱不能为空");
         if ($data['url'] == "") $this->error("url不能为空");
         if ($data['content'] == "") $this->error("内容能为空");
-        $data['status'] = web_config('comment_review')?0:1;
+        $data['status'] = web_config('comment_review') ? 0 : 1;
         $res = commentModel::create($data);
         if ($res) {
-            $this->success('提交成功',url('detail',['id'=>$data['document_id']]));
+            $this->success('提交成功', url('detail', ['id' => $data['document_id']]));
         } else {
             $this->error('提交失败，请联系站长查看', null);
         }
@@ -200,9 +204,9 @@ class Article extends Base
     /**
      * 文章标签页面
      * @return string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 李玉坤
      * @date 2021-10-29 0:19
      */
@@ -258,9 +262,9 @@ class Article extends Base
     /**
      * 搜索页面
      * @return string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 李玉坤
      * @date 2021-10-29 0:18
      */

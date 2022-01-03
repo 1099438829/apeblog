@@ -3,11 +3,14 @@
 namespace app\index\controller;
 
 use app\admin\extend\Util as Util;
-use app\common\model\FriendLink as friendLinkModel;
-use app\common\validate\MessageForm as MessageformValidate;
-use app\common\model\MessageForm as MessageFormModel;
-use app\Request;
 use app\common\constant\Data;
+use app\common\model\FriendLink as friendLinkModel;
+use app\common\model\MessageForm as MessageFormModel;
+use app\common\validate\MessageForm as MessageformValidate;
+use app\Request;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 应用入口
@@ -38,9 +41,9 @@ class Index extends Base
      * 友链申请
      * @param Request $request
      * @return string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 李玉坤
      * @date 2021-10-17 1:03
      */
@@ -83,9 +86,9 @@ class Index extends Base
      * 留言
      * @param Request $request
      * @return string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 李玉坤
      * @date 2021-10-17 1:03
      */

@@ -3,6 +3,12 @@
 
 namespace app\common\model;
 
+use Exception;
+use think\Collection;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
+
 /**
  * Class Tag
  * @package app\common\model
@@ -15,9 +21,9 @@ class Tag extends BaseModel
      * 列表
      * @param $where
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 李玉坤
      * @date 2021-02-15 23:24
      */
@@ -41,8 +47,8 @@ class Tag extends BaseModel
      * @param $tags
      * @param $document_id
      * @param $user_id
-     * @return \think\Collection
-     * @throws \Exception
+     * @return Collection
+     * @throws Exception
      * @author 李玉坤
      * @date 2021-11-08 0:53
      */
@@ -69,9 +75,9 @@ class Tag extends BaseModel
      * 列表
      * @param $where
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 李玉坤
      * @date 2021-02-15 23:24
      */

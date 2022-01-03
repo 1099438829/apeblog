@@ -4,7 +4,9 @@
 namespace app\common\model;
 
 
-use app\common\model\BaseModel;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 系统配置
@@ -17,9 +19,9 @@ class SystemConfig extends BaseModel
      * 列表
      * @param int $tab_id
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public static function lst($where): array
     {
@@ -36,9 +38,9 @@ class SystemConfig extends BaseModel
      * 获取字段值
      * @param string $formName
      * @return string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public static function getValueByFormName(string $formName): string
     {
@@ -63,9 +65,9 @@ class SystemConfig extends BaseModel
      * 获取字段值
      * @param string $formNames
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public static function getValuesByFormNames(array $formNames): array
     {
@@ -80,9 +82,9 @@ class SystemConfig extends BaseModel
      * 获取参数
      * @param int $tab_id
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public static function getLstByTabId(int $tab_id = 0): array
     {

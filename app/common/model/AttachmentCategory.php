@@ -4,7 +4,9 @@
 namespace app\common\model;
 
 
-use app\common\model\BaseModel;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * Class AttachmentCategory
@@ -18,9 +20,9 @@ class AttachmentCategory extends BaseModel
      * @param int $pid
      * @param bool $lower
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public static function getCategoryLst(string $type = "image", int $pid = 0, bool $lower = false)
     {
@@ -52,9 +54,9 @@ class AttachmentCategory extends BaseModel
      * @param int $pid
      * @param string $title
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public static function buildNodes(string $type = "images", int $pid = 0, string $title = "")
     {
@@ -90,9 +92,9 @@ class AttachmentCategory extends BaseModel
     /**
      * 返回选择项
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public static function returnOptions(): array
     {

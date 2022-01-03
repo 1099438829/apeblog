@@ -4,7 +4,10 @@
 namespace app\common\model;
 
 
-use app\common\model\BaseModel;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
+use think\Paginator;
 
 /**
  * 消息通知
@@ -16,8 +19,8 @@ class AdminNotify extends BaseModel
     /**
      * 系统分页
      * @param array $where
-     * @return \think\Paginator
-     * @throws \think\db\exception\DbException
+     * @return Paginator
+     * @throws DbException
      */
     public static function systemPage(array $where)
     {
@@ -47,9 +50,9 @@ class AdminNotify extends BaseModel
      * 后台首页获取通知信息
      * @param int $num
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public static function pageList(int $num)
     {

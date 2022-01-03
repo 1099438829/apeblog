@@ -4,7 +4,7 @@
 namespace app\common\model;
 
 
-use app\common\model\BaseModel;
+use think\db\exception\DbException;
 
 /**
  * 操作日志
@@ -40,7 +40,7 @@ class AdminLog extends BaseModel
      * 日志列表
      * @param $where
      * @return array
-     * @throws \think\db\exception\DbException
+     * @throws DbException
      */
     public static function systemPage($where)
     {

@@ -4,8 +4,10 @@
 namespace app\common\model;
 
 
-use app\common\model\BaseModel;
 use FormBuilder\Factory\Elm;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 操作角色
@@ -27,9 +29,9 @@ class AdminRole extends BaseModel
     /**
      * 获取所有角色ids
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public static function getAuthLst(): array
     {
@@ -52,9 +54,9 @@ class AdminRole extends BaseModel
      * @param int $pid
      * @param array $auth
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public static function systemPage(int $pid = -1): array
     {
@@ -71,9 +73,9 @@ class AdminRole extends BaseModel
      * @param int $pid
      * @param array $auth
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public static function lst(int $pid = 0, array $auth = []): array
     {
@@ -107,9 +109,9 @@ class AdminRole extends BaseModel
     /**
      * 返回选择项
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public static function returnOptions(): array
     {

@@ -4,6 +4,7 @@
 namespace app\common\model;
 
 
+use think\db\Raw;
 use think\Model;
 
 trait ModelTrait
@@ -33,7 +34,8 @@ trait ModelTrait
         }
     }
 
-    public static function all($function){
+    public static function all($function)
+    {
         $query = self::newQuery();
         $function($query);
         return $query->select();
@@ -153,9 +155,10 @@ trait ModelTrait
      * @param string $like 模糊查找 关键字
      * @return array
      */
-    public static function setWherePage($model=null,$where=[],$field=[],$fieldOr=[],$fun=null,$like='LIKE'){
-        if(!is_array($where) || !is_array($field)) return false;
-        if($model===null) $model=new self();
+    public static function setWherePage($model = null, $where = [], $field = [], $fieldOr = [], $fun = null, $like = 'LIKE')
+    {
+        if (!is_array($where) || !is_array($field)) return false;
+        if ($model === null) $model = new self();
         //处理等于行查询
         foreach ($field as $key => $item) {
             if (($count = strpos($item, '.')) === false) {
@@ -194,59 +197,68 @@ trait ModelTrait
      * @param string $str
      * @return string
      */
-    private static function get_field($id,$str='|'){
-        if(is_array($id)){
-            $sql="";
-            $i=0;
-            foreach($id as $val){
+    private static function get_field($id, $str = '|')
+    {
+        if (is_array($id)) {
+            $sql = "";
+            $i = 0;
+            foreach ($id as $val) {
                 $i++;
-                if($i<count($id)){
-                    $sql.=$val.$str;
-                }else{
-                    $sql.=$val;
+                if ($i < count($id)) {
+                    $sql .= $val . $str;
+                } else {
+                    $sql .= $val;
                 }
             }
-            return  $sql;
-        }else{
+            return $sql;
+        } else {
             return $id;
         }
     }
+
     /**
      * 条件切割
      * @param string $order
      * @param string $file
      * @return string
      */
-    public static function setOrder($order,$file='-'){
-        if(empty($order)) return '';
-        return str_replace($file,' ',$order);
+    public static function setOrder($order, $file = '-')
+    {
+        if (empty($order)) return '';
+        return str_replace($file, ' ', $order);
     }
+
     /**
      * 获取时间段之间的model
      * @param int|string $time
      * @param string $ceil
      * @return array
      */
-    public static function getModelTime($where,$model=null,$prefix='add_time',$data='data',$field=' - '){
+    public static function getModelTime($where, $model = null, $prefix = 'add_time', $data = 'data', $field = ' - ')
+    {
         if ($model == null) $model = new self;
-        if(!isset($where[$data])) return $model;
-        switch ($where[$data]){
-            case 'today':case 'week':case 'month':case 'year':case 'yesterday':
-            $model=$model->whereTime($prefix,$where[$data]);
-            break;
+        if (!isset($where[$data])) return $model;
+        switch ($where[$data]) {
+            case 'today':
+            case 'week':
+            case 'month':
+            case 'year':
+            case 'yesterday':
+                $model = $model->whereTime($prefix, $where[$data]);
+                break;
             case 'quarter':
-                list($startTime,$endTime)=self::getMonth();
+                list($startTime, $endTime) = self::getMonth();
                 $model = $model->where($prefix, '>', strtotime($startTime));
                 $model = $model->where($prefix, '<', strtotime($endTime));
                 break;
             case 'lately7':
-                $model = $model->where($prefix,'between',[strtotime("-7 day"),time()]);
+                $model = $model->where($prefix, 'between', [strtotime("-7 day"), time()]);
                 break;
             case 'lately30':
-                $model = $model->where($prefix,'between',[strtotime("-30 day"),time()]);
+                $model = $model->where($prefix, 'between', [strtotime("-30 day"), time()]);
                 break;
             default:
-                if(strstr($where[$data],$field)!==false){
+                if (strstr($where[$data], $field) !== false) {
                     list($startTime, $endTime) = explode($field, $where[$data]);
                     $model = $model->where($prefix, '>', strtotime($startTime));
                     $model = $model->where($prefix, '<', strtotime($endTime));
@@ -255,14 +267,17 @@ trait ModelTrait
         }
         return $model;
     }
+
     /**
      * 获取去除html去除空格去除软回车,软换行,转换过后的字符串
      * @param string $str
      * @return string
      */
-    public static function HtmlToMbStr($str){
-        return trim(strip_tags(str_replace(["\n","\t","\r"," ","&nbsp;"],'',htmlspecialchars_decode($str))));
+    public static function HtmlToMbStr($str)
+    {
+        return trim(strip_tags(str_replace(["\n", "\t", "\r", " ", "&nbsp;"], '', htmlspecialchars_decode($str))));
     }
+
     /**
      * 截取中文指定字节
      * @param string $str
@@ -271,27 +286,31 @@ trait ModelTrait
      * @param string $file
      * @return string
      */
-    public static function getSubstrUTf8($str,$utf8len=100,$chaet='UTF-8',$file='....'){
-        if(mb_strlen($str,$chaet)>$utf8len){
-            $str=mb_substr($str,0,$utf8len,$chaet).$file;
+    public static function getSubstrUTf8($str, $utf8len = 100, $chaet = 'UTF-8', $file = '....')
+    {
+        if (mb_strlen($str, $chaet) > $utf8len) {
+            $str = mb_substr($str, 0, $utf8len, $chaet) . $file;
         }
         return $str;
     }
+
     /**
      * 获取本季度 time
      * @param int|string $time
      * @param string $ceil
      * @return array
      */
-    public static function getMonth($time='',$ceil=0){
-        if($ceil!=0)
-            $season = ceil(date('n') /3)-$ceil;
+    public static function getMonth($time = '', $ceil = 0)
+    {
+        if ($ceil != 0)
+            $season = ceil(date('n') / 3) - $ceil;
         else
-            $season = ceil(date('n') /3);
-        $firstday=date('Y-m-01',mktime(0,0,0,($season - 1) *3 +1,1,date('Y')));
-        $lastday=date('Y-m-t',mktime(0,0,0,$season * 3,1,date('Y')));
-        return array($firstday,$lastday);
+            $season = ceil(date('n') / 3);
+        $firstday = date('Y-m-01', mktime(0, 0, 0, ($season - 1) * 3 + 1, 1, date('Y')));
+        $lastday = date('Y-m-t', mktime(0, 0, 0, $season * 3, 1, date('Y')));
+        return array($firstday, $lastday);
     }
+
     /**
      * 高精度 加法
      * @param int|string $uid id
@@ -301,15 +320,15 @@ trait ModelTrait
      * @param int $acc 精度
      * @return bool
      */
-    public static function bcInc($key, $incField, $inc, $keyField = null, $acc=2)
+    public static function bcInc($key, $incField, $inc, $keyField = null, $acc = 2)
     {
-        if(!is_numeric($inc)) return false;
+        if (!is_numeric($inc)) return false;
         $model = new self();
-        if($keyField === null) $keyField = $model->getPk();
-        $result = self::where($keyField,$key)->find();
-        if(!$result) return false;
-        $new = bcadd($result[$incField],$inc,$acc);
-        return false !== $model->where($keyField,$key)->update([$incField=>$new]);
+        if ($keyField === null) $keyField = $model->getPk();
+        $result = self::where($keyField, $key)->find();
+        if (!$result) return false;
+        $new = bcadd($result[$incField], $inc, $acc);
+        return false !== $model->where($keyField, $key)->update([$incField => $new]);
     }
 
 
@@ -323,16 +342,16 @@ trait ModelTrait
      * @param int $acc 精度
      * @return bool
      */
-    public static function bcDec($key, $decField, $dec, $keyField = null, $minus = false, $acc=2)
+    public static function bcDec($key, $decField, $dec, $keyField = null, $minus = false, $acc = 2)
     {
-        if(!is_numeric($dec)) return false;
+        if (!is_numeric($dec)) return false;
         $model = new self();
-        if($keyField === null) $keyField = $model->getPk();
-        $result = self::where($keyField,$key)->find();
-        if(!$result) return false;
-        if(!$minus && $result[$decField] < $dec) return false;
-        $new = bcsub($result[$decField],$dec,$acc);
-        return false !== $model->where($keyField,$key)->update([$decField=>$new]);
+        if ($keyField === null) $keyField = $model->getPk();
+        $result = self::where($keyField, $key)->find();
+        if (!$result) return false;
+        if (!$minus && $result[$decField] < $dec) return false;
+        $new = bcsub($result[$decField], $dec, $acc);
+        return false !== $model->where($keyField, $key)->update([$decField => $new]);
     }
 
     /**
@@ -346,7 +365,7 @@ trait ModelTrait
 
     /**
      * 数据个数
-     * @param string|\think\db\Raw $model
+     * @param string|Raw $model
      * @return int
      */
     public static function counts($model): int

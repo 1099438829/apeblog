@@ -4,7 +4,9 @@
 namespace app\common\model;
 
 
-use app\common\model\BaseModel;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 操作权限
@@ -43,9 +45,9 @@ class AdminAuth extends BaseModel
      * @param int $pid
      * @param array $auth
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public static function getMenu(int $pid = 0, array $auth = []): array
     {
@@ -68,9 +70,9 @@ class AdminAuth extends BaseModel
      * 权限列表
      * @param $where
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public static function systemPage($where): array
     {
@@ -88,9 +90,9 @@ class AdminAuth extends BaseModel
      * @param int $pid
      * @param array $auth
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public static function lst(int $pid = 0, array $auth = []): array
     {
@@ -153,9 +155,9 @@ class AdminAuth extends BaseModel
     /**
      * 返回选择项
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public static function returnOptions(): array
     {
@@ -186,9 +188,9 @@ class AdminAuth extends BaseModel
      * @param array $auth
      * @param array $list
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public static function selectAndBuildTree(int $pid = 0, array $auth = [], array $list = [])
     {

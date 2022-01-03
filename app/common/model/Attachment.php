@@ -4,9 +4,6 @@
 namespace app\common\model;
 
 
-use app\common\model\BaseModel;
-use app\common\model\SystemConfig;
-
 /**
  * Class attachment
  * @package app\admin\model\widget

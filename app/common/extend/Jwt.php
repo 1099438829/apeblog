@@ -3,7 +3,11 @@
 
 namespace app\common\extend;
 
+use Exception;
+use Firebase\JWT\BeforeValidException;
+use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT as jt;
+use Firebase\JWT\SignatureInvalidException;
 
 /**
  * Class Jwt
@@ -42,16 +46,16 @@ class Jwt
             $data = jt::decode(trim(ltrim($token, 'Bearer')), $salt, ["HS256"]);
             $data = (array)$data;
             return (array)$data['data'];
-        } catch (\Firebase\JWT\SignatureInvalidException $e) {
+        } catch (SignatureInvalidException $e) {
             $status['msg'] = "签名不正确";
             return $status;
-        } catch (\Firebase\JWT\BeforeValidException $e) {
+        } catch (BeforeValidException $e) {
             $status['msg'] = "token失效";
             return $status;
-        } catch (\Firebase\JWT\ExpiredException $e) {
+        } catch (ExpiredException $e) {
             $status['msg'] = "token失效";
             return $status;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $status['msg'] = "未知错误";
             return $status;
         }

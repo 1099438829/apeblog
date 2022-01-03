@@ -4,8 +4,6 @@
 namespace app\common\model;
 
 
-use app\common\model\BaseModel;
-
 class SystemConfigTab extends BaseModel
 {
     /**

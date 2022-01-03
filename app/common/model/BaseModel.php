@@ -11,25 +11,10 @@ class BaseModel extends Model
 {
     use ModelTrait;
 
-    private static $errorMsg;
-
-    private static $transaction = 0;
-
-    private static $DbInstance = [];
-
     const DEFAULT_ERROR_MSG = '操作失败,请稍候再试!';
-
-    /**
-     * 设置错误信息
-     * @param string $errorMsg
-     * @return bool
-     */
-    protected static function setErrorInfo($errorMsg = self::DEFAULT_ERROR_MSG, $rollback = false)
-    {
-        if ($rollback) self::rollbackTrans();
-        self::$errorMsg = $errorMsg;
-        return false;
-    }
+    private static $errorMsg;
+    private static $transaction = 0;
+    private static $DbInstance = [];
 
     /**
      * 获取错误信息
@@ -50,22 +35,6 @@ class BaseModel extends Model
     }
 
     /**
-     * 提交事务
-     */
-    public static function commitTrans()
-    {
-        Db::commit();
-    }
-
-    /**
-     * 关闭事务
-     */
-    public static function rollbackTrans()
-    {
-        Db::rollback();
-    }
-
-    /**
      * 根据结果提交滚回事务
      * @param $res
      */
@@ -76,6 +45,34 @@ class BaseModel extends Model
         } else {
             self::rollbackTrans();
         }
+    }
+
+    /**
+     * 提交事务
+     */
+    public static function commitTrans()
+    {
+        Db::commit();
+    }
+
+    /**
+     * 设置错误信息
+     * @param string $errorMsg
+     * @return bool
+     */
+    protected static function setErrorInfo($errorMsg = self::DEFAULT_ERROR_MSG, $rollback = false)
+    {
+        if ($rollback) self::rollbackTrans();
+        self::$errorMsg = $errorMsg;
+        return false;
+    }
+
+    /**
+     * 关闭事务
+     */
+    public static function rollbackTrans()
+    {
+        Db::rollback();
     }
 
 }

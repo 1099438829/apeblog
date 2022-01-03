@@ -1,13 +1,19 @@
 <?php
 
-use think\facade\Db;
-use think\Exception;
 use app\common\constant\Data;
-use app\common\model\DocumentCategoryContent;
-use app\common\model\DocumentCategory;
-use app\common\model\Document;
 use app\common\model\Comment;
-use \app\common\model\FriendLink;
+use app\common\model\Document;
+use app\common\model\DocumentCategory;
+use app\common\model\DocumentCategoryContent;
+use app\common\model\FriendLink;
+use app\common\model\Tag;
+use think\App;
+use think\Collection;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
+use think\Exception;
+use think\facade\Db;
 
 // 应用公共文件
 /**
@@ -122,11 +128,11 @@ function get_document_category_by_name($name, $field = false)
  * @param int $row
  * @param string $where
  * @param string $orderby
- * @return DocumentCategory[]|array|bool|\think\Collection
+ * @return DocumentCategory[]|array|bool|Collection
  * @throws Exception
- * @throws \think\db\exception\DataNotFoundException
- * @throws \think\db\exception\DbException
- * @throws \think\db\exception\ModelNotFoundException
+ * @throws DataNotFoundException
+ * @throws DbException
+ * @throws ModelNotFoundException
  * @author 李玉坤
  * @date 2021-11-12 21:48
  */
@@ -309,14 +315,14 @@ function tpl_get_prenext($get, $cid = false, $none)
  * @param $pageSize int 每页显示的数据数目
  * @param $cid int 栏目分类id
  * @param $type string 读取数据的方式（son:'获取栏目下文章以及所有子孙分类文章',self:'获取栏目下文章',search:'获取关键字搜索的文章',where:'根据自定义条件获取文章（where语句）'）
- * @param string $table  文章内容扩展表名，默认article
+ * @param string $table 文章内容扩展表名，默认article
  * @param bool $where 自定义条件
  * @param int $display
  * @return array
  * @throws Exception
- * @throws \think\db\exception\DataNotFoundException
- * @throws \think\db\exception\DbException
- * @throws \think\db\exception\ModelNotFoundException
+ * @throws DataNotFoundException
+ * @throws DbException
+ * @throws ModelNotFoundException
  */
 function tpl_get_list($orderBy, $pageSize, $cid, $type, $table = 'article', $where = false, $display = 1)
 {
@@ -368,7 +374,7 @@ function tpl_get_list($orderBy, $pageSize, $cid, $type, $table = 'article', $whe
         case 'tag':
             //读取指定tag的文章
             $tag = substr(input('t'), 0, strpos(input('t'), '.')); //搜索关键词
-            $tagModel = new \app\common\model\Tag();
+            $tagModel = new Tag();
             $tagList = $tagModel->where('name', $tag)->select()->toArray();
             $documentListModel = $documentListModel->where('a.id', 'in', array_column($tagList, 'document_id'));
             break;
@@ -563,10 +569,10 @@ function tpl_get_friend_link($type, $row)
  * 广告
  * @param $type
  * @param $row
- * @return array|mixed|object|\think\App|\think\Collection|Db[]
- * @throws \think\db\exception\DataNotFoundException
- * @throws \think\db\exception\DbException
- * @throws \think\db\exception\ModelNotFoundException
+ * @return array|mixed|object|App|Collection|Db[]
+ * @throws DataNotFoundException
+ * @throws DbException
+ * @throws ModelNotFoundException
  * @author 李玉坤
  * @date 2021-07-26 23:24
  */
@@ -658,16 +664,17 @@ function tpl_get_position($dc, $positionList = array())
     return tpl_get_position($parentDc, $positionList);
 }
 
-function get_comment_children($parentIds){
-    $list = $commentModel = Comment::where('status', 1)->where('pid','in', $parentIds)->select()->toArray();
-    if (empty($list)){
+function get_comment_children($parentIds)
+{
+    $list = $commentModel = Comment::where('status', 1)->where('pid', 'in', $parentIds)->select()->toArray();
+    if (empty($list)) {
         return $list;
     }
-    foreach ($list as &$item){
-        $item['reply_url'] = url('article/create_comment?pid=' . $item['id'])->build();;
+    foreach ($list as &$item) {
+        $item['reply_url'] = url('article/create_comment?pid=' . $item['id'])->build();
     }
     unset($item);
-    return  array_merge($list,get_comment_children(array_column($list,'id')));
+    return array_merge($list, get_comment_children(array_column($list, 'id')));
 }
 
 /**
@@ -677,7 +684,7 @@ function get_comment_children($parentIds){
  * @param int $pageSize
  * @param string $orderBy
  * @return array
- * @throws \think\db\exception\DbException
+ * @throws DbException
  * @author 李玉坤
  * @date 2021-12-05 23:54
  */
@@ -706,7 +713,7 @@ function tpl_get_comment_list($id, $type, $pageSize, $orderBy)
     }
     $lists = [];
     foreach ($commentModel as $key => $item) {
-        $item['reply_url'] = url('article/create_comment?pid=' . $item['id'])->build();;
+        $item['reply_url'] = url('article/create_comment?pid=' . $item['id'])->build();
         $lists[$key] = $item;
     }
     return [
@@ -745,10 +752,10 @@ function get_comment_count($documentId, $type = 'top')
  * @param $documentId
  * @param $row
  * @param string $table
- * @return Document[]|array|\think\Collection
- * @throws \think\db\exception\DataNotFoundException
- * @throws \think\db\exception\DbException
- * @throws \think\db\exception\ModelNotFoundException
+ * @return Document[]|array|Collection
+ * @throws DataNotFoundException
+ * @throws DbException
+ * @throws ModelNotFoundException
  * @author 李玉坤
  * @date 2021-11-28 1:02
  */

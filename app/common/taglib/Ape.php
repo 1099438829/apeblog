@@ -93,7 +93,7 @@ class Ape extends TagLib
         }
 
         $parse = '<?php ';
-        $parse .= '$__LIST__ = ' . "tpl_get_article_list($typeId,\"$row\",\"$orderBy\",\"$model\",\"$type\",\"$where\",$display,\"$ids\");";;
+        $parse .= '$__LIST__ = ' . "tpl_get_article_list($typeId,\"$row\",\"$orderBy\",\"$model\",\"$type\",\"$where\",$display,\"$ids\");";
         $parse .= ' ?>';
         $parse .= '{volist name="__LIST__" id="' . $void . '"}';
         $parse .= $content;

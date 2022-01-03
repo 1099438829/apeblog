@@ -3,8 +3,9 @@
 
 namespace app\common\model;
 
-use app\common\model\BaseModel;
-use think\facade\Cache;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\facade\Session;
 
 /**
@@ -19,9 +20,9 @@ class Admin extends BaseModel
      * @param $username
      * @param $pwd
      * @return bool
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public static function login(string $username, string $pwd): bool
     {
@@ -72,9 +73,9 @@ class Admin extends BaseModel
      * 列表
      * @param array $where
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public static function systemPage(array $where): array
     {
@@ -103,9 +104,9 @@ class Admin extends BaseModel
      * @param int $id
      * @param string $field
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public static function getAdminInfoById(int $id, string $field = '*'): array
     {
@@ -120,9 +121,9 @@ class Admin extends BaseModel
     /**
      * 人员列表
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public static function lst()
     {

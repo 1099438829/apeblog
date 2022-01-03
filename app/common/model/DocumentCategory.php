@@ -3,7 +3,9 @@
 
 namespace app\common\model;
 
-use think\facade\Db;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * Class DocumentCategory
@@ -17,9 +19,9 @@ class DocumentCategory extends BaseModel
      * 列表
      * @param $where
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 李玉坤
      * @date 2021-11-08 0:25
      */
@@ -37,9 +39,9 @@ class DocumentCategory extends BaseModel
      * @param int $type
      * @param array $ids
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public static function selectByType(int $type = 0, array $ids = [])
     {
