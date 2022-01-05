@@ -45,28 +45,44 @@
 			</div>
 			<div>
 				<script type="text/javascript" id="index_js-js-extra">
+					/* <![CDATA[ */
 					var set = {
-						is_single: "",
-						is_page: "",
-						is_home: "1",
-						ajaxurl: "/admin-ajax.php",
-						reprint: {
-							msg: "复制成功，转载请保留本站链接",
-							copylenopen: 0,
-							copylen: 0,
-							addurl: 0,
-							siteurl: "/",
-							open: 1,
+						"is_single": "",
+						"is_page": "",
+						"is_home": "1",
+						"ajaxurl": "{:url('/index/index/index')}",
+						"logourl": "{:web_config('logo')}",
+						"imgurl": "__IMG__/",
+						"themeColor": "#409EFF",
+						"reprint": {
+							"msg": "",
+							"copylenopen": 0,
+							"copylen": 0,
+							"addurl": 0,
+							"siteurl": "{:web_config('domain')}",
 						},
-						module: { imglightbox: 1, imglazyload: 1 },
-						theme: { loadbar: 1 },
-						index: {
-							linksicon: 1,
-							chromeiconurl:
-									"__IMG__/chrome.png",
+						"module": {
+							"imglightbox": 1,
+							"imglazyload": 1
 						},
-						is_page_template: "",
-					};
+						"theme": {
+							"loadbar": 1
+						},
+						"index": {
+							"linksicon": 0,
+							"chromeiconurl": "__IMG__/chrome.png"
+						},
+						"is_page_template": "",
+						"themeversion": "13",
+						"autodark": "1",
+						"dark": "0",
+						"darklogourl": "{:web_config('logo')}",
+						"darkcss": "__CSS__/dark.css",
+						"popwindow": "1",
+						"popwindowhtml": "DQogICAgPGRpdiBjbGFzcz0iY3AtcG9wLXdpbmRvdyI+DQogICAgPGRpdiBjbGFzcz0iY3AtcG9wLXdpbmRvdy10aXRsZSI+DQogICAgPGkgY2xhc3M9ImZhciBmYS10aW1lcy1jaXJjbGUgY3AtcG9wLWNsb3NlIiBvbmNsaWNrPSJjbG9zZV9wb3Bfd2luZG93KCkiPjwvaT4NCiAgICA8ZGl2IHN0eWxlPSJjb2xvcjojZmZmO2JhY2tncm91bmQtY29sb3I6IzQwOWVmZiI+PGkgY2xhc3M9ImZhciBmYS1oZWFydCI+PC9pPiDmm7TmlrDmj5DnpLo8L2Rpdj4NCiAgICA8L2Rpdj4NCiAgICA8ZGl2IGNsYXNzPSJjcC1wb3Atd2luZG93LWNvbnRlbnQiPg0KICAgIFByb+eJiOacrOabtOaWsDEuMi4x5LqG77yM5aSa5Yqf6IO95YC85b6X5Y2H57qnDQogICAgPC9kaXY+DQogICAgPGRpdiBjbGFzcz0iY3AtcG9wLXdpbmRvdy1idG5zIj4NCiAgICA8YnV0dG9uIGNsYXNzPSJjcC1wb3AtYnRuIiBvbmNsaWNrPSJjbG9zZV9wb3Bfd2luZG93KCkiPuehruWumjwvYnV0dG9uPg0KICAgIDwvZGl2Pg0KICAgIDwvZGl2Pg0KICAgIA==",
+						"popwindowtime": "0",
+						"popwindowmd5": "1640521671630"
+					}; /* ]]> */
 				</script>
 				<script type="text/javascript" src="__JS__/tools.js" id="tools-js"></script>
 				<script type="text/javascript" src="__JS__/index.js" id="index_js-js"></script>
