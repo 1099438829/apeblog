@@ -100,6 +100,7 @@ class Article extends AuthController
             if ($data['display']) $data['display'] = 1;
             if ($data['is_top']) $data['is_top'] = 1;
             if ($id == "") {
+                $data['uid'] = $this->adminInfo['uid'];
                 $data['author'] = $data['author'] ?: $this->adminInfo['nickname'];
                 $data['create_time'] = time();
                 $data['update_time'] = time();

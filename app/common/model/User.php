@@ -3,6 +3,7 @@
 
 namespace app\common\model;
 
+use app\common\constant\Data;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -17,7 +18,7 @@ use think\facade\Session;
  */
 class User extends BaseModel
 {
-    public static $adminColumn = ["username", "nickname", "password", "avatar", "mail", "tel",
+    public static $adminColumn = ["username", "nickname", "password", "avatar", "email", "tel",
         "ip", "status", "remark", "is_admin", "create_time", "update_time"];
 
     /**
@@ -31,7 +32,7 @@ class User extends BaseModel
      */
     public static function login(string $name, string $pwd): bool
     {
-        $info = self::where("username|tel", "=", $name)->find();
+        $info = self::where("username|email|tel", "=", $name)->find();
         if (!$info) return self::setErrorInfo("登录账号不存在");
         if ($info['password'] != md5(md5($pwd))) return self::setErrorInfo("密码不正确！");
         if ($info['status'] == 2) return self::setErrorInfo("账号已被冻结！");
@@ -46,9 +47,8 @@ class User extends BaseModel
      */
     public static function setLoginInfo($info)
     {
-        Session::set("adminId", $info['id']);
-        Session::set("adminInfo", $info->toArray());
-        event("AdminLog", [$info->toArray(), "admin", "login", "login"]);
+        Session::set(Data::SESSION_KEY_USER_ID, $info['id']);
+        Session::set(Data::SESSION_KEY_USER_INFO, $info->toArray());
         return true;
     }
 
@@ -102,8 +102,8 @@ class User extends BaseModel
      */
     public static function clearLoginInfo()
     {
-        Session::delete("adminId");
-        Session::delete("adminInfo");
+        Session::delete(Data::SESSION_KEY_USER_ID);
+        Session::delete(Data::SESSION_KEY_USER_INFO);
         Session::clear();
         return true;
     }
@@ -114,7 +114,7 @@ class User extends BaseModel
      */
     public static function isActive(): bool
     {
-        return Session::has('adminId') && Session::has('adminInfo');
+        return Session::has(Data::SESSION_KEY_USER_ID) && Session::has(Data::SESSION_KEY_USER_INFO);
     }
 
     /**

@@ -8,6 +8,30 @@ class Layer extends Paginator
 {
 
     /**
+     * 渲染分页html
+     * @return mixed
+     */
+    public function render()
+    {
+        if ($this->hasPages()) {
+            if ($this->simple) {
+                return sprintf(
+                    '<div class="layui-box layui-laypage layui-laypage-default">%s %s</div>',
+                    $this->getPreviousButton(),
+                    $this->getNextButton()
+                );
+            } else {
+                return sprintf(
+                    '<div class="layui-box layui-laypage layui-laypage-default">%s %s %s</div>',
+                    $this->getPreviousButton(),
+                    $this->getLinks(),
+                    $this->getNextButton()
+                );
+            }
+        }
+    }
+
+    /**
      * 上一页按钮
      * @param string $text
      * @return string
@@ -24,6 +48,56 @@ class Layer extends Paginator
         );
 
         return $this->getPageLinkWrapper($url, $text);
+    }
+
+    /**
+     * 生成一个禁用的按钮
+     *
+     * @param string $text
+     * @return string
+     */
+    protected function getDisabledTextWrapper($text)
+    {
+        return '<a class="layui-laypage-prev layui-disabled">' . $text . '</a>';
+    }
+
+    /**
+     * 生成普通页码按钮
+     *
+     * @param string $url
+     * @param int $page
+     * @return string
+     */
+    protected function getPageLinkWrapper($url, $page)
+    {
+        if ($page == $this->currentPage()) {
+            return $this->getActivePageWrapper($page);
+        }
+
+        return $this->getAvailablePageWrapper($url, $page);
+    }
+
+    /**
+     * 生成一个激活的按钮
+     *
+     * @param string $text
+     * @return string
+     */
+    protected function getActivePageWrapper($text)
+    {
+        return '<span class="layui-laypage-curr"><em class="layui-laypage-em"></em><em>' . $text . '</em></span>';
+    }
+
+    /**
+     * 生成一个可点击的按钮
+     *
+     * @param string $url
+     * @param int $page
+     * @return string
+     */
+    protected function getAvailablePageWrapper($url, $page)
+    {
+        return '<a href="' . htmlentities($url) . '">' . $page . '</a>';
     }
 
     /**
@@ -94,74 +168,6 @@ class Layer extends Paginator
     }
 
     /**
-     * 渲染分页html
-     * @return mixed
-     */
-    public function render()
-    {
-        if ($this->hasPages()) {
-            if ($this->simple) {
-                return sprintf(
-                    '<div class="layui-box layui-laypage layui-laypage-default">%s %s</div>',
-                    $this->getPreviousButton(),
-                    $this->getNextButton()
-                );
-            } else {
-                return sprintf(
-                    '<div class="layui-box layui-laypage layui-laypage-default">%s %s %s</div>',
-                    $this->getPreviousButton(),
-                    $this->getLinks(),
-                    $this->getNextButton()
-                );
-            }
-        }
-    }
-
-    /**
-     * 生成一个可点击的按钮
-     *
-     * @param string $url
-     * @param int $page
-     * @return string
-     */
-    protected function getAvailablePageWrapper($url, $page)
-    {
-        return '<a href="' . htmlentities($url) . '">' . $page . '</a>';
-    }
-
-    /**
-     * 生成一个禁用的按钮
-     *
-     * @param string $text
-     * @return string
-     */
-    protected function getDisabledTextWrapper($text)
-    {
-        return '<a class="layui-laypage-prev layui-disabled">' . $text . '</a>';
-    }
-
-    /**
-     * 生成一个激活的按钮
-     *
-     * @param string $text
-     * @return string
-     */
-    protected function getActivePageWrapper($text)
-    {
-        return '<span class="layui-laypage-curr"><em class="layui-laypage-em"></em><em>' . $text . '</em></span>';
-    }
-
-    /**
-     * 生成省略号按钮
-     *
-     * @return string
-     */
-    protected function getDots()
-    {
-        return $this->getDisabledTextWrapper('...');
-    }
-
-    /**
      * 批量生成页码按钮.
      *
      * @param array $urls
@@ -179,18 +185,12 @@ class Layer extends Paginator
     }
 
     /**
-     * 生成普通页码按钮
+     * 生成省略号按钮
      *
-     * @param string $url
-     * @param int $page
      * @return string
      */
-    protected function getPageLinkWrapper($url, $page)
+    protected function getDots()
     {
-        if ($page == $this->currentPage()) {
-            return $this->getActivePageWrapper($page);
-        }
-
-        return $this->getAvailablePageWrapper($url, $page);
+        return $this->getDisabledTextWrapper('...');
     }
 }

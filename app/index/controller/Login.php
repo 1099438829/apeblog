@@ -7,6 +7,7 @@
 namespace app\index\controller;
 
 use app\admin\extend\Util;
+use app\common\constant\Data;
 use app\common\model\User as userModel;
 use Exception;
 use think\db\exception\DataNotFoundException;
@@ -23,6 +24,10 @@ class Login extends Base
      */
     public function login()
     {
+        //清除可能存在的栏目分类树id
+        cache(Data::CURR_CATEGORY_PATENT_ID, false);
+        //模板兼容性标签
+        $this->assign('id', false);
         $this->assign('cid', false);
         return $this->fetch();
     }
@@ -36,12 +41,12 @@ class Login extends Base
      */
     public function verify()
     {
-        list($account, $pwd, $verify) = Util::postMore(['account', 'password', 'verify'], null, true);
-        if (empty($account) || empty($pwd)) return app("json")->fail("账号、密码和验证码不能为空！");
+        list($username, $password, $captcha) = Util::postMore(['username', 'password', 'captcha'], null, true);
+        if (empty($username) || empty($password)) return app("json")->fail("账号、密码和验证码不能为空！");
         // 验证码验证
-        if (!captcha_check($verify)) return app("json")->fail("验证码不正确！");
+        if (!captcha_check($captcha)) return app("json")->fail("验证码不正确！");
         // 验证登录
-        if (!userModel::login($account, $pwd)) return app("json")->fail("登录失败！");
+        if (!userModel::login($username, $password)) return app("json")->fail(userModel::getErrorInfo());
         return app("json")->success("登录成功！");
     }
 
@@ -72,13 +77,7 @@ class Login extends Base
      */
     public function logout()
     {
-        $res = userModel::clearLoginInfo();
-
-        if ($res) {
-            $this->success('留言成功');
-        } else {
-            $this->error('留言失败');
-        }
+        return userModel::clearLoginInfo() ? $this->success("操作成功", "/admin/login/login") : $this->error("操作失败", "/admin/index/index");
     }
 
     /**

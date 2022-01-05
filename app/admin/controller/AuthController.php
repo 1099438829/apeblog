@@ -2,6 +2,7 @@
 
 namespace app\admin\controller;
 
+use app\common\constant\Data;
 use app\common\model\AdminAuth;
 use think\facade\App;
 use think\facade\Lang;
@@ -83,8 +84,8 @@ abstract class AuthController extends SystemBasic
     protected function initialize()
     {
         parent::initialize();
-        $this->adminInfo = Session::get("adminInfo");
-        $this->adminId = Session::get("adminId");
+        $this->adminInfo = Session::get(Data::SESSION_KEY_ADMIN_INFO);
+        $this->adminId = Session::get(Data::SESSION_KEY_ADMIN_ID);
         $this->module = App::getInstance()->http->getName();
         $this->controller = un_camelize($this->request->controller());
         $this->action = $this->request->action();
@@ -127,7 +128,7 @@ abstract class AuthController extends SystemBasic
      */
     protected static function isActive()
     {
-        return Session::has('adminId') && Session::has('adminInfo');
+        return Session::has(Data::SESSION_KEY_ADMIN_ID) && Session::has(Data::SESSION_KEY_ADMIN_INFO);
     }
 
     /**

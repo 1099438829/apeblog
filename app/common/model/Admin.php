@@ -3,6 +3,7 @@
 
 namespace app\common\model;
 
+use app\common\constant\Data;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -43,8 +44,8 @@ class Admin extends BaseModel
     {
         unset($info->password);//去除密码字段
         $info->role_auth = AdminRole::getAuth($info['role_id'] ?? 0);//提前缓存auth字段避免频繁查询
-        Session::set("adminId", $info['id']);
-        Session::set("adminInfo", $info->toArray());
+        Session::set(Data::SESSION_KEY_ADMIN_ID, $info['id']);
+        Session::set(Data::SESSION_KEY_ADMIN_INFO, $info->toArray());
         event("AdminLog", [$info->toArray(), "admin", "login", "login"]);
         return true;
     }
@@ -54,19 +55,10 @@ class Admin extends BaseModel
      */
     public static function clearLoginInfo()
     {
-        Session::delete("adminId");
-        Session::delete("adminInfo");
+        Session::delete(Data::SESSION_KEY_ADMIN_ID);
+        Session::delete(Data::SESSION_KEY_ADMIN_INFO);
         Session::clear();
         return true;
-    }
-
-    /**
-     * 是否登录
-     * @return bool
-     */
-    public static function isActive(): bool
-    {
-        return Session::has('adminId') && Session::has('adminInfo');
     }
 
     /**

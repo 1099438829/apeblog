@@ -58,6 +58,7 @@ class BaseModel extends Model
     /**
      * 设置错误信息
      * @param string $errorMsg
+     * @param bool $rollback
      * @return bool
      */
     protected static function setErrorInfo($errorMsg = self::DEFAULT_ERROR_MSG, $rollback = false)

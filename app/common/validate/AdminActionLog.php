@@ -7,7 +7,7 @@ use think\Validate;
 /**
  * 后台菜单验证器
  */
-class Adminactionlog extends Validate
+class AdminActionLog extends Validate
 {
 
     protected $rule = [

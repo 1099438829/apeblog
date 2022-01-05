@@ -14,7 +14,7 @@ use think\Validate;
 /**
  * 后台菜单验证器
  */
-class Friendlink extends Validate
+class FriendLink extends Validate
 {
 
     protected $rule = [

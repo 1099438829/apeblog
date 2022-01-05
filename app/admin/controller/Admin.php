@@ -78,7 +78,7 @@ class Admin extends AuthController
             return $menus;
         })->col(10);
         $form[] = Elm::input('tel', '电话')->col(10);
-        $form[] = Elm::email('mail', '邮箱')->col(10);
+        $form[] = Elm::email('email', '邮箱')->col(10);
         $form[] = Elm::radio('status', '状态', 1)->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(10);
         $form = Form::make_post_form($form, url('save')->build());
         $this->assign(compact('form'));
@@ -110,7 +110,7 @@ class Admin extends AuthController
             return $menus;
         })->col(10);
         $form[] = Elm::input('tel', '电话', $ainfo['tel'])->col(10);
-        $form[] = Elm::email('mail', '邮箱', $ainfo['mail'])->col(10);
+        $form[] = Elm::email('email', '邮箱', $ainfo['email'])->col(10);
         $form[] = Elm::radio('status', '状态', $ainfo['status'])->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(10);
         $form = Form::make_post_form($form, url('save', ['id' => $id])->build());
         $this->assign(compact('form'));
@@ -132,13 +132,13 @@ class Admin extends AuthController
             ['realname', ''],
             ['role_id', ''],
             ['tel', ''],
-            ['mail', ''],
+            ['email', ''],
             ['status', '']
         ]);
         if ($data['username'] == "") return app("json")->fail("登录账号不能为空");
         if ($data['password'] == "") return app("json")->fail("密码不能为空");
         if ($data['tel'] == "") return app("json")->fail("手机号不能为空");
-        if ($data['mail'] == "") return app("json")->fail("邮箱不能为空");
+        if ($data['email'] == "") return app("json")->fail("邮箱不能为空");
         if (is_array($data['avatar'])) $data['avatar'] = $data['avatar'][0];
         // 启动事务
         Db::startTrans();
@@ -228,10 +228,10 @@ class Admin extends AuthController
             ['nickname', ''],
             ['avatar', ''],
             ['tel', ''],
-            ['mail', ''],
+            ['email', ''],
             ['remark', '']
         ]);
-        if ($data['nickname'] == '' || $data['avatar'] == '' || $data['tel'] == '' || $data['mail'] == '') return app("json")->fail("必选项不能为空！");
-        return aModel::update(['nickname' => $data['nickname'], 'avatar' => $data['avatar'], 'tel' => $data['tel'], 'mail' => $data['mail'], 'remark' => $data['remark']], ['id' => $this->adminId]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+        if ($data['nickname'] == '' || $data['avatar'] == '' || $data['tel'] == '' || $data['email'] == '') return app("json")->fail("必选项不能为空！");
+        return aModel::update(['nickname' => $data['nickname'], 'avatar' => $data['avatar'], 'tel' => $data['tel'], 'email' => $data['email'], 'remark' => $data['remark']], ['id' => $this->adminId]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 }

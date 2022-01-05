@@ -5,7 +5,7 @@
     <meta name="keywords" content="{:web_config('keywords')}">
     <meta name="description" content="{:web_config('description')}">
     {include file="public/head" /}
-    <link rel="stylesheet" href="__LIB__/swiper/swiper.min.css" />
+    <link rel="stylesheet" href="__LIB__/swiper/swiper.min.css"/>
     <script type="text/javascript" src="__LIB__/swiper/swiper.min.js"></script>
 </head>
 <body>
@@ -25,12 +25,13 @@
                 <div class="login-form">
                     <div class="login-title"><h3>登录账户</h3></div>
                     <i class="fa fa-user ico-login" aria-hidden="true"></i>
-                    <input class="input-login input-user" name="user" type="text" placeholder="请输入用户名/电子邮箱"/>
+                    <input class="input-login input-user" name="username" type="text" placeholder="请输入用户名/电子邮箱"/>
                     <i class="fa fa-key ico-login" aria-hidden="true"></i>
-                    <input class="input-login input-pass" name="pass" type="password" placeholder="请输入密码"/>
+                    <input class="input-login input-pass" name="password" type="password" placeholder="请输入密码"/>
                     <div class="code-plane">
-                        <img class="img-code" src="/index/login/captcha"  style="cursor: pointer;width: 120px;height: 38px;" alt=""/>
-                        <input class="input-login input-code" name="code" type="text" placeholder="验证码"/>
+                        <img class="img-code" src="/index/login/captcha"
+                             style="cursor: pointer;width: 120px;height: 38px;" alt=""/>
+                        <input class="input-login input-code" name="captcha" type="text" placeholder="验证码"/>
                     </div>
                     <div class="login-title">
                         <label>
@@ -38,13 +39,13 @@
                             记住我的登录状态</label>
                         <a href="wp-login-lostpassword.html">忘记密码?</a>
                     </div>
-<!--                    <div class="thirdparty-plane">-->
-<!--                        <span class="login-thirdparty-btn">-->
-<!--                            <a href="javascript:;">-->
-<!--                                <img src="__IMG__/share-qq.svg"/>QQ登录-->
-<!--                            </a>-->
-<!--                        </span>-->
-<!--                    </div>-->
+                    <!--                    <div class="thirdparty-plane">-->
+                    <!--                        <span class="login-thirdparty-btn">-->
+                    <!--                            <a href="javascript:;">-->
+                    <!--                                <img src="__IMG__/share-qq.svg"/>QQ登录-->
+                    <!--                            </a>-->
+                    <!--                        </span>-->
+                    <!--                    </div>-->
                     <div>
                         <button class="login-button" id="btn-login">登录</button>
                     </div>
@@ -66,34 +67,34 @@
         });
 
         function login() {
-            var user = $('input[name="user"]').val();
-            var pass = $('input[name="pass"]').val();
-            var code = $('input[name="code"]').val();
-            if (user == "" || pass == "") {
+            let username = $('input[name="username"]').val();
+            let password = $('input[name="password"]').val();
+            let captcha = $('input[name="captcha"]').val();
+            if (username === "" || password === "") {
                 return;
             }
-            var remember = $("#remember").val();
+            let remember = $("#remember").val();
             $("#login-note").text("登录中，请稍后");
             $("#login-note").css("visibility", "visible");
             $.post(
                 "{:url('/index/login/verify')}",
                 {
-                    action: "corepress_login",
-                    user: user,
-                    pass: pass,
+                    action: "login",
+                    username: username,
+                    password: password,
                     remember: remember,
-                    code: code,
+                    captcha: captcha,
                 },
                 (data) => {
-                    var obj = JSON.parse(data);
-                    if (obj) {
-                        if (obj.code === 1) {
+                    console.log(data)
+                    if (data) {
+                        if (data.status === 200) {
                             $("#login-note").text("登录成功，跳转中");
                             window.location.href = getQueryVariable("redirect_to")
                                 ? decodeURIComponent(getQueryVariable("redirect_to"))
                                 : "/";
                         } else {
-                            $("#login-note").text(obj.msg);
+                            $("#login-note").text(data.msg);
                             recodeimg();
                         }
                     } else {
@@ -105,7 +106,7 @@
         function recodeimg() {
             $(".img-code").attr(
                 "src",
-                "/index/login/captcha?d="+Math.random()
+                "/index/login/captcha?d=" + Math.random()
             );
         }
     </script>
