@@ -2,6 +2,7 @@ document.body.oncopy = function () {
 	if (set.isusercenter == 1) {
 		return;
 	}
+
 	var copytext = window.getSelection().toString();
 	if (set.reprint.open == 1) {
 		if (set.reprint.copylenopen == 1) {
@@ -17,6 +18,11 @@ document.body.oncopy = function () {
 		}
 	}
 }
+init_dark();
+
+function init_dark() {
+	!0 === cp_user_get_dark() ? loaddarkcss() : "" === cp_user_get_dark() ? 1 == set.autodark ? cp_isdark() ? loaddarkcss() : def_dark() : def_dark() : removedarkcss()
+};
 
 function copyaddurl(content) {
 	if (set.reprint.addurl == 0) {
