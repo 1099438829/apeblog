@@ -114,23 +114,20 @@
                         </div>
                         <div class="form-group">
                             <label for="realname">真实姓名</label>
-                            <input type="text" class="form-control" name="realname" id="realname"
-                                   value="{$info.realname}" disabled="disabled"/>
+                            <input type="text" class="form-control" name="realname" id="realname" value="{$info.realname}" disabled="disabled"/>
                         </div>
                         <div class="form-group">
                             <label for="nickname">昵称</label>
-                            <input type="text" class="form-control" name="nickname" id="nickname"
-                                   value="{$info.nickname}"/>
+                            <input type="text" class="form-control" name="nickname" id="nickname" value="{$info.nickname}"/>
                         </div>
                         <div class="form-group">
                             <label for="tel">电话</label>
-                            <input type="tel" class="form-control" name="tel" id="tel" placeholder="输入您的昵称"
-                                   value="{$info.tel}">
+                            <input type="tel" class="form-control" name="tel" id="tel" placeholder="输入您的昵称" value="{$info.tel}">
                         </div>
                         <div class="form-group">
-                            <label for="mail">邮箱</label>
-                            <input type="email" class="form-control" name="mail" id="mail" aria-describedby="emailHelp"
-                                   placeholder="请输入正确的邮箱地址" value="{$info.mail}">
+                            <label for="email">邮箱</label>
+                            <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp"
+                                   placeholder="请输入正确的邮箱地址" value="{$info.email}">
                             <small id="emailHelp" class="form-text text-muted">请保证您填写的邮箱地址是正确的。</small>
                         </div>
                         <div class="form-group">
@@ -245,7 +242,7 @@
                 "nickname": $("input[name='nickname']").val(),
                 "avatar": $("input[name='avatar']").val(),
                 "tel": $("input[name='tel']").val(),
-                "mail": $("input[name='email']").val(),
+                "email": $("input[name='email']").val(),
                 "remark": $("textarea[name='remark']").val()
             }, function (res) {
                 if (res.status === 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');

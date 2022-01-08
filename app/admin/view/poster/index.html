@@ -96,9 +96,9 @@
             field: 'title',
             title: '广告名称'
         }, {
-            field: 'image',
+            field: 'cover_path',
             title: '广告图片',
-            formatter: function (value, row, index) {
+            formatter: function (value) {
                 let html = '<img src="' + value + '" alt="" width="50px;">';
                 return html;
             }

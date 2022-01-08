@@ -27,6 +27,10 @@ class Files extends AuthController
             case 1:
                 $savename = Filesystem::putFile('images', $file);
                 $filePath = "/uploads/" . $savename;
+                //转换因为win导致的兼容问题
+                if(strtoupper(substr(PHP_OS,0,3))==='WIN'){
+                    $filePath = str_replace( DIRECTORY_SEPARATOR, '/',$filePath);
+                }
                 break;
             case 2:
                 $savename = Filesystem::putFile('images', $file);
@@ -53,6 +57,10 @@ class Files extends AuthController
             $type = $result[2];
             if (!file_exists($path)) mkdir($path, 0755, true);
             $savename = $path . md5(time()) . ".{$type}";
+            //转换因为win导致的兼容问题
+            if(strtoupper(substr(PHP_OS,0,3))==='WIN'){
+                $savename = str_replace( DIRECTORY_SEPARATOR, '/',$savename);
+            }
             if (file_put_contents($savename, base64_decode(str_replace($result[1], '', $data['image'])))) return app("json")->success("上传成功", ['src' => "/" . $savename]);
             else return app("json")->fail("上传失败，写入文件失败！");
         } else return app("json")->fail("上传失败,图片格式有误！");
@@ -64,8 +72,11 @@ class Files extends AuthController
      */
     public function tinymce()
     {
-        $savename = Filesystem::putFile('image', request()->file('file'));
-        return json_encode(['location' => "/uploads/" . $savename]);
+        $filePath = Filesystem::putFile('image', request()->file('file'));
+        if(strtoupper(substr(PHP_OS,0,3))==='WIN'){
+            $filePath = str_replace( DIRECTORY_SEPARATOR, '/',$filePath);
+        }
+        return json_encode(['location' => "/uploads/" . $filePath]);
     }
 
 
@@ -122,6 +133,10 @@ class Files extends AuthController
                 ]])->check(['file' => $file]);
                 $savename = Filesystem::putFile($type, $file);
                 $filePath = "/uploads/" . $savename;
+                //转换因为win导致的兼容问题
+                if(strtoupper(substr(PHP_OS,0,3))==='WIN'){
+                    $filePath = str_replace( DIRECTORY_SEPARATOR, '/',$filePath);
+                }
                 return $savename ? app("json")->code()->success("上传成功", ['filePath' => $filePath, "name" => basename($savename)]) : app("json")->fail("上传失败");
             } catch (ValidateException $e) {
                 return app("json")->fail($e->getMessage());

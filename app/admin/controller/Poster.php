@@ -74,7 +74,7 @@ class Poster extends AuthController
         $form = array();
         $form[] = Elm::input('title', '广告名称')->col(10);
         $form[] = Elm::input('url', '链接地址')->col(10);
-        $form[] = Elm::frameImage('image', '广告图片', Url::buildUrl('admin/images/index', array('fodder' => 'image', 'limit' => 1)))->icon("ios-image")->width('96%')->height('440px')->col(10);
+        $form[] = Elm::frameImage('cover_path', '广告图片', Url::buildUrl('admin/images/index', array('fodder' => 'images', 'limit' => 1)))->icon("ios-image")->width('96%')->height('440px')->col(10);
         $form[] = Elm::input('sort', '排序')->col(10);
         $form[] = Elm::select('position', '位置')->options(function () {
             $options = [];
@@ -102,7 +102,7 @@ class Poster extends AuthController
         $form = array();
         $form[] = Elm::input('title', '广告名称', $ainfo['title'])->col(10);
         $form[] = Elm::input('url', '链接地址', $ainfo['url'])->col(10);
-        $form[] = Elm::frameImage('image', '广告图片', Url::buildUrl('admin/images/index', array('fodder' => 'image', 'limit' => 1)), $ainfo['image'])->icon("ios-image")->width('96%')->height('440px')->col(10);
+        $form[] = Elm::frameImage('cover_path', '广告图片', Url::buildUrl('admin/images/index', array('fodder' => 'images', 'limit' => 1)), $ainfo['cover_path'])->icon("ios-image")->width('96%')->height('440px')->col(10);
         $form[] = Elm::input('sort', '排序', $ainfo['sort'])->col(10);
         $form[] = Elm::select('position', '位置', $ainfo['position'])->options(function () {
             $options = [];
@@ -128,13 +128,15 @@ class Poster extends AuthController
             ['id', ''],
             ['title', ''],
             ['url', ''],
-            ['image', ''],
+            ['cover_path', ''],
+            ['position', 0],
             ['sort', ''],
             ['status', 1],
         ]);
         if ($data['title'] == "") return app("json")->fail("广告名称不能为空");
         if ($data['url'] == "") return app("json")->fail("链接地址不能为空");
-        if (is_array($data['image'])) $data['image'] = $data['avatar'][0];
+        if (is_array($data['cover_path'])) $data['cover_path'] = $data['cover_path'][0];
+        $data['user_id'] = $this->adminId;//默认修改你
         if ($id == "") {
             //判断下用户是否存在
             $info = aModel::where('url', $data['url'])->find();
@@ -145,7 +147,7 @@ class Poster extends AuthController
         } else {
             $res = aModel::update($data, ['id' => $id]);
         }
-        cache(Data::DATA_ADVERT . '_' . $data['type'], null);//清除缓存
+        cache(Data::DATA_ADVERT . '_' . $data['position'], null);//清除缓存
         return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败");
     }
 }
