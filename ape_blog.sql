@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 10/01/2022 01:01:35
+ Date: 10/01/2022 01:06:06
 */
 
 SET NAMES utf8mb4;
@@ -124,7 +124,7 @@ CREATE TABLE `ape_admin_log`  (
   `user_agent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT 'User-Agent',
   `create_time` int(10) NOT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 103 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 113 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_admin_log
@@ -220,6 +220,16 @@ INSERT INTO `ape_admin_log` VALUES (99, 1, 'admin', 'admin', 'poster', 'index', 
 INSERT INTO `ape_admin_log` VALUES (100, 1, 'admin', 'admin', 'article', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55', 1641663162);
 INSERT INTO `ape_admin_log` VALUES (101, 1, 'admin', 'admin', 'login', 'login', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55', 1641741706);
 INSERT INTO `ape_admin_log` VALUES (102, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55', 1641741706);
+INSERT INTO `ape_admin_log` VALUES (103, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55', 1641747741);
+INSERT INTO `ape_admin_log` VALUES (104, 1, 'admin', 'admin', 'poster', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55', 1641747746);
+INSERT INTO `ape_admin_log` VALUES (105, 1, 'admin', 'admin', 'poster', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55', 1641747753);
+INSERT INTO `ape_admin_log` VALUES (106, 1, 'admin', 'admin', 'poster', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55', 1641747763);
+INSERT INTO `ape_admin_log` VALUES (107, 1, 'admin', 'admin', 'login', 'login', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55', 1641747835);
+INSERT INTO `ape_admin_log` VALUES (108, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55', 1641747836);
+INSERT INTO `ape_admin_log` VALUES (109, 1, 'admin', 'admin', 'poster', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55', 1641747839);
+INSERT INTO `ape_admin_log` VALUES (110, 1, 'admin', 'admin', 'poster', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55', 1641747848);
+INSERT INTO `ape_admin_log` VALUES (111, 1, 'admin', 'admin', 'poster', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55', 1641747859);
+INSERT INTO `ape_admin_log` VALUES (112, 1, 'admin', 'admin', 'poster', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55', 1641747916);
 
 -- ----------------------------
 -- Table structure for ape_admin_notify
@@ -289,7 +299,7 @@ CREATE TABLE `ape_advert`  (
 -- ----------------------------
 -- Records of ape_advert
 -- ----------------------------
-INSERT INTO `ape_advert` VALUES (1, 'banner', '/uploads/images/20220109/fdebd2bf797b89b82675476d2af416dd.jpg', 'www.baidu.com', 2, 1, 1, 1, 1641661899, 1641663157);
+INSERT INTO `ape_advert` VALUES (1, 'banner', '/uploads/images/20220109/fdebd2bf797b89b82675476d2af416dd.jpg', 'www.baidu.com', 1, 1, 1, 1, 1641661899, 1641747914);
 
 -- ----------------------------
 -- Table structure for ape_attachment
@@ -552,7 +562,7 @@ CREATE TABLE `ape_pv_log`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_pv_log
@@ -561,6 +571,7 @@ INSERT INTO `ape_pv_log` VALUES (1, 23, 14, '2022-01-08', '2022-01-08 23:21:27',
 INSERT INTO `ape_pv_log` VALUES (2, 0, 10, '2022-01-09', '2022-01-09 00:20:34', '2022-01-09 00:20:34');
 INSERT INTO `ape_pv_log` VALUES (3, 1, 24, '2022-01-09', '2022-01-09 01:11:46', '2022-01-09 01:11:46');
 INSERT INTO `ape_pv_log` VALUES (4, 23, 6, '2022-01-09', '2022-01-09 23:21:19', '2022-01-09 23:21:19');
+INSERT INTO `ape_pv_log` VALUES (5, 1, 12, '2022-01-10', '2022-01-10 01:02:47', '2022-01-10 01:02:47');
 
 -- ----------------------------
 -- Table structure for ape_system_config
@@ -676,7 +687,7 @@ CREATE TABLE `ape_url_log`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'pv记录表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'pv记录表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_url_log
@@ -685,6 +696,7 @@ INSERT INTO `ape_url_log` VALUES (1, 'http://apeblog.io/', 7, '网站首页', '2
 INSERT INTO `ape_url_log` VALUES (2, 'http://apeblog.io/', 16, '网站首页', '2022-01-09', NULL, NULL);
 INSERT INTO `ape_url_log` VALUES (3, 'http://apeblog.io/index/article/detail.html?id=1', 2, '每日必应图片接口', '2022-01-09', NULL, NULL);
 INSERT INTO `ape_url_log` VALUES (4, 'http://apeblog.io/index/article/lists.html?id=1', 3, '编程资料', '2022-01-09', NULL, NULL);
+INSERT INTO `ape_url_log` VALUES (5, 'http://apeblog.io/', 6, '网站首页', '2022-01-10', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for ape_user
@@ -724,12 +736,13 @@ CREATE TABLE `ape_uv_log`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Uv记录表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Uv记录表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_uv_log
 -- ----------------------------
 INSERT INTO `ape_uv_log` VALUES (1, '127.0.0.1', 23, '2022-01-08', '2022-01-08 23:21:27', '2022-01-08 23:21:27');
 INSERT INTO `ape_uv_log` VALUES (2, '127.0.0.1', 0, '2022-01-09', '2022-01-09 00:20:34', '2022-01-09 00:20:34');
+INSERT INTO `ape_uv_log` VALUES (3, '127.0.0.1', 1, '2022-01-10', '2022-01-10 01:02:47', '2022-01-10 01:02:47');
 
 SET FOREIGN_KEY_CHECKS = 1;
