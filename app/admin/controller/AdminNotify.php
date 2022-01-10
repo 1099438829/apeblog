@@ -4,6 +4,7 @@ namespace app\admin\controller;
 
 use app\admin\extend\Util as Util;
 use app\common\model\AdminNotify as nModel;
+use Exception;
 
 /**
  * 消息提醒
@@ -15,7 +16,7 @@ class AdminNotify extends AuthController
     /**
      * 列表
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function index()
     {

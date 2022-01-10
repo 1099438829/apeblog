@@ -7,7 +7,12 @@ use app\common\model\FriendLink as aModel;
 use app\admin\extend\FormBuilder as Form;
 use app\Request;
 use app\admin\extend\Util as Util;
+use Exception;
+use FormBuilder\Exception\FormBuilderException;
 use FormBuilder\Factory\Elm;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\facade\Route as Url;
 
 /**
@@ -21,7 +26,7 @@ class FriendLink extends AuthController
     /**
      * 账号列表
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function index()
     {
@@ -32,9 +37,9 @@ class FriendLink extends AuthController
      * 文章列表
      * @param Request $request
      * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 李玉坤
      * @date 2021-02-15 23:26
      */
@@ -54,7 +59,7 @@ class FriendLink extends AuthController
     /**
      * 添加友链
      * @return string
-     * @throws \FormBuilder\Exception\FormBuilderException
+     * @throws FormBuilderException
      */
     public function add()
     {
@@ -73,7 +78,7 @@ class FriendLink extends AuthController
     /**
      * 修改友链
      * @return string
-     * @throws \FormBuilder\Exception\FormBuilderException
+     * @throws FormBuilderException
      */
     public function edit($id = "")
     {

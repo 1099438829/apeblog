@@ -3,6 +3,7 @@
 
 namespace app\admin\extend;
 
+use FormBuilder\Exception\FormBuilderException;
 use FormBuilder\Form\IviewForm;
 
 /**
@@ -17,7 +18,7 @@ class FormBuilder
      * @param $rule
      * @param $url
      * @return string
-     * @throws \FormBuilder\Exception\FormBuilderException
+     * @throws FormBuilderException
      */
     public static function make_post_form($rule, $url)
     {

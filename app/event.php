@@ -1,5 +1,7 @@
 <?php
 // 事件定义文件
+use app\admin\subscribes\AdminSubscribe;
+
 return [
     'bind' => [
     ],
@@ -13,6 +15,6 @@ return [
     ],
 
     'subscribe' => [
-        \app\admin\subscribes\AdminSubscribe::class, // 操作记录
+        AdminSubscribe::class, // 操作记录
     ],
 ];

@@ -20,7 +20,7 @@ class SystemBasic extends BaseController
      * @param string $title 标题
      * @param int $duration 持续时间
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     protected function failedNotice($msg = '操作失败', $backUrl = 0, $info = '', $duration = 3)
     {

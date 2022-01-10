@@ -5,9 +5,14 @@ namespace app\admin\controller;
 
 use app\common\model\Attachment;
 use app\common\model\AttachmentCategory;
+use Exception;
+use FormBuilder\Exception\FormBuilderException;
 use FormBuilder\Factory\Elm;
 use app\admin\extend\FormBuilder as Form;
 use app\admin\extend\Util as Util;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * Class Images
@@ -28,9 +33,9 @@ class Images extends AuthController
 
     /**
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function category()
     {
@@ -42,7 +47,7 @@ class Images extends AuthController
      * @param int $id
      * @param int $pid
      * @return string
-     * @throws \FormBuilder\Exception\FormBuilderException
+     * @throws FormBuilderException
      */
     public function addCategory($id = 0, $pid = 0)
     {
@@ -65,8 +70,8 @@ class Images extends AuthController
      * 目录的修改
      * @param $id
      * @return string
-     * @throws \FormBuilder\Exception\FormBuilderException
-     * @throws \Exception
+     * @throws FormBuilderException
+     * @throws Exception
      */
     public function editCategory($id = 0, $pid = 0)
     {
@@ -139,10 +144,10 @@ class Images extends AuthController
     /**
      * @param $id
      * @return string
-     * @throws \FormBuilder\Exception\FormBuilderException
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws FormBuilderException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function editImage($id)
     {
@@ -185,7 +190,7 @@ class Images extends AuthController
                     break;
             }
             return Attachment::del($id) ? app("json")->success("删除成功") : app("json")->fail("删除失败");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return app("json")->fail("删除失败" . $e);
         }
     }

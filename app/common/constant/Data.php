@@ -16,6 +16,15 @@ class Data
     const DATA_SYSTEM_CONFIG = 'data_system_config'; //系统配置
     const DATA_ADVERT = 'data_advert'; //广告
 
+    //广告位
+    const ADVERT_NAV_LIST = [
+        1 => '主页banner',
+        2 => '主页推荐位置',
+        3 => '主页右侧广告位',
+        4 => '文章banner',
+        5 => '文章右侧广告位置',
+    ];
+
     //后台用户sessionKey
     const SESSION_KEY_ADMIN_ID = 'admin_id';
     const SESSION_KEY_ADMIN_INFO = 'admin_info';

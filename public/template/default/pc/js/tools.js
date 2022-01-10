@@ -152,4 +152,3 @@ function loadlazyimg() {
             $("img.thumbnail").trigger("load")
         }, 1E3)))
 }
-;

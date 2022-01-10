@@ -5,6 +5,10 @@ namespace app\admin\controller;
 use app\common\model\InvitationCode as aModel;
 use app\Request;
 use app\admin\extend\Util as Util;
+use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * Class Invitation
@@ -27,7 +31,7 @@ class Invitation extends AuthController
     /**
      * 邀请码列表
      * @return string
-     * @throws \Exception
+     * @throws Exception
      * @author 李玉坤
      * @date 2021-02-16 13:15
      */
@@ -40,9 +44,9 @@ class Invitation extends AuthController
      * 文章列表
      * @param Request $request
      * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 李玉坤
      * @date 2021-02-15 23:26
      */
@@ -60,9 +64,9 @@ class Invitation extends AuthController
      * 保存修改
      * @param string $id
      * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 李玉坤
      * @date 2021-02-20 14:32
      */
@@ -92,9 +96,9 @@ class Invitation extends AuthController
      * 批量添加
      * @param string $id
      * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 李玉坤
      * @date 2021-02-20 14:35
      */

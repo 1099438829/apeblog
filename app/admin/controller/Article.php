@@ -9,6 +9,9 @@ use app\common\model\DocumentArticle;
 use app\common\model\Comment as CommentModel;
 use app\Request;
 use app\admin\extend\Util as Util;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\Exception;
 use think\facade\Log;
 
@@ -33,9 +36,9 @@ class Article extends AuthController
     /**
      * 文章列表
      * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 李玉坤
      * @date 2021-02-15 23:26
      */
@@ -166,9 +169,9 @@ class Article extends AuthController
      * 新增文章
      * @param $category_id
      * @return string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 李玉坤
      * @date 2021-03-10 14:46
      */
@@ -228,9 +231,9 @@ class Article extends AuthController
     /**
      * 文章评论列表
      * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 李玉坤
      * @date 2021-11-03 23:28
      */

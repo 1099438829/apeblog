@@ -9,6 +9,9 @@ use FormBuilder\Exception\FormBuilderException;
 use app\admin\extend\Util as Util;
 use FormBuilder\Factory\Elm;
 use app\admin\extend\FormBuilder as Form;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 class AdminRole extends AuthController
 {
@@ -21,9 +24,9 @@ class AdminRole extends AuthController
      * 角色列表
      * @param Request $request
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function lst(Request $request)
     {
@@ -35,9 +38,9 @@ class AdminRole extends AuthController
      * @param int $pid
      * @return string
      * @throws FormBuilderException
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function add($pid = 0)
     {
@@ -57,9 +60,9 @@ class AdminRole extends AuthController
      * @param int $id
      * @return string
      * @throws FormBuilderException
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function edit($id = 0)
     {

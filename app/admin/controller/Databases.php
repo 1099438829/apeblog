@@ -10,6 +10,11 @@
 namespace app\admin\controller;
 
 use app\Request;
+use Exception;
+use FilesystemIterator;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\facade\Db;
 use app\common\extend\Database;
 use app\admin\extend\Util as Util;
@@ -24,7 +29,7 @@ class Databases extends AuthController
      * 数据库备份/还原列表
      * @param null $type
      * @return string
-     * @throws \Exception
+     * @throws Exception
      * @author 李玉坤
      * @date 2021-10-30 12:45
      */
@@ -53,9 +58,9 @@ class Databases extends AuthController
      * 获取列表
      * @param Request $request
      * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 李玉坤
      * @date 2021-10-31 0:12
      */
@@ -74,8 +79,8 @@ class Databases extends AuthController
                     mkdir($path, 0755, true);
                 }
                 $path = realpath($path);
-                $flag = \FilesystemIterator::KEY_AS_FILENAME;
-                $glob = new \FilesystemIterator($path, $flag);
+                $flag = FilesystemIterator::KEY_AS_FILENAME;
+                $glob = new FilesystemIterator($path, $flag);
 
                 $list = array();
                 foreach ($glob as $name => $file) {
@@ -166,9 +171,9 @@ class Databases extends AuthController
     /**
      * 删除备份文件
      * @return mixed|void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 李玉坤
      * @date 2021-10-30 13:31
      */
@@ -187,9 +192,9 @@ class Databases extends AuthController
     /**
      * 备份数据库
      * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 李玉坤
      * @date 2021-10-31 0:35
      */

@@ -4,10 +4,14 @@ namespace app\admin\controller;
 
 use app\common\model\AdminAuth as aModel;
 use app\Request;
+use Exception;
 use FormBuilder\Exception\FormBuilderException;
 use app\admin\extend\Util as Util;
 use FormBuilder\Factory\Elm;
 use app\admin\extend\FormBuilder as Form;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\facade\Route as Url;
 
 /**
@@ -26,9 +30,9 @@ class AdminAuth extends AuthController
      * 权限列表
      * @param Request $request
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function lst(Request $request)
     {
@@ -44,10 +48,10 @@ class AdminAuth extends AuthController
      * @param int $pid
      * @return string
      * @throws FormBuilderException
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \Exception
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     * @throws Exception
      */
     public function add($pid = 0)
     {
@@ -72,9 +76,9 @@ class AdminAuth extends AuthController
      * @param int $id
      * @return string
      * @throws FormBuilderException
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function edit($id = 0)
     {

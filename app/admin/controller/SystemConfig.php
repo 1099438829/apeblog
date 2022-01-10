@@ -6,9 +6,15 @@ use app\common\constant\Data;
 use app\common\model\SystemConfig as cModel;
 use app\common\model\SystemConfigTab as tModel;
 use app\Request;
+use Exception;
+use FormBuilder\Exception\FormBuilderException;
 use FormBuilder\Factory\Elm;
 use app\admin\extend\FormBuilder as Form;
 use app\admin\extend\Util as Util;
+use Psr\SimpleCache\InvalidArgumentException;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 系统配置
@@ -21,9 +27,9 @@ class SystemConfig extends AuthController
      * 基础配置
      * @param int $tab_id
      * @return string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function base($tab_id = 1)
     {
@@ -48,7 +54,7 @@ class SystemConfig extends AuthController
     /**
      * @param Request $request
      * @return
-     * @throws \Psr\SimpleCache\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function clearCache(Request $request)
     {
@@ -67,9 +73,9 @@ class SystemConfig extends AuthController
      * 列表
      * @param int $tab_id
      * @return string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function lst(Request $request)
     {
@@ -85,7 +91,7 @@ class SystemConfig extends AuthController
      * 列表
      * @param int $tab_id
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function index($tab_id = 0)
     {
@@ -97,7 +103,7 @@ class SystemConfig extends AuthController
      * 添加
      * @param Request $request
      * @return string
-     * @throws \FormBuilder\Exception\FormBuilderException
+     * @throws FormBuilderException
      */
     public function add(Request $request)
     {
@@ -123,7 +129,7 @@ class SystemConfig extends AuthController
      * 修改
      * @param Request $request
      * @return string
-     * @throws \FormBuilder\Exception\FormBuilderException
+     * @throws FormBuilderException
      */
     public function edit($id = '')
     {
@@ -198,7 +204,7 @@ class SystemConfig extends AuthController
             foreach ($request->param() as $k => $v) cModel::editValueByFormName($k, $v);
             cache(Data::DATA_SYSTEM_CONFIG, null);//清除缓存
             return app("json")->success("操作成功");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return app("json")->fail("操作失败");
         }
 

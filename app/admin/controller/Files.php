@@ -6,6 +6,9 @@ namespace app\admin\controller;
 use app\common\model\Attachment;
 use app\admin\extend\storage\QcloudCoService;
 use app\admin\extend\Util as Util;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\exception\ValidateException;
 use think\facade\Filesystem;
 use think\Request;
@@ -15,9 +18,9 @@ class Files extends AuthController
     /**
      * 单个图片上传
      * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function image()
     {

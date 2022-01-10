@@ -6,13 +6,17 @@ use app\common\model\AdminAuth;
 use app\common\model\AdminNotify;
 use app\Request;
 use app\admin\extend\Util as Util;
+use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 class Index extends AuthController
 {
     /**
      * 后台首页
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function index()
     {
@@ -31,7 +35,7 @@ class Index extends AuthController
     /**
      * 控制台
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function main()
     {
@@ -40,9 +44,9 @@ class Index extends AuthController
 
     /**
      * 菜单
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function menu()
     {

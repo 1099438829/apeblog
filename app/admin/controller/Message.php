@@ -5,6 +5,10 @@ namespace app\admin\controller;
 use app\common\model\MessageForm as aModel;
 use app\Request;
 use app\admin\extend\Util as Util;
+use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * Class Message
@@ -27,7 +31,7 @@ class Message extends AuthController
     /**
      * 留言管理
      * @return string
-     * @throws \Exception
+     * @throws Exception
      * @author 李玉坤
      * @date 2021-02-19 11:53
      */
@@ -40,9 +44,9 @@ class Message extends AuthController
      * 留言列表
      * @param Request $request
      * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 李玉坤
      * @date 2021-02-19 11:54
      */

@@ -2,6 +2,9 @@
 
 use app\common\model\SystemConfig;
 use app\common\constant\Data;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 // 应用公共文件
 if (!function_exists('system_config_more')) {
@@ -9,9 +12,9 @@ if (!function_exists('system_config_more')) {
      * 获取系统配置值
      * @param array $formNames
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     function system_config_more(array $formNames): array
     {
@@ -65,9 +68,9 @@ if (!function_exists('system_config')) {
      * 获取系统配置值
      * @param string $formName
      * @return string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     function system_config(string $formName): string
     {

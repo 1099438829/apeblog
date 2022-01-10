@@ -5,8 +5,13 @@ namespace app\admin\controller;
 use app\common\model\User as aModel;
 use app\Request;
 use app\admin\extend\Util as Util;
+use Exception;
+use FormBuilder\Exception\FormBuilderException;
 use FormBuilder\Factory\Elm;
 use app\admin\extend\FormBuilder as Form;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\facade\Route as Url;
 
 /**
@@ -21,7 +26,7 @@ class User extends AuthController
     /**
      * 账号列表
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function index()
     {
@@ -32,9 +37,9 @@ class User extends AuthController
      * 账号列表
      * @param Request $request
      * @return
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function lst(Request $request)
     {
@@ -55,7 +60,7 @@ class User extends AuthController
      * 添加账号
      * @param Request $request
      * @return string
-     * @throws \FormBuilder\Exception\FormBuilderException
+     * @throws FormBuilderException
      */
     public function add(Request $request)
     {
@@ -76,7 +81,7 @@ class User extends AuthController
     /**
      * 修改账号
      * @return string
-     * @throws \FormBuilder\Exception\FormBuilderException
+     * @throws FormBuilderException
      */
     public function edit($id = "")
     {

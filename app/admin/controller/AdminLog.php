@@ -5,6 +5,10 @@ namespace app\admin\controller;
 use app\common\model\AdminLog as lModel;
 use app\Request;
 use app\admin\extend\Util as Util;
+use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 日志
@@ -18,7 +22,7 @@ class AdminLog extends AuthController
     /**
      * 主页
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function index()
     {
@@ -29,9 +33,9 @@ class AdminLog extends AuthController
      * 权限列表
      * @param Request $request
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function lst(Request $request)
     {
@@ -49,7 +53,7 @@ class AdminLog extends AuthController
     /**
      * 清空日志
      * @param Request $request
-     * @throws \Exception
+     * @throws Exception
      */
     public function empty(Request $request)
     {

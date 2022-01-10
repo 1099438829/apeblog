@@ -4,11 +4,15 @@ namespace app\admin\controller;
 
 
 use app\Request;
+use FormBuilder\Exception\FormBuilderException;
 use FormBuilder\Factory\Elm;
 use app\admin\extend\FormBuilder as Form;
 use app\admin\extend\Util as Util;
 use app\common\model\SystemConfigTab as tModel;
 use app\common\model\SystemConfig as cModel;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * 管理员配置
@@ -42,7 +46,7 @@ class SystemConfigTab extends AuthController
      * 添加
      * @param Request $request
      * @return string
-     * @throws \FormBuilder\Exception\FormBuilderException
+     * @throws FormBuilderException
      */
     public function add(Request $request)
     {
@@ -59,7 +63,7 @@ class SystemConfigTab extends AuthController
      * 修改
      * @param Request $request
      * @return string
-     * @throws \FormBuilder\Exception\FormBuilderException
+     * @throws FormBuilderException
      */
     public function edit($id = '')
     {
@@ -104,9 +108,9 @@ class SystemConfigTab extends AuthController
      * 重写删除
      * @param Request $request
      * @return mixed|void
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function del(Request $request)
     {

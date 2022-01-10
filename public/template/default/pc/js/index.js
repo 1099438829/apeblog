@@ -22,7 +22,7 @@ init_dark();
 
 function init_dark() {
 	!0 === cp_user_get_dark() ? loaddarkcss() : "" === cp_user_get_dark() ? 1 == set.autodark ? cp_isdark() ? loaddarkcss() : def_dark() : def_dark() : removedarkcss()
-};
+}
 
 function copyaddurl(content) {
 	if (set.reprint.addurl == 0) {
@@ -170,7 +170,7 @@ $(document).ready(function () {
 			for (let i = 0; i < links_url_arr.length; i++) {
 				var url = $(links_url_arr[i]).children('a').attr('href') + '/favicon.ico';
 				var default_url = set.index.chromeiconurl;
-				$(links_url_arr[i]).children('a').prepend(`<img class="frinds-links-icon img-lazyload" src="${default_url}" data-original="${url}" onerror="javascript:this.src='${default_url}'"> `);
+				$(links_url_arr[i]).children('a').prepend(`<img class="frinds-links-icon img-lazyload" src="${default_url}" data-original="${url}" onerror="this.src='${default_url}'"> `);
 			}
 			setTimeout(function () {
 				endloadhtml();
@@ -196,7 +196,7 @@ $(document).scroll(function () {
 			var name = $(this).attr('catalog');
 			set_catalog_css();
 			$('p[catalog=' + name + ']').addClass('catalog-hover');
-			return;
+
 		}
 
 	});

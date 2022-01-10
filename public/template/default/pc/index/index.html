@@ -56,7 +56,7 @@
                 </style>
                 <div class="index-top-postcard-plane">
                     <div class="index-top-postcard-body">
-                        {ape:advert row="4" type="1"}
+                        {ape:advert row="4" type="2"}
                         <div class="index-top-postcard-item">
                             <div class="index-top-postcard-main">
                                 <div class="post-item-thumbnail">
@@ -259,10 +259,10 @@
                     <a href="{$field['url']}" title="{$field['title']}" target="_blank">
                         {notempty name="$field['image']"}
                         <img class="frinds-links-icon img-lazyload" src="{$field['image']}" data-original="{$field['image']}"
-                             onerror="javascript:this.src='__IMG__/chrome.png'">
+                             onerror="this.src='__IMG__/chrome.png'">
                         {else /}
                         <img class="frinds-links-icon img-lazyload" src="__IMG__/chrome.png" data-original="__IMG__/chrome.png"
-                             onerror="javascript:this.src='__IMG__/chrome.png'">
+                             onerror="this.src='__IMG__/chrome.png'">
                         {/notempty} {$field['title']}
                     </a>
                 </li>

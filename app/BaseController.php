@@ -3,6 +3,7 @@ declare (strict_types=1);
 
 namespace app;
 
+use Exception;
 use think\App;
 use think\exception\HttpResponseException;
 use think\exception\ValidateException;
@@ -22,7 +23,7 @@ abstract class BaseController
 
     /**
      * 应用实例
-     * @var \think\App
+     * @var App
      */
     protected $app;
 
@@ -193,7 +194,7 @@ abstract class BaseController
     /**
      * 返回视图
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     protected function fetch(string $template = '')
     {

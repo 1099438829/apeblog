@@ -3,35 +3,30 @@
 namespace app\admin\controller;
 
 use app\admin\extend\FormBuilder as Form;
+use app\admin\extend\Util as Util;
 use app\common\constant\Data;
 use app\common\model\Advert as aModel;
 use app\Request;
-use app\admin\extend\Util as Util;
+use Exception;
+use FormBuilder\Exception\FormBuilderException;
 use FormBuilder\Factory\Elm;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\facade\Route as Url;
 
 /**
- * Class Poster
+ * Class Advert
  * @package app\admin\controller
  * @author 李玉坤
  * @date 2021-07-26 17:53
  */
-class Poster extends AuthController
+class Advert extends AuthController
 {
-    /**
-     * 构造方法 初始化一些参数
-     */
-    public function initialize()
-    {
-        parent::initialize();
-        //修正因为修改model名称和原来不能对应导致的model功能异常
-        $this->model = new aModel();
-    }
-
     /**
      * 广告管理
      * @return string
-     * @throws \Exception
+     * @throws Exception
      * @author 李玉坤
      * @date 2021-02-19 11:53
      */
@@ -40,13 +35,18 @@ class Poster extends AuthController
         return $this->fetch();
     }
 
+    public function navList(Request $request)
+    {
+        return app("json")->layui(Data::ADVERT_NAV_LIST);
+    }
+
     /**
      * 文章列表
      * @param Request $request
      * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 李玉坤
      * @date 2021-02-15 23:26
      */
@@ -67,7 +67,7 @@ class Poster extends AuthController
      * 添加广告
      * @param Request $request
      * @return string
-     * @throws \FormBuilder\Exception\FormBuilderException
+     * @throws FormBuilderException
      */
     public function add(Request $request)
     {
@@ -78,7 +78,7 @@ class Poster extends AuthController
         $form[] = Elm::input('sort', '排序')->col(10);
         $form[] = Elm::select('position', '位置')->options(function () {
             $options = [];
-            foreach (['顶部页签', '右侧广告位', '文章页面'] as $k => $v) {
+            foreach (Data::ADVERT_NAV_LIST as $k => $v) {
                 $options[] = Elm::option($k, $v);
             }
             return $options;
@@ -92,26 +92,26 @@ class Poster extends AuthController
     /**
      * 修改banner
      * @return string
-     * @throws \FormBuilder\Exception\FormBuilderException
+     * @throws FormBuilderException
      */
     public function edit($id = "")
     {
         if (!$id) return app("json")->fail("数据id不能为空");
-        $ainfo = aModel::get($id);
-        if (!$ainfo) return app("json")->fail("没有该数据");
+        $info = aModel::get($id);
+        if (!$info) return app("json")->fail("没有该数据");
         $form = array();
-        $form[] = Elm::input('title', '广告名称', $ainfo['title'])->col(10);
-        $form[] = Elm::input('url', '链接地址', $ainfo['url'])->col(10);
-        $form[] = Elm::frameImage('cover_path', '广告图片', Url::buildUrl('admin/images/index', array('fodder' => 'cover_path', 'limit' => 1)), $ainfo['cover_path'])->icon("ios-image")->width('96%')->height('440px')->col(10);
-        $form[] = Elm::input('sort', '排序', $ainfo['sort'])->col(10);
-        $form[] = Elm::select('position', '位置', $ainfo['position'])->options(function () {
+        $form[] = Elm::input('title', '广告名称', $info['title'])->col(10);
+        $form[] = Elm::input('url', '链接地址', $info['url'])->col(10);
+        $form[] = Elm::frameImage('cover_path', '广告图片', Url::buildUrl('admin/images/index', array('fodder' => 'cover_path', 'limit' => 1)), $info['cover_path'])->icon("ios-image")->width('96%')->height('440px')->col(10);
+        $form[] = Elm::input('sort', '排序', $info['sort'])->col(10);
+        $form[] = Elm::select('position', '位置', $info['position'])->options(function () {
             $options = [];
-            foreach (['顶部页签', '右侧广告位', '文章页面'] as $k => $v) {
+            foreach (Data::ADVERT_NAV_LIST as $k => $v) {
                 $options[] = Elm::option($k, $v);
             }
             return $options;
         })->col(10);
-        $form[] = Elm::radio('status', '状态', $ainfo['status'])->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(10);
+        $form[] = Elm::radio('status', '状态', $info['status'])->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(10);
         $form = Form::make_post_form($form, url('save', ['id' => $id])->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
@@ -129,7 +129,7 @@ class Poster extends AuthController
             ['title', ''],
             ['url', ''],
             ['cover_path', ''],
-            ['position', 0],
+            ['position', 1],
             ['sort', ''],
             ['status', 1],
         ]);

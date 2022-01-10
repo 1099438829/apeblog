@@ -5,6 +5,7 @@ namespace app\admin\controller;
 use app\common\model\SystemConfig as cModel;
 use app\Request;
 use app\admin\extend\Util as Util;
+use Exception;
 
 /**
  * Class Theme
@@ -17,7 +18,7 @@ class Theme extends AuthController
     /**
      * 主题列表
      * @return string
-     * @throws \Exception
+     * @throws Exception
      * @author 李玉坤
      * @date 2021-02-17 11:40
      */
@@ -53,7 +54,7 @@ class Theme extends AuthController
     /**
      * 更新主题
      * @return string
-     * @throws \Exception
+     * @throws Exception
      * @author 李玉坤
      * @date 2021-02-17 11:40
      */

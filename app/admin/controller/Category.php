@@ -7,6 +7,10 @@ use app\common\model\DocumentCategory as aModel;
 use app\common\model\DocumentCategoryContent;
 use app\Request;
 use app\admin\extend\Util as Util;
+use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 
 /**
  * Class Article
@@ -19,7 +23,7 @@ class Category extends AuthController
     /**
      * 分类
      * @return string
-     * @throws \Exception
+     * @throws Exception
      * @author 李玉坤
      * @date 2021-02-17 11:40
      */
@@ -32,9 +36,9 @@ class Category extends AuthController
      * 权限列表
      * @param Request $request
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function lst(Request $request)
     {
@@ -108,7 +112,7 @@ class Category extends AuthController
     /**
      * 新增页
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function add($pid = '')
     {
@@ -135,7 +139,7 @@ class Category extends AuthController
     /**
      * 编辑页
      * @return string
-     * @throws \Exception
+     * @throws Exception
      * @author 李玉坤
      * @date 2021-02-20 17:00
      */
