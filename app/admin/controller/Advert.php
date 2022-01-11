@@ -137,6 +137,7 @@ class Advert extends AuthController
         if ($data['url'] == "") return app("json")->fail("链接地址不能为空");
         if (is_array($data['cover_path'])) $data['cover_path'] = $data['cover_path'][0];
         $data['user_id'] = $this->adminId;//默认修改你
+        if (filter_var($data['url'], FILTER_VALIDATE_URL) === false) return app("json")->fail("链接地址不合法");
         if ($id == "") {
             //判断下用户是否存在
             $info = aModel::where('url', $data['url'])->find();

@@ -96,7 +96,7 @@ class Article extends AuthController
                 $content = $data['content'];
             }
             //判断摘要是否为空，为空则从内容摘取
-            $data['abstract'] = $data['abstract'] ?: mb_substr($content, 0, 100);
+            $data['abstract'] = $data['abstract'] ?: mb_substr(strip_tags($content), 0, 100);
             unset($data['content']);
             if ($data['is_recommend']) $data['is_recommend'] = 1;
             if ($data['is_hot']) $data['is_hot'] = 1;
