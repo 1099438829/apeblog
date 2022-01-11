@@ -1,1 +1,1 @@
-<div class="footer"> &copy; 2020-2030 <a href="http://www.leapy.cn" target="_blank">www.leapy.cn</a> 里派网络科技有限公司出品</div>
+<div class="footer"> &copy; 2020-2030 <a href="http://www.apecloud.cn" target="_blank">www.apecloud.cn</a> 源码云出品</div>

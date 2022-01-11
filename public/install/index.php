@@ -23,7 +23,7 @@ if (PHP_EDITION > phpversion()){
 	exit('您的php版本过低，不能安装本软件，请升级到'.PHP_EDITION.'或更高版本再安装，谢谢！');
 }
 
-define("LEAPY_VERSION", '20200601');
+define("APEBLOG_VERSION", '20200601');
 date_default_timezone_set('PRC');
 error_reporting(E_ALL & ~E_NOTICE);
 header('Content-Type: text/html; charset=UTF-8');
@@ -33,14 +33,14 @@ define('APP_DIR', _dir_path(substr(dirname(__FILE__), 0, -15)));//项目目录
 //echo SITEDIR;
 //exit;SITE_DIR
 //数据库
-$sqlFile = 'leapy.sql';
+$sqlFile = 'ape_blog.sql';
 $configFile = '.env';
 if (!file_exists(SITE_DIR . 'install/' . $sqlFile) || !file_exists(SITE_DIR . 'install/' . $configFile)) {
     echo '缺少必要的安装文件!';
     exit;
 }
-$Title = "Pai-admin安装向导";
-$Powered = "Powered by LEAPY";
+$Title = "apeBlog安装向导";
+$Powered = "Powered by muzi";
 $steps = array(
     '1' => '安装许可协议',
     '2' => '运行环境检测',
@@ -202,7 +202,7 @@ switch ($step) {
             $dbName = strtolower(trim($_POST['dbname']));            
             $dbUser = trim($_POST['dbuser']);
             $dbPwd = trim($_POST['dbpw']);
-            $dbPrefix = empty($_POST['dbprefix']) ? 'lea_' : trim($_POST['dbprefix']);
+            $dbPrefix = empty($_POST['dbprefix']) ? 'ape_' : trim($_POST['dbprefix']);
 
             $username = trim($_POST['manager']);
             $password = trim($_POST['manager_pwd']);
@@ -255,9 +255,9 @@ switch ($step) {
             for ($i = $n; $i < $counts; $i++) {
                 $sql = trim($sqlFormat[$i]);
                 if (strstr($sql, 'CREATE TABLE')) {
-                    preg_match('/CREATE TABLE `lea_([^ ]*)`/is', $sql, $matches);
+                    preg_match('/CREATE TABLE `ape_([^ ]*)`/is', $sql, $matches);
                     mysqli_query($conn,"DROP TABLE IF EXISTS `$matches[1]");
-                    $sql = str_replace('`lea_','`'.$dbPrefix,$sql);//替换表前缀
+                    $sql = str_replace('`ape_','`'.$dbPrefix,$sql);//替换表前缀
                     $ret = mysqli_query($conn,$sql);
                     if ($ret) {
                         $message = '<li><span class="correct_span">&radic;</span>创建数据表['.$dbPrefix.$matches[1] . ']完成!<span style="float: right;">'.date('Y-m-d H:i:s').'</span></li> ';
@@ -271,7 +271,7 @@ switch ($step) {
                 } else {
                     if(trim($sql) == '')
                         continue;
-                    $sql = str_replace('`lea_','`'.$dbPrefix,$sql);//替换表前缀
+                    $sql = str_replace('`ape_','`'.$dbPrefix,$sql);//替换表前缀
                     $ret = mysqli_query($conn,$sql);
                     $message = '';
                     $arr = array('n' => $i, 'msg' => $message);
@@ -279,22 +279,22 @@ switch ($step) {
                 }
             }
             // 清理掉管理员表
-            mysqli_query($conn,"truncate table ".str_replace('lea_',$dbPrefix,'lea_admin'));
+            mysqli_query($conn,"truncate table ".str_replace('ape_',$dbPrefix,'ape_admin'));
 			// 清空测试数据			
 			if(!$_POST['demo'])
 			{
-				$bl_table = array('lea_admin'
-                ,'lea_admin_log'
-                ,'lea_admin_notify'
-                ,'lea_wechat_user'
-                ,'lea_wechat_message'
-                ,'lea_user'
-                ,'lea_user_bill'
-                ,'lea_user_message'
-                ,'lea_user_order');
+				$bl_table = array('ape_admin'
+                ,'ape_admin_log'
+                ,'ape_admin_notify'
+                ,'ape_wechat_user'
+                ,'ape_wechat_message'
+                ,'ape_user'
+                ,'ape_user_bill'
+                ,'ape_user_message'
+                ,'ape_user_order');
 				foreach($bl_table as $k => $v)
 				{
-					$bl_table[$k] = str_replace('lea_',$dbPrefix,$v);
+					$bl_table[$k] = str_replace('ape_',$dbPrefix,$v);
 				}			      
 			
 				foreach($bl_table as $key => $val)
@@ -315,15 +315,8 @@ switch ($step) {
             // $strConfig = str_replace('#DB_DEBUG#', false, $strConfig);
             @file_put_contents(APP_DIR . '.env', $strConfig); //数据库配置文件的地址
             @chmod(APP_DIR . '.env',0777); //数据库配置文件的地址//
-            
-            //读取配置文件，并替换换配置
-//            $strConfig = file_get_contents(SITE_DIR . '/application/config.php');
-//            $strConfig = str_replace('CRMEB_cache_prefix', $uniqid_str, $strConfig);
-//            @chmod(SITE_DIR . '/application/config.php',0777); //配置文件的地址
-//            @file_put_contents(SITE_DIR . '/application/config.php', $strConfig); //配置文件的地址
 
             //更新网站配置信息2
-
             //插入管理员表字段tp_admin表
             $time = time();
             $password = md5(md5(trim($_POST['manager_pwd'])));
