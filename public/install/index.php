@@ -193,29 +193,28 @@ switch ($step) {
     case '4':
         if (intval($_GET['install'])) {
             $n = intval($_GET['n']);
-            if ($i == 999999)
-                exit;
+            if ($n == 999999) exit;
             $arr = array();
 
             $dbHost = trim($_POST['dbhost']);
             $_POST['dbport'] = $_POST['dbport'] ? $_POST['dbport'] : '3306';
-            $dbName = strtolower(trim($_POST['dbname']));            
+            $dbName = strtolower(trim($_POST['dbname']));
             $dbUser = trim($_POST['dbuser']);
             $dbPwd = trim($_POST['dbpw']);
             $dbPrefix = empty($_POST['dbprefix']) ? 'ape_' : trim($_POST['dbprefix']);
-
             $username = trim($_POST['manager']);
             $password = trim($_POST['manager_pwd']);
             $email	  = trim($_POST['manager_email']);
-            
+
             if (!function_exists('mysqli_connect')) {
                 $arr['msg'] = "请安装 mysqli 扩展!";
                 echo json_encode($arr);
                 exit;
             }
+            ;
             $conn = @mysqli_connect($dbHost, $dbUser, $dbPwd,NULL,$_POST['dbport']);
             if (mysqli_connect_errno($conn)){
-                $arr['msg'] = "连接数据库失败!".mysqli_connect_error($conn);           
+                $arr['msg'] = "连接数据库失败!".mysqli_connect_error($conn);
                 echo json_encode($arr);
                 exit;
             }
@@ -226,7 +225,7 @@ switch ($step) {
                 echo json_encode($arr);
                 exit;
             }
-            
+
             if (!mysqli_select_db($conn,$dbName)) {
                 //创建数据时同时设置编码
                 if (!mysqli_query($conn,"CREATE DATABASE IF NOT EXISTS `" . $dbName . "` DEFAULT CHARACTER SET utf8;")) {
@@ -280,18 +279,28 @@ switch ($step) {
             }
             // 清理掉管理员表
             mysqli_query($conn,"truncate table ".str_replace('ape_',$dbPrefix,'ape_admin'));
-			// 清空测试数据			
+			// 清空测试数据
 			if(!$_POST['demo'])
 			{
 				$bl_table = array('ape_admin'
                 ,'ape_admin_log'
                 ,'ape_admin_notify'
-                ,'ape_wechat_user'
-                ,'ape_wechat_message'
+                ,'ape_advert'
+                ,'ape_attachment'
+                ,'ape_attachment_category'
+                ,'ape_document'
+                ,'ape_document_article'
+                ,'ape_document_category'
+                ,'ape_document_category_content'
+                ,'ape_document_product'
+                ,'ape_friend_link'
+                ,'ape_invitation_code'
+                ,'ape_message_form'
+                ,'ape_pv_log'
+                ,'ape_tag'
+                ,'ape_url_log'
                 ,'ape_user'
-                ,'ape_user_bill'
-                ,'ape_user_message'
-                ,'ape_user_order');
+                ,'ape_uv_log');
 				foreach($bl_table as $k => $v)
 				{
 					$bl_table[$k] = str_replace('ape_',$dbPrefix,$v);
@@ -312,18 +321,23 @@ switch ($step) {
             $strConfig = str_replace('#DB_PORT#', $_POST['dbport'], $strConfig);
             $strConfig = str_replace('#DB_PREFIX#', $dbPrefix, $strConfig);
             $strConfig = str_replace('#DB_CHARSET#', 'utf8', $strConfig);
-            // $strConfig = str_replace('#DB_DEBUG#', false, $strConfig);
+            $strConfig = str_replace('#DB_DEBUG#', 'false', $strConfig);
             @file_put_contents(APP_DIR . '.env', $strConfig); //数据库配置文件的地址
             @chmod(APP_DIR . '.env',0777); //数据库配置文件的地址//
-
             //更新网站配置信息2
-            //插入管理员表字段tp_admin表
+            //插入管理员表字段ape_admin表
             $time = time();
             $password = md5(md5(trim($_POST['manager_pwd'])));
-            mysqli_query($conn,"truncate table {$dbPrefix}system_admin");
-            $addadminsql = "INSERT INTO `{$dbPrefix}admin` (`id`, `name`, `nickname`, `password`, `role_id`, `status`, `create_time`, `create_user`) VALUES
-(1, '".$username."', 'admin' ,'".$password."', 1, 1, $time, '1')";
-			$res = mysqli_query($conn,$addadminsql);
+            // 清理掉管理员表和用户表
+            mysqli_query($conn,"truncate table {$dbPrefix}admin");
+            mysqli_query($conn,"truncate table {$dbPrefix}user");
+            $addAdminSql = "INSERT INTO `{$dbPrefix}admin` (`id`, `uid`,`username`, `nickname`, `password`, `role_id`, `status`, `create_time`, `create_user`) VALUES".
+            "(1, 1,'".$username."', 'admin' ,'".$password."', 1, 1, $time, '1')";
+            $addUserSql = "INSERT INTO `{$dbPrefix}user` (`id`, `username`, `nickname`, `password`, `status`, `is_admin`, `create_time`) VALUES ".
+            "(1,'".$username."', 'admin' ,'".$password."', 1, 1, $time);";
+            //插入前台用户和管理员
+            mysqli_query($conn,$addUserSql);
+			$res = mysqli_query($conn,$addAdminSql);
 			if($res){
                 $message = '成功添加管理员<br />成功写入配置文件<br>安装完成．';
                 $arr = array('n' => 999999, 'msg' => $message);

@@ -226,7 +226,6 @@ a:visited{
 	box-shadow:0 3px 3px #ddd;
 	position:relative;
 	color:#fff;
-	background:#246fa6 url(../images/install/header.png) 0 0 repeat-x;
 }
 /*
 ===================
@@ -314,18 +313,14 @@ LOGO
 */
 .icon_install,
 .icon_update{
-	float:left;
-	margin-top:35px;
-	width:90px;
-	height:30px;
-	overflow:hidden;
-	text-indent:-2000em;
-}
-.icon_install{
-	background:url(../images/install/icon_install.png) no-repeat;
-}
-.icon_update{
-	background:url(../images/install/icon_update.png) no-repeat;
+	float: left;
+	margin-top: 40px;
+	width: 90px;
+	height: 30px;
+	overflow: hidden;
+	font-size: 20px;
+	color: #050919;
+	font-weight: bold;
 }
 
 /*
@@ -387,7 +382,7 @@ a.btn_old:visited{
 	width:33%;
 	text-align:center;
 	font-size:14px;
-	color:#6f7885;
+	color: #050919;
 	font-weight:700;
 }
 .step li em{
@@ -644,7 +639,7 @@ loading
 }
 .updata_type .tab li.current a{
 	background:#fdfdfd;
-	color:#6F7885;
+	color: #050919;
 	border-bottom:1px solid #fdfdfd;
 }
 .updata_type .tab_cont{

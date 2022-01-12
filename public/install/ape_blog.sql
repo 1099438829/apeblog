@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 12/01/2022 00:04:30
+ Date: 13/01/2022 00:14:49
 */
 
 SET NAMES utf8mb4;
@@ -295,7 +295,7 @@ CREATE TABLE `ape_document`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_category_status`(`category_id`, `status`) USING BTREE,
   INDEX `idx_status_type_pid`(`status`, `uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文档模型基础表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文档模型基础表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_document
@@ -309,7 +309,7 @@ CREATE TABLE `ape_document_article`  (
   `id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '文档ID',
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '文章内容',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '文档模型文章表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '文档模型文章表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_document_article
@@ -337,7 +337,7 @@ CREATE TABLE `ape_document_category`  (
   `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '分类表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '分类表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_document_category
@@ -351,7 +351,7 @@ CREATE TABLE `ape_document_category_content`  (
   `id` int(11) NOT NULL,
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '分类内容表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '分类内容表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_document_category_content
@@ -370,7 +370,7 @@ CREATE TABLE `ape_document_product`  (
   `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文档模型文章表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文档模型文章表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_document_product
@@ -392,7 +392,7 @@ CREATE TABLE `ape_friend_link`  (
   `update_time` int(10) NOT NULL DEFAULT 0 COMMENT '更新时间',
   `status` int(10) NOT NULL DEFAULT 1 COMMENT '状态 0禁用',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '友链表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '友链表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_friend_link
@@ -432,7 +432,7 @@ CREATE TABLE `ape_message_form`  (
   `status` int(10) NOT NULL DEFAULT 1,
   `create_time` int(10) NOT NULL DEFAULT 0 COMMENT '留言时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '反馈意见表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '反馈意见表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_message_form
@@ -580,11 +580,11 @@ DROP TABLE IF EXISTS `ape_user`;
 CREATE TABLE `ape_user`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `username` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户账号',
-  `nickname` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '里程密' COMMENT '昵称',
+  `nickname` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '昵称',
   `password` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户密码',
-  `avatar` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户头像',
+  `avatar` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '用户头像',
   `email` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '邮箱',
-  `tel` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '手机号',
+  `tel` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '手机号',
   `ip` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '注册IP地址',
   `status` int(11) NOT NULL DEFAULT 0 COMMENT '状态 0启用 1禁用',
   `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '简介',

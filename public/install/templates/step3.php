@@ -47,13 +47,13 @@
           </tr>
           <tr>
             <td class="tar">数据库名：</td>
-            <td><input type="text" name="dbname" id="dbname" value="leapy" class="input" onBlur="TestDbPwd(0)"></td>
+            <td><input type="text" name="dbname" id="dbname" value="ape_blog" class="input" onBlur="TestDbPwd(0)"></td>
             <td><div id="J_install_tip_dbname"></div></td>
           </tr>
           <tr>
             <td class="tar">数据库表前缀：</td>
-            <td><input type="text" name="dbprefix" id="dbprefix" value="lea_" class="input" ></td>
-            <td><div id="J_install_tip_dbprefix"><span class="gray">建议使用默认，同一数据库安装多个pai-admin时需修改</span></div></td>
+            <td><input type="text" name="dbprefix" id="dbprefix" value="ape_" class="input" ></td>
+            <td><div id="J_install_tip_dbprefix"><span class="gray">建议使用默认，同一数据库安装多个ape_blog时需修改</span></div></td>
           </tr>
           <tr>
           	<td class="tar">演示数据：</td>
