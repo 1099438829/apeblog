@@ -5,3 +5,5 @@
 .env
 /runtime
 /composer.lock
+/public/install/install.lock
+/.constant

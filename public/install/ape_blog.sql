@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 13/01/2022 00:14:49
+ Date: 13/01/2022 00:50:41
 */
 
 SET NAMES utf8mb4;
@@ -484,12 +484,12 @@ CREATE TABLE `ape_system_config`  (
 -- ----------------------------
 -- Records of ape_system_config
 -- ----------------------------
-INSERT INTO `ape_system_config` VALUES (1, 1, '网站标题', 'title', 'text', 'input', 0, '', '猿博', '', 99, 1, 1, '1', '1', 1582792265, 1583855342);
-INSERT INTO `ape_system_config` VALUES (2, 1, '网站图标', 'favicon', 'file', 'input', 0, '', '/uploads/images/20220108/ebc3414c8b02c1af2131609616018c0e.png', '', 98, 1, 1, '1', '1', 1582793160, 1582792265);
-INSERT INTO `ape_system_config` VALUES (3, 1, '站点关键词', 'keywords', 'text', 'input', 0, '', '猿博系统', '', 97, 1, 1, '1', '1', 1582793221, 1582792265);
-INSERT INTO `ape_system_config` VALUES (4, 1, '站点描述', 'description', 'text', 'input', 0, '', '猿博系统', '', 96, 1, 1, '1', '1', 1582793248, 1582792265);
+INSERT INTO `ape_system_config` VALUES (1, 1, '网站标题', 'title', 'text', 'input', 0, '', '源码云博客', '', 99, 1, 1, '1', '1', 1582792265, 1583855342);
+INSERT INTO `ape_system_config` VALUES (2, 1, '网站图标', 'favicon', 'file', 'input', 0, '', '/uploads/images/20220113/7937a0e34d8ddad087653a8b6ff3062f.png', '', 98, 1, 1, '1', '1', 1582793160, 1582792265);
+INSERT INTO `ape_system_config` VALUES (3, 1, '站点关键词', 'keywords', 'text', 'input', 0, '', '源码云博客', '', 97, 1, 1, '1', '1', 1582793221, 1582792265);
+INSERT INTO `ape_system_config` VALUES (4, 1, '站点描述', 'description', 'text', 'input', 0, '', '源码云博客', '', 96, 1, 1, '1', '1', 1582793248, 1582792265);
 INSERT INTO `ape_system_config` VALUES (5, 1, '网站作者', 'author', 'text', 'input', 0, '', '木子的忧伤', '', 95, 1, 1, '1', '1', 1582793305, 1582792265);
-INSERT INTO `ape_system_config` VALUES (6, 1, '站点logo', 'logo', 'file', 'input', 0, '', '/uploads/images/20220108/9739e8e4c2cc0d2865f9f1b2475f7da8.png', '', 94, 1, 1, '1', '1', 1582793393, 1582793700);
+INSERT INTO `ape_system_config` VALUES (6, 1, '站点logo', 'logo', 'file', 'input', 0, '', '/uploads/images/20220113/e53d7518221fea797e67317faa4ac07c.png', '', 94, 1, 1, '1', '1', 1582793393, 1582793700);
 INSERT INTO `ape_system_config` VALUES (7, 1, '版权信息', 'copyright', 'text', 'input', 0, '', 'Power by muzi', '', 93, 1, 1, '1', '1', 1582793470, 1582793495);
 INSERT INTO `ape_system_config` VALUES (8, 1, '备案信息', 'icp', 'text', 'textarea', 0, '', '<a href=\"http://beian.miit.gov.cn\">京ICP备19038953号</a> | <a target=\"_blank\" href=\"http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=62062102000138\">甘公网安备62062102000138号</a>', '', 92, 1, 1, '1', '1', 1582793563, 1583375542);
 INSERT INTO `ape_system_config` VALUES (9, 1, '评论开关', 'comment_close', 'radio', 'input', 0, '1=>开启\n0=>关闭', '1', '', 91, 1, 1, '1', '1', 1583126643, 1582792265);
