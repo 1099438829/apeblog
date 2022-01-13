@@ -333,8 +333,8 @@ switch ($step) {
             // 清理掉管理员表和用户表
             mysqli_query($conn, "truncate table {$dbPrefix}admin");
             mysqli_query($conn, "truncate table {$dbPrefix}user");
-            $addAdminSql = "INSERT INTO `{$dbPrefix}admin` (`id`, `uid`,`username`,`realname`, `nickname`,  `password`, `role_id`, `status`, `create_time`, `create_user`) VALUES" .
-                "(1, 1,'" . $username . "', '超级管理员' ,'超级管理员','" . $password . "', 1, 1, $time, '1')";
+            $addAdminSql = "INSERT INTO `{$dbPrefix}admin` (`id`, `uid`,`username`,`realname`, `nickname`, `avatar`, `password`, `role_id`, `status`, `create_time`, `create_user`) VALUES" .
+                "(1, 1,'" . $username . "', '超级管理员' ,'超级管理员','/static/admin/images/logo2.png','" . $password . "', 1, 1, $time, '1')";
             $addUserSql = "INSERT INTO `{$dbPrefix}user` (`id`, `username`, `nickname`, `password`, `status`, `is_admin`, `create_time`) VALUES " .
                 "(1,'" . $username . "', '超级管理员' ,'" . $password . "', 1, 1, $time);";
             //插入前台用户和管理员
