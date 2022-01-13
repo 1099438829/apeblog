@@ -2,7 +2,7 @@
 /.vscode
 *.log
 */.DS_Store
-.env
+/.env
 /runtime
 /composer.lock
 /public/install/install.lock

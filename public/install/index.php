@@ -1,8 +1,8 @@
 <?php
 
 include 'auto.php';
-if(IS_SAE)
-header("Location: index_sae.php");
+if (IS_SAE)
+    header("Location: index_sae.php");
 
 if (file_exists('./install.lock')) {
     echo '
@@ -18,9 +18,9 @@ if (file_exists('./install.lock')) {
 }
 @set_time_limit(1000);
 
-if (PHP_EDITION > phpversion()){
-	header("Content-type:text/html;charset=utf-8");
-	exit('您的php版本过低，不能安装本软件，请升级到'.PHP_EDITION.'或更高版本再安装，谢谢！');
+if (PHP_EDITION > phpversion()) {
+    header("Content-type:text/html;charset=utf-8");
+    exit('您的php版本过低，不能安装本软件，请升级到' . PHP_EDITION . '或更高版本再安装，谢谢！');
 }
 
 define("APEBLOG_VERSION", '20200601');
@@ -29,13 +29,10 @@ error_reporting(E_ALL & ~E_NOTICE);
 header('Content-Type: text/html; charset=UTF-8');
 define('SITE_DIR', _dir_path(substr(dirname(__FILE__), 0, -8)));//入口文件目录
 define('APP_DIR', _dir_path(substr(dirname(__FILE__), 0, -15)));//项目目录
-//define('SITEDIR2', substr(SITEDIR,0,-7));
-//echo SITEDIR;
-//exit;SITE_DIR
 //数据库
-$sqlFile = 'ape_blog.sql';
-$configFile = '.env';
-if (!file_exists(SITE_DIR . 'install/' . $sqlFile) || !file_exists(SITE_DIR . 'install/' . $configFile)) {
+$sqlFile = SITE_DIR . 'install/ape_blog.sql';
+$configFile = SITE_DIR . 'install/.env';
+if (!file_exists($sqlFile) || !file_exists($configFile)) {
     echo '缺少必要的安装文件!';
     exit;
 }
@@ -54,7 +51,7 @@ $step = isset($_GET['step']) ? $_GET['step'] : 1;
 $scriptName = !empty($_SERVER["REQUEST_URI"]) ? $scriptName = $_SERVER["REQUEST_URI"] : $scriptName = $_SERVER["PHP_SELF"];
 $rootpath = @preg_replace("/\/(I|i)nstall\/index\.php(.*)$/", "", $scriptName);
 $domain = empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
-if ((int) $_SERVER['SERVER_PORT'] != 80) {
+if ((int)$_SERVER['SERVER_PORT'] != 80) {
     $domain .= ":" . $_SERVER['SERVER_PORT'];
 }
 $domain = $domain . $rootpath;
@@ -62,13 +59,13 @@ $domain = $domain . $rootpath;
 switch ($step) {
 
     case '1':
-        include_once ("./templates/step1.php");
+        include_once("./templates/step1.php");
         exit();
 
     case '2':
 
         if (phpversion() <= PHP_EDITION) {
-            die('本系统需要PHP版本 >= '.PHP_EDITION.'环境，当前PHP版本为：' . phpversion());
+            die('本系统需要PHP版本 >= ' . PHP_EDITION . '环境，当前PHP版本为：' . phpversion());
         }
 
         $phpv = @ phpversion();
@@ -112,32 +109,32 @@ switch ($step) {
             $session = '<span class="correct_span error_span">&radic;</span> 不支持';
             $err++;
         }
-        if(function_exists('curl_init')){
-        	$curl = '<font color=green>[√]支持</font> ';
-        }else{
-        	$curl = '<font color=red>[×]不支持</font>';
-        	$err++;
+        if (function_exists('curl_init')) {
+            $curl = '<font color=green>[√]支持</font> ';
+        } else {
+            $curl = '<font color=red>[×]不支持</font>';
+            $err++;
         }
 
-        if(function_exists('bcadd')){
+        if (function_exists('bcadd')) {
             $bcmath = '<font color=green>[√]支持</font> ';
-        }else{
+        } else {
             $bcmath = '<font color=red>[×]不支持</font>';
             $err++;
         }
-        if(function_exists('openssl_encrypt')){
+        if (function_exists('openssl_encrypt')) {
             $openssl = '<font color=green>[√]支持</font> ';
-        }else{
+        } else {
             $openssl = '<font color=red>[×]不支持</font>';
             $err++;
         }
-        if(function_exists('finfo_open')){
+        if (function_exists('finfo_open')) {
             $finfo_open = '<font color=green>[√]支持</font> ';
-        }else{
+        } else {
             $finfo_open = '<font color=red>[×]不支持</font>';
             $err++;
         }
-        
+
         $folder = array(
             'public/install',
             'public/upload',
@@ -145,30 +142,30 @@ switch ($step) {
             '.env',
         );
         //必须开启函数
-        if(function_exists('file_put_contents')){
+        if (function_exists('file_put_contents')) {
             $file_put_contents = '<font color=green>[√]开启</font> ';
-        }else{
+        } else {
             $file_put_contents = '<font color=red>[×]关闭</font>';
             $err++;
         }
-        if(function_exists('imagettftext')){
+        if (function_exists('imagettftext')) {
             $imagettftext = '<font color=green>[√]开启</font> ';
-        }else{
+        } else {
             $imagettftext = '<font color=red>[×]关闭</font>';
             $err++;
         }
 
-        include_once ("./templates/step2.php");
+        include_once("./templates/step2.php");
         exit();
 
     case '3':
-		$dbName = strtolower(trim($_POST['dbName']));
-		$_POST['dbport'] = $_POST['dbport'] ? $_POST['dbport'] : '3306';
+        $dbName = strtolower(trim($_POST['dbName']));
+        $_POST['dbport'] = $_POST['dbport'] ? $_POST['dbport'] : '3306';
         if ($_GET['testdbpwd']) {
             $dbHost = $_POST['dbHost'];
-            $conn = @mysqli_connect($dbHost, $_POST['dbUser'], $_POST['dbPwd'],NULL,$_POST['dbport']);			
-            if (mysqli_connect_errno($conn)){				
-				die(json_encode(0));                
+            $conn = @mysqli_connect($dbHost, $_POST['dbUser'], $_POST['dbPwd'], NULL, $_POST['dbport']);
+            if (mysqli_connect_errno($conn)) {
+                die(json_encode(0));
             } else {
 //				$result = mysqli_query($conn,"SELECT @@global.sql_mode");
 //				$result = $result->fetch_array();
@@ -178,15 +175,15 @@ switch ($step) {
 //					if(strstr($result[0],'STRICT_TRANS_TABLES') || strstr($result[0],'STRICT_ALL_TABLES') || strstr($result[0],'TRADITIONAL') || strstr($result[0],'ANSI'))
 //						exit(json_encode(-1));
 //				}
-				$result = mysqli_query($conn,"select count(table_name) as c from information_schema.`TABLES` where table_schema='$dbName'");
-				$result = $result->fetch_array();
-				if($result['c'] > 0)
-					exit(json_encode(-2));
-				
+                $result = mysqli_query($conn, "select count(table_name) as c from information_schema.`TABLES` where table_schema='$dbName'");
+                $result = $result->fetch_array();
+                if ($result['c'] > 0)
+                    exit(json_encode(-2));
+
                 exit(json_encode(1));
             }
-        }		 		
-        include_once ("./templates/step3.php");
+        }
+        include_once("./templates/step3.php");
         exit();
 
 
@@ -204,17 +201,16 @@ switch ($step) {
             $dbPrefix = empty($_POST['dbprefix']) ? 'ape_' : trim($_POST['dbprefix']);
             $username = trim($_POST['manager']);
             $password = trim($_POST['manager_pwd']);
-            $email	  = trim($_POST['manager_email']);
+            $email = trim($_POST['manager_email']);
 
             if (!function_exists('mysqli_connect')) {
                 $arr['msg'] = "请安装 mysqli 扩展!";
                 echo json_encode($arr);
                 exit;
-            }
-            ;
-            $conn = @mysqli_connect($dbHost, $dbUser, $dbPwd,NULL,$_POST['dbport']);
-            if (mysqli_connect_errno($conn)){
-                $arr['msg'] = "连接数据库失败!".mysqli_connect_error($conn);
+            };
+            $conn = @mysqli_connect($dbHost, $dbUser, $dbPwd, NULL, $_POST['dbport']);
+            if (mysqli_connect_errno($conn)) {
+                $arr['msg'] = "连接数据库失败!" . mysqli_connect_error($conn);
                 echo json_encode($arr);
                 exit;
             }
@@ -226,24 +222,24 @@ switch ($step) {
                 exit;
             }
 
-            if (!mysqli_select_db($conn,$dbName)) {
+            if (!mysqli_select_db($conn, $dbName)) {
                 //创建数据时同时设置编码
-                if (!mysqli_query($conn,"CREATE DATABASE IF NOT EXISTS `" . $dbName . "` DEFAULT CHARACTER SET utf8;")) {
+                if (!mysqli_query($conn, "CREATE DATABASE IF NOT EXISTS `" . $dbName . "` DEFAULT CHARACTER SET utf8;")) {
                     $arr['msg'] = '数据库 ' . $dbName . ' 不存在，也没权限创建新的数据库！';
                     echo json_encode($arr);
                     exit;
                 }
-                if ($n==-1) {
+                if ($n == -1) {
                     $arr['n'] = 0;
                     $arr['msg'] = "成功创建数据库:{$dbName}<br>";
                     echo json_encode($arr);
                     exit;
                 }
-                mysqli_select_db($conn , $dbName);
+                mysqli_select_db($conn, $dbName);
             }
 
             //读取数据文件
-            $sqldata = file_get_contents(SITE_DIR . 'install/' . $sqlFile);
+            $sqldata = file_get_contents($sqlFile);
             $sqlFormat = sql_split($sqldata, $dbPrefix);
             //创建写入sql数据库文件到库中 结束
 
@@ -255,65 +251,63 @@ switch ($step) {
                 $sql = trim($sqlFormat[$i]);
                 if (strstr($sql, 'CREATE TABLE')) {
                     preg_match('/CREATE TABLE `ape_([^ ]*)`/is', $sql, $matches);
-                    mysqli_query($conn,"DROP TABLE IF EXISTS `$matches[1]");
-                    $sql = str_replace('`ape_','`'.$dbPrefix,$sql);//替换表前缀
-                    $ret = mysqli_query($conn,$sql);
+                    mysqli_query($conn, "DROP TABLE IF EXISTS `$matches[1]");
+                    $sql = str_replace('`ape_', '`' . $dbPrefix, $sql);//替换表前缀
+                    $ret = mysqli_query($conn, $sql);
                     if ($ret) {
-                        $message = '<li><span class="correct_span">&radic;</span>创建数据表['.$dbPrefix.$matches[1] . ']完成!<span style="float: right;">'.date('Y-m-d H:i:s').'</span></li> ';
+                        $message = '<li><span class="correct_span">&radic;</span>创建数据表[' . $dbPrefix . $matches[1] . ']完成!<span style="float: right;">' . date('Y-m-d H:i:s') . '</span></li> ';
                     } else {
-                        $message = '<li><span class="correct_span error_span">&radic;</span>创建数据表['.$dbPrefix.$matches[1] . ']失败!<span style="float: right;">'.date('Y-m-d H:i:s').'</span></li>';
+                        $message = '<li><span class="correct_span error_span">&radic;</span>创建数据表[' . $dbPrefix . $matches[1] . ']失败!<span style="float: right;">' . date('Y-m-d H:i:s') . '</span></li>';
                     }
                     $i++;
                     $arr = array('n' => $i, 'msg' => $message);
                     echo json_encode($arr);
                     exit;
                 } else {
-                    if(trim($sql) == '')
+                    if (trim($sql) == '')
                         continue;
-                    $sql = str_replace('`ape_','`'.$dbPrefix,$sql);//替换表前缀
-                    $ret = mysqli_query($conn,$sql);
+                    $sql = str_replace('`ape_', '`' . $dbPrefix, $sql);//替换表前缀
+                    $ret = mysqli_query($conn, $sql);
                     $message = '';
                     $arr = array('n' => $i, 'msg' => $message);
 //                    echo json_encode($arr); exit;
                 }
             }
             // 清理掉管理员表
-            mysqli_query($conn,"truncate table ".str_replace('ape_',$dbPrefix,'ape_admin'));
-			// 清空测试数据
-			if(!$_POST['demo'])
-			{
-				$bl_table = array('ape_admin'
-                ,'ape_admin_log'
-                ,'ape_admin_notify'
-                ,'ape_advert'
-                ,'ape_attachment'
-                ,'ape_attachment_category'
-                ,'ape_document'
-                ,'ape_document_article'
-                ,'ape_document_category'
-                ,'ape_document_category_content'
-                ,'ape_document_product'
-                ,'ape_friend_link'
-                ,'ape_invitation_code'
-                ,'ape_message_form'
-                ,'ape_pv_log'
-                ,'ape_tag'
-                ,'ape_url_log'
-                ,'ape_user'
-                ,'ape_uv_log');
-				foreach($bl_table as $k => $v)
-				{
-					$bl_table[$k] = str_replace('ape_',$dbPrefix,$v);
-				}			      
-			
-				foreach($bl_table as $key => $val)
-				{
-                    mysqli_query($conn,"truncate table ".$val);
-				}   	
-				delFile(APP_DIR.'/public/upload'); // 清空测试图片
-			}
+            mysqli_query($conn, "truncate table " . str_replace('ape_', $dbPrefix, 'ape_admin'));
+            // 清空测试数据
+            if (!$_POST['demo']) {
+                $bl_table = array('ape_admin'
+                , 'ape_admin_log'
+                , 'ape_admin_notify'
+                , 'ape_advert'
+                , 'ape_attachment'
+                , 'ape_attachment_category'
+                , 'ape_document'
+                , 'ape_document_article'
+                , 'ape_document_category'
+                , 'ape_document_category_content'
+                , 'ape_document_product'
+                , 'ape_friend_link'
+                , 'ape_invitation_code'
+                , 'ape_message_form'
+                , 'ape_pv_log'
+                , 'ape_tag'
+                , 'ape_url_log'
+                , 'ape_user'
+                , 'ape_uv_log');
+                foreach ($bl_table as $k => $v) {
+                    $bl_table[$k] = str_replace('ape_', $dbPrefix, $v);
+                }
+
+                foreach ($bl_table as $key => $val) {
+                    mysqli_query($conn, "truncate table " . $val);
+                }
+                delFile(APP_DIR . '/public/upload'); // 清空测试图片
+            }
             //读取配置文件，并替换真实配置数据1
-            $strConfig = file_get_contents(SITE_DIR . 'install/' . $configFile);
+
+            $strConfig = file_get_contents($configFile);
             $strConfig = str_replace('#DB_HOST#', $dbHost, $strConfig);
             $strConfig = str_replace('#DB_NAME#', $dbName, $strConfig);
             $strConfig = str_replace('#DB_USER#', $dbUser, $strConfig);
@@ -322,59 +316,72 @@ switch ($step) {
             $strConfig = str_replace('#DB_PREFIX#', $dbPrefix, $strConfig);
             $strConfig = str_replace('#DB_CHARSET#', 'utf8', $strConfig);
             $strConfig = str_replace('#DB_DEBUG#', 'false', $strConfig);
-            @file_put_contents(APP_DIR . '.env', $strConfig); //数据库配置文件的地址
-            @chmod(APP_DIR . '.env',0777); //数据库配置文件的地址//
+            //检查文件是否存在
+            $newConfigFile = APP_DIR . '.env';
+            if (!file_exists($newConfigFile)) {
+                @copy($configFile, $newConfigFile);
+            } else if (is_dir($newConfigFile)) {
+                @rmdir($newConfigFile);
+                @copy($configFile, $newConfigFile);
+            }
+            @file_put_contents($newConfigFile, $strConfig); //数据库配置文件的地址
+            @chmod($newConfigFile, 0777); //数据库配置文件的地址//
             //更新网站配置信息2
             //插入管理员表字段ape_admin表
             $time = time();
             $password = md5(md5(trim($_POST['manager_pwd'])));
             // 清理掉管理员表和用户表
-            mysqli_query($conn,"truncate table {$dbPrefix}admin");
-            mysqli_query($conn,"truncate table {$dbPrefix}user");
-            $addAdminSql = "INSERT INTO `{$dbPrefix}admin` (`id`, `uid`,`username`, `nickname`, `password`, `role_id`, `status`, `create_time`, `create_user`) VALUES".
-            "(1, 1,'".$username."', 'admin' ,'".$password."', 1, 1, $time, '1')";
-            $addUserSql = "INSERT INTO `{$dbPrefix}user` (`id`, `username`, `nickname`, `password`, `status`, `is_admin`, `create_time`) VALUES ".
-            "(1,'".$username."', 'admin' ,'".$password."', 1, 1, $time);";
+            mysqli_query($conn, "truncate table {$dbPrefix}admin");
+            mysqli_query($conn, "truncate table {$dbPrefix}user");
+            $addAdminSql = "INSERT INTO `{$dbPrefix}admin` (`id`, `uid`,`username`, `nickname`, `password`, `role_id`, `status`, `create_time`, `create_user`) VALUES" .
+                "(1, 1,'" . $username . "', 'admin' ,'" . $password . "', 1, 1, $time, '1')";
+            $addUserSql = "INSERT INTO `{$dbPrefix}user` (`id`, `username`, `nickname`, `password`, `status`, `is_admin`, `create_time`) VALUES " .
+                "(1,'" . $username . "', 'admin' ,'" . $password . "', 1, 1, $time);";
             //插入前台用户和管理员
-            mysqli_query($conn,$addUserSql);
-			$res = mysqli_query($conn,$addAdminSql);
-			if($res){
+            mysqli_query($conn, $addUserSql);
+            $res = mysqli_query($conn, $addAdminSql);
+            if ($res) {
                 $message = '成功添加管理员<br />成功写入配置文件<br>安装完成．';
                 $arr = array('n' => 999999, 'msg' => $message);
-                echo json_encode($arr);exit;
-            }else{
+                echo json_encode($arr);
+                exit;
+            } else {
                 $message = '添加管理员失败<br />成功写入配置文件<br>安装完成．';
                 $arr = array('n' => 999999, 'msg' => $message);
-                echo json_encode($arr);exit;
+                echo json_encode($arr);
+                exit;
             }
         }
-        include_once ("./templates/step4.php");
+        include_once("./templates/step4.php");
         exit();
 
     case '5':
-    	$ip = get_client_ip();
-    	$host = $_SERVER['HTTP_HOST'];
+        $ip = get_client_ip();
+        $host = $_SERVER['HTTP_HOST'];
         installlog();
-        include_once ("./templates/step5.php");
+        include_once("./templates/step5.php");
         @touch('./install.lock');
         exit();
 }
 
 //写入安装信息
-function installlog(){
+function installlog()
+{
     $mt_rand_str = sp_random_string(6);
-    $str_constant = "<?php".PHP_EOL."define('INSTALL_DATE',".time().");".PHP_EOL."define('SERIALNUMBER','".$mt_rand_str."');";
+    $str_constant = "<?php" . PHP_EOL . "define('INSTALL_DATE'," . time() . ");" . PHP_EOL . "define('SERIALNUMBER','" . $mt_rand_str . "');";
     @file_put_contents(APP_DIR . '.constant', $str_constant);
 }
+
 //判断权限
-function testwrite($d) {
-    if(is_file($d)){
-        if(is_writeable($d)){
+function testwrite($d)
+{
+    if (is_file($d)) {
+        if (is_writeable($d)) {
             return true;
         }
         return false;
 
-    }else{
+    } else {
         $tfile = "_test.txt";
         $fp = @fopen($d . "/" . $tfile, "w");
         if (!$fp) {
@@ -391,13 +398,14 @@ function testwrite($d) {
 }
 
 
-function sql_split($sql, $tablepre) {
+function sql_split($sql, $tablepre)
+{
 
     if ($tablepre != "tp_")
-    	$sql = str_replace("tp_", $tablepre, $sql);
-          
+        $sql = str_replace("tp_", $tablepre, $sql);
+
     $sql = preg_replace("/TYPE=(InnoDB|MyISAM|MEMORY)( DEFAULT CHARSET=[^; ]+)?/", "ENGINE=\\1 DEFAULT CHARSET=utf8", $sql);
-    
+
     $sql = str_replace("\r", "\n", $sql);
     $ret = array();
     $num = 0;
@@ -417,7 +425,8 @@ function sql_split($sql, $tablepre) {
     return $ret;
 }
 
-function _dir_path($path) {
+function _dir_path($path)
+{
     $path = str_replace('\\', '/', $path);
     if (substr($path, -1) != '/')
         $path = $path . '/';
@@ -425,7 +434,8 @@ function _dir_path($path) {
 }
 
 // 获取客户端IP地址
-function get_client_ip() {
+function get_client_ip()
+{
     static $ip = NULL;
     if ($ip !== NULL)
         return $ip;
@@ -435,7 +445,7 @@ function get_client_ip() {
         if (false !== $pos)
             unset($arr[$pos]);
         $ip = trim($arr[0]);
-    }elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {
+    } elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {
         $ip = $_SERVER['HTTP_CLIENT_IP'];
     } elseif (isset($_SERVER['REMOTE_ADDR'])) {
         $ip = $_SERVER['REMOTE_ADDR'];
@@ -445,7 +455,8 @@ function get_client_ip() {
     return $ip;
 }
 
-function dir_create($path, $mode = 0777) {
+function dir_create($path, $mode = 0777)
+{
     if (is_dir($path))
         return TRUE;
     $ftp_enable = 0;
@@ -463,67 +474,73 @@ function dir_create($path, $mode = 0777) {
     return is_dir($path);
 }
 
-function dir_path($path) {
+function dir_path($path)
+{
     $path = str_replace('\\', '/', $path);
     if (substr($path, -1) != '/')
         $path = $path . '/';
     return $path;
 }
 
-function sp_password($pw, $pre){
-	$decor = md5($pre);
-	$mi = md5($pw);
-	return substr($decor,0,12).$mi.substr($decor,-4,4);
+function sp_password($pw, $pre)
+{
+    $decor = md5($pre);
+    $mi = md5($pw);
+    return substr($decor, 0, 12) . $mi . substr($decor, -4, 4);
 }
 
-function sp_random_string($len = 8) {
-	$chars = array(
-			"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
-			"l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
-			"w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G",
-			"H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
-			"S", "T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2",
-			"3", "4", "5", "6", "7", "8", "9"
-	);
-	$charsLen = count($chars) - 1;
-	shuffle($chars);    // 将数组打乱
-	$output = "";
-	for ($i = 0; $i < $len; $i++) {
-		$output .= $chars[mt_rand(0, $charsLen)];
-	}
-	return $output;
+function sp_random_string($len = 8)
+{
+    $chars = array(
+        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
+        "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
+        "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G",
+        "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
+        "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2",
+        "3", "4", "5", "6", "7", "8", "9"
+    );
+    $charsLen = count($chars) - 1;
+    shuffle($chars);    // 将数组打乱
+    $output = "";
+    for ($i = 0; $i < $len; $i++) {
+        $output .= $chars[mt_rand(0, $charsLen)];
+    }
+    return $output;
 }
+
 // 递归删除文件夹
-function delFile($dir,$file_type='') {
-	if(is_dir($dir)){
-		$files = scandir($dir);
-		//打开目录 //列出目录中的所有文件并去掉 . 和 ..
-		foreach($files as $filename){
-			if($filename!='.' && $filename!='..'){
-				if(!is_dir($dir.'/'.$filename)){
-					if(empty($file_type)){
-						unlink($dir.'/'.$filename);
-					}else{
-						if(is_array($file_type)){
-							//正则匹配指定文件
-							if(preg_match($file_type[0],$filename)){
-								unlink($dir.'/'.$filename);
-							}
-						}else{
-							//指定包含某些字符串的文件
-							if(false!=stristr($filename,$file_type)){
-								unlink($dir.'/'.$filename);
-							}
-						}
-					}
-				}else{
-					delFile($dir.'/'.$filename);
-					rmdir($dir.'/'.$filename);
-				}
-			}
-		}
-	}else{
-		if(file_exists($dir)) unlink($dir);
-	}
+function delFile($dir, $file_type = '')
+{
+    if (is_dir($dir)) {
+        $files = scandir($dir);
+        //打开目录 //列出目录中的所有文件并去掉 . 和 ..
+        foreach ($files as $filename) {
+            if ($filename != '.' && $filename != '..') {
+                if (!is_dir($dir . '/' . $filename)) {
+                    if (empty($file_type)) {
+                        unlink($dir . '/' . $filename);
+                    } else {
+                        if (is_array($file_type)) {
+                            //正则匹配指定文件
+                            if (preg_match($file_type[0], $filename)) {
+                                unlink($dir . '/' . $filename);
+                            }
+                        } else {
+                            //指定包含某些字符串的文件
+                            if (false != stristr($filename, $file_type)) {
+                                unlink($dir . '/' . $filename);
+                            }
+                        }
+                    }
+                } else {
+                    delFile($dir . '/' . $filename);
+                    rmdir($dir . '/' . $filename);
+                }
+            }
+        }
+    } else {
+        if (file_exists($dir)) unlink($dir);
+    }
 }
+
 ?>
