@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 13/01/2022 00:50:41
+ Date: 14/01/2022 00:06:52
 */
 
 SET NAMES utf8mb4;
@@ -41,8 +41,7 @@ CREATE TABLE `ape_admin`  (
   `update_time` int(10) NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `username_email_tel`(`username`, `tel`, `email`) USING BTREE COMMENT '用户名'
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '后台人员列表' ROW_FORMAT = DYNAMIC;
-
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '后台人员列表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_admin
@@ -54,7 +53,7 @@ CREATE TABLE `ape_admin`  (
 DROP TABLE IF EXISTS `ape_admin_auth`;
 CREATE TABLE `ape_admin_auth`  (
   `id` int(4) NOT NULL AUTO_INCREMENT COMMENT '权限id',
-  `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '权限名称',
+  `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '权限名称',
   `icon` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '图标',
   `pid` int(4) NOT NULL DEFAULT 0 COMMENT '父id',
   `module` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '模块名',
@@ -73,7 +72,7 @@ CREATE TABLE `ape_admin_auth`  (
   `create_time` int(10) NOT NULL DEFAULT 0 COMMENT '添加时间',
   `update_time` int(10) NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '权限表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '权限表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_admin_auth
@@ -108,6 +107,7 @@ INSERT INTO `ape_admin_auth` VALUES (28, '主题商店', '', 26, 'admin', 'theme
 INSERT INTO `ape_admin_auth` VALUES (29, '友链管理', 'mdi mdi-account-card-details', 0, 'admin', 'friendlink', 'index', '', '', 0, 0, 1, '/admin/friendlink/index', 0, 1, '1', '', 1613400510, 1582093161);
 INSERT INTO `ape_admin_auth` VALUES (30, '友链列表', '', 34, 'admin', 'friendlink', 'index', '', '', 0, 0, 1, '/admin/friendlink/index', 0, 1, '1', '', 1613400539, 1582093161);
 INSERT INTO `ape_admin_auth` VALUES (31, '数据库管理', '', 8, 'admin', 'databases', 'index', '', '', 0, 0, 1, '/admin/databases/index', 0, 1, '1', '', 1635572569, 1635572671);
+INSERT INTO `ape_admin_auth` VALUES (32, '友链管理', '', 29, 'admin', 'friendlink', 'index', '', '', 0, 0, 1, '/admin/friendlink/index', 0, 1, '1', '1', 1642089882, 1642089911);
 
 -- ----------------------------
 -- Table structure for ape_admin_log
@@ -122,7 +122,7 @@ CREATE TABLE `ape_admin_log`  (
   `action` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '方法名',
   `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT 'ip',
   `user_agent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT 'User-Agent',
-  `create_time` int(10) NOT NULL COMMENT '操作时间',
+  `create_time` int(10) NOT NULL DEFAULT 0 COMMENT '操作时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志表' ROW_FORMAT = DYNAMIC;
 
@@ -136,15 +136,15 @@ CREATE TABLE `ape_admin_log`  (
 DROP TABLE IF EXISTS `ape_admin_notify`;
 CREATE TABLE `ape_admin_notify`  (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '消息ID',
-  `aid` int(10) NOT NULL COMMENT '管理员ID',
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标题',
+  `aid` int(10) NOT NULL DEFAULT 0 COMMENT '管理员ID',
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '标题',
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '内容',
-  `from` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '消息来源 谁发的',
-  `type` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '消息类型 timer:定时器 system:系统',
-  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '跳转路径 不填写时自动判断',
+  `from` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '消息来源 谁发的',
+  `type` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'system' COMMENT '消息类型 timer:定时器 system:系统',
+  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '跳转路径 不填写时自动判断',
   `is_read` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否已读',
-  `create_time` int(10) NOT NULL COMMENT '添加时间',
-  `update_time` int(10) NOT NULL COMMENT '更新时间',
+  `create_time` int(10) NOT NULL DEFAULT 0 COMMENT '添加时间',
+  `update_time` int(10) NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '后台信息表' ROW_FORMAT = DYNAMIC;
 
@@ -159,23 +159,23 @@ DROP TABLE IF EXISTS `ape_admin_role`;
 CREATE TABLE `ape_admin_role`  (
   `id` int(4) NOT NULL AUTO_INCREMENT COMMENT '角色状态',
   `pid` int(4) NOT NULL DEFAULT 0 COMMENT '上级id',
-  `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色名称',
+  `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '角色名称',
   `auth` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '权限',
-  `tree_data` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'treedata',
+  `tree_data` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'treedata',
   `rank` tinyint(2) NOT NULL DEFAULT 0 COMMENT '排序',
-  `status` tinyint(1) NOT NULL COMMENT '角色状态1可用0不用',
-  `create_user` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '添加人',
-  `update_user` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改时间',
-  `create_time` int(10) NOT NULL COMMENT '添加时间',
-  `update_time` int(10) NOT NULL COMMENT '更新时间',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '角色状态1可用0不用',
+  `create_user` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '添加人',
+  `update_user` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '修改时间',
+  `create_time` int(10) NOT NULL DEFAULT 0 COMMENT '添加时间',
+  `update_time` int(10) NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '后台角色表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_admin_role
 -- ----------------------------
-INSERT INTO `ape_admin_role` VALUES (1, 0, '超级管理员', '2,4,5,6,7,8,1,9,10,11,12,13,14,15,16,31,17,18,19,20,21,22,23,24,25,26,27,28,29', '2,4,5,6,7,8,1,9,10,11,12,13,14,15,16,31,17,18,19,20,21,22,23,24,25,26,27,28,29', 0, 1, '1', '1', 1580031132, 1641658902);
-INSERT INTO `ape_admin_role` VALUES (2, 0, '普通用户', '17,18,19,20,21,22,23,26,27,28,29', '17,18,19,20,21,22,23,26,27,28,29', 0, 1, '1', '1', 1641393643, 1641659233);
+INSERT INTO `ape_admin_role` VALUES (1, 0, '超级管理员', '2,4,5,6,7,8,1,9,10,11,12,13,14,15,16,31,17,18,19,20,21,22,23,24,25,26,27,28,29,32', '2,4,5,6,7,8,1,9,10,11,12,13,14,15,16,31,17,18,19,20,21,22,23,24,25,26,27,28,29,32', 0, 1, '1', '1', 1580031132, 1642089929);
+INSERT INTO `ape_admin_role` VALUES (2, 0, '普通用户', '17,18,19,20,21,22,23,26,27,28,29,32', '17,18,19,20,21,22,23,26,27,28,29,32', 0, 1, '1', '1', 1641393643, 1642089936);
 
 -- ----------------------------
 -- Table structure for ape_advert
@@ -190,14 +190,16 @@ CREATE TABLE `ape_advert`  (
   `user_id` int(19) NOT NULL DEFAULT 0 COMMENT '操作人id',
   `sort` int(2) NOT NULL DEFAULT 0 COMMENT '权重',
   `status` tinyint(2) NOT NULL DEFAULT 1 COMMENT '是否启用 0不启用 1启用',
-  `create_time` int(10) NOT NULL,
-  `update_time` int(10) NOT NULL,
+  `create_time` int(10) NOT NULL DEFAULT 0,
+  `update_time` int(10) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '广告专区表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '广告专区表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_advert
 -- ----------------------------
+INSERT INTO `ape_advert` VALUES (1, '源码云博客', '/uploads/images/20220114/fd86d80e8f68c4e9347501cbc4e2509c.jpg', 'http://blog.apecloud.cn', 1, 1, 99, 1, 1642089742, 1642089742);
+INSERT INTO `ape_advert` VALUES (2, '源码云博客', '/uploads/images/20220114/fd86d80e8f68c4e9347501cbc4e2509c.jpg', 'http://blog.apecloud.cn/index/article/detail.html?id=1', 2, 1, 99, 1, 1642089806, 1642089806);
 
 -- ----------------------------
 -- Table structure for ape_attachment
@@ -206,20 +208,21 @@ DROP TABLE IF EXISTS `ape_attachment`;
 CREATE TABLE `ape_attachment`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '附件ID',
   `cid` int(2) NOT NULL COMMENT '所属目录',
-  `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '附件名称',
-  `path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '附件地址',
-  `type` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类型',
-  `mime` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'mime',
-  `size` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '大小',
-  `storage` int(2) NULL DEFAULT NULL COMMENT '存储方式1本地2腾讯云',
-  `create_time` int(10) NOT NULL COMMENT '上传时间',
-  `update_time` int(10) NOT NULL COMMENT '更新时间',
+  `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '附件名称',
+  `path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '附件地址',
+  `type` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '类型',
+  `mime` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT 'mime',
+  `size` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '大小',
+  `storage` int(2) NOT NULL DEFAULT 1 COMMENT '存储方式1本地2腾讯云',
+  `create_time` int(10) NOT NULL DEFAULT 0 COMMENT '上传时间',
+  `update_time` int(10) NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_attachment
 -- ----------------------------
+INSERT INTO `ape_attachment` VALUES (1, 1, 'images/20220114\\fd86d80e8f68c4e9347501cbc4e2509c.jpg', '/uploads/images/20220114/fd86d80e8f68c4e9347501cbc4e2509c.jpg', 'images', 'image/jpeg', '1919593', 1, 1642089709, 1642089709);
 
 -- ----------------------------
 -- Table structure for ape_attachment_category
@@ -228,18 +231,19 @@ DROP TABLE IF EXISTS `ape_attachment_category`;
 CREATE TABLE `ape_attachment_category`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '目录ID',
   `pid` int(10) NOT NULL DEFAULT 0 COMMENT '上级分类',
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '目录名称',
-  `type` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '所属附件类型',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '目录名称',
+  `type` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '所属附件类型',
   `create_user` int(10) NOT NULL DEFAULT 0 COMMENT '添加人',
   `update_user` int(10) NOT NULL DEFAULT 0 COMMENT '修改时间',
-  `create_time` int(11) NOT NULL COMMENT '添加时间',
-  `update_time` int(11) NOT NULL COMMENT '更新时间',
+  `create_time` int(11) NOT NULL DEFAULT 0 COMMENT '添加时间',
+  `update_time` int(11) NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件分类' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件分类' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_attachment_category
 -- ----------------------------
+INSERT INTO `ape_attachment_category` VALUES (1, 0, 'banner', 'images', 1, 0, 1642089692, 1642089692);
 
 -- ----------------------------
 -- Table structure for ape_comment
@@ -247,17 +251,17 @@ CREATE TABLE `ape_attachment_category`  (
 DROP TABLE IF EXISTS `ape_comment`;
 CREATE TABLE `ape_comment`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `author` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '评论者姓名',
-  `email` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '评论者邮箱',
-  `url` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '评论者网站',
-  `content` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '评论者内容',
+  `author` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '评论者姓名',
+  `email` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '评论者邮箱',
+  `url` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '评论者网站',
+  `content` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '评论者内容',
   `user_id` int(11) NOT NULL DEFAULT 0 COMMENT '评论者ID',
-  `cover_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '评论头像地址',
+  `cover_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '评论头像地址',
   `pid` int(11) NOT NULL DEFAULT 0 COMMENT '评论谁',
-  `create_time` int(11) NOT NULL COMMENT '评论时间',
-  `document_id` int(11) NOT NULL COMMENT '文章ID',
-  `status` int(11) NOT NULL DEFAULT 0 COMMENT '状态 1不显示 1显示',
-  `update_time` int(11) NOT NULL COMMENT '评论时间',
+  `document_id` int(11) NOT NULL DEFAULT 0 COMMENT '文章ID',
+  `status` int(11) NOT NULL DEFAULT 0 COMMENT '状态 0不显示 1显示',
+  `create_time` int(11) NOT NULL DEFAULT 0 COMMENT '评论时间',
+  `update_time` int(11) NOT NULL DEFAULT 0 COMMENT '评论时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '评论表' ROW_FORMAT = COMPACT;
 
@@ -296,11 +300,12 @@ CREATE TABLE `ape_document`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_category_status`(`category_id`, `status`) USING BTREE,
   INDEX `idx_status_type_pid`(`status`, `uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文档模型基础表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文档模型基础表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_document
 -- ----------------------------
+INSERT INTO `ape_document` VALUES (1, 1, '超级管理员', '关于源码云博客', 1, '/uploads/images/20220113/0114fc5ff6a1f9c541dcbc8b99b1c5f2.png', 'article', '', 1, 1, 1, '', 1, 1, '源码云,博客,源码云博客', '关于源码云博客', '源码云博客,源码云,博客,关于', '源码云博客最好用的博客程序', 99, 1642089660, 1642089660, 1, '');
 
 -- ----------------------------
 -- Table structure for ape_document_article
@@ -315,6 +320,7 @@ CREATE TABLE `ape_document_article`  (
 -- ----------------------------
 -- Records of ape_document_article
 -- ----------------------------
+INSERT INTO `ape_document_article` VALUES (1, '<p>源码云博客</p>\r\n<p>&nbsp;</p>');
 
 -- ----------------------------
 -- Table structure for ape_document_category
@@ -322,27 +328,28 @@ CREATE TABLE `ape_document_article`  (
 DROP TABLE IF EXISTS `ape_document_category`;
 CREATE TABLE `ape_document_category`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标题',
-  `en_title` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标志',
+  `title` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '标题',
+  `en_title` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '标志',
   `icon` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '分类图标',
   `type` tinyint(4) NOT NULL DEFAULT 0 COMMENT '分类类别：0列表，1单篇，2链接',
   `pid` int(10) NOT NULL DEFAULT 0 COMMENT '上级分类ID',
   `sort` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '排序（同级有效）',
   `meta_title` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT 'SEO的网页标题',
-  `keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '关键字',
-  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '描述',
+  `keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '关键字',
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '描述',
   `status` tinyint(2) NOT NULL DEFAULT 1 COMMENT '是否显示',
-  `template` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '分类模板',
-  `link_str` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '外链',
+  `template` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '分类模板',
+  `link_str` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '外链',
   `view` int(10) NOT NULL DEFAULT 0 COMMENT '访问数',
   `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '分类表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '分类表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_document_category
 -- ----------------------------
+INSERT INTO `ape_document_category` VALUES (1, '关于小站', '', '', 0, 0, 99, '关于小站', '关于小站,源码云,源码云博客,关于源码云博客', '源码云博客,源码云博客网站', 1, 'list_default.html', '', 0, 0, 1642089484);
 
 -- ----------------------------
 -- Table structure for ape_document_category_content
@@ -357,6 +364,7 @@ CREATE TABLE `ape_document_category_content`  (
 -- ----------------------------
 -- Records of ape_document_category_content
 -- ----------------------------
+INSERT INTO `ape_document_category_content` VALUES (1, '');
 
 -- ----------------------------
 -- Table structure for ape_document_product
@@ -387,7 +395,7 @@ CREATE TABLE `ape_friend_link`  (
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '链接网站名称',
   `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '链接地址',
   `image` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '图片连接的图片',
-  `description` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '描述',
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '描述',
   `sort` int(10) NOT NULL DEFAULT 0 COMMENT '排序',
   `create_time` int(10) NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` int(10) NOT NULL DEFAULT 0 COMMENT '更新时间',
@@ -405,9 +413,9 @@ CREATE TABLE `ape_friend_link`  (
 DROP TABLE IF EXISTS `ape_invitation_code`;
 CREATE TABLE `ape_invitation_code`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '邀请码',
+  `code` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '邀请码',
   `status` int(11) NOT NULL DEFAULT 0 COMMENT '状态 0未使用 1 使用',
-  `uid` int(11) NULL DEFAULT NULL COMMENT '使用用户',
+  `uid` int(11) NOT NULL DEFAULT 0 COMMENT '使用用户',
   `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
@@ -424,12 +432,12 @@ DROP TABLE IF EXISTS `ape_message_form`;
 CREATE TABLE `ape_message_form`  (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `author` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '姓名',
-  `tel` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '手机',
+  `tel` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '手机',
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '邮箱',
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '留言内容',
-  `is_reply` int(10) NULL DEFAULT 0 COMMENT '回复状态 0未回复',
-  `reply_uid` int(10) NULL DEFAULT NULL COMMENT '回复人',
-  `reply_content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '回复内容',
+  `is_reply` int(10) NOT NULL DEFAULT 0 COMMENT '回复状态 0未回复',
+  `reply_uid` int(10) NOT NULL DEFAULT 0 COMMENT '回复人',
+  `reply_content` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '回复内容',
   `status` int(10) NOT NULL DEFAULT 1,
   `create_time` int(10) NOT NULL DEFAULT 0 COMMENT '留言时间',
   PRIMARY KEY (`id`) USING BTREE
@@ -448,8 +456,8 @@ CREATE TABLE `ape_pv_log`  (
   `time` int(10) NOT NULL DEFAULT 0 COMMENT '时间段',
   `view` int(10) NOT NULL DEFAULT 0 COMMENT '浏览量',
   `date` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '访问时间',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
+  `create_time` int(11) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` int(11) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'pv记录' ROW_FORMAT = DYNAMIC;
 
@@ -519,23 +527,23 @@ INSERT INTO `ape_system_config` VALUES (27, 1, '评论审核', 'comment_review',
 DROP TABLE IF EXISTS `ape_system_config_tab`;
 CREATE TABLE `ape_system_config_tab`  (
   `id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '分类ID',
-  `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '分类名称',
+  `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '分类名称',
   `rank` tinyint(2) NOT NULL DEFAULT 0 COMMENT '排序',
   `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '角色状态1可用0不用',
-  `create_user` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '添加人',
-  `update_user` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改时间',
-  `create_time` int(10) NOT NULL COMMENT '添加时间',
-  `update_time` int(10) NOT NULL COMMENT '更新时间',
+  `create_user` int(10) NOT NULL DEFAULT 0 COMMENT '添加人',
+  `update_user` int(10) NOT NULL DEFAULT 0 COMMENT '修改时间',
+  `create_time` int(10) NOT NULL DEFAULT 0 COMMENT '添加时间',
+  `update_time` int(10) NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统配置分类' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_system_config_tab
 -- ----------------------------
-INSERT INTO `ape_system_config_tab` VALUES (1, '基础配置', 99, 1, '1', '1', 1582784937, 1583385482);
-INSERT INTO `ape_system_config_tab` VALUES (2, '上传配置', 98, 1, '1', '1', 1582785701, 1583385489);
-INSERT INTO `ape_system_config_tab` VALUES (3, '数据库配置', 98, 1, '1', '1', 1582785701, 1583385489);
-INSERT INTO `ape_system_config_tab` VALUES (4, '留言配置', 99, 1, '1', '1', 1582784937, 1583385482);
+INSERT INTO `ape_system_config_tab` VALUES (1, '基础配置', 99, 1, 1, 1, 1582784937, 1583385482);
+INSERT INTO `ape_system_config_tab` VALUES (2, '上传配置', 98, 1, 1, 1, 1582785701, 1583385489);
+INSERT INTO `ape_system_config_tab` VALUES (3, '数据库配置', 98, 1, 1, 1, 1582785701, 1583385489);
+INSERT INTO `ape_system_config_tab` VALUES (4, '留言配置', 99, 1, 1, 1, 1582784937, 1583385482);
 
 -- ----------------------------
 -- Table structure for ape_tag
@@ -546,14 +554,17 @@ CREATE TABLE `ape_tag`  (
   `name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '专区名称',
   `document_id` int(10) NOT NULL DEFAULT 0 COMMENT '文章id',
   `user_id` int(19) NOT NULL DEFAULT 0 COMMENT '操作人id',
-  `create_time` int(11) NOT NULL,
-  `update_time` int(11) NOT NULL,
+  `create_time` int(11) NOT NULL DEFAULT 0,
+  `update_time` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '标签表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '标签表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_tag
 -- ----------------------------
+INSERT INTO `ape_tag` VALUES (1, '源码云', 1, 1, 1642089660, 1642089660);
+INSERT INTO `ape_tag` VALUES (2, '博客', 1, 1, 1642089660, 1642089660);
+INSERT INTO `ape_tag` VALUES (3, '源码云博客', 1, 1, 1642089660, 1642089660);
 
 -- ----------------------------
 -- Table structure for ape_url_log
@@ -565,8 +576,8 @@ CREATE TABLE `ape_url_log`  (
   `pv` int(10) NOT NULL DEFAULT 0 COMMENT '浏览量',
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '页面名称',
   `date` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '访问时间',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
+  `create_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'pv记录表' ROW_FORMAT = DYNAMIC;
 
@@ -580,18 +591,18 @@ CREATE TABLE `ape_url_log`  (
 DROP TABLE IF EXISTS `ape_user`;
 CREATE TABLE `ape_user`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `username` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户账号',
+  `username` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '用户账号',
   `nickname` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '昵称',
-  `password` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户密码',
-  `avatar` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '用户头像',
-  `email` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '邮箱',
-  `tel` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '手机号',
-  `ip` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '注册IP地址',
+  `password` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '用户密码',
+  `avatar` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '用户头像',
+  `email` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '邮箱',
+  `tel` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '手机号',
+  `ip` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '注册IP地址',
   `status` int(11) NOT NULL DEFAULT 0 COMMENT '状态 0启用 1禁用',
-  `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '简介',
+  `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '简介',
   `is_admin` int(11) NOT NULL DEFAULT 0 COMMENT '是否是管理员',
-  `create_time` int(11) NOT NULL COMMENT '创建时间',
-  `update_time` int(11) NOT NULL COMMENT '上次登录时间',
+  `create_time` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` int(11) NOT NULL DEFAULT 0 COMMENT '上次登录时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `username_email_tel`(`username`, `tel`, `email`) USING BTREE COMMENT '用户名'
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = COMPACT;
@@ -606,11 +617,11 @@ CREATE TABLE `ape_user`  (
 DROP TABLE IF EXISTS `ape_uv_log`;
 CREATE TABLE `ape_uv_log`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '访问ip',
+  `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '访问ip',
   `time` int(10) NOT NULL DEFAULT 0 COMMENT '时间',
   `date` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '访问时间',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
+  `create_time` int(10) NOT NULL COMMENT '创建时间',
+  `update_time` int(10) NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Uv记录表' ROW_FORMAT = DYNAMIC;
 
