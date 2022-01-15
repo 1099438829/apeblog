@@ -41,6 +41,29 @@ class User extends BaseModel
     }
 
     /**
+     * 注册
+     * @param string $name
+     * @param string $email
+     * @param string $pwd
+     * @return bool
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     * @author 李玉坤
+     * @date 2022-01-16 1:33
+     */
+    public static function register(string $name, string $email,string $pwd): bool
+    {
+        $info = self::where("username|email|tel", "=", $name)->find();
+        if (!$info) return self::setErrorInfo("登录账号不存在");
+        if ($info['password'] != md5(md5($pwd))) return self::setErrorInfo("密码不正确！");
+        if ($info['status'] == 2) return self::setErrorInfo("账号已被冻结！");
+        self::setLoginInfo($info);
+        return true;
+    }
+
+
+    /**
      * 设置登录信息
      * @param $info
      * @return bool

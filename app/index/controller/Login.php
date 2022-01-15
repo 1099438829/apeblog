@@ -57,7 +57,32 @@ class Login extends Base
      */
     public function register()
     {
+        //清除可能存在的栏目分类树id
+        cache(Data::CURR_CATEGORY_PATENT_ID, false);
+        //模板兼容性标签
+        $this->assign('id', false);
+        $this->assign('cid', false);
         return $this->fetch();
+    }
+
+    /**
+     * 验证登录
+     * @return mixed
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function registerVerify()
+    {
+        list($username, $email,  $password, $repassword,$captcha) = Util::postMore(['username','email', 'password', 'repassword','captcha'], null, true);
+        if (empty($username) || empty($email) || empty($password)  || empty($repassword) || empty($captcha)) return app("json")->fail("账号、密码和验证码不能为空！");
+        // 验证码验证
+        if (!captcha_check($captcha)) return app("json")->fail("验证码不正确！");
+        //密码 和 确认密码
+        if ($password != $repassword) return app("json")->fail("两次密码不一致！");
+        // 验证登录
+        if (!userModel::login($username, $password)) return app("json")->fail(userModel::getErrorInfo());
+        return app("json")->success("登录成功！");
     }
 
     /**
