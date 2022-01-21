@@ -6,31 +6,6 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 
-// 应用公共文件
-if (!function_exists('system_config_more')) {
-    /**
-     * 获取系统配置值
-     * @param array $formNames
-     * @return array
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
-     */
-    function system_config_more(array $formNames): array
-    {
-        $systemConfig = cache(Data::DATA_SYSTEM_CONFIG);
-        if (empty($systemConfig)) {
-            $systemConfig = SystemConfig::getSystemConfigValues();
-            cache(Data::DATA_SYSTEM_CONFIG, $systemConfig);
-        }
-        $data = [];
-        foreach ($formNames as $v) {
-            $data[$v] = $systemConfig[$v] ?? '';
-        }
-        return $data;
-    }
-}
-
 if (!function_exists('param_to_array')) {
     /**
      * 参数分割成数组

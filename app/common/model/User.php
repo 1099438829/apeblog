@@ -68,8 +68,8 @@ class User extends BaseModel
         if (!$res) {
             return self::setErrorInfo("账号注册失败，请稍后再试");
         } else {
-            $info = self::where('id', "=", $res)->find();
-            return self::setLoginInfo($info);
+            //开始发送激活邮件,激活邮件处理
+
         }
     }
 

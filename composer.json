@@ -22,7 +22,7 @@
         "topthink/think-multi-app": "^1.0",
         "xaboy/form-builder": "^2.0",
         "topthink/think-captcha": "^3.0",
-        "phpmailer/phpmailer": "^6.1",
+        "phpmailer/phpmailer": "^6.5",
         "spatie/macroable": "^1.0",
         "topthink/think-view": "^1.0"
     },

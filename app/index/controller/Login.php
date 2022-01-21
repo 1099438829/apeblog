@@ -80,7 +80,7 @@ class Login extends Base
         if (!captcha_check($captcha)) return app("json")->fail("验证码不正确！");
         // 验证登录
         if (!userModel::register($username,$email, $password)) return app("json")->fail(userModel::getErrorInfo());
-        return app("json")->success("登录成功！");
+        return app("json")->success("注册成功!我们给您邮箱发送了一封激活邮件，请按照邮件提示激活用户");
     }
 
     /**
