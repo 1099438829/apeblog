@@ -34,9 +34,9 @@
                     <input class="input-login input-pass" name="email" type="text" placeholder="电子邮箱">
 
                     <i class="fas fa-key ico-login" aria-hidden="true"></i>
-                    <input class="input-login input-pass" name="password" type="text" placeholder="密码">
+                    <input class="input-login input-pass" name="password" type="password" placeholder="密码">
                     <i class="fas fa-key ico-login" aria-hidden="true"></i>
-                    <input class="input-login input-pass" name="repassword" type="text" placeholder="重复密码">
+                    <input class="input-login input-pass" name="repassword" type="password" placeholder="重复密码">
                     <div class="code-plane">
                         <img class="img-code" src="/index/login/captcha" alt="">
                         <input class="input-login input-code" name="captcha" type="text" placeholder="验证码">
@@ -88,7 +88,7 @@
             if (username == '' || password == '' || repassword == '' || email == '') {
                 return;
             }
-            if (!checkEemail(email)) {
+            if (!checkEmail(email)) {
                 $('#login-note').text('邮箱格式不正确');
                 $('#login-note').css('visibility', 'visible');
                 $('input[name="email"]').addClass('input-warning')
@@ -114,22 +114,18 @@
 
             $('#login-note').text('正在注册，请稍后');
             $('#login-note').css('visibility', 'visible');
-            $.post('/index/login/login', {
-                action: 'corepress_reguser',
-                user: user,
+            $.post('/index/login/registerVerify', {
+                username: username,
                 email: email,
                 password: password,
                 captcha: captcha
             }, (data) => {
-                var obj = JSON.parse(data);
-                if (obj) {
-                    if (obj.code === 1) {
-                        $('#login-note').text('注册成功，跳转登陆页面');
-                        window.location.href = 'https://www.cnesa.cn/login';
-                    } else if (obj.code === 2) {
-                        $('#login-note').text(obj.msg);
-                    } else if (obj.code === 0) {
-                        $('#login-note').text(obj.msg);
+                if (data) {
+                    if (data.status === 200) {
+                        $('#login-note').text('注册成功，跳转首页');
+                        window.location.href = '/';
+                    } else  {
+                        $('#login-note').text(data.msg);
                         recodeimg();
                     }
                 }

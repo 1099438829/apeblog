@@ -23,18 +23,18 @@ class User extends BaseModel
 
     /**
      * 登录
-     * @param $name
-     * @param $pwd
+     * @param $username
+     * @param $password
      * @return bool
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public static function login(string $name, string $pwd): bool
+    public static function login(string $username, string $password): bool
     {
-        $info = self::where("username|email|tel", "=", $name)->find();
+        $info = self::where("username|email|tel", "=", $username)->find();
         if (!$info) return self::setErrorInfo("登录账号不存在");
-        if ($info['password'] != md5(md5($pwd))) return self::setErrorInfo("密码不正确！");
+        if ($info['password'] != md5(md5($password))) return self::setErrorInfo("密码不正确！");
         if ($info['status'] == 2) return self::setErrorInfo("账号已被冻结！");
         self::setLoginInfo($info);
         return true;
@@ -42,9 +42,9 @@ class User extends BaseModel
 
     /**
      * 注册
-     * @param string $name
+     * @param string $username
      * @param string $email
-     * @param string $pwd
+     * @param string $password
      * @return bool
      * @throws DataNotFoundException
      * @throws DbException
@@ -52,14 +52,25 @@ class User extends BaseModel
      * @author 李玉坤
      * @date 2022-01-16 1:33
      */
-    public static function register(string $name, string $email,string $pwd): bool
+    public static function register(string $username, string $email, string $password): bool
     {
-        $info = self::where("username|email|tel", "=", $name)->find();
-        if (!$info) return self::setErrorInfo("登录账号不存在");
-        if ($info['password'] != md5(md5($pwd))) return self::setErrorInfo("密码不正确！");
-        if ($info['status'] == 2) return self::setErrorInfo("账号已被冻结！");
-        self::setLoginInfo($info);
-        return true;
+        $info = self::where('username', '=', $username)->whereOr('email', '=', $email)->find();
+        if ($info) return self::setErrorInfo("账号已存在,请更换用户名重试");
+        $data = [
+            'username' => $username,
+            'email' => $email,
+            'password' => md5(md5($password)),
+            'create_time' => time(),
+            'update_time' => time(),
+            'is_admin' => Data::USER_IS_ADMIN_NO
+        ];
+        $res = self::insert($data, true);
+        if (!$res) {
+            return self::setErrorInfo("账号注册失败，请稍后再试");
+        } else {
+            $info = self::where('id', "=", $res)->find();
+            return self::setLoginInfo($info);
+        }
     }
 
 

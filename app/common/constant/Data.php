@@ -32,4 +32,9 @@ class Data
     //前台用户session
     const SESSION_KEY_USER_ID = 'user_id';
     const SESSION_KEY_USER_INFO = 'user_info';
+
+    //用户是否是管理员
+    const USER_IS_ADMIN_YES = 1;
+    const USER_IS_ADMIN_NO = 0;
+
 }
