@@ -49,6 +49,7 @@ class Base extends BaseController
             $pvLogModel = new PvLog();
             $pvLogModel->set_view();
         }
+        //获取根域名
         //判断是否开启了伪静态
 //        if (web_config('web_rewrite')=='0') {
 //            $this->request->setRoot('/?s=');

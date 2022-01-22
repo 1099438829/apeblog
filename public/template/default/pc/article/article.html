@@ -84,13 +84,13 @@
                                       {:file_echo_svg('__IMG__/reward.svg')}打赏</div>
                                   <div id="share-plane" class="post-pop-plane">
                                     <div class="post-share-list">
-                                      <a href="https://connect.qq.com/widget/shareqq/index.html?url={:web_config('domain')}&title={$apeField['title']}&source={:web_config('title')}&desc={:web_config('title')}-{$apeField['description']}&pics=&summary=${$apeField['abstract']}" target="_blank">
+                                      <a href="https://connect.qq.com/widget/shareqq/index.html?url={$Request.domain.$Request.url}&title={$apeField['title']}&source={:web_config('title')}&desc={:web_config('title')}-{$apeField['description']}&pics=&summary={$apeField['abstract']}" target="_blank">
                                           {:file_echo_svg('__IMG__/share-qq.svg')}
                                       </a>
-                                      <a href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={:web_config('domain')}&title={$apeField['title']}&source={:web_config('title')}&desc={:web_config('title')}-{$apeField['description']}&pics=&summary=${$apeField['abstract']}" target="_blank">
+                                      <a href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={$Request.domain.$Request.url}&title={$apeField['title']}&source={:web_config('title')}&desc={:web_config('title')}-{$apeField['description']}&pics=&summary={$apeField['abstract']}" target="_blank">
                                           {:file_echo_svg('__IMG__/share-qzone.svg')}
                                       </a>
-                                      <a href="https://service.weibo.com/share/share.php?url={:web_config('domain')}&title={$apeField['title']}&pic=&appkey=&searchPic=true" target="_blank">
+                                      <a href="https://service.weibo.com/share/share.php?url={$Request.domain.$Request.url}&title={$apeField['title']}&pic=&appkey=&searchPic=true" target="_blank">
                                           {:file_echo_svg('__IMG__/share-weibo.svg')}
                                       </a>
                                 </div>
