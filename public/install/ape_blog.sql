@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 14/01/2022 00:06:52
+ Date: 23/01/2022 00:36:08
 */
 
 SET NAMES utf8mb4;
@@ -41,11 +41,12 @@ CREATE TABLE `ape_admin`  (
   `update_time` int(10) NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `username_email_tel`(`username`, `tel`, `email`) USING BTREE COMMENT '用户名'
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '后台人员列表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '后台人员列表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_admin
 -- ----------------------------
+INSERT INTO `ape_admin` VALUES (1, 1, 'admin', '超级管理员', '4760f3fbfe9e42ace8bea27edfb85d65', '超级管理员', '/static/admin/images/logo2.png', 1, '', '', '', 1, '', 1, 0, 1642090317, 0);
 
 -- ----------------------------
 -- Table structure for ape_admin_auth
@@ -305,7 +306,7 @@ CREATE TABLE `ape_document`  (
 -- ----------------------------
 -- Records of ape_document
 -- ----------------------------
-INSERT INTO `ape_document` VALUES (1, 1, '超级管理员', '关于源码云博客', 1, '/uploads/images/20220113/0114fc5ff6a1f9c541dcbc8b99b1c5f2.png', 'article', '', 1, 1, 1, '', 1, 1, '源码云,博客,源码云博客', '关于源码云博客', '源码云博客,源码云,博客,关于', '源码云博客最好用的博客程序', 99, 1642089660, 1642089660, 1, '');
+INSERT INTO `ape_document` VALUES (1, 1, '超级管理员', '关于源码云博客', 1, '/uploads/images/20220113/0114fc5ff6a1f9c541dcbc8b99b1c5f2.png', 'article', '', 1, 1, 1, '', 1, 10, '源码云,博客,源码云博客', '关于源码云博客', '源码云博客,源码云,博客,关于', '源码云博客最好用的博客程序', 99, 1642089660, 1642089660, 1, '');
 
 -- ----------------------------
 -- Table structure for ape_document_article
@@ -349,7 +350,7 @@ CREATE TABLE `ape_document_category`  (
 -- ----------------------------
 -- Records of ape_document_category
 -- ----------------------------
-INSERT INTO `ape_document_category` VALUES (1, '关于小站', '', '', 0, 0, 99, '关于小站', '关于小站,源码云,源码云博客,关于源码云博客', '源码云博客,源码云博客网站', 1, 'list_default.html', '', 0, 0, 1642089484);
+INSERT INTO `ape_document_category` VALUES (1, '关于小站', '', '', 0, 0, 99, '关于小站', '关于小站,源码云,源码云博客,关于源码云博客', '源码云博客,源码云博客网站', 1, 'list_default.html', '', 1, 0, 1642089484);
 
 -- ----------------------------
 -- Table structure for ape_document_category_content
@@ -364,7 +365,6 @@ CREATE TABLE `ape_document_category_content`  (
 -- ----------------------------
 -- Records of ape_document_category_content
 -- ----------------------------
-INSERT INTO `ape_document_category_content` VALUES (1, '');
 
 -- ----------------------------
 -- Table structure for ape_document_product
@@ -459,11 +459,25 @@ CREATE TABLE `ape_pv_log`  (
   `create_time` int(11) NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` int(11) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'pv记录' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'pv记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_pv_log
 -- ----------------------------
+INSERT INTO `ape_pv_log` VALUES (1, 0, 4, '2022-01-14', 1642090321, 1642090321);
+INSERT INTO `ape_pv_log` VALUES (2, 21, 2, '2022-01-15', 1642254566, 1642254566);
+INSERT INTO `ape_pv_log` VALUES (3, 0, 8, '2022-01-16', 1642262462, 1642262462);
+INSERT INTO `ape_pv_log` VALUES (4, 1, 15, '2022-01-16', 1642266364, 1642266364);
+INSERT INTO `ape_pv_log` VALUES (5, 20, 4, '2022-01-16', 1642337804, 1642337804);
+INSERT INTO `ape_pv_log` VALUES (6, 21, 7, '2022-01-16', 1642338171, 1642338171);
+INSERT INTO `ape_pv_log` VALUES (7, 0, 52, '2022-01-22', 1642781897, 1642781897);
+INSERT INTO `ape_pv_log` VALUES (8, 1, 2, '2022-01-22', 1642784650, 1642784650);
+INSERT INTO `ape_pv_log` VALUES (9, 12, 2, '2022-01-22', 1642827308, 1642827308);
+INSERT INTO `ape_pv_log` VALUES (10, 13, 12, '2022-01-22', 1642827684, 1642827684);
+INSERT INTO `ape_pv_log` VALUES (11, 19, 1, '2022-01-22', 1642850731, 1642850731);
+INSERT INTO `ape_pv_log` VALUES (12, 20, 1, '2022-01-22', 1642854563, 1642854563);
+INSERT INTO `ape_pv_log` VALUES (13, 22, 1, '2022-01-22', 1642860663, 1642860663);
+INSERT INTO `ape_pv_log` VALUES (14, 23, 2, '2022-01-22', 1642864245, 1642864245);
 
 -- ----------------------------
 -- Table structure for ape_system_config
@@ -488,7 +502,7 @@ CREATE TABLE `ape_system_config`  (
   `create_time` int(10) NOT NULL DEFAULT 0 COMMENT '添加时间',
   `update_time` int(10) NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统配置表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统配置表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_system_config
@@ -501,25 +515,28 @@ INSERT INTO `ape_system_config` VALUES (5, 1, '网站作者', 'author', 'text', 
 INSERT INTO `ape_system_config` VALUES (6, 1, '站点logo', 'logo', 'file', 'input', 0, '', '/uploads/images/20220113/e53d7518221fea797e67317faa4ac07c.png', '', 94, 1, 1, '1', '1', 1582793393, 1582793700);
 INSERT INTO `ape_system_config` VALUES (7, 1, '版权信息', 'copyright', 'text', 'input', 0, '', 'Power by muzi', '', 93, 1, 1, '1', '1', 1582793470, 1582793495);
 INSERT INTO `ape_system_config` VALUES (8, 1, '备案信息', 'icp', 'text', 'textarea', 0, '', '<a href=\"http://beian.miit.gov.cn\">京ICP备19038953号</a> | <a target=\"_blank\" href=\"http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=62062102000138\">甘公网安备62062102000138号</a>', '', 92, 1, 1, '1', '1', 1582793563, 1583375542);
-INSERT INTO `ape_system_config` VALUES (9, 1, '评论开关', 'comment_close', 'radio', 'input', 0, '1=>开启\n0=>关闭', '1', '', 91, 1, 1, '1', '1', 1583126643, 1582792265);
 INSERT INTO `ape_system_config` VALUES (10, 1, '网站域名', 'domain', 'text', 'input', 0, '', 'http://apeblog.io', '', 90, 1, 1, '1', '1', 1588858018, 1582792265);
 INSERT INTO `ape_system_config` VALUES (11, 1, '网站统计代码', 'statistics', 'text', 'textarea', 0, '', '', '', 89, 1, 1, '1', '1', 1582793470, 1582793495);
 INSERT INTO `ape_system_config` VALUES (12, 1, '主题信息', 'web_template', 'select', 'input', 0, 'default=>默认\nnew=>新bolg', 'default', '', 88, 1, 1, '1', '1', 1582793563, 1620610858);
-INSERT INTO `ape_system_config` VALUES (13, 1, '关闭网站', 'web_close', 'radio', 'input', 0, '1=>开启\n0=>关闭', '1', '', 87, 1, 1, '1', '1', 1583126643, 1582792265);
+INSERT INTO `ape_system_config` VALUES (13, 1, '关闭网站', 'web_close', 'radio', 'input', 0, '1=>是\n0=>否', '0', '', 87, 1, 1, '1', '1', 1583126643, 1582792265);
 INSERT INTO `ape_system_config` VALUES (14, 1, '网站统计', 'web_statistics', 'radio', 'input', 0, '1=>开启\n0=>关闭', '1', '', 86, 1, 1, '1', '1', 1583126643, 1582792265);
-INSERT INTO `ape_system_config` VALUES (15, 1, '开始伪静态', 'web_rewrite', 'radio', 'input', 0, '1=>开启\n0=>关闭', '0', '', 85, 1, 1, '1', '1', 1583126643, 1582792265);
-INSERT INTO `ape_system_config` VALUES (16, 1, '联系地址', 'web_contact_add', 'text', 'input', 0, '', '北京市昌平区', '', 84, 1, 1, '1', '1', 1582793305, 1582792265);
-INSERT INTO `ape_system_config` VALUES (17, 1, '联系电话', 'web_contact_tel', 'text', 'input', 0, '', '13500000000', '', 83, 1, 1, '1', '1', 1582793305, 1582792265);
-INSERT INTO `ape_system_config` VALUES (18, 1, '联系QQ', 'web_contact_qq', 'text', 'input', 0, '', '11222', '', 82, 1, 1, '1', '1', 1582793305, 1582792265);
-INSERT INTO `ape_system_config` VALUES (19, 3, '数据库备份根路径', 'data_backup_path', 'text', 'input', 0, '', './databack/', '路径必须以 / 结尾', 81, 1, 1, '1', '1', 1582793305, 1582792265);
-INSERT INTO `ape_system_config` VALUES (20, 3, '数据库备份卷大小', 'data_backup_part_size', 'text', 'input', 0, '', '20971520', '该值用于限制压缩后的分卷最大长度。单位：B；建议设置20M', 80, 1, 1, '1', '1', 1582793305, 1582792265);
-INSERT INTO `ape_system_config` VALUES (21, 3, '数据库备份文件是否启用压缩', 'data_backup_compress', 'radio', 'input', 0, '1=>开启\n0=>关闭', '1', '压缩备份文件需要PHP环境支持gzopen,gzwrite函数', 79, 1, 1, '1', '1', 1582793305, 1582792265);
-INSERT INTO `ape_system_config` VALUES (22, 3, '数据库备份文件压缩级别', 'data_backup_compress_level', 'text', 'input', 0, '', '4', '数据库备份文件的压缩级别，该配置在开启压缩时生效1:普通\n4:一般\n9:最高', 78, 1, 1, '1', '1', 1582793305, 1582792265);
-INSERT INTO `ape_system_config` VALUES (23, 1, '微信收款码', 'web_weixin_pay', 'file', 'input', 0, '', '/uploads/images/20220108/bc9076123ad87bfabca390e9fb3c488c.jpg', '微信收款码捐赠使用', 77, 1, 1, '1', '1', 1582793305, 1582792265);
-INSERT INTO `ape_system_config` VALUES (24, 1, '支付宝收款码', 'web_zhifubao_pay', 'file', 'input', 0, '', '/uploads/images/20220108/934d9383bcefefccbe30bccdc60a03d3.jpg', '支付宝收款码捐赠使用', 76, 1, 1, '1', '1', 1582793305, 1582792265);
-INSERT INTO `ape_system_config` VALUES (25, 4, '是否登录', 'comment_need_login', 'radio', 'input', 0, '1=>是\n0=>否', '1', '', 91, 1, 1, '1', '1', 1583126643, 1582792265);
-INSERT INTO `ape_system_config` VALUES (26, 4, '敏感词', 'comment_sensitive_word', 'text', 'input', 0, '', '新疆,华为', '多个逗号隔开', 81, 1, 1, '1', '1', 1582793305, 1582792265);
-INSERT INTO `ape_system_config` VALUES (27, 1, '评论审核', 'comment_review', 'radio', 'input', 0, '1=>开启\n0=>关闭', '1', '', 91, 1, 1, '1', '1', 1583126643, 1582792265);
+INSERT INTO `ape_system_config` VALUES (15, 1, '开始伪静态', 'web_rewrite', 'radio', 'input', 0, '1=>开启\n0=>关闭', '1', '', 85, 1, 1, '1', '1', 1583126643, 1582792265);
+INSERT INTO `ape_system_config` VALUES (16, 2, '联系地址', 'web_contact_add', 'text', 'input', 0, '', '北京市昌平区', '', 84, 1, 1, '1', '1', 1582793305, 1582792265);
+INSERT INTO `ape_system_config` VALUES (17, 2, '联系电话', 'web_contact_tel', 'text', 'input', 0, '', '13500000000', '', 83, 1, 1, '1', '1', 1582793305, 1582792265);
+INSERT INTO `ape_system_config` VALUES (18, 2, '联系QQ', 'web_contact_qq', 'text', 'input', 0, '', '11222', '', 82, 1, 1, '1', '1', 1582793305, 1582792265);
+INSERT INTO `ape_system_config` VALUES (19, 2, '微信收款码', 'web_weixin_pay', 'file', 'input', 0, '', '/uploads/images/20220108/bc9076123ad87bfabca390e9fb3c488c.jpg', '微信收款码捐赠使用', 77, 1, 1, '1', '1', 1582793305, 1582792265);
+INSERT INTO `ape_system_config` VALUES (20, 2, '支付宝收款码', 'web_zhifubao_pay', 'file', 'input', 0, '', '/uploads/images/20220108/934d9383bcefefccbe30bccdc60a03d3.jpg', '支付宝收款码捐赠使用', 76, 1, 1, '1', '1', 1582793305, 1582792265);
+INSERT INTO `ape_system_config` VALUES (25, 3, '数据库备份根路径', 'data_backup_path', 'text', 'input', 0, '', './databack/', '路径必须以 / 结尾', 81, 1, 1, '1', '1', 1582793305, 1582792265);
+INSERT INTO `ape_system_config` VALUES (26, 3, '数据库备份卷大小', 'data_backup_part_size', 'text', 'input', 0, '', '20971520', '该值用于限制压缩后的分卷最大长度。单位：B；建议设置20M', 80, 1, 1, '1', '1', 1582793305, 1582792265);
+INSERT INTO `ape_system_config` VALUES (27, 3, '数据库备份文件是否启用压缩', 'data_backup_compress', 'radio', 'input', 0, '1=>开启\n0=>关闭', '1', '压缩备份文件需要PHP环境支持gzopen,gzwrite函数', 79, 1, 1, '1', '1', 1582793305, 1582792265);
+INSERT INTO `ape_system_config` VALUES (28, 3, '数据库备份文件压缩级别', 'data_backup_compress_level', 'text', 'input', 0, '', '4', '数据库备份文件的压缩级别，该配置在开启压缩时生效1:普通\n4:一般\n9:最高', 78, 1, 1, '1', '1', 1582793305, 1582792265);
+INSERT INTO `ape_system_config` VALUES (29, 4, '注册开关', 'is_register', 'radio', 'input', 0, '1=>开启\n0=>关闭', '1', '默认开启，如不需要可关闭。', 91, 1, 1, '1', '1', 1583126643, 1582792265);
+INSERT INTO `ape_system_config` VALUES (30, 4, '注册方式', 'register_type', 'radio', 'input', 0, '0=>普通\n1=>手机\n2=>邀请码', '0', '邀请码注册默认状态为已审核！', 91, 1, 1, '1', '1', 1583126643, 1582792265);
+INSERT INTO `ape_system_config` VALUES (31, 4, '禁止注册', 'register_black_list', 'text', 'input', 0, '', 'www,bbs,ftp,mail,user,users,admin,administrator', '禁止注册的用户名!', 91, 1, 1, '1', '1', 1583126643, 1582792265);
+INSERT INTO `ape_system_config` VALUES (32, 4, '评论开关', 'comment_close', 'radio', 'input', 0, '1=>开启\n0=>关闭', '1', '默认开启，如不需要可关闭。', 91, 1, 1, '1', '1', 1583126643, 1582792265);
+INSERT INTO `ape_system_config` VALUES (33, 4, '游客评论', 'comment_need_login', 'radio', 'input', 0, '1=>是\n0=>否', '1', '开启后需要登录才能评论。', 91, 1, 1, '1', '1', 1583126643, 1582792265);
+INSERT INTO `ape_system_config` VALUES (34, 4, '评论审核', 'comment_review', 'radio', 'input', 0, '1=>开启\n0=>关闭', '1', '开启后需要审核评论才会展示。', 91, 1, 1, '1', '1', 1583126643, 1582792265);
+INSERT INTO `ape_system_config` VALUES (35, 4, '脏话过滤', 'comment_sensitive_word', 'text', 'input', 0, '', '新疆,华为,她妈,它妈,他妈,你妈,去死,贱人', '多个逗号隔开', 81, 1, 1, '1', '1', 1582793305, 1582792265);
 
 -- ----------------------------
 -- Table structure for ape_system_config_tab
@@ -541,9 +558,9 @@ CREATE TABLE `ape_system_config_tab`  (
 -- Records of ape_system_config_tab
 -- ----------------------------
 INSERT INTO `ape_system_config_tab` VALUES (1, '基础配置', 99, 1, 1, 1, 1582784937, 1583385482);
-INSERT INTO `ape_system_config_tab` VALUES (2, '上传配置', 98, 1, 1, 1, 1582785701, 1583385489);
+INSERT INTO `ape_system_config_tab` VALUES (2, '社交配置', 98, 1, 1, 1, 1582785701, 1583385489);
 INSERT INTO `ape_system_config_tab` VALUES (3, '数据库配置', 98, 1, 1, 1, 1582785701, 1583385489);
-INSERT INTO `ape_system_config_tab` VALUES (4, '留言配置', 99, 1, 1, 1, 1582784937, 1583385482);
+INSERT INTO `ape_system_config_tab` VALUES (4, '用户中心', 99, 1, 1, 1, 1582784937, 1583385482);
 
 -- ----------------------------
 -- Table structure for ape_tag
@@ -600,7 +617,7 @@ CREATE TABLE `ape_user`  (
   `ip` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '注册IP地址',
   `status` int(11) NOT NULL DEFAULT 0 COMMENT '状态 0启用 1禁用',
   `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '简介',
-  `is_admin` int(11) NOT NULL DEFAULT 0 COMMENT '是否是管理员',
+  `is_admin` int(11) NOT NULL DEFAULT 0 COMMENT '是否是管理员 1是 0 否',
   `create_time` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` int(11) NOT NULL DEFAULT 0 COMMENT '上次登录时间',
   PRIMARY KEY (`id`) USING BTREE,

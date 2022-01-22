@@ -25,14 +25,14 @@
                 <div class="login-form">
                     <div class="login-title">
                         <h3>登录账户</h3>
-                        <span><a href="/index/login/register">注册用户</a></span>
+                        <span><a href="/user/login/register">注册用户</a></span>
                     </div>
                     <i class="fa fa-user ico-login" aria-hidden="true"></i>
                     <input class="input-login input-user" name="username" type="text" placeholder="请输入用户名/电子邮箱"/>
                     <i class="fa fa-key ico-login" aria-hidden="true"></i>
                     <input class="input-login input-pass" name="password" type="password" placeholder="请输入密码"/>
                     <div class="code-plane">
-                        <img class="img-code" src="/index/login/captcha"
+                        <img class="img-code" src="/user/login/captcha"
                              style="cursor: pointer;width: 120px;height: 38px;" alt=""/>
                         <input class="input-login input-code" name="captcha" type="text" placeholder="验证码"/>
                     </div>
@@ -80,7 +80,7 @@
             $("#login-note").text("登录中，请稍后");
             $("#login-note").css("visibility", "visible");
             $.post(
-                "{:url('/index/login/verify')}",
+                "{:url('/user/login/verify')}",
                 {
                     action: "login",
                     username: username,
@@ -109,7 +109,7 @@
         function recodeimg() {
             $(".img-code").attr(
                 "src",
-                "/index/login/captcha?d=" + Math.random()
+                "/user/login/captcha?d=" + Math.random()
             );
         }
     </script>

@@ -15,7 +15,7 @@ use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\Response;
 
-class Login extends Base
+class User extends Base
 {
     /**
      * 登录

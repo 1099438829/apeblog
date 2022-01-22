@@ -20,8 +20,9 @@
             <div class="card">
                 <ul class="nav nav-tabs page-tabs">
                     {volist name="tab_list" id="vo"}
-                    <li {eq name="vo.id" value="$tab_id" }class="active" {
-                    /eq}><a href="/admin/system_config/base?tab_id={$vo.id}">{$vo.name}</a></li>
+                    <li {eq name="vo.id" value="$tab_id" }class="active" {/eq}>
+                        <a href="/admin/system_config/base?tab_id={$vo.id}">{$vo.name}</a>
+                    </li>
                     {/volist}
                 </ul>
                 <div class="tab-content">
