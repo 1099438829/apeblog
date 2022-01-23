@@ -187,14 +187,26 @@ class Article extends Base
             ['email', ''],
             ['content', ''],
         ]);
+        if (!web_config('comment_close')){
+            $this->error('非法操作，请检查后重试', null);
+        }
+        if (web_config('comment_visitor')){
+            if ($data['author'] == "") $this->error("昵称不能为空");
+            if ($data['email'] == "") $this->error("邮箱不能为空");
+            if ($data['url'] == "") $this->error("url不能为空");
+        }else{
+            $data['author'] = $this->userInfo['nickname']?:$this->userInfo['username'];
+            $data['email'] = $this->userInfo['email']?:'';
+            $data['url'] = '';
+        }
         if ($data['document_id'] == "") $this->error("文章id不能为空");
-        if ($data['author'] == "") $this->error("昵称不能为空");
-        if ($data['email'] == "") $this->error("邮箱不能为空");
-        if ($data['url'] == "") $this->error("url不能为空");
         if ($data['content'] == "") $this->error("内容能为空");
         $data['status'] = web_config('comment_review') ? 0 : 1;
         $res = commentModel::create($data);
         if ($res) {
+            cookie(Data::COOKIE_KEY_COMMENT_AUTHOR,$data['author'],Data::COOKIE_KEY_COMMENT_EXPIRE);
+            cookie(Data::COOKIE_KEY_COMMENT_AUTHOR_EMAIL,$data['email'],Data::COOKIE_KEY_COMMENT_EXPIRE);
+            cookie(Data::COOKIE_KEY_COMMENT_AUTHOR_URL,$data['url'],Data::COOKIE_KEY_COMMENT_EXPIRE);
             $this->success('提交成功', url('detail', ['id' => $data['document_id']]));
         } else {
             $this->error('提交失败，请联系站长查看', null);

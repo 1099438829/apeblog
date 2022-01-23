@@ -120,6 +120,7 @@
 					<div class="user-menu-pc-dark" onclick="darkMode()" title="深色模式">
 						<i class="far fa-moon" id="darkModeicon"></i>
 					</div>
+					{if web_config('is_register')}
 					{notempty name="user_info"}
 					<ul class="user-menu">
 						<li>
@@ -145,6 +146,7 @@
                  		<a href="{:url('/index/user/login')}"><button class="login-btn-header">登录</button></a>
                     </span>
 					{/notempty}
+					{/if}
 				</div>
 			</div>
 		</div>

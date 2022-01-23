@@ -966,3 +966,19 @@ function file_load_face($path)
     }
     return $html;
 }
+
+
+function comment_face($incoming_comment,$path)
+{
+    $pattern = '/\[f=(.*?)\]/';
+    $isMatched = preg_match_all($pattern, $incoming_comment, $match);
+    if ($isMatched == 0) {
+        return $incoming_comment;
+    }
+    foreach ($match[1] as $facename) {
+        if (file_exists( public_path() . $path . $facename . '.gif')) {
+            $incoming_comment = str_replace("[f={$facename}]", '<img src="' . $path . $facename . '.gif" width="24">', $incoming_comment);
+        }
+    }
+    return $incoming_comment;
+}

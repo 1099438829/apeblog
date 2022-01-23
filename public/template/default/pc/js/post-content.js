@@ -85,4 +85,20 @@ if ($(".btn-copy-pwd").length > 0) {
     });
 }
 
+if ($(".btn-copy-pwd").length > 0) {
+    var copy_pwd = new ClipboardJS('.btn-copy-pwd', {
+        text: function (trigger) {
+            copynotmsg = 1;
+            return $(trigger).parent().find('.c-downbtn-pwd-key').text();
+        }
+    });
+    copy_pwd.on('success', function (e) {
+        $(e.trigger).toggleClass('fal fa-clone')
+        $(e.trigger).toggleClass('fal fa-check')
+        setTimeout(function () {
+            $(e.trigger).toggleClass('fal fa-clone')
+            $(e.trigger).toggleClass('fal fa-check')
+        }, 2000);
+    });
+}
 

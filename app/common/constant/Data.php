@@ -37,4 +37,11 @@ class Data
     const USER_IS_ADMIN_YES = 1;
     const USER_IS_ADMIN_NO = 0;
 
+    //评论key
+    const COOKIE_KEY_COMMENT_AUTHOR = 'comment_author';
+    const COOKIE_KEY_COMMENT_AUTHOR_EMAIL = 'comment_author_email';
+    const COOKIE_KEY_COMMENT_AUTHOR_URL = 'comment_author_url';
+    //评论
+    const COOKIE_KEY_COMMENT_EXPIRE = 7*24*60*60;
+
 }

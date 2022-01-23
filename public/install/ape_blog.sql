@@ -534,7 +534,7 @@ INSERT INTO `ape_system_config` VALUES (29, 4, '注册开关', 'is_register', 'r
 INSERT INTO `ape_system_config` VALUES (30, 4, '注册方式', 'register_type', 'radio', 'input', 0, '0=>普通\n1=>手机\n2=>邀请码', '0', '邀请码注册默认状态为已审核！', 91, 1, 1, '1', '1', 1583126643, 1582792265);
 INSERT INTO `ape_system_config` VALUES (31, 4, '禁止注册', 'register_black_list', 'text', 'input', 0, '', 'www,bbs,ftp,mail,user,users,admin,administrator', '禁止注册的用户名!', 91, 1, 1, '1', '1', 1583126643, 1582792265);
 INSERT INTO `ape_system_config` VALUES (32, 4, '评论开关', 'comment_close', 'radio', 'input', 0, '1=>开启\n0=>关闭', '1', '默认开启，如不需要可关闭。', 91, 1, 1, '1', '1', 1583126643, 1582792265);
-INSERT INTO `ape_system_config` VALUES (33, 4, '游客评论', 'comment_need_login', 'radio', 'input', 0, '1=>是\n0=>否', '1', '开启后需要登录才能评论。', 91, 1, 1, '1', '1', 1583126643, 1582792265);
+INSERT INTO `ape_system_config` VALUES (33, 4, '游客评论', 'comment_visitor', 'radio', 'input', 0, '1=>是\n0=>否', '1', '开启后需要登录才能评论。', 91, 1, 1, '1', '1', 1583126643, 1582792265);
 INSERT INTO `ape_system_config` VALUES (34, 4, '评论审核', 'comment_review', 'radio', 'input', 0, '1=>开启\n0=>关闭', '1', '开启后需要审核评论才会展示。', 91, 1, 1, '1', '1', 1583126643, 1582792265);
 INSERT INTO `ape_system_config` VALUES (35, 4, '脏话过滤', 'comment_sensitive_word', 'text', 'input', 0, '', '新疆,华为,她妈,它妈,他妈,你妈,去死,贱人', '多个逗号隔开', 81, 1, 1, '1', '1', 1582793305, 1582792265);
 

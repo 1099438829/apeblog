@@ -156,41 +156,51 @@
                         <form action="{:url('/index/article/create_comment')}" method="post" id="form_comment" class="comment-form">
                             <div class="comment-user-plane">
                                 <div class="logged-in-as">
-                                    <img class="comment-user-avatar" width="48" height="auto" src="__IMG__/avatar.png" alt="">
+                                    <img class="comment-user-avatar" width="48" height="auto" src="__IMG__/avatar.png"
+                                         alt="">
                                 </div>
                                 <div class="comment_form_textarea_box">
-                                    <textarea class="comment_form_textarea" name="content" id="comment" placeholder="发表你的看法" rows="5"></textarea>
+                                    <textarea class="comment_form_textarea" name="content" id="comment"
+                                              placeholder="发表你的看法" rows="5"></textarea>
                                     <div id="comment_addplane">
                                         <button class="popover-btn popover-btn-face" type="button">
-                                          <i class="far fa-smile-wink">
-                                          </i>添加表情</button>
+                                            <i class="far fa-smile-wink">
+                                            </i>添加表情
+                                        </button>
                                         <div class="conment-face-plane">
                                             {:file_load_face('__IMG__/face/')}
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            {if web_config('comment_visitor') && empty($user_id)}
                             <div class="comment_userinput">
                                 <div class="comment-form-author">
-                              <input id="author" name="author" placeholder="昵称(*)" type="text" value="" size="30" class="required" />
+                                    <input id="author" name="author" placeholder="昵称(*)" type="text" value="{$Request.cookie.comment_author}" size="30"
+                                           class="required"/>
+                                </div>
+                                <div class="comment-form-email">
+                                    <input id="email" name="email" type="text" placeholder="邮箱(*)" value="{$Request.cookie.comment_author_email}"
+                                           class="required"/>
+                                </div>
+                                <div class="comment-form-url">
+                                    <input id="url" placeholder="网址" name="url" type="text" value="{$Request.cookie.comment_author_url}" size="30"/>
+                                </div>
+                                <div style="display: none" class="comment-form-cookies-consent">
+                                    <input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent"
+                                           type="checkbox" value="yes" checked="checked"/>记住用户信息
+                                </div>
                             </div>
-                            <div class="comment-form-email">
-                              <input id="email" name="email" type="text" placeholder="邮箱(*)" value="" class="required" />
+                            {/if}
+                            <div class="form-submit">
+                                <div style="text-align: right">
+                                    <input name="submit" type="submit" id="commit_submit" class="button primary-btn"
+                                           value="发表评论">
+                                </div>
+                                <input type="hidden" name="document_id" value="{$apeField['id']}"
+                                       id="comment_document_id">
+                                <input type="hidden" name="pid" id="comment_parent" value="0">
                             </div>
-                            <div class="comment-form-url">
-                              <input id="url" placeholder="网址" name="url" type="text" value="" size="30" />
-                            </div>
-                          </div>
-                          <div style="display: none" class="comment-form-cookies-consent">
-                            <input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes" checked="checked" />记住用户信息
-                          </div>
-                          <div class="form-submit">
-                            <div style="text-align: right">
-                                <input name="submit" type="submit" id="submit" class="button primary-btn" value="发表评论">
-                            </div>
-                            <input type="hidden" name="document_id" value="{$apeField['id']}" id="comment_document_id">
-                            <input type="hidden" name="pid" id="comment_parent" value="0">
-                          </div>
                         </form>
                     </div>
                     <!-- #respond -->
@@ -214,7 +224,7 @@
                                     <div class="media-body">
                                         <p class="author_name">{$field['author']}<a href="{$field['url']}" rel="external nofollow ugc" target="_blank" class="url"></a><span class="comment-zhan"><img title="网站主" src="__IMG__/zhan.svg" alt=""></span></p>
                                         <div class="comment-text">
-                                          <p>{$field['content']}</p>
+                                          <p>{:comment_face($field['content'],'__IMG__/face/')}</p>
                                         </div>
                                     </div>
                                     <span class="comment-pub-time">{$field['create_time']}</span>
@@ -236,7 +246,7 @@
                                             <div class="media-body">
                                                 <p class="author_name">{$vo['author']}<span class="user-identity user-admin" title="{$vo['author']}"></span><span class="comment-from">@<a href="#comment-2264">{$field['author']}</a></span></p>
                                                 <div class="comment-text">
-                                                    <p>{$vo['content']}</p>
+                                                    <p>{:comment_face($vo['content'],'__IMG__/face/')}</p>
                                                 </div>
                                             </div>
                                             <span class="comment-pub-time">{$vo.create_time}</span>
