@@ -109,7 +109,7 @@
     </p>
 </div>
 <div class="copyright">
-    Power by HulaCWMS &copy <a href="http://www.zhuopro.com" target="_blank">灼灼文化</a>
+   {:web_config("copyright")}
 </div>
 <script type="text/javascript">
     (function () {
