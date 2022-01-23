@@ -3,13 +3,15 @@
 namespace app\admin\controller;
 
 use app\common\model\AdminAuth;
-use app\common\model\AdminNotify;
-use app\Request;
-use app\admin\extend\Util as Util;
+use app\common\model\Document;
+use app\common\model\DocumentCategory;
+use app\common\model\MessageForm;
 use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
+use \app\common\model\User;
+use \app\common\model\FriendLink;
 
 class Index extends AuthController
 {
@@ -39,6 +41,14 @@ class Index extends AuthController
      */
     public function main()
     {
+        $documentCount = Document::counts(new Document());
+        $this->assign("document_count", $documentCount);
+        $userCount = User::counts(new User());
+        $this->assign("user_count", $userCount);
+        $FriendLinkCount = FriendLink::counts(new FriendLink());
+        $this->assign("friend_link_count", $FriendLinkCount);
+        $messageFormCount = MessageForm::counts(new MessageForm());
+        $this->assign("message_form_count", $messageFormCount);
         return $this->fetch();
     }
 
