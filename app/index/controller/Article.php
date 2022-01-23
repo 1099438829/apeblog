@@ -308,4 +308,41 @@ class Article extends Base
         }
         return $this->fetch();
     }
+
+    /**
+     * 用户首页
+     * @return string
+     * @throws Exception
+     * @author 李玉坤
+     * @date 2022-01-24 1:23
+     */
+    public function user()
+    {
+        $author = input('author');
+        if (!trim($author)) {
+            $this->error('请输入搜索关键词');
+        }
+        if (!mb_check_encoding($author, 'utf-8')) {
+            $kw = iconv('gbk', 'utf-8', $author);
+        }
+        $apeField['id'] = '0';
+        $apeField['title'] = $author;
+        $apeField['meta_title'] = $author;
+        $apeField['keywords'] = web_config('keywords');
+        $apeField['description'] = web_config('description');
+        $apeField['position'] = '<a href="/">首页</a> > <a>' . $author . '</a>';
+        $this->assign('apeField', $apeField);
+        $this->assign('author', $author);
+
+        //清除可能存在的栏目分类树id
+        cache(Data::CURR_CATEGORY_PATENT_ID, false);
+        //模板兼容性标签
+        $this->assign('id', false);
+        $this->assign('cid', false);
+        $templateFile = config('view.view_path') . 'article/user.html';
+        if (!is_file($templateFile)) {
+            $this->error('模板文件不存在！');
+        }
+        return $this->fetch();
+    }
 }

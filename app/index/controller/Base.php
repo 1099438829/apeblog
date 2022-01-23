@@ -49,6 +49,11 @@ class Base extends BaseController
             $pvLogModel = new PvLog();
             $pvLogModel->set_view();
         }
+        cache(Data::CURR_CATEGORY_PATENT_ID, false);
+        //模板兼容性标签
+        $this->assign('id', false);
+        $this->assign('cid', false);
+
         //获取根域名
         //判断是否开启了伪静态
 //        if (web_config('web_rewrite')=='0') {

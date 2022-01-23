@@ -7,7 +7,6 @@
 namespace app\index\controller;
 
 use app\admin\extend\Util;
-use app\common\constant\Data;
 use app\common\model\User as userModel;
 use Exception;
 use think\db\exception\DataNotFoundException;
@@ -27,11 +26,6 @@ class User extends Base
         if (!web_config('is_register')){
             $this->error('登录未启用，请联系管理员！');
         }
-        //清除可能存在的栏目分类树id
-        cache(Data::CURR_CATEGORY_PATENT_ID, false);
-        //模板兼容性标签
-        $this->assign('id', false);
-        $this->assign('cid', false);
         return $this->fetch();
     }
 
@@ -66,11 +60,6 @@ class User extends Base
         if (!web_config('is_register')){
             $this->error('注册未启用，请联系管理员！');
         }
-        //清除可能存在的栏目分类树id
-        cache(Data::CURR_CATEGORY_PATENT_ID, false);
-        //模板兼容性标签
-        $this->assign('id', false);
-        $this->assign('cid', false);
         return $this->fetch();
     }
 
@@ -128,11 +117,6 @@ class User extends Base
      */
     public function profile()
     {
-        //清除可能存在的栏目分类树id
-        cache(Data::CURR_CATEGORY_PATENT_ID, false);
-        //模板兼容性标签
-        $this->assign('id', false);
-        $this->assign('cid', false);
         return $this->fetch();
     }
 
