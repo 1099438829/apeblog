@@ -29,8 +29,7 @@
             <div class="post-main">
                 <div class="post-content-body">
                     <div class="post-content">
-                        <h1 class="post-title">
-                            留言建议 </h1>
+                        <h1 class="post-title">留言建议 </h1>
                         <div class="post-content-post">
                             <div class="post-content-content">
                                 <p>有什么想说的，可以在本页面说</p>
@@ -163,11 +162,67 @@
                         </div>
                         {/ape:arclist}
                     </div>
-                    {ape:advert row="3" type="2"}
+                    <div class="aside-box">
+                        <h2 class="widget-title">标签云</h2>
+                        <script src="__JS__/TagCloud.js"></script>
+                        <div class="corepress-tag-cloud">
+                            <div class="corepress-tag-container-tag1"></div>
+                        </div>
+                        <style>
+                            .corepress-tagcloud a {
+                                font-size: 12px;
+                                color: #fff;
+                                padding: 0 !important;
+                            }
+
+                            .corepress-tagcloud a:hover {
+                                color: #fff !important;
+                            }
+
+                            .tagcloud--item {
+                                color: #fff;
+                                padding: 2px 4px;
+                                border-radius: 3px;
+                                cursor: pointer;
+                            }
+
+                            .tagcloud--item:hover {
+                                opacity: 1 !important;
+                                z-index: 100 !important;
+                            }
+                        </style>
+                        <script>
+                            $.get("{:url('/index/article/taglist')}",function(data,status){
+                               TagCloud(
+                                    ".corepress-tag-container-tag1",
+                                    data.data,
+                                    {},
+                                    [
+                                        "#67C23A",
+                                        "#E6A23C",
+                                        "#F56C6C",
+                                        "#909399",
+                                        "#CC9966",
+                                        "#FF6666",
+                                        "#99CCFF",
+                                        "#FF9999",
+                                        "#CC6633",
+                                        "#67C23A",
+                                        '#ef5b9c',
+                                        '#fcaf17',
+                                        '#009ad6',
+                                        '#003A8C',
+                                        '#f36c21'
+                                    ]
+                               );
+                            });
+                        </script>
+                    </div>
+                    {ape:advert row="3" type="3"}
                     <div class="aside-box">
                         <h2 class="widget-title">{$field['title']}</h2>
                         <a href="{$field['url']}" target="_blank">
-                            <img width="300" height="191" src="{$field['image']}"
+                            <img width="300" height="191" src="{$field['cover_path']}"
                                  class="image wp-image-559  attachment-medium size-medium" alt=""
                                  loading="lazy" style="max-width: 100%; height: auto;">
                         </a>
