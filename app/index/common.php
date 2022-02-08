@@ -345,8 +345,8 @@ function tpl_get_list($orderBy, $pageSize, $cid, $type, $table = 'article', $whe
         case 'find':
             //获取栏目下文章以及所有子孙分类文章
             $dc = get_document_category($cid);
-            $child = $dc['child'];
-            if ($child) {
+            if (!empty($dc['child'])) {
+                $child = $dc['child'];
                 $documentListModel = $documentListModel->where('a.category_id', 'in', "$cid,$child");
             } else {
                 $documentListModel = $documentListModel->where('a.category_id', $cid);

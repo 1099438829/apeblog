@@ -20,7 +20,7 @@
                 <div>{$apeField['title']}</div>
               </div>
               <ul class="post-list">
-                {ape:list orderBy="create_time desc" type="where" pagesize="10"}
+                {ape:list orderBy="create_time desc" pagesize="10"}
                 <li class="post-item">
                   <div class="post-item-container">
                     <div class="post-item-thumbnail">
@@ -28,7 +28,6 @@
                         <img src="__IMG__/loading.gif" data-original="{:file_cdn($field['cover_path'])}" />
                       </a>
                     </div>
-<!--                    tag链接等待完善-->
                     {notempty name="$field['tags']"}
                     <div class="post-item-tags ">
                       <span class="cat-item">
