@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 23/01/2022 22:22:06
+ Date: 08/02/2022 22:31:04
 */
 
 SET NAMES utf8mb4;
@@ -125,15 +125,11 @@ CREATE TABLE `ape_admin_log`  (
   `user_agent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT 'User-Agent',
   `create_time` int(10) NOT NULL DEFAULT 0 COMMENT '操作时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_admin_log
 -- ----------------------------
-INSERT INTO `ape_admin_log` VALUES (1, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36 Edg/97.0.1072.69', 1642947456);
-INSERT INTO `ape_admin_log` VALUES (2, 1, 'admin', 'admin', 'friendlink', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36 Edg/97.0.1072.69', 1642947458);
-INSERT INTO `ape_admin_log` VALUES (3, 1, 'admin', 'admin', 'admin_auth', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36 Edg/97.0.1072.69', 1642947612);
-INSERT INTO `ape_admin_log` VALUES (4, 1, 'admin', 'admin', 'admin_auth', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36 Edg/97.0.1072.69', 1642947645);
 
 -- ----------------------------
 -- Table structure for ape_admin_notify
@@ -271,14 +267,11 @@ CREATE TABLE `ape_comment`  (
   `create_time` int(11) NOT NULL DEFAULT 0 COMMENT '评论时间',
   `update_time` int(11) NOT NULL DEFAULT 0 COMMENT '评论时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '评论表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '评论表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of ape_comment
 -- ----------------------------
-INSERT INTO `ape_comment` VALUES (1, '看看', '123@qq.com', 'www.baidu.com', '123213', 0, '', 0, 1, 0, 1642931109, 1642931109);
-INSERT INTO `ape_comment` VALUES (2, '看看', '123@qq.com', 'www.baidu.com', '驱蚊驱蚊[f=youling]', 0, '', 0, 1, 1, 1642931129, 1642931129);
-INSERT INTO `ape_comment` VALUES (3, '看看', '123@qq.com', 'www.baidu.com', '[f=yiwen][f=yinxian]', 0, '', 2, 1, 1, 1642945595, 1642945595);
 
 -- ----------------------------
 -- Table structure for ape_document
@@ -286,6 +279,7 @@ INSERT INTO `ape_comment` VALUES (3, '看看', '123@qq.com', 'www.baidu.com', '[
 DROP TABLE IF EXISTS `ape_document`;
 CREATE TABLE `ape_document`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `alias` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '别名',
   `uid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID',
   `author` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '作者',
   `title` char(80) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '标题',
@@ -310,13 +304,14 @@ CREATE TABLE `ape_document`  (
   `password` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '文章密码',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_category_status`(`category_id`, `status`) USING BTREE,
-  INDEX `idx_status_type_pid`(`status`, `uid`) USING BTREE
+  INDEX `idx_status_type_pid`(`status`, `uid`) USING BTREE,
+  UNIQUE INDEX `alias`(`alias`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文档模型基础表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_document
 -- ----------------------------
-INSERT INTO `ape_document` VALUES (1, 1, '超级管理员', '关于源码云博客', 1, '/uploads/images/20220113/0114fc5ff6a1f9c541dcbc8b99b1c5f2.png', 'article', '', 1, 1, 1, '', 1, 41, '源码云,博客,源码云博客', '关于源码云博客', '源码云博客,源码云,博客,关于', '源码云博客最好用的博客程序', 99, 1642089660, 1642089660, 1, '');
+INSERT INTO `ape_document` VALUES (1, 'about', 1, '超级管理员', '关于源码云博客', 1, '/uploads/images/20220113/0114fc5ff6a1f9c541dcbc8b99b1c5f2.png', 'article', '', 1, 1, 1, '', 1, 61, '源码云,博客,源码云博客', '关于源码云博客', '源码云博客,源码云,博客,关于', '源码云博客最好用的博客程序', 99, 1642089660, 1642089660, 1, '');
 
 -- ----------------------------
 -- Table structure for ape_document_article
@@ -360,7 +355,7 @@ CREATE TABLE `ape_document_category`  (
 -- ----------------------------
 -- Records of ape_document_category
 -- ----------------------------
-INSERT INTO `ape_document_category` VALUES (1, '关于小站', '', '', 0, 0, 99, '关于小站', '关于小站,源码云,源码云博客,关于源码云博客', '源码云博客,源码云博客网站', 1, 'list_default.html', '', 1, 0, 1642089484);
+INSERT INTO `ape_document_category` VALUES (1, '关于小站', '', '', 0, 0, 99, '关于小站', '关于小站,源码云,源码云博客,关于源码云博客', '源码云博客,源码云博客网站', 1, 'list_default.html', '', 11, 0, 1642089484);
 
 -- ----------------------------
 -- Table structure for ape_document_category_content
@@ -500,7 +495,7 @@ CREATE TABLE `ape_system_config`  (
   `create_time` int(10) NOT NULL DEFAULT 0 COMMENT '添加时间',
   `update_time` int(10) NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统配置表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统配置表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_system_config

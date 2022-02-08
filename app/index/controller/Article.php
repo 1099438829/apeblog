@@ -114,14 +114,13 @@ class Article extends Base
      */
     public function detail()
     {
-        $id = input('id/d');
-
+        $id = input('id');
         if (!$id) {
             $this->error('参数错误！');
         }
         //获取该文章
         $documentModel = new Document();
-        $article = $documentModel->where('status', 1)->where('id', $id)->find();
+        $article = $documentModel->where('status', 1)->where('id|alias', $id)->find();
         if (!$article) {
             $this->error('文章不存在或已删除！');
         }
