@@ -150,7 +150,7 @@ if (!function_exists('file_cdn')) {
         }
 
         $path = str_replace(public_path(), '', $path);
-        
+
         //转换因为win导致的兼容问题
         if(strtoupper(substr(PHP_OS,0,3))==='WIN'){
             $path = str_replace( DIRECTORY_SEPARATOR, '/',$path);
