@@ -109,6 +109,28 @@ if (!function_exists('unicode_decode')) {
     }
 }
 
+/**
+ * 服务器地址
+ * 协议和域名
+ *
+ * @return string
+ */
+function server_url()
+{
+    if (isset($_SERVER['HTTPS']) && ('1' == $_SERVER['HTTPS'] || 'on' == strtolower($_SERVER['HTTPS']))) {
+        $http = 'https://';
+    } elseif (isset($_SERVER['SERVER_PORT']) && ('443' == $_SERVER['SERVER_PORT'])) {
+        $http = 'https://';
+    } else {
+        $http = 'http://';
+    }
+
+    $host = $_SERVER['HTTP_HOST'];
+    $res  = $http . $host;
+
+    return $res;
+}
+
 if (!function_exists('file_cdn')) {
     /**
      * 文件cdn
@@ -120,21 +142,24 @@ if (!function_exists('file_cdn')) {
     function file_cdn($path)
     {
         if (empty($path)) {
-            return $path;
+            return '';
         }
+
         if (strpos($path, 'http') !== false) {
-            //是网址开头的不处理
             return $path;
         }
+
         $path = str_replace(public_path(), '', $path);
-        if (!(substr($path, 0, 1) == '/')) {
-            //统一路径
-            $path = '/' . $path;
-        }
+        
         //转换因为win导致的兼容问题
         if(strtoupper(substr(PHP_OS,0,3))==='WIN'){
             $path = str_replace( DIRECTORY_SEPARATOR, '/',$path);
         }
-        return config("app.cdn_url") . $path;
+
+        if (!(substr($path, 0, 1) == '/')) {
+            //统一路径
+            $path = '/' . $path;
+        }
+        return (config("app.cdn_url")?:$server_url = server_url()) . $path;
     }
 }

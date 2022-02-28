@@ -58,7 +58,7 @@ class AttachmentCategory extends BaseModel
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public static function buildNodes(string $type = "images", int $pid = 0, string $title = "")
+    public static function buildNodes(string $type = "image", int $pid = 0, string $title = "")
     {
         $model = new self;
         $model = $model->where("type", $type);

@@ -143,7 +143,7 @@
         onEditableSave: function (field, row) {
             $.ajax({
                 type: "post",
-                url: "/admin/article/update",
+                url: "/admin/article/save",
                 data: row,
                 success: function (res) {
                     if (res.code == 200 || res.status == 200) {

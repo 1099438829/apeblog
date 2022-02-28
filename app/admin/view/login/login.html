@@ -56,7 +56,7 @@
     </style>
 </head>
 
-<body style="background: url('/static/admin/images/back.jpg')">
+<body style="background: url('/static/admin/img/back.jpg')">
 <div class="row lyear-wrapper">
     <div class="lyear-login">
         <div class="login-center">
@@ -100,6 +100,7 @@
 </div>
 <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
 <script type="text/javascript" src="/static/admin/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/layer/layer.js"></script>
 <script>
     // 账号登录
     function btnLogin() {
@@ -108,7 +109,7 @@
         if ($("#captchas").val() == "") {$(".has-captchas").addClass("has-error");return false;}
         $.post(url="/admin/login/verify",$("#loginFrm").serialize(),function (res) {
             if (res.status == 200) window.location = "/admin/index/index";
-            else alert(res.msg);
+            else  layer.alert(res.msg, {icon:5})
             return true;
         });
         $("#captcha").attr("src",'/admin/login/captcha?d='+Math.random());

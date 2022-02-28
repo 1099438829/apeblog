@@ -42,5 +42,5 @@ return [
     // 显示错误信息
     'show_error_msg'   => env('app_debug', false),
     //cdn
-    'cdn_url' =>  env('app.cdn', 'http://apeblog.io/'),
+    'cdn_url' =>  env('app.cdn', ''),
 ];

@@ -46,7 +46,7 @@ CREATE TABLE `ape_admin`  (
 -- ----------------------------
 -- Records of ape_admin
 -- ----------------------------
-INSERT INTO `ape_admin` VALUES (1, 1, 'admin', '超级管理员', '4760f3fbfe9e42ace8bea27edfb85d65', '超级管理员', '/static/admin/images/logo2.png', 1, '13500000000', '123@qq.com', '', 1, '', 1, 1, 1642090317, 1642946994);
+INSERT INTO `ape_admin` VALUES (1, 1, 'admin', '超级管理员', '4760f3fbfe9e42ace8bea27edfb85d65', '超级管理员', '/static/admin/img/logo2.png', 1, '13500000000', '123@qq.com', '', 1, '', 1, 1, 1642090317, 1642946994);
 
 -- ----------------------------
 -- Table structure for ape_admin_auth
