@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 08/02/2022 22:31:04
+ Date: 28/02/2022 14:42:06
 */
 
 SET NAMES utf8mb4;
@@ -46,7 +46,7 @@ CREATE TABLE `ape_admin`  (
 -- ----------------------------
 -- Records of ape_admin
 -- ----------------------------
-INSERT INTO `ape_admin` VALUES (1, 1, 'admin', '超级管理员', '4760f3fbfe9e42ace8bea27edfb85d65', '超级管理员', '/static/admin/img/logo2.png', 1, '13500000000', '123@qq.com', '', 1, '', 1, 1, 1642090317, 1642946994);
+INSERT INTO `ape_admin` VALUES (1, 1, 'admin', '超级管理员', '4760f3fbfe9e42ace8bea27edfb85d65', '超级管理员', '/upload/image/20220228/ca46bd04e1d32911de549862f6db1b8e.png', 1, '13500000000', '123@qq.com', '这家伙很懒，什么也没留下', 1, '', 1, 1, 1642090317, 1646028509);
 
 -- ----------------------------
 -- Table structure for ape_admin_auth
@@ -199,8 +199,8 @@ CREATE TABLE `ape_advert`  (
 -- ----------------------------
 -- Records of ape_advert
 -- ----------------------------
-INSERT INTO `ape_advert` VALUES (1, '源码云博客', '/uploads/images/20220114/fd86d80e8f68c4e9347501cbc4e2509c.jpg', 'http://blog.apecloud.cn', 1, 1, 99, 1, 1642089742, 1642089742);
-INSERT INTO `ape_advert` VALUES (2, '源码云博客', '/uploads/images/20220114/fd86d80e8f68c4e9347501cbc4e2509c.jpg', 'http://blog.apecloud.cn/index/article/detail.html?id=1', 2, 1, 99, 1, 1642089806, 1642089806);
+INSERT INTO `ape_advert` VALUES (1, '源码云博客', '/upload/image/20220228/77e53705a8651dbd30d7e5c3eea8313c.jpg', 'http://blog.apecloud.cn', 1, 1, 99, 1, 1642089742, 1646030018);
+INSERT INTO `ape_advert` VALUES (2, '源码云博客', '/upload/image/20220228/77e53705a8651dbd30d7e5c3eea8313c.jpg', 'http://blog.apecloud.cn/index/article/detail.html?id=1', 2, 1, 99, 1, 1642089806, 1646030028);
 
 -- ----------------------------
 -- Table structure for ape_attachment
@@ -223,9 +223,8 @@ CREATE TABLE `ape_attachment`  (
 -- ----------------------------
 -- Records of ape_attachment
 -- ----------------------------
-INSERT INTO `ape_attachment` VALUES (1, 1, 'images/20220114\\fd86d80e8f68c4e9347501cbc4e2509c.jpg', '/uploads/images/20220114/fd86d80e8f68c4e9347501cbc4e2509c.jpg', 'images', 'image/jpeg', '1919593', 1, 1642089709, 1642089709);
-INSERT INTO `ape_attachment` VALUES (2, 2, 'images/20220123\\a72d3bf8f55e210f03387fe8873fb2c6.png', '/uploads/images/20220123/a72d3bf8f55e210f03387fe8873fb2c6.png', 'images', 'image/png', '32120', 1, 1642946867, 1642946867);
-INSERT INTO `ape_attachment` VALUES (3, 2, 'images/20220123\\85745a6882524e0ed8e9eb7a13c9498a.png', '/uploads/images/20220123/85745a6882524e0ed8e9eb7a13c9498a.png', 'images', 'image/png', '34531', 1, 1642946898, 1642946898);
+INSERT INTO `ape_attachment` VALUES (2, 1, 'image/20220228\\ca46bd04e1d32911de549862f6db1b8e.png', '/upload/image/20220228/ca46bd04e1d32911de549862f6db1b8e.png', 'image', 'image/png', '32120', 1, 1646028504, 1646028504);
+INSERT INTO `ape_attachment` VALUES (3, 2, 'image/20220228\\77e53705a8651dbd30d7e5c3eea8313c.jpg', '/upload/image/20220228/77e53705a8651dbd30d7e5c3eea8313c.jpg', 'image', 'image/jpeg', '262966', 1, 1646030013, 1646030013);
 
 -- ----------------------------
 -- Table structure for ape_attachment_category
@@ -246,8 +245,8 @@ CREATE TABLE `ape_attachment_category`  (
 -- ----------------------------
 -- Records of ape_attachment_category
 -- ----------------------------
-INSERT INTO `ape_attachment_category` VALUES (1, 0, 'banner', 'images', 1, 0, 1642089692, 1642089692);
-INSERT INTO `ape_attachment_category` VALUES (2, 0, '友链', 'images', 1, 0, 1642946833, 1642946833);
+INSERT INTO `ape_attachment_category` VALUES (1, 0, '头像', 'image', 1, 0, 1646018678, 1646018678);
+INSERT INTO `ape_attachment_category` VALUES (2, 0, 'banner', 'image', 1, 0, 1646029908, 1646029908);
 
 -- ----------------------------
 -- Table structure for ape_comment
@@ -267,11 +266,12 @@ CREATE TABLE `ape_comment`  (
   `create_time` int(11) NOT NULL DEFAULT 0 COMMENT '评论时间',
   `update_time` int(11) NOT NULL DEFAULT 0 COMMENT '评论时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '评论表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '评论表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of ape_comment
 -- ----------------------------
+INSERT INTO `ape_comment` VALUES (1, '影子', 'hewa@belloai.com', 'https://www.iqiyi.com/a_19rrhbd5ml.html', 'ewrwer[f=weiqu][f=yinxian]', 0, '', 0, 1, 0, 1646030054, 1646030076);
 
 -- ----------------------------
 -- Table structure for ape_document
@@ -303,15 +303,15 @@ CREATE TABLE `ape_document`  (
   `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '数据状态',
   `password` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '文章密码',
   PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `alias`(`alias`) USING BTREE,
   INDEX `idx_category_status`(`category_id`, `status`) USING BTREE,
-  INDEX `idx_status_type_pid`(`status`, `uid`) USING BTREE,
-  UNIQUE INDEX `alias`(`alias`) USING BTREE
+  INDEX `idx_status_type_pid`(`status`, `uid`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文档模型基础表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_document
 -- ----------------------------
-INSERT INTO `ape_document` VALUES (1, 'about', 1, '超级管理员', '关于源码云博客', 1, '/uploads/images/20220113/0114fc5ff6a1f9c541dcbc8b99b1c5f2.png', 'article', '', 1, 1, 1, '', 1, 61, '源码云,博客,源码云博客', '关于源码云博客', '源码云博客,源码云,博客,关于', '源码云博客最好用的博客程序', 99, 1642089660, 1642089660, 1, '');
+INSERT INTO `ape_document` VALUES (1, 'about', 1, '超级管理员', '关于源码云博客', 1, 'http://apeblog.io/upload/image/20220228/05e4cabf56f07a0e39337dc1ce63867a.png', 'article', '', 1, 1, 1, '', 1, 88, '源码云,博客,源码云博客', '关于源码云博客', '源码云博客,源码云,博客,关于', '源码云博客最好用的博客程序', 98, 1642089660, 1646011628, 1, '');
 
 -- ----------------------------
 -- Table structure for ape_document_article
@@ -326,7 +326,7 @@ CREATE TABLE `ape_document_article`  (
 -- ----------------------------
 -- Records of ape_document_article
 -- ----------------------------
-INSERT INTO `ape_document_article` VALUES (1, '<p>源码云博客</p>\r\n<p>&nbsp;</p>');
+INSERT INTO `ape_document_article` VALUES (1, '<p>源码云博客</p><p><br></p><p><br></p><p><br></p><p><br></p><p>阿迪斯</p>');
 
 -- ----------------------------
 -- Table structure for ape_document_category
@@ -350,12 +350,13 @@ CREATE TABLE `ape_document_category`  (
   `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '分类表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '分类表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_document_category
 -- ----------------------------
-INSERT INTO `ape_document_category` VALUES (1, '关于小站', '', '', 0, 0, 99, '关于小站', '关于小站,源码云,源码云博客,关于源码云博客', '源码云博客,源码云博客网站', 1, 'list_default.html', '', 11, 0, 1642089484);
+INSERT INTO `ape_document_category` VALUES (1, '关于小站', '', '', 0, 0, 99, '关于小站', '关于小站,源码云,源码云博客,关于源码云博客', '源码云博客,源码云博客网站', 1, 'list_default.html', '', 49, 0, 1642089484);
+INSERT INTO `ape_document_category` VALUES (2, '编程资料', '', '', 1, 0, 0, '', '', '', 1, 'list_default.html', '', 30, 0, 0);
 
 -- ----------------------------
 -- Table structure for ape_document_category_content
@@ -370,6 +371,7 @@ CREATE TABLE `ape_document_category_content`  (
 -- ----------------------------
 -- Records of ape_document_category_content
 -- ----------------------------
+INSERT INTO `ape_document_category_content` VALUES (2, '');
 
 -- ----------------------------
 -- Table structure for ape_document_product
@@ -411,8 +413,8 @@ CREATE TABLE `ape_friend_link`  (
 -- ----------------------------
 -- Records of ape_friend_link
 -- ----------------------------
-INSERT INTO `ape_friend_link` VALUES (1, 1, '源码云', 'https://www.apecloud.cn/', '/uploads/images/20220123/a72d3bf8f55e210f03387fe8873fb2c6.png', '源码云', 0, 1642946872, 1642946872, 1);
-INSERT INTO `ape_friend_link` VALUES (2, 1, '源码云博客', 'https://blog.apecloud.cn/', '/uploads/images/20220123/85745a6882524e0ed8e9eb7a13c9498a.png', '源码云博客', 0, 1642946909, 1642946909, 1);
+INSERT INTO `ape_friend_link` VALUES (1, 1, '源码云', 'https://www.apecloud.cn/', '/upload/image/20220228/ca46bd04e1d32911de549862f6db1b8e.png', '源码云', 0, 1642946872, 1646030344, 1);
+INSERT INTO `ape_friend_link` VALUES (2, 1, '源码云博客', 'https://blog.apecloud.cn/', '/upload/image/20220228/ca46bd04e1d32911de549862f6db1b8e.png', '源码云博客', 0, 1642946909, 1646030354, 1);
 
 -- ----------------------------
 -- Table structure for ape_invitation_code
@@ -501,11 +503,11 @@ CREATE TABLE `ape_system_config`  (
 -- Records of ape_system_config
 -- ----------------------------
 INSERT INTO `ape_system_config` VALUES (1, 1, '网站标题', 'title', 'text', 'input', 0, '', '源码云博客', '', 99, 1, 1, '1', '1', 1582792265, 1583855342);
-INSERT INTO `ape_system_config` VALUES (2, 1, '网站图标', 'favicon', 'file', 'input', 0, '', '/uploads/images/20220113/7937a0e34d8ddad087653a8b6ff3062f.png', '', 98, 1, 1, '1', '1', 1582793160, 1582792265);
+INSERT INTO `ape_system_config` VALUES (2, 1, '网站图标', 'favicon', 'file', 'input', 0, '', '/static/admin/img/logo.ico', '', 98, 1, 1, '1', '1', 1582793160, 1582792265);
 INSERT INTO `ape_system_config` VALUES (3, 1, '站点关键词', 'keywords', 'text', 'input', 0, '', '源码云博客', '', 97, 1, 1, '1', '1', 1582793221, 1582792265);
 INSERT INTO `ape_system_config` VALUES (4, 1, '站点描述', 'description', 'text', 'input', 0, '', '源码云博客', '', 96, 1, 1, '1', '1', 1582793248, 1582792265);
 INSERT INTO `ape_system_config` VALUES (5, 1, '网站作者', 'author', 'text', 'input', 0, '', '木子的忧伤', '', 95, 1, 1, '1', '1', 1582793305, 1582792265);
-INSERT INTO `ape_system_config` VALUES (6, 1, '站点logo', 'logo', 'file', 'input', 0, '', '/uploads/images/20220113/e53d7518221fea797e67317faa4ac07c.png', '', 94, 1, 1, '1', '1', 1582793393, 1582793700);
+INSERT INTO `ape_system_config` VALUES (6, 1, '站点logo', 'logo', 'file', 'input', 0, '', '/static/admin/img/logo.png', '', 94, 1, 1, '1', '1', 1582793393, 1582793700);
 INSERT INTO `ape_system_config` VALUES (7, 1, '版权信息', 'copyright', 'text', 'input', 0, '', 'Copyright © 2022 apeBlog Powered by 源码云博客', '', 93, 1, 1, '1', '1', 1582793470, 1582793495);
 INSERT INTO `ape_system_config` VALUES (8, 1, '备案信息', 'icp', 'text', 'textarea', 0, '', '<a href=\"http://beian.miit.gov.cn\">京ICP备19038953号</a> | <a target=\"_blank\" href=\"http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=62062102000138\">甘公网安备62062102000138号</a>', '', 92, 1, 1, '1', '1', 1582793563, 1583375542);
 INSERT INTO `ape_system_config` VALUES (10, 1, '网站域名', 'domain', 'text', 'input', 0, '', 'http://apeblog.io', '', 90, 1, 1, '1', '1', 1588858018, 1582792265);
@@ -517,8 +519,8 @@ INSERT INTO `ape_system_config` VALUES (15, 1, '开始伪静态', 'web_rewrite',
 INSERT INTO `ape_system_config` VALUES (16, 2, '联系地址', 'web_contact_add', 'text', 'input', 0, '', '北京市昌平区', '', 84, 1, 1, '1', '1', 1582793305, 1582792265);
 INSERT INTO `ape_system_config` VALUES (17, 2, '联系电话', 'web_contact_tel', 'text', 'input', 0, '', '13500000000', '', 83, 1, 1, '1', '1', 1582793305, 1582792265);
 INSERT INTO `ape_system_config` VALUES (18, 2, '联系QQ', 'web_contact_qq', 'text', 'input', 0, '', '11222', '', 82, 1, 1, '1', '1', 1582793305, 1582792265);
-INSERT INTO `ape_system_config` VALUES (19, 2, '微信收款码', 'web_weixin_pay', 'file', 'input', 0, '', '/uploads/images/20220108/bc9076123ad87bfabca390e9fb3c488c.jpg', '微信收款码捐赠使用', 77, 1, 1, '1', '1', 1582793305, 1582792265);
-INSERT INTO `ape_system_config` VALUES (20, 2, '支付宝收款码', 'web_zhifubao_pay', 'file', 'input', 0, '', '/uploads/images/20220108/934d9383bcefefccbe30bccdc60a03d3.jpg', '支付宝收款码捐赠使用', 76, 1, 1, '1', '1', 1582793305, 1582792265);
+INSERT INTO `ape_system_config` VALUES (19, 2, '微信收款码', 'web_weixin_pay', 'file', 'input', 0, '', '/upload/pay/weixin.jpg', '微信收款码捐赠使用', 77, 1, 1, '1', '1', 1582793305, 1582792265);
+INSERT INTO `ape_system_config` VALUES (20, 2, '支付宝收款码', 'web_zhifubao_pay', 'file', 'input', 0, '', '/upload/pay/zfb.jpg', '支付宝收款码捐赠使用', 76, 1, 1, '1', '1', 1582793305, 1582792265);
 INSERT INTO `ape_system_config` VALUES (25, 3, '数据库备份根路径', 'data_backup_path', 'text', 'input', 0, '', './databack/', '路径必须以 / 结尾', 81, 1, 1, '1', '1', 1582793305, 1582792265);
 INSERT INTO `ape_system_config` VALUES (26, 3, '数据库备份卷大小', 'data_backup_part_size', 'text', 'input', 0, '', '20971520', '该值用于限制压缩后的分卷最大长度。单位：B；建议设置20M', 80, 1, 1, '1', '1', 1582793305, 1582792265);
 INSERT INTO `ape_system_config` VALUES (27, 3, '数据库备份文件是否启用压缩', 'data_backup_compress', 'radio', 'input', 0, '1=>开启\n0=>关闭', '1', '压缩备份文件需要PHP环境支持gzopen,gzwrite函数', 79, 1, 1, '1', '1', 1582793305, 1582792265);
@@ -567,14 +569,14 @@ CREATE TABLE `ape_tag`  (
   `create_time` int(11) NOT NULL DEFAULT 0,
   `update_time` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '标签表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 43 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '标签表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_tag
 -- ----------------------------
-INSERT INTO `ape_tag` VALUES (1, '源码云', 1, 1, 1642089660, 1642089660);
-INSERT INTO `ape_tag` VALUES (2, '博客', 1, 1, 1642089660, 1642089660);
-INSERT INTO `ape_tag` VALUES (3, '源码云博客', 1, 1, 1642089660, 1642089660);
+INSERT INTO `ape_tag` VALUES (40, '源码云', 1, 1, 1646022464, 1646022464);
+INSERT INTO `ape_tag` VALUES (41, '博客', 1, 1, 1646022464, 1646022464);
+INSERT INTO `ape_tag` VALUES (42, '源码云博客', 1, 1, 1646022464, 1646022464);
 
 -- ----------------------------
 -- Table structure for ape_url_log
