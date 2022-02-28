@@ -52,7 +52,7 @@
                 <div class="card-toolbar clearfix">
                     <div class="toolbar-btn-action">
                         <button id="btn_add" type="button" class="btn btn-primary m-r-5"
-                                onclick="iframe.createIframe('添加友链','/admin/friendlink/add')">
+                                onclick="iframe.createIframe('添加友链','/admin/friend_link/add')">
                             <span class="mdi mdi-plus" aria-hidden="true"></span>新增
                         </button>
                         <a class="btn btn-warning" href="#!" onclick="delSelect()"><i class="mdi mdi-window-close"></i>
@@ -144,14 +144,14 @@
             },
             events: {
                 'click .btn-edit': function (event, value, row, index) {
-                    iframe.createIframe('修改友链', '/admin/friendlink/edit?id=' + row.id)
+                    iframe.createIframe('修改友链', '/admin/friend_link/edit?id=' + row.id)
                 },
             }
         }],
         onEditableSave: function (field, row) {
             $.ajax({
                 type: "post",
-                url: "/admin/friendlink/save",
+                url: "/admin/friend_link/save",
                 data: row,
                 success: function (res) {
                     if (res.code == 200 || res.status == 200) {
@@ -185,7 +185,7 @@
         var newstate = (value == 1) ? 0 : 1; // 发送参数值跟当前参数值相反
         $.ajax({
             type: "post",
-            url: "/admin/friendlink/field?id=" + id,
+            url: "/admin/friend_link/field?id=" + id,
             data: {field: field, value: newstate},
             dataType: 'json',
             success: function (res) {
@@ -210,7 +210,7 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/friendlink/del", data = {id: id}, function (res) {
+                        $.post("/admin/friend_link/del", data = {id: id}, function (res) {
                             if (res.status == 200 || res.code == 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                             location.reload();
@@ -242,7 +242,7 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/friendlink/del", data = {id: checkID}, function (res) {
+                        $.post("/admin/friend_link/del", data = {id: checkID}, function (res) {
                             if (res.status == 200 || res.code == 200) {
                                 lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                                 location.reload();

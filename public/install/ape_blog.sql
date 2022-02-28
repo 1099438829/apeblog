@@ -106,7 +106,7 @@ INSERT INTO `ape_admin_auth` VALUES (26, '主题管理', 'mdi mdi-store', 0, 'ad
 INSERT INTO `ape_admin_auth` VALUES (27, '主题管理', '', 26, 'admin', 'theme', 'index', '', '', 0, 0, 1, '/admin/theme/index', 0, 1, '1', '', 1613400349, 1582093161);
 INSERT INTO `ape_admin_auth` VALUES (28, '主题商店', '', 26, 'admin', 'theme', 'store', '', '', 0, 0, 0, '/admin/theme/store', 0, 1, '1', '1', 1613400389, 1642946978);
 INSERT INTO `ape_admin_auth` VALUES (29, '友链管理', 'mdi mdi-account-card-details', 0, 'admin', 'friend_link', 'index', '', '', 0, 0, 1, '/admin/friend_link/index', 0, 1, '1', '1', 1613400510, 1642947636);
-INSERT INTO `ape_admin_auth` VALUES (30, '友链列表', '', 34, 'admin', 'friendlink', 'index', '', '', 0, 0, 1, '/admin/friendlink/index', 0, 1, '1', '', 1613400539, 1582093161);
+INSERT INTO `ape_admin_auth` VALUES (30, '友链列表', '', 34, 'admin', 'friendlink', 'index', '', '', 0, 0, 1, '/admin/friend_link/index', 0, 1, '1', '', 1613400539, 1582093161);
 INSERT INTO `ape_admin_auth` VALUES (31, '数据库管理', '', 8, 'admin', 'databases', 'index', '', '', 0, 0, 1, '/admin/databases/index', 0, 1, '1', '', 1635572569, 1635572671);
 INSERT INTO `ape_admin_auth` VALUES (32, '友链管理', '', 29, 'admin', 'friend_link', 'index', '', '', 0, 0, 1, '/admin/friend_link/index', 0, 1, '1', '1', 1642089882, 1642947643);
 
