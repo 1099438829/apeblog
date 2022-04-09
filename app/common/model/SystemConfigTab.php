@@ -4,15 +4,19 @@
 namespace app\common\model;
 
 
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
+
 class SystemConfigTab extends BaseModel
 {
     /**
      * 列表
      * @param $where
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 李玉坤
      * @date 2022-02-28 9:19
      */

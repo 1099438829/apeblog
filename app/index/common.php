@@ -440,7 +440,7 @@ function make_detail_url($item)
     if ($item['link_str']) {
         return $item['link_str'];
     } else {
-        return url('article/detail?id=' . $item['id'])->build();
+        return url('article/detail?id=' . $item['alias']?:$item['id'])->build();
     }
 }
 

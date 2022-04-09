@@ -10,7 +10,7 @@
 </head>
 <body>
 <script>NProgress.start();</script>
-<div id="app">
+<div id="app" class="app-show">
     {include file="public/header" /}
     <div class="top-divider"></div>
     <main class="container">
@@ -103,7 +103,7 @@
                             <div class="post-item-container">
                                 <div class="post-item-thumbnail">
                                     <a href="{$field['url']}">
-                                        <img src="__IMG__/loading.gif" data-original="{:file_cdn($field['cover_path'])}"/>
+                                        <img src="__IMG__/loading.gif"  alt="{$field['title']}" data-original="{:file_cdn($field['cover_path'])}"/>
                                     </a>
                                 </div>
                                 {notempty name="$field['tags']"}
@@ -119,7 +119,7 @@
                                         <a href="{$field['url']}" style="white-space: nowrap;text-overflow: ellipsis;">{:cn_substr($field['title'],20)}</a>
                                     </h2>
                                     <div class="post-item-content" style="white-space: nowrap;text-overflow: ellipsis;">
-                                        {:cn_substr($field['content'],100)}
+                                        {:cn_substr($field['description'],100)}
                                     </div>
                                     <div class="post-item-info">
                                         <div class="post-item-meta">
