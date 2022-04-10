@@ -45,7 +45,7 @@ class Article extends AuthController
     public function lst()
     {
         $where = Util::postMore([
-            ['name', ''],
+            ['title', ''],
             ['start_time', ''],
             ['end_time', ''],
             ['status', ''],

@@ -28,19 +28,17 @@ class Document extends BaseModel
     public static function systemPage($where): array
     {
         $model = new self;
-        $count = self::counts($model);
+        if ($where['title'] != '') $model = $model->where("title", "like", "%$where[title]%");
+        if ($where['start_time'] != '') $model = $model->where("create_time", ">", strtotime($where['start_time'] . " 00:00:00"));
+        if ($where['end_time'] != '') $model = $model->where("create_time", "<", strtotime($where['end_time'] . " 23:59:59"));
+        if ($where['status'] != '') $model = $model->where("status", $where['status']);
         $model = $model->order("sort desc")->order("id desc");
+        $count = self::counts($model);
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'], (int)$where['limit']);
-        $data = $model->select();
-        if ($data) $data = $data->toArray();
-        $categoryList = DocumentCategory::where('id', 'in', array_column($data, 'category_id'))->column('title', 'id');
-        foreach ($data as &$item) {
-            if (!empty($categoryList[$item['category_id']])) {
-                $item['category_title'] = $categoryList[$item['category_id']];
-            } else {
-                $item['category_title'] = '';
-            }
-        }
+        $categoryList = DocumentCategory::column('title', 'id');
+        $data = $model->select()->each(function ($item) use($categoryList) {
+            $item->category_title = $categoryList[$item->category_id]??"";
+        });
         return compact('data', 'count');
     }
 }
