@@ -29,6 +29,7 @@ class Document extends BaseModel
     {
         $model = new self;
         $count = self::counts($model);
+        $model = $model->order("sort desc")->order("id desc");
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'], (int)$where['limit']);
         $data = $model->select();
         if ($data) $data = $data->toArray();
