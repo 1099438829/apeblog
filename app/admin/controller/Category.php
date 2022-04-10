@@ -58,7 +58,7 @@ class Category extends AuthController
     {
         $data = Util::postMore([
             ['title', ''],
-            ['en_title', ''],
+            ['alias', ''],
             ['type', ''],
             ['pid', 0],
             ['meta_title', ''],

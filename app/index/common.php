@@ -420,9 +420,10 @@ function get_route_query()
 function make_category_url($item)
 {
     if ((int)$item['type'] == 0) {
-        return url('article/lists', ['id'=>$item['alias']?:$item['id']])->build();
+        return url('article/lists', ['id'=>$item['id']])->build();
+//        return url('article/lists', ['id'=>$item['alias']?:$item['id']])->build();
     } elseif ((int)$item['type'] == 1) {
-        return url('article/lists', ['id'=>$item['alias']?:$item['id']])->build();
+        return url('article/lists', ['id'=>$item['id']])->build();
     } elseif ((int)$item['type'] == 2) {
         return $item['link_str'];
     }
