@@ -132,7 +132,7 @@ class Ape extends TagLib
      */
     public function tagList($tag, $content)
     {
-        $orderBy = isset($tag['orderBy']) ? $tag['orderBy'] : 'sort asc,create_time desc';
+        $orderBy = isset($tag['orderBy']) ? $tag['orderBy'] : 'sort desc,create_time desc';
         $pageSize = isset($tag['pageSize']) ? $tag['pageSize'] : 15;
         $type = isset($tag['type']) ? $tag['type'] : 'find';
         $typeId = isset($tag['typeId']) ? $tag['typeId'] : '$cid';

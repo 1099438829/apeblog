@@ -76,26 +76,26 @@
                         <div class="index-tab-plane">
                             <div class="index-tab-item index-tab-item-active" catid="0">最新文章</div>
                         </div>
-                        <script>
-                            var nowid = $('.index-tab-item-active').attr('catid');
-                            $('.index-tab-item').click(function () {
-                                if (nowid == $(this).attr('catid')) {
-                                    return;
-                                }
-                                nowid = $(this).attr('catid');
-                                paged = 2;
-                                $('.index-tab-item').removeClass('index-tab-item-active');
-                                $(this).addClass('index-tab-item-active');
-                                $('.post-list').html('<div class="post-item post-loading"><i class="far fa-circle-notch fa-spin"></i> 加载中</div>');
-                                $.post('/admin-ajax.php', {
-                                    action: 'corepress_load_post_by_tabs',
-                                    cat: $(this).attr('catid')
-                                }, function (data) {
-                                    $('.post-list').html(data);
-                                    $("img").lazyload({effect: "fadeIn"});
-                                })
-                            });
-                        </script>
+<!--                        <script>-->
+<!--                            var nowid = $('.index-tab-item-active').attr('catid');-->
+<!--                            $('.index-tab-item').click(function () {-->
+<!--                                if (nowid == $(this).attr('catid')) {-->
+<!--                                    return;-->
+<!--                                }-->
+<!--                                nowid = $(this).attr('catid');-->
+<!--                                paged = 2;-->
+<!--                                $('.index-tab-item').removeClass('index-tab-item-active');-->
+<!--                                $(this).addClass('index-tab-item-active');-->
+<!--                                $('.post-list').html('<div class="post-item post-loading"><i class="far fa-circle-notch fa-spin"></i> 加载中</div>');-->
+<!--                                $.post('/admin-ajax.php', {-->
+<!--                                    action: 'corepress_load_post_by_tabs',-->
+<!--                                    cat: $(this).attr('catid')-->
+<!--                                }, function (data) {-->
+<!--                                    $('.post-list').html(data);-->
+<!--                                    $("img").lazyload({effect: "fadeIn"});-->
+<!--                                })-->
+<!--                            });-->
+<!--                        </script>-->
                     </div>
                     <ul class="post-list">
                         {ape:list orderby="create_time desc" pagesize="10" type="where" }

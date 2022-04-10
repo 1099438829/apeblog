@@ -40,7 +40,6 @@ class Article extends Base
         $id = input('id/d');
         //栏目分类标识
         $name = input('name');
-
         if ($id) {
             //获取分类信息
             $dc = get_document_category($id);
@@ -55,8 +54,7 @@ class Article extends Base
         $id = $dc['id'];
         $documentCategoryModel = new DocumentCategory();
         //栏目存在  增加访问量
-        $documentCategoryModel->where('id', $id)->inc('view')->update();
-
+        $documentCategoryModel->where('id|alias', $id)->inc('view')->update();
         //判断后台统计配置是否开启 1 开启
         if (web_config("web_statistics") == 1) {
             //统计url
@@ -120,7 +118,11 @@ class Article extends Base
         }
         //获取该文章
         $documentModel = new Document();
-        $article = $documentModel->where('status', 1)->where('id|alias', $id)->find();
+        if (is_int($id)){
+            $article = $documentModel->where('status', 1)->where('id', $id)->find();
+        }else{
+            $article = $documentModel->where('status', 1)->where('alias', $id)->find();
+        }
         if (!$article) {
             $this->error('文章不存在或已删除！');
         }
@@ -133,7 +135,7 @@ class Article extends Base
         //获取该文章内容
         //根据文章类型，加载不同的内容。
         $articleType = $article['type'] ? $article['type'] : 'article';
-        $articleExt = $documentModel::name('document_' . $articleType)->where('id', $id)->find();
+        $articleExt = $documentModel::name('document_' . $articleType)->where('id', $article['id'])->find();
         if (!$articleExt) {
             $this->error('文章不存在或已删除！');
         }
