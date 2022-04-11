@@ -68,6 +68,7 @@ class Article extends AuthController
             ['id', ''],
             ['author', ''],
             ['title', ''],
+            ['alias', ''],
             ['category_id', ''],
             ['type', 'article'],
             ['abstract', ''],
@@ -97,6 +98,8 @@ class Article extends AuthController
             }
             //判断摘要是否为空，为空则从内容摘取
             $data['abstract'] = $data['abstract'] ?: mb_substr(strip_tags($content), 0, 100);
+            //判断是否写了别名，没写则需要生成
+            if ($data['alias'] == "") $data['alias'] = get_rand_str(6);
             unset($data['content']);
             if ($data['is_recommend']) $data['is_recommend'] = 1;
             if ($data['is_hot']) $data['is_hot'] = 1;

@@ -163,3 +163,22 @@ if (!function_exists('file_cdn')) {
         return (config("app.cdn_url")?:$server_url = server_url()) . $path;
     }
 }
+
+if (!function_exists('get_rand_str')) {
+    /**
+     * 生成随机字符串
+     * @param $length
+     * @return string
+     * @author 李玉坤
+     * @date 2022-04-11 18:26
+     */
+    function get_rand_str($length){
+        //字符组合
+        $str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
+        $randStr = str_shuffle($str);//打乱字符串
+        $randstr= substr($randStr,0,$length);//substr(string,start,length);返回字符串的一部分
+        $randstr = md5($randstr.time());
+        $randstr = substr($randstr,5,$length);
+        return $randstr;
+    }
+}

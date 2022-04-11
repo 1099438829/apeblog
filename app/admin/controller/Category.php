@@ -72,9 +72,11 @@ class Category extends AuthController
         ]);
         if ($data['title'] == "") return app("json")->fail("分类名称不能为空");
         if ($data['type'] == "") return app("json")->fail("类型不能为空");
+        $content = $data['content'];
+        unset($data['content']);
+        //判断是否写了别名，没写则需要生成
+        if ($data['alias'] == "") $data['alias'] = get_rand_str(8);
         if ($id == "") {
-            $content = $data['content'];
-            unset($data['content']);
             $model = new aModel();
             $id = $model->insert($data, true);
             $data = [
@@ -84,8 +86,6 @@ class Category extends AuthController
             $model = new DocumentCategoryContent();
             $res = $model->save($data);
         } else {
-            $content = $data['content'];
-            unset($data['content']);
             $res = aModel::update($data, ['id' => $id]);
             if ($res) {
                 $res = DocumentCategoryContent::update(['content' => $content], ['id' => $id]);
