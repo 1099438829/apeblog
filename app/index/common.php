@@ -383,7 +383,11 @@ function tpl_get_list($orderBy, $pageSize, $cid, $type, $table = 'article', $whe
     //获取当前请求的请求参数，以确定分页是否要带上这些请求参数
     $query = request()->query();
     if ($query) {
-        $documentListModel = $documentListModel->paginate($pageSize, false, ['query' => get_route_query()]);
+        $documentListModel = $documentListModel->paginate([
+            'list_rows'=> $pageSize,
+            'var_page' => 'page',
+            'query' => get_route_query()
+        ]);
     } else {
         $documentListModel = $documentListModel->paginate($pageSize);
     }
@@ -408,7 +412,7 @@ function get_route_query()
 {
     $request = request();
     $queryArr = $request->param();
-    $queryArr['s'] = $request->pathinfo();
+    //$queryArr['s'] = $request->pathinfo();
     return $queryArr;
 }
 
