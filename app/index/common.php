@@ -401,6 +401,7 @@ function tpl_get_list($orderBy, $pageSize, $cid, $type, $table = 'article', $whe
         'model' => $documentListModel,
         'lists' => $lists
     ];
+    //dd($re);
     return $re;
 }
 
