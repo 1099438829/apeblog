@@ -89,6 +89,7 @@ class Article extends AuthController
         if ($data['title'] == "") return app("json")->fail("文章名称不能为空");
         if ($data['category_id'] == "") return app("json")->fail("栏目分类不能为空");
         if ($data['cover_path'] == "") return app("json")->fail("主图不能为空");
+        $error = "";
         try {
             $data['author'] = $data['author'] ?: $this->adminInfo['nickname'];
             $data['uid'] = $this->adminId;
@@ -108,6 +109,7 @@ class Article extends AuthController
             if ($id == "") {
                 $data['uid'] = $this->adminInfo['uid'];
                 $data['author'] = $data['author'] ?: $this->adminInfo['nickname'];
+                $data['create_date'] = date("Y-m-d");
                 $data['create_time'] = time();
                 $data['update_time'] = time();
                 $id = aModel::insertGetId($data);
@@ -147,9 +149,10 @@ class Article extends AuthController
             $res = true;
         } catch (Exception $e) {
             Log::error('文章修改失败：失败原因：' . $e->getMessage());
+            $error = $e->getMessage();
             $res = false;
         }
-        return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败,错误原因：".$error);
     }
 
 

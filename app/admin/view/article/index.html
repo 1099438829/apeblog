@@ -129,8 +129,9 @@
             field: 'operate',
             title: '操作',
             formatter: function (value, row, index) {
-                let html = '<a class="btn btn-xs btn-default btn-del" href="#!" title="删除" data-toggle="tooltip" onclick="delOne(' + row.id + ')"><i class="mdi mdi-window-close"></i></a>\n' +
+                let html =
                     '<a type="button" class="btn-edit btn btn-xs btn-default m-r-5"  href="/admin/article/edit?id=' + row.id + '" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>\n' +
+                    '<a class="btn btn-xs btn-default btn-del" href="#!" title="删除" data-toggle="tooltip" onclick="delOne(' + row.id + ')"><i class="mdi mdi-window-close"></i></a>\n' +
                     '<a type="button" class="btn-edit btn btn-xs btn-default m-r-5"  href="/admin/article/comment?id=' + row.id + '" title="查看评论" data-toggle="tooltip"><i class="mdi mdi-message-text"></i></a>\n';
                 return html;
             },

@@ -23,6 +23,7 @@ class Ape extends TagLib
         'comment' => ['attr' => 'typeId,void,type,pageSize,orderBy', 'close' => 1],
         'relevant' => ['attr' => 'id,model,void,row', 'close' => 1],
         'tags' => ['attr' => 'tags,void', 'close' => 1],
+        'archive' => ['attr' => 'type,format,void', 'close' => 1],
     ];
 
 
@@ -162,8 +163,8 @@ class Ape extends TagLib
         $cid = isset($tag['cid']) ? $tag['cid'] : '$cid';
         $void = isset($tag['void']) ? $tag['void'] : 'field';
         $none = isset($tag['none']) ? $tag['none'] : '没有了';
-
         $parse = '<?php ';
+
         $parse .= '$__LIST__ =[];array_push($__LIST__,' . "tpl_get_prenext(\"$get\",$cid,\"$none\"));";
         $parse .= ' ?>';
         $parse .= '{volist name="__LIST__" id="' . $void . '"}';
@@ -254,9 +255,9 @@ class Ape extends TagLib
         $void = isset($tag['void']) ? $tag['void'] : 'field';
 
         $parse = '<?php ';
-        $parse .= '$__TAG_LIST__ =' . "tpl_get_tags_list($tags);";
+        $parse .= '$__LIST__ =' . "tpl_get_tags_list($tags);";
         $parse .= ' ?>';
-        $parse .= '{volist name="$__TAG_LIST__" id="' . $void . '"}';
+        $parse .= '{volist name="$__LIST__" id="' . $void . '"}';
         $parse .= $content;
         $parse .= '{/volist}';
         return $parse;
@@ -316,4 +317,27 @@ class Ape extends TagLib
         $parse .= '{/volist}';
         return $parse;
     }
+
+    /**
+     * 文章归档
+     * @param $tag
+     * @param $content
+     * @return bool|string
+     */
+    public function tagArchive($tag, $content)
+    {
+        if (empty($tag['type'])) {
+            return false;
+        }
+        $format = $tag['format']?:"Y-m";
+        $void = isset($tag['void']) ? $tag['void'] : 'field';
+        $parse = '<?php ';
+        $parse .= '$__LIST__ =' . "tpl_get_archive_list(\"$tag[type]\",\"$format\");";
+        $parse .= ' ?>';
+        $parse .= '{volist name="$__LIST__" id="' . $void . '"}';
+        $parse .= $content;
+        $parse .= '{/volist}';
+        return $parse;
+    }
+
 }

@@ -591,15 +591,52 @@ function tpl_get_advert($type, $row)
         } else {
             $advertList = Db::name('advert')->where('status', 1)->order('sort desc')->limit($row)->select();
         }
+        //处理文件cdn信息
+        foreach ($advertList as $key => &$item) {
+            if (empty($item['cover_path'])){
+                unset($advertList[$key]);
+            }
+            $item['cover_path'] = file_cdn($item['cover_path']);
+        }
         cache(Data::DATA_ADVERT . '_' . $type, $advertList);
     }
-    $advertListTemp = [];
-    foreach ($advertList as $key => $item) {
-        if ($item['cover_path']) {
-            array_push($advertListTemp, $item);
+    return $advertList;
+}
+
+/**
+ * 文档归档
+ * @ 格式  tpl_get_archive_list("month","Y-m")  tpl_get_archive_list("month","Y年-m月")....
+ * @param $type
+ * @param $format
+ * @return mixed
+ * @author 李玉坤
+ * @date 2022-06-01 10:06
+ */
+function tpl_get_archive_list($type,$format){
+    $list = cache(Data::DATA_ARCHIVE . '_' . $type);
+    $list = null;
+    if ($list === null) {
+        switch ($type){
+            case "month":
+                $dateFormat = "LEFT(create_date,7)";
+                break;
+            case "day":
+                $dateFormat = "create_date";
+                break;
+            case "year":
+                $dateFormat = "LEFT(create_date,4)";
+                break;
+            default:
+                $dateFormat = "create_date";
+                break;
         }
+        $list =  $documentListModel = (new Document())->group($dateFormat)->column("count(*) as count,create_date");
+        foreach ($list as $key => &$item) {
+            $item['create_date'] = date($format,strtotime($item['create_date']));
+        }
+        cache(Data::DATA_ADVERT . '_' . $type, $list);
     }
-    return $advertListTemp;
+    return $list;
 }
 
 if (!function_exists('web_config')) {

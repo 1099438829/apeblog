@@ -15,6 +15,7 @@ class Data
     const CURR_CATEGORY_PATENT_ID = 'curr_category_patent_id'; //当前分类父级id
     const DATA_SYSTEM_CONFIG = 'data_system_config'; //系统配置
     const DATA_ADVERT = 'data_advert'; //广告
+    const DATA_ARCHIVE = "data_archive"; //文章归档
 
     //广告位
     const ADVERT_NAV_LIST = [
