@@ -99,8 +99,8 @@
                             <div id="qrcode-img"></div>
                           </div>
                           <div id="reward-plane" class="post-pop-plane">
-                              {notempty name="(web_config('web_weixin_pay'))"}<img src="{:file_cdn(web_config('web_weixin_pay'))}" alt="">{/notempty}
-                              {notempty name="(web_config('web_zhifubao_pay'))"}<img src="{:file_cdn(web_config('web_zhifubao_pay'))}" alt="" />{/notempty}
+                              {notempty name="(web_config('web_weixin_pay'))"}<img src="{:file_cdn(web_config('web_weixin_pay'))}" alt="{:web_config('web_weixin_pay')}" />{/notempty}
+                              {notempty name="(web_config('web_zhifubao_pay'))"}<img src="{:file_cdn(web_config('web_zhifubao_pay'))}" alt="{:web_config('web_zhifubao_pay')}"/>{/notempty}
                           </div>
                         </div>
                             <div class="post-turn-page-plane">
@@ -156,8 +156,7 @@
                         <form action="{:url('/index/article/create_comment')}" method="post" id="form_comment" class="comment-form">
                             <div class="comment-user-plane">
                                 <div class="logged-in-as">
-                                    <img class="comment-user-avatar" width="48" height="auto" src="__IMG__/avatar.png"
-                                         alt="">
+                                    <img class="comment-user-avatar" width="48" height="auto" src="__IMG__/avatar.png" alt="comment-user-avatar">
                                 </div>
                                 <div class="comment_form_textarea_box">
                                     <textarea class="comment_form_textarea" name="content" id="comment"
@@ -217,7 +216,7 @@
                             <div class="comment-item" id="comment-{$field['id']}">
                                 <div class="comment-media">
                                     <div class="avatar-img">
-                                        <img src="{$field['cover_path']}" alt="">
+                                        <img src="{$field['cover_path']}" alt="avatar-im">
                                     </div>
                                 </div>
                                 <div class="comment-metadata">

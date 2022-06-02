@@ -60,8 +60,7 @@
                         <div class="index-top-postcard-item">
                             <div class="index-top-postcard-main">
                                 <div class="post-item-thumbnail">
-                                    <a href="{$field['url']}"><img
-                                            src="{$field['cover_path']}" alt=""></a>
+                                    <a href="{$field['url']}"><img src="{$field['cover_path']}" alt="{$field['title']}"></a>
                                 </div>
                                 <div class="index-top-postcard-title">
                                     <a href="{$field['url']}">{$field['title']}</a>
@@ -240,7 +239,7 @@
                         <h2 class="widget-title">{$field['title']}</h2>
                         <a href="{$field['url']}" target="_blank">
                             <img width="300" height="191" src="{$field['cover_path']}"
-                                 class="image wp-image-559  attachment-medium size-medium" alt=""
+                                 class="image wp-image-559  attachment-medium size-medium" alt="{$field['title']}"
                                  loading="lazy" style="max-width: 100%; height: auto;">
                         </a>
                     </div>
@@ -258,10 +257,10 @@
                 <li>
                     <a href="{$field['url']}" title="{$field['title']}" target="_blank">
                         {notempty name="$field['image']"}
-                        <img class="frinds-links-icon img-lazyload" src="{$field['image']}" data-original="{$field['image']}"
+                        <img class="frinds-links-icon img-lazyload" src="{$field['image']}" alt="{$field['title']}" data-original="{$field['image']}"
                              onerror="this.src='__IMG__/chrome.png'">
                         {else /}
-                        <img class="frinds-links-icon img-lazyload" src="__IMG__/chrome.png" data-original="__IMG__/chrome.png"
+                        <img class="frinds-links-icon img-lazyload" src="__IMG__/chrome.png" alt="{$field['title']}" data-original="__IMG__/chrome.png"
                              onerror="this.src='__IMG__/chrome.png'">
                         {/notempty} {$field['title']}
                     </a>
