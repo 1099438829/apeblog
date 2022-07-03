@@ -7,6 +7,7 @@ use app\common\model\DocumentCategory;
 use app\common\model\DocumentCategoryContent;
 use app\common\model\FriendLink;
 use app\common\model\Tag;
+use app\common\model\Nav;
 use think\App;
 use think\Collection;
 use think\db\exception\DataNotFoundException;
@@ -14,6 +15,7 @@ use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\Exception;
 use think\facade\Db;
+use think\facade\Route as Url;
 
 // 应用公共文件
 /**
@@ -63,7 +65,7 @@ function get_document_category_list()
         $documentCategoryList = DocumentCategory::where('status', 1)->order('sort asc')->select()->toArray();
         //转换，让id作为数组的键
         $documentCategory = [];
-        foreach ($documentCategoryList as $key => $item) {
+        foreach ($documentCategoryList as $item) {
             //根据栏目类型，生成栏目url
             $item['url'] = make_category_url($item);
             $documentCategory[$item['id']] = $item;
@@ -72,7 +74,6 @@ function get_document_category_list()
     }
     return $documentCategory;
 }
-
 
 /**
  * 获取一个文章分类
@@ -90,6 +91,7 @@ function get_document_category($x, $field = false)
     if ($field) {
         return $documentCategoryList[$x][$field];
     } else {
+        $documentCategoryList[$x]['child'] = implode(",",array_column(getSubs($documentCategoryList,$x),"id"));
         return $documentCategoryList[$x];
     }
 }
@@ -260,6 +262,21 @@ function get_document_category_by_parent($pid, $row)
         }
     }
     return $tempArr;
+}
+
+/*
+ * 获取所有子集元素
+ */
+function getSubs($categorys,$catId=0,$level=1){
+    $subs=array();
+    foreach($categorys as $item){
+        if($item['pid']==$catId){
+            $item['level']=$level;
+            $subs[]=$item;
+            $subs=array_merge($subs,getSubs($categorys,$item['id'],$level+1));
+        }
+    }
+    return $subs;
 }
 
 function get_document_category_all()
@@ -1024,4 +1041,200 @@ function comment_face($incoming_comment,$path)
         }
     }
     return $incoming_comment;
+}
+
+
+/**
+ * 模板-获取导航
+ * @param $type
+ * @param $typeId
+ * @param int $row
+ * @param string $where
+ * @param string $orderby
+ * @return DocumentCategory[]|array|bool|Collection
+ * @throws Exception
+ * @throws DataNotFoundException
+ * @throws DbException
+ * @throws ModelNotFoundException
+ * @author 李玉坤
+ * @date 2021-11-12 21:48
+ */
+function tpl_get_nav($type, $typeId, $row = 100, $where = '', $orderby = '')
+{
+    switch ($type) {
+        case "all":
+            //获取顶级导航
+            return get_nav_all();
+            break;
+        case 'top':
+            //获取顶级导航
+            return get_nav_by_parent(0, $row);
+            break;
+        case 'son':
+            //获取子级导航
+            if (!$typeId) {
+                throw new Exception('请指定要获取的栏目导航id！');
+            }
+            return get_nav_by_parent($typeId, $row);
+            break;
+        case 'self':
+            //获取同级导航
+            if (!$typeId) {
+                throw new Exception('请指定要获取的栏目导航id！');
+            }
+            $dc = get_nav($typeId);
+            if (!$dc) {
+                return false;
+            }
+            return get_nav_by_parent($dc['pid'], $row);
+            break;
+        case 'find':
+            //获取所有子孙导航，此操作读取数据库，非缓存！
+            if (!$typeId) {
+                throw new Exception('请指定要获取的栏目导航id！');
+            }
+            $dc = get_nav($typeId);
+            if (!$dc) {
+                throw new Exception('导航不存在或已删除！');
+            }
+            $tempArr = Nav::where('id', 'in', $dc['child'])->where('status', 1)->limit($row);
+            $tempArr = $tempArr->select();
+            foreach ($tempArr as $key => $item) {
+                //根据栏目类型，生成栏目url
+                $item['url'] = make_category_url($item);
+                $tempArr[$key] = $item;
+            }
+            return $tempArr;
+            break;
+        case 'parent':
+            //获取父级导航
+            if (!$typeId) {
+                throw new Exception('请指定要获取的栏目导航id！');
+            }
+            $dc = get_nav($typeId);
+            $tempArr = array();
+            $parent = get_nav($dc['pid']);
+            array_push($tempArr, $parent);
+            return $tempArr;
+            break;
+        case 'root':
+            if (!$typeId) {
+                throw new Exception('请指定要获取的栏目导航id！');
+            }
+            $dc = get_nav($typeId);
+            if ($dc['pid'] != 0) {
+                //获取根导航，此操作读取数据库，非缓存！
+                $dc = Nav::where('pid', 0)->where('status', 1)
+                    ->where("CONCAT(',',child,',') like '%,$typeId,%'")->limit($row);
+                $dc = $dc->find();
+            }
+            //根据栏目类型，生成栏目url
+            $dc['url'] = make_category_url($dc);
+            $tempArr = [];
+            array_push($tempArr, $dc);
+            return $tempArr;
+            break;
+        case 'where':
+            //根据自定义条件获取导航（where语句），此操作读取数据库，非缓存！
+            $tempArr = Nav::where('status', 1)->where($where)->order($orderby)->limit($row);
+            $tempArr = $tempArr->select();
+            foreach ($tempArr as $key => $item) {
+                //根据栏目类型，生成栏目url
+                $item['url'] = make_category_url($item);
+                $tempArr[$key] = $item;
+            }
+            return $tempArr;
+            break;
+        case 'ids':
+            //根据多个栏目id，逗号隔开的那种，获得栏目列表
+            $tempArr = Nav::where('status', 1)->where('id', 'in', $typeId)->order($orderby)->limit($row);
+            $tempArr = $tempArr->select();
+            foreach ($tempArr as $key => $item) {
+                //根据栏目类型，生成栏目url
+                $item['url'] = make_category_url($item);
+                $tempArr[$key] = $item;
+            }
+            return $tempArr;
+            break;
+        default:
+            $tempArr = [];
+            return $tempArr;
+            break;
+    }
+}
+
+
+/**
+ * 获取一个文章导航
+ */
+function get_nav($x, $field = false)
+{
+    if (!$x) {
+        throw new Exception('请指定要获取的栏目导航id！');
+    }
+    //获取缓存的文章菜单
+    $list = get_nav_list();
+    if (!isset($list[$x])) {
+        return false;
+    }
+    if ($field) {
+        return $list[$x][$field];
+    } else {
+        return $list[$x];
+    }
+}
+
+/**
+ * 获取导航列表
+ */
+function get_nav_list()
+{
+    //缓存文章菜单
+    $navList = cache(Data::DATA_NAV_LIST);
+    if ($navList === null) {
+        $list = Nav::where('status', 1)->order('sort asc')->select()->toArray();
+        //转换，让id作为数组的键
+        $navList = [];
+        foreach ($list as $item) {
+            $navList[$item['id']] = $item;
+        }
+        cache(Data::DATA_NAV_LIST, $navList);
+    }
+    return $navList;
+}
+
+function get_nav_all()
+{
+    $list = get_nav_list();
+    $tempArr = array();
+    foreach ($list as $item) {
+        if ($item['pid'] == 0) {
+            $tempArr[$item['id']] = $item;
+        } else {
+            $tempArr[$item['pid']]['child'][] = $item;
+        }
+    }
+    return $tempArr;
+}
+
+/**
+ * 根据父级导航id获取子导航
+ * $pid=父级id
+ * $row=获取多少数目
+ */
+function get_nav_by_parent($pid, $row)
+{
+    $list = get_nav_list();
+    $x = 1;
+    $tempArr = array();
+    foreach ($list as $item) {
+        if ($x > $row) {
+            break;
+        }
+        if ($item['pid'] == $pid) {
+            $x = $x + 1;
+            array_push($tempArr, $item);
+        }
+    }
+    return $tempArr;
 }

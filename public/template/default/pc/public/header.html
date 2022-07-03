@@ -43,8 +43,7 @@
 				<div class="drawer-menu-list">
 					<div class="menu-mobile">
 						<ul class="menu-mobile-header-list">
-							<li id="menu-item-0" class="menu-item menu-item-0"><a href="/" aria-current="page">首页</a></li>
-							{ape:channel type="all"}
+							{ape:nav type="all"}
 							<li id="menu-item-{$field.id}" class="menu-item {notempty name="field['child']"}menu-item-has-children{/notempty} {:is_active_nav($cid,$field['id'])?'current-menu-item current_page_item':''} menu-item-{$field['id']}">
 							{notempty name="field['child']"}
 								<a href="#" aria-current="page">{$field['title']}</a>
@@ -53,15 +52,15 @@
 							{/notempty}
 							{notempty name="field['child']"}
 							<ul class="sub-menu">
-								{ape:channel type="son" typeId="$field['id']" void="vo"}
+								{ape:nav type="son" typeId="$field['id']" void="vo"}
 								<li id="menu-item-{$vo.id}" class="menu-item menu-item-{$vo.id} {:is_active_nav($cid,$vo['id'])?'current-menu-item':''}">
-									<a title="{$vo['title']}" aria-current="page" href="{$vo['url']}" {if $vo['link_str']} target="_blank"{/if}>{$vo['title']}</a>
+									<a title="{$vo['title']}" aria-current="page" href="{$vo['url']}" {if $vo['target']} target="_blank"{/if}>{$vo['title']}</a>
 								</li>
-								{/ape:channel}
+								{/ape:nav}
 							</ul>
 							{/notempty}
 							</li>
-							{/ape:channel}
+							{/ape:nav}
 						</ul>
 					</div>
 				</div>
@@ -91,8 +90,7 @@
 				<div class="menu-plane">
 					<nav class="menu-header-plane">
 						<ul id="menu-header-list" class="menu-header-list">
-							<li class="menu-item menu-item-0"><a href="/">首页</a></li>
-							{ape:channel type="all"}
+							{ape:nav type="all"}
 							<li class="menu-item {notempty name="field['child']"}menu-item-has-children{/notempty} {:is_active_nav($cid,$field['id'])?'current-menu-item':''} menu-item-{$field['id']}">
 								{notempty name="field['child']"}
 								<a href="#" aria-current="page">{$field['title']}</a>
@@ -101,15 +99,15 @@
 								{/notempty}
 								{notempty name="field['child']"}
 								<ul class="sub-menu">
-									{ape:channel type="son" typeId="$field['id']" void="vo"}
+									{ape:nav type="son" typeId="$field['id']" void="vo"}
 									<li id="menu-item-{$vo.id}" class="menu-item menu-item-{$vo.id} {:is_active_nav($cid,$vo['id'])?'current-menu-item':''}">
-										<a title="{$vo['title']}" href="{$vo['url']}" {if $vo['link_str']} target="_blank"{/if}>{$vo['title']}</a>
+										<a title="{$vo['title']}" href="{$vo['url']}" {if $vo["target"]} target="_blank"{/if}>{$vo['title']}</a>
 									</li>
-									{/ape:channel}
+									{/ape:nav}
 								</ul>
 								{/notempty}
 							</li>
-							{/ape:channel}
+							{/ape:nav}
 						</ul>
 					</nav>
 				</div>

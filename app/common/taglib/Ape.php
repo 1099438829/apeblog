@@ -24,8 +24,42 @@ class Ape extends TagLib
         'relevant' => ['attr' => 'id,model,void,row', 'close' => 1],
         'tags' => ['attr' => 'tags,void', 'close' => 1],
         'archive' => ['attr' => 'type,format,void', 'close' => 1],
+        'nav' => ['attr' => 'type,typeId,row,void,where,orderBy,display', 'close' => 1],
     ];
 
+    /**
+     * 导航列表
+     * type,栏目分类数据读取分类
+     * typeId,导航列表分类，数字，字符串，或者变量
+     */
+    public function tagNav($tag, $content)
+    {
+        $type = isset($tag['type']) ? $tag['type'] : 'son';
+        $typeId = isset($tag['typeId']) ? $tag['typeId'] : '$cid';
+        $row = isset($tag['row']) ? $tag['row'] : 100;
+        $void = isset($tag['void']) ? $tag['void'] : 'field';
+        $where = isset($tag['where']) ? $tag['where'] : '';
+        $orderBy = isset($tag['orderBy']) ? $tag['orderBy'] : 'sort asc';
+
+        $display = isset($tag['display']) ? $tag['display'] : 1;
+        $display = $display == 1 ? 1 : 0;
+        //3中传参类型
+        //1、栏目id，数字类型
+        //2、多个栏目id，逗号隔开
+        //3、变量
+        //只有当多个栏目id时，才需要单引号加持。保证生成的为字符串
+        if (strpos($typeId, ',')) {
+            $typeId = "'$typeId'";
+        }
+
+        $parse = '<?php ';
+        $parse .= '$__LIST__ = ' . "tpl_get_nav(\"$type\",$typeId,$row,\"$where\",\"$orderBy\",$display);";
+        $parse .= ' ?>';
+        $parse .= '{volist name="__LIST__" id="' . $void . '"}';
+        $parse .= $content;
+        $parse .= '{/volist}';
+        return $parse;
+    }
 
     /**
      * 栏目列表

@@ -18,10 +18,10 @@ use think\facade\Log;
 
 /**
  * 应用入口
- * Class Article
+ * Class Page
  * @package app\index\controller
  */
-class Article extends Base
+class Page extends Base
 {
     /**
      * 列表页
@@ -247,6 +247,25 @@ class Article extends Base
             $this->error('模板文件不存在！');
         }
         return $this->fetch();
+    }
+
+    /**
+     * 标签列表
+     * @return mixed
+     * @author 李玉坤
+     * @date 2021-11-11 0:27
+     */
+    public function tagList()
+    {
+        $where = Util::postMore([
+            ['name', ''],
+            ['document_id', ''],
+            ['start_time', ''],
+            ['end_time', ''],
+            ['page', 1],
+            ['limit', 10]
+        ]);
+        return app("json")->layui(TagModel::getList($where));
     }
 
     /**
