@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <title>文章管理 - {:system_config('title')}后台管理系统</title>
+    <title>页面管理 - {:system_config('title')}后台管理系统</title>
     {include file="public/header" /}
 </head>
 <body>
@@ -13,10 +13,10 @@
                 <div class="card-body">
                     <form class="form-inline searchForm" onsubmit="return false;">
                         <div class="form-group">
-                            <label for="title">文章标题</label>
+                            <label for="title">页面标题</label>
                             <div class="input-group">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="title" name="title" placeholder="请输入文章标题">
+                                    <input type="text" class="form-control" id="title" name="title" placeholder="请输入页面标题">
                                 </div>
                             </div>
                         </div>
@@ -92,8 +92,26 @@
             field: 'title',
             title: '标题'
         }, {
-            field: 'category_title',
-            title: '分类',
+            field: 'alias',
+            title: 'URL名称'
+        }, {
+            field: 'theme',
+            title: '模板文件',
+        }, {
+            field: 'create_time',
+            title: '发布时间',
+        }, {
+            field: 'sort',
+            title: '排序',
+            editable: {
+                type: 'text',
+                emptytext: '',
+                highlight: false,
+                mode: 'inline'
+            }
+        }, {
+            field: 'view',
+            title: '浏览量',
         }, {
             field: 'display',
             title: '可见性',
@@ -107,24 +125,6 @@
                 result = '<label class="lyear-switch switch-primary switch-solid lyear-status"><input type="checkbox" ' + is_checked + '><span  onClick="updateStatus(' + row.id + ', ' + value + ', \'' + field + '\')"></span></label>';
                 return result;
             },
-        }, {
-            field: 'view',
-            title: '浏览量',
-        }, {
-            field: 'sort',
-            title: '排序',
-            editable: {
-                type: 'text',
-                emptytext: '',
-                highlight: false,
-                mode: 'inline'
-            }
-        }, {
-            field: 'create_time',
-            title: '创建时间',
-        }, {
-            field: 'create_time',
-            title: '更新时间',
         }, {
             field: 'operate',
             title: '操作',

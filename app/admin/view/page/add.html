@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <title>添加文章 - {:system_config('title')}后台管理系统</title>
+    <title>添加页面 - {:system_config('title')}后台管理系统</title>
     {include file="public/header" /}
     <!--标签插件-->
     <link rel="stylesheet" href="/static/admin/js/jquery-tags-input/jquery.tagsinput.min.css">
@@ -15,131 +15,80 @@
             <div class="card-body">
                 <ul id="myTabs" class="nav nav-tabs" role="tablist">
                     <li class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab">基本信息</a></li>
-                    <li><a href="#profile" role="tab" id="profile-tab" data-toggle="tab">文章设置</a></li>
-                    <li class="tab-right"><a data-toggle="tooltip" data-original-title="返回"
-                                             onclick="history.back(-1);return false;">返 回</a></li>
+                    <li class="tab-right"><a data-toggle="tooltip" data-original-title="返回" onclick="history.back(-1);return false;">返 回</a></li>
                 </ul>
                 <div id="myTabContent" class="tab-content">
-                    <div class="tab-pane fade active in" id="home">
-                        <form action="#!" method="post" class="row add-form" onsubmit="return false;">
-                            <div class="form-group col-md-12">
-                                <label>文章名称</label>
-                                <input type="text" class="form-control" id="title" name="title" value=""
-                                       placeholder="文章名称"/>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label>别名</label>
-                                <input type="text" class="form-control" id="alias" name="alias" value=""
-                                       placeholder="别名索引"/>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="category_id">栏目分类</label>
-                                <div class="form-controls">
-                                    <select name="category_id" id="category_id" class="form-control">
-                                        <option value="0">请选择</option>
-                                        {volist name="category" id="vo"}
-                                        <option value="{$vo.id}"
-                                                {notempty name="pid" }{if $vo.id==$category_id}selected{/if} {/notempty}
-                                            >{$vo.html}{$vo.title}</option>
-                                        {/volist}
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="writer">作者</label>
-                                <input type="text" class="form-control" id="writer" name="writer" value=""
-                                       placeholder="原作者"/>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label>主图</label>
-                                <div class="form-controls">
-                                    <ul class="list-inline clearfix lyear-uploads-pic">
-                                        <li class="col-xs-4 col-sm-3 col-md-2" id="pic-image" style="display: none;">
-                                        </li>
-                                        <li class="col-xs-4 col-sm-3 col-md-2" id="pic-upload">
-                                            <input type="hidden" class="form-control" name="cover_path" id="cover_path"
-                                                   value=""/>
-                                            <input type="file" id="file_cover_path"  accept="image/*" style="display: none;"
-                                                   onchange="upload('cover_path')"/>
-                                            <a class="pic-add" href="#!" onclick="btnClick('cover_path')"
-                                               title="上传"></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="abstract">摘要</label>
-                                <input type="text" class="form-control" name="abstract" id="abstract"
-                                       placeholder="请输入摘要">
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="abstract">标签</label>
-                                <input class="form-control js-tags-input" type="text" name="tags" data-height="38px"
-                                       placeholder="请输入标签">
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="content">文章内容</label>
-                                <textarea id="content" name="content" data-provide="summernote" data-toolbar="full"></textarea>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <button type="submit" class="btn btn-primary ajax-post" target-form="add-form">立即提交
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="tab-pane fade" id="profile">
-                        <form action="#!" method="post" class="row add-form" onsubmit="return false;">
-                            <div class="form-group row col-md-2">
-                                <div class="col-xs-6">推荐</div>
+                    <form action="#!" method="post" class="row add-form" onsubmit="return false;">
+                        <div class="form-group col-md-12">
+                            <label>页面名称</label>
+                            <input type="text" class="form-control" id="title" name="title" value="" placeholder="页面名称"/>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
                                 <div class="col-xs-6">
-                                    <label class="lyear-switch switch-solid switch-primary">
-                                        <input type="checkbox" name="is_recommend">
-                                        <span></span>
-                                    </label>
+                                    <label>展示模板</label>
+                                    <input class="form-control" name="theme" type="text" placeholder="展示模板">
                                 </div>
-                            </div>
-                            <div class="form-group row col-md-2">
-                                <div class="col-xs-6">热门</div>
                                 <div class="col-xs-6">
-                                    <label class="lyear-switch switch-solid switch-primary">
-                                        <input type="checkbox" name="is_hot">
-                                        <span></span>
-                                    </label>
+                                    <label>URL名称</label>
+                                    <input class="form-control" id="alias" name="alias" type="text" placeholder="URL名称">
                                 </div>
                             </div>
-                            <div class="form-group row col-md-2">
-                                <div class="col-xs-6">置顶</div>
-                                <div class="col-xs-6">
-                                    <label class="lyear-switch switch-solid switch-primary">
-                                        <input type="checkbox" name="is_top">
-                                        <span></span>
-                                    </label>
-                                </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="abstract">排序</label>
+                            <input type="text" class="form-control" name="sort" placeholder="请输入排序" value="99">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="link_str">外链</label>
+                            <input type="text" class="form-control" name="link_str" id="link_str" placeholder="外链">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="keywords">seo关键字</label>
+                            <input type="text" class="form-control" id="keywords" name="keywords"
+                                   placeholder="请输入seo关键字">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="description">seo描述</label>
+                            <input type="text" class="form-control" name="description" id="description"
+                                   placeholder="seo描述">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>主图</label>
+                            <div class="form-controls">
+                                <ul class="list-inline clearfix lyear-uploads-pic">
+                                    <li class="col-xs-4 col-sm-3 col-md-2" id="pic-image" style="display: none;">
+                                    </li>
+                                    <li class="col-xs-4 col-sm-3 col-md-2" id="pic-upload">
+                                        <input type="hidden" class="form-control" name="cover_path" id="cover_path"
+                                               value=""/>
+                                        <input type="file" id="file_cover_path"  accept="image/*" style="display: none;"
+                                               onchange="upload('cover_path')"/>
+                                        <a class="pic-add" href="#!" onclick="btnClick('cover_path')"
+                                           title="上传"></a>
+                                    </li>
+                                </ul>
                             </div>
-                            <div class="form-group col-md-12">
-                                <label for="abstract">排序</label>
-                                <input type="text" class="form-control" name="sort" placeholder="请输入排序" value="99">
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="link_str">外链</label>
-                                <input type="text" class="form-control" name="link_str" id="link_str" placeholder="外链">
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="keywords">seo关键字</label>
-                                <input type="text" class="form-control" id="keywords" name="keywords"
-                                       placeholder="请输入seo关键字">
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="description">seo描述</label>
-                                <input type="text" class="form-control" name="description" id="description"
-                                       placeholder="seo描述">
-                            </div>
-                            <div class="form-group col-md-12">
-                                <button type="submit" class="btn btn-primary ajax-post" target-form="add-form">立即提交
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="abstract">摘要</label>
+                            <input type="text" class="form-control" name="abstract" id="abstract"
+                                   placeholder="请输入摘要">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="abstract">标签</label>
+                            <input class="form-control js-tags-input" type="text" name="tags" data-height="38px"
+                                   placeholder="请输入标签">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="content">页面内容</label>
+                            <textarea id="content" name="content" data-provide="summernote" data-toolbar="full"></textarea>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <button type="submit" class="btn btn-primary ajax-post" target-form="add-form">立即提交
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -253,14 +202,9 @@
         $.each(Arr, function (index, item) {
             try {
                 switch (item.name) {
-                    case 'category_id':
-                        if (!item.value) {
-                            throw "栏目分类不能为空";
-                        }
-                        break;
                     case 'title':
                         if (!item.value) {
-                            throw "文章名称不能为空";
+                            throw "页面名称不能为空";
                         }
                         break;
                     case 'cover_path':

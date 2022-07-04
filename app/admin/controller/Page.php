@@ -187,8 +187,7 @@ class Page extends AuthController
             'name' => '',
             'status' => ''
         ];
-        $category = cModel::systemPage($where);
-        $category = get_tree_list($category);
+
         $this->assign("category", $category);
         $this->assign("category_id", $category_id);
         return $this->fetch();
