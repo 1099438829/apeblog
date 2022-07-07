@@ -15,6 +15,11 @@ use think\db\exception\ModelNotFoundException;
  */
 class Document extends BaseModel
 {
+    //文档类型
+    const DOCUMENT_TYPE_ARTICLE = "article";
+    const DOCUMENT_TYPE_PAGE = "page";
+    const DOCUMENT_TYPE_CATEGORY = "product";
+
     /**
      * 列表
      * @param $where
@@ -28,6 +33,7 @@ class Document extends BaseModel
     public static function systemPage($where): array
     {
         $model = new self;
+        $model = $model->where("type", "=",$where['type']?:self::DOCUMENT_TYPE_ARTICLE);
         if ($where['title'] != '') $model = $model->where("title", "like", "%$where[title]%");
         if ($where['start_time'] != '') $model = $model->where("create_time", ">", strtotime($where['start_time'] . " 00:00:00"));
         if ($where['end_time'] != '') $model = $model->where("create_time", "<", strtotime($where['end_time'] . " 23:59:59"));

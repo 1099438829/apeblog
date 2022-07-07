@@ -10,12 +10,12 @@ use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 
 /**
- * Class DocumentArticle
+ * Class DocumentPage
  * @package app\admin\model\system
  * @author 李玉坤
  * @date 2021-02-15 23:22
  */
-class DocumentArticle extends BaseModel
+class DocumentPage extends BaseModel
 {
     public function getInfo($id)
     {
@@ -23,7 +23,7 @@ class DocumentArticle extends BaseModel
             return [];
         }
         $info = aModel::alias('a')
-            ->leftJoin('document_article p','a.id = p.id')
+            ->leftJoin('document_page p','a.id = p.id')
             ->where("a.id",$id)
             ->where("a.type",Document::DOCUMENT_TYPE_PAGE)
             ->find();
@@ -32,4 +32,5 @@ class DocumentArticle extends BaseModel
         }
         return $info->toArray();
     }
+
 }

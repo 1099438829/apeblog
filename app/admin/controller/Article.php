@@ -4,6 +4,7 @@ namespace app\admin\controller;
 
 use app\common\model\Document as aModel;
 use app\common\model\DocumentCategory as cModel;
+use app\common\model\DocumentPage;
 use app\common\model\Tag as TagModel;
 use app\common\model\DocumentArticle;
 use app\common\model\Comment as CommentModel;
@@ -208,7 +209,11 @@ class Article extends AuthController
             ['id', '']
         ]);
         if ($where['id'] == '') {
-            return $this->error('数据不存在');
+            $this->error('数据不存在');
+        }
+        $info = (new DocumentArticle())->getInfo($where["id"]);
+        if (empty($info)) {
+            $this->error('数据不存在');
         }
         $category = cModel::systemPage($where);
         $category = get_tree_list($category);

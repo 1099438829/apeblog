@@ -118,7 +118,11 @@ class Article extends Base
         }
         //获取该文章
         $documentModel = new Document();
-        $article = $documentModel->where('status', 1)->where('id|alias', $id)->find();
+        if (is_numeric($id)){
+            $article = $documentModel->where('status', 1)->where('id', $id)->find();
+        }else{
+            $article = $documentModel->where('status', 1)->where('alias', $id)->find();
+        }
         if (!$article) {
             $this->error('文章不存在或已删除！');
         }

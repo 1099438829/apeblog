@@ -4,6 +4,7 @@ namespace app\admin\controller;
 
 use app\common\model\Document as aModel;
 use app\common\model\DocumentCategory as cModel;
+use app\common\model\DocumentPage;
 use app\common\model\Tag as TagModel;
 use app\common\model\DocumentArticle;
 use app\common\model\Comment as CommentModel;
@@ -52,6 +53,7 @@ class Page extends AuthController
             ['page', 1],
             ['limit', 20],
         ]);
+        $where["type"] = aModel::DOCUMENT_TYPE_PAGE;
         return app("json")->layui(aModel::systemPage($where));
     }
 
@@ -173,7 +175,6 @@ class Page extends AuthController
 
     /**
      * 新增文章
-     * @param $category_id
      * @return string
      * @throws DataNotFoundException
      * @throws DbException
@@ -181,44 +182,57 @@ class Page extends AuthController
      * @author 李玉坤
      * @date 2021-03-10 14:46
      */
-    public function add($category_id = '')
+    public function add()
     {
-        $where = [
-            'name' => '',
-            'status' => ''
-        ];
+        // 获取页面模板列表
+        $themeList = [];
+        $themeDir =  public_path('template').system_config('web_template').'/pc/page';
+        if ($dh = opendir($themeDir)) {
+            while (($file = readdir($dh)) !== false) {
 
-        $this->assign("category", $category);
-        $this->assign("category_id", $category_id);
+                if ( $file != "." && $file != "..") {
+                    $themeList[] = $file;
+                }
+            }
+            closedir($dh);
+        }
+        $this->assign("themeList", $themeList);
         return $this->fetch();
     }
 
     /**
      * 编辑页
-     * @return string
-     * @throws \Exception
-     * @author 李玉坤
-     * @date 2021-02-20 17:00
+     * @return string|void
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function edit()
     {
         $where = Util::postMore([
-            ['name', ''],
             ['id', '']
         ]);
         if ($where['id'] == '') {
-            return $this->error('数据不存在');
+            $this->error('数据不存在');
         }
-        $category = cModel::systemPage($where);
-        $category = get_tree_list($category);
-        $info = aModel::get($where['id']);
-        $content = DocumentArticle::get($where['id']);
-        if ($content) {
-            $info->content = $content->content;
-        } else {
-            $info->content = '';
+        $info = (new DocumentPage())->getInfo($where["id"]);
+        if (empty($info)) {
+            $this->error('数据不存在');
         }
-        $this->assign("category", $category);
+        // 获取页面模板列表
+        $themeList = [];
+        $themeDir = public_path('template/');
+        $defaultTheme = system_config('web_template');
+        if ($dh = opendir($themeDir.'/'.$defaultTheme.'/pc/page')) {
+            if ((is_dir($themeDir . "/" . $file)) && $file != "." && $file != "..") {
+                while (($file = readdir($dh)) !== false) {
+                    $pageList[] = $file;
+                }
+            }
+
+            closedir($dh);
+        }
+        $this->assign("themeList", $themeList);
         $this->assign("info", $info);
         return $this->fetch();
     }
