@@ -13,7 +13,7 @@ use think\db\exception\ModelNotFoundException;
 /**
  * Class Invitation
  * @package app\admin\controller\system
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-02-15 23:20
  */
 class Invitation extends AuthController
@@ -32,7 +32,7 @@ class Invitation extends AuthController
      * 邀请码列表
      * @return string
      * @throws Exception
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-02-16 13:15
      */
     public function index()
@@ -47,7 +47,7 @@ class Invitation extends AuthController
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-02-15 23:26
      */
     public function lst(Request $request)
@@ -67,7 +67,7 @@ class Invitation extends AuthController
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-02-20 14:32
      */
     public function save($id = "")
@@ -99,7 +99,7 @@ class Invitation extends AuthController
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-02-20 14:35
      */
     public function addMultiple($id = "")

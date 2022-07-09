@@ -12,7 +12,7 @@ use think\db\exception\ModelNotFoundException;
 /**
  * Class Tag
  * @package app\common\model
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-11-08 0:11
  */
 class Tag extends BaseModel
@@ -24,7 +24,7 @@ class Tag extends BaseModel
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-02-15 23:24
      */
     public static function systemPage($where): array
@@ -49,7 +49,7 @@ class Tag extends BaseModel
      * @param $user_id
      * @return Collection
      * @throws Exception
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-11-08 0:53
      */
     public function createTags($tags, $document_id, $user_id)
@@ -78,7 +78,7 @@ class Tag extends BaseModel
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-02-15 23:24
      */
     public static function getList($where): array

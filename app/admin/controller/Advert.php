@@ -18,7 +18,7 @@ use think\facade\Route as Url;
 /**
  * Class Advert
  * @package app\admin\controller
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-07-26 17:53
  */
 class Advert extends AuthController
@@ -27,7 +27,7 @@ class Advert extends AuthController
      * 广告管理
      * @return string
      * @throws Exception
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-02-19 11:53
      */
     public function index()
@@ -47,7 +47,7 @@ class Advert extends AuthController
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-02-15 23:26
      */
     public function lst(Request $request)

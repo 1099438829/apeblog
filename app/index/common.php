@@ -135,7 +135,7 @@ function get_document_category_by_name($name, $field = false)
  * @throws DataNotFoundException
  * @throws DbException
  * @throws ModelNotFoundException
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-11-12 21:48
  */
 function tpl_get_channel($type, $typeId, $row = 100, $where = '', $orderby = '')
@@ -596,7 +596,7 @@ function tpl_get_friend_link($type, $row)
  * @throws DataNotFoundException
  * @throws DbException
  * @throws ModelNotFoundException
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-07-26 23:24
  */
 function tpl_get_advert($type, $row)
@@ -626,7 +626,7 @@ function tpl_get_advert($type, $row)
  * @param $type
  * @param $format
  * @return mixed
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2022-06-01 10:06
  */
 function tpl_get_archive_list($type,$format){
@@ -661,7 +661,7 @@ if (!function_exists('web_config')) {
      * 获取系统配置值
      * @param string $formName
      * @return string
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-11-12 0:34
      */
     function web_config(string $formName): string
@@ -679,7 +679,7 @@ if (!function_exists('web_config')) {
  * 模板-文章标签
  * @param $tags
  * @return array|bool
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-11-12 0:34
  */
 if (!function_exists('tpl_get_tags_list')) {
@@ -705,7 +705,7 @@ if (!function_exists('tpl_get_tags_list')) {
  * @param array $positionList
  * @return string
  * @throws Exception
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-12-05 22:40
  */
 function tpl_get_position($dc, $positionList = array())
@@ -745,7 +745,7 @@ function get_comment_children($parentIds)
  * @param string $orderBy
  * @return array
  * @throws DbException
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-12-05 23:54
  */
 function tpl_get_comment_list($id, $type, $pageSize, $orderBy)
@@ -787,7 +787,7 @@ function tpl_get_comment_list($id, $type, $pageSize, $orderBy)
  * @param $documentId
  * @param string $type
  * @return int
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-12-05 23:16
  */
 function get_comment_count($documentId, $type = 'top')
@@ -816,7 +816,7 @@ function get_comment_count($documentId, $type = 'top')
  * @throws DataNotFoundException
  * @throws DbException
  * @throws ModelNotFoundException
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-11-28 1:02
  */
 function tpl_get_relevant_list($documentId, $row, $table = 'article')
@@ -995,7 +995,7 @@ function is_mobile()
 /**
  * 加载svg
  * @param $path
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-12-05 21:35
  */
 function file_echo_svg($path)
@@ -1008,7 +1008,7 @@ function file_echo_svg($path)
  * 加载表情
  * @param $path
  * @return string|null
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-12-05 21:36
  */
 function file_load_face($path)
@@ -1056,7 +1056,7 @@ function comment_face($incoming_comment,$path)
  * @throws DataNotFoundException
  * @throws DbException
  * @throws ModelNotFoundException
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-11-12 21:48
  */
 function tpl_get_nav($type, $typeId, $row = 100, $where = '', $orderby = '')

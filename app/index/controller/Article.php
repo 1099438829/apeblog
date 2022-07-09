@@ -30,7 +30,7 @@ class Article extends Base
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-10-29 0:17
      */
     public function lists()
@@ -107,7 +107,7 @@ class Article extends Base
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-10-29 0:17
      */
     public function detail()
@@ -175,7 +175,7 @@ class Article extends Base
      * 创建评论
      * @param Request $request
      * @return mixed
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-10-17 19:13
      */
     public function create_comment(Request $request)
@@ -220,7 +220,7 @@ class Article extends Base
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-10-29 0:19
      */
     public function tag()
@@ -259,7 +259,7 @@ class Article extends Base
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-10-29 0:18
      */
     public function search()
@@ -295,7 +295,7 @@ class Article extends Base
      * 用户首页
      * @return string
      * @throws Exception
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2022-01-24 1:23
      */
     public function user()

@@ -46,7 +46,7 @@ class Index extends AuthController
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-10-17 1:03
      */
     public function msg(Request $request)
@@ -82,7 +82,7 @@ class Index extends AuthController
     /**
      * 标签列表
      * @return mixed
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-11-11 0:27
      */
     public function tagList()

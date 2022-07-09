@@ -10,7 +10,7 @@ use think\db\exception\ModelNotFoundException;
 /**
  * Class Advert
  * @package app\common\model
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-07-26 18:38
  */
 class Advert extends BaseModel
@@ -22,7 +22,7 @@ class Advert extends BaseModel
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-02-15 23:24
      */
     public static function systemPage($where): array

@@ -11,7 +11,7 @@ use think\db\exception\ModelNotFoundException;
 /**
  * Class Document
  * @package app\admin\model\system
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-02-15 23:22
  */
 class Nav extends BaseModel
@@ -55,34 +55,6 @@ class Nav extends BaseModel
             $item['children'] = self::lst($item['id'], $auth);
         });
         return $data->toArray() ?: [];
-    }
-
-    /**
-     * 获取菜单列表缓存key
-     * @param $adminId
-     * @return string
-     * @author 李玉坤
-     * @date 2021-06-09 17:24
-     */
-    public static function getMenuCacheKey($adminId)
-    {
-        return 'menu:List:' . $adminId;
-    }
-
-    /**
-     * @return string
-     * @author 李玉坤
-     * @date 2021-06-15 11:11
-     */
-    public static function getAuthCacheKey()
-    {
-        return 'auth:key:list';
-    }
-
-    public static function clearCache($adminId)
-    {
-        cache(AdminAuth::getMenuCacheKey($adminId), null);
-        cache(AdminAuth::getAuthCacheKey(), null);
     }
 
     /**
@@ -132,54 +104,6 @@ class Nav extends BaseModel
         return $str . " ";
     }
 
-    /**
-     * 生成treeData
-     * @param int $pid
-     * @param array $auth
-     * @param array $list
-     * @return array
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
-     */
-    public static function selectAndBuildTree(int $pid = 0, array $auth = [], array $list = [])
-    {
-        $model = new self;
-        $model = $model->where("pid", $pid);
-        if ($auth != []) $model = $model->where("id", 'in', $auth);
-        $model = $model->where("status", 1);
-        $model = $model->field(['title', 'id']);
-        $model = $model->order(["sort desc", "id"]);
-        $data = $model->select();
-        foreach ($data as $k => $v) {
-            $list[] = self::buildTreeData($v['id'], $v['title'], self::selectAndBuildTree($v['id'], $auth));
-        }
-        return $list;
-    }
-
-    /**
-     * 获取所有权限id
-     * @param array $ids
-     * @return array
-     */
-    public static function getIds(array $ids = []): array
-    {
-        if (empty($ids)) return self::where("status", 1)->column("id");
-        $pids = self::where("id", "in", $ids)->column("pid");
-        return array_merge($ids, $pids) ?: [];
-    }
-
-    /**
-     * 获取操作名
-     * @param string $module
-     * @param string $controller
-     * @param string $action
-     * @return string
-     */
-    public static function getNameByAction(string $module, string $controller, string $action)
-    {
-        return self::where("module", $module)->where("controller", $controller)->where("action", $action)->value("title") ?: '未知操作';
-    }
     /**
      * 生成单个节点
      * @param $id

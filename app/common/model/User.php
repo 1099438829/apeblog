@@ -13,7 +13,7 @@ use think\facade\Session;
  * 用户管理
  * Class User
  * @package app\admin\model
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-02-18 15:49
  */
 class User extends BaseModel
@@ -49,7 +49,7 @@ class User extends BaseModel
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2022-01-16 1:33
      */
     public static function register(string $username, string $email, string $password): bool
@@ -90,7 +90,7 @@ class User extends BaseModel
      * 添加后台用户信息
      * @param $data
      * @return bool|int|string
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2022-01-03 3:46
      */
     public static function addAdminUser($data)
@@ -114,7 +114,7 @@ class User extends BaseModel
      * @param $id
      * @param $data
      * @return bool|int|string
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2022-01-03 3:48
      */
     public static function updateAdminUser($id, $data)

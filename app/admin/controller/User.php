@@ -18,7 +18,7 @@ use think\facade\Route as Url;
  * 用户管理
  * Class User
  * @package app\admin\controller\system
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-02-15 23:20
  */
 class User extends AuthController

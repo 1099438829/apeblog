@@ -13,7 +13,7 @@ use think\db\exception\ModelNotFoundException;
 /**
  * Class Message
  * @package app\admin\controller\system
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-02-15 23:20
  */
 class Message extends AuthController
@@ -32,7 +32,7 @@ class Message extends AuthController
      * 留言管理
      * @return string
      * @throws Exception
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-02-19 11:53
      */
     public function index()
@@ -47,7 +47,7 @@ class Message extends AuthController
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-02-19 11:54
      */
     public function lst(Request $request)

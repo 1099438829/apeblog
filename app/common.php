@@ -136,7 +136,7 @@ if (!function_exists('file_cdn')) {
      * 文件cdn
      * @param $path
      * @return string
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-02-17 23:32
      */
     function file_cdn($path)
@@ -169,7 +169,7 @@ if (!function_exists('get_rand_str')) {
      * 生成随机字符串
      * @param $length
      * @return string
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2022-04-11 18:26
      */
     function get_rand_str($length){

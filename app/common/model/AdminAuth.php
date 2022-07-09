@@ -111,7 +111,7 @@ class AdminAuth extends BaseModel
      * 获取菜单列表缓存key
      * @param $adminId
      * @return string
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-06-09 17:24
      */
     public static function getMenuCacheKey($adminId)
@@ -121,7 +121,7 @@ class AdminAuth extends BaseModel
 
     /**
      * @return string
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-06-15 11:11
      */
     public static function getAuthCacheKey()

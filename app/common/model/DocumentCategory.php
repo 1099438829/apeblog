@@ -10,7 +10,7 @@ use think\db\exception\ModelNotFoundException;
 /**
  * Class DocumentCategory
  * @package app\admin\model\system
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-02-15 23:22
  */
 class DocumentCategory extends BaseModel
@@ -22,7 +22,7 @@ class DocumentCategory extends BaseModel
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-11-08 0:25
      */
     public static function systemPage($where): array

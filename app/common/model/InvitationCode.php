@@ -11,7 +11,7 @@ use think\db\exception\ModelNotFoundException;
 /**
  * Class InvitationCode
  * @package app\admin\model\system
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-02-15 23:22
  */
 class InvitationCode extends BaseModel
@@ -23,7 +23,7 @@ class InvitationCode extends BaseModel
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-02-15 23:24
      */
     public static function systemPage($where): array

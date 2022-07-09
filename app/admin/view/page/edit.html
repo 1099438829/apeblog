@@ -24,7 +24,8 @@
                 <form action="#!" method="post" class="row add-form" onsubmit="return false;">
                         <div class="form-group col-md-12">
                             <label>页面名称</label>
-                            <input type="text" class="form-control" id="title" name="title" value="" placeholder="页面名称"/>
+                            <input type="hidden" name="id" value="{$info.id}">
+                            <input type="text" class="form-control" id="title" name="title" value="{$info.title}" placeholder="页面名称"/>
                         </div>
                         <div class="form-group col-md-12">
                             <div class="row">
@@ -33,7 +34,7 @@
                                     <div class="form-group form-controls">
                                         <select name="theme" id="theme" class="form-control">
                                             <option value="0">请选择</option>
-                                            {volist name="themeList" id="vo"}
+                                            {volist name="theme_list" id="vo"}
                                             <option value="{$vo}" {if $vo == $info.theme}selected{/if}>{$vo}</option>
                                             {/volist}
                                         </select>

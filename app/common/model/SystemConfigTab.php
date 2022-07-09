@@ -17,7 +17,7 @@ class SystemConfigTab extends BaseModel
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2022-02-28 9:19
      */
     public static function lst($where)

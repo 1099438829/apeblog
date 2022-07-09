@@ -12,24 +12,9 @@ use think\db\exception\ModelNotFoundException;
 /**
  * Class DocumentArticle
  * @package app\admin\model\system
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-02-15 23:22
  */
 class DocumentArticle extends BaseModel
 {
-    public function getInfo($id)
-    {
-        if (empty($id)){
-            return [];
-        }
-        $info = aModel::alias('a')
-            ->leftJoin('document_article p','a.id = p.id')
-            ->where("a.id",$id)
-            ->where("a.type",Document::DOCUMENT_TYPE_PAGE)
-            ->find();
-        if (!$info){
-            return [];
-        }
-        return $info->toArray();
-    }
 }

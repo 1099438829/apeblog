@@ -3,6 +3,7 @@
 namespace app\admin\controller;
 
 use app\admin\extend\FormBuilder as Form;
+use app\common\constant\Data;
 use app\common\model\Nav as aModel;
 use app\Request;
 use app\admin\extend\Util as Util;
@@ -17,7 +18,7 @@ use think\facade\Route as Url;
 /**
  * Class Nav
  * @package app\admin\controller\system
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-02-15 23:20
  */
 class Nav extends AuthController
@@ -123,7 +124,7 @@ class Nav extends AuthController
             $res = aModel::update($data, ['id' => $id]);
         }
         //清理缓存
-        aModel::clearCache($this->adminId);
+        cache(Data::DATA_NAV_LIST, null);
         return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败");
     }
 
@@ -138,7 +139,7 @@ class Nav extends AuthController
         $where = Util::postMore([['field', ''], ['value', '']]);
         if ($where['field'] == '' || $where['value'] == '') return app("json")->fail("参数有误！");
         //清理缓存
-        aModel::clearCache($this->adminId);
+        cache(Data::DATA_NAV_LIST, null);
         return aModel::update([$where['field'] => $where['value']], ['id' => $id]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 }

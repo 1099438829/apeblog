@@ -1,6 +1,6 @@
 <?php
 /**
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-12-31 1:04
  */
 
@@ -112,7 +112,7 @@ class User extends Base
      * 用户中心
      * @return string
      * @throws Exception
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2022-01-16 21:04
      */
     public function profile()

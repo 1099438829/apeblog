@@ -30,7 +30,7 @@ class Databases extends AuthController
      * @param null $type
      * @return string
      * @throws Exception
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-10-30 12:45
      */
     public function index($type = null)
@@ -61,7 +61,7 @@ class Databases extends AuthController
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-10-31 0:12
      */
     public function lst(Request $request)
@@ -126,7 +126,7 @@ class Databases extends AuthController
 
     /**
      * 优化表
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-10-30 12:46
      */
     public function optimize()
@@ -148,7 +148,7 @@ class Databases extends AuthController
 
     /**
      * 修复表
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-10-31 0:12
      */
     public function repair()
@@ -174,7 +174,7 @@ class Databases extends AuthController
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-10-30 13:31
      */
     public function delOne()
@@ -195,7 +195,7 @@ class Databases extends AuthController
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-10-31 0:35
      */
     public function export()
@@ -277,7 +277,7 @@ class Databases extends AuthController
 
     /**
      * 还原数据库
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-10-30 12:46
      */
     public function import()

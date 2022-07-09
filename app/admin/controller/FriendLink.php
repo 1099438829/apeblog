@@ -18,7 +18,7 @@ use think\facade\Route as Url;
 /**
  * Class Message
  * @package app\admin\controller\system
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-02-15 23:20
  */
 class FriendLink extends AuthController
@@ -40,7 +40,7 @@ class FriendLink extends AuthController
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-02-15 23:26
      */
     public function lst(Request $request)
@@ -136,7 +136,7 @@ class FriendLink extends AuthController
      * 修改字段
      * @param $id
      * @return mixed
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-02-16 23:12
      */
     public function field($id)

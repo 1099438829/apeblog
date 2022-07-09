@@ -143,3 +143,21 @@ if (!function_exists('get_tree_list')) {
     }
 
 }
+
+if (!function_exists('get_theme_list')) {
+    function get_theme_list($type = ''):array
+    {
+        $themeList = [];
+        $themeDir = public_path('template') . system_config('web_template') . '/pc/' .$type;
+        if ($dh = opendir($themeDir)) {
+            while (($file = readdir($dh)) !== false) {
+
+                if ($file != "." && $file != "..") {
+                    $themeList[] = $file;
+                }
+            }
+            closedir($dh);
+        }
+        return   $themeList;
+    }
+}

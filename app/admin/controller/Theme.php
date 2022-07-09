@@ -10,7 +10,7 @@ use Exception;
 /**
  * Class Theme
  * @package app\admin\controller\system
- * @author 李玉坤
+ * @author 木子的忧伤
  * @date 2021-02-15 23:20
  */
 class Theme extends AuthController
@@ -19,7 +19,7 @@ class Theme extends AuthController
      * 主题列表
      * @return string
      * @throws Exception
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-02-17 11:40
      */
     public function index()
@@ -55,7 +55,7 @@ class Theme extends AuthController
      * 更新主题
      * @return string
      * @throws Exception
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-02-17 11:40
      */
     public function change_theme()

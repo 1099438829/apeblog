@@ -234,7 +234,7 @@ class Ape extends TagLib
      * @param $tag
      * @param $content
      * @return string
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-07-26 23:22
      */
     public function tagAdvert($tag, $content)
@@ -302,7 +302,7 @@ class Ape extends TagLib
      * @param $tag
      * @param $content
      * @return bool|string
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-11-27 23:44
      */
     public function tagComment($tag, $content)
@@ -331,7 +331,7 @@ class Ape extends TagLib
      * @param $tag
      * @param $content
      * @return string
-     * @author 李玉坤
+     * @author 木子的忧伤
      * @date 2021-11-28 0:52
      */
     public function tagRelevant($tag, $content)
