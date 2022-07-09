@@ -2,13 +2,13 @@
 
 namespace app\admin\controller;
 
+use app\admin\extend\FormBuilder as Form;
+use app\admin\extend\Util as Util;
 use app\common\model\AdminAuth as aModel;
 use app\Request;
 use Exception;
 use FormBuilder\Exception\FormBuilderException;
-use app\admin\extend\Util as Util;
 use FormBuilder\Factory\Elm;
-use app\admin\extend\FormBuilder as Form;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;

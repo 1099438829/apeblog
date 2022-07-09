@@ -3,17 +3,16 @@
 namespace app\admin\controller;
 
 use app\admin\extend\FormBuilder as Form;
+use app\admin\extend\Util as Util;
 use app\common\constant\Data;
 use app\common\model\Nav as aModel;
 use app\Request;
-use app\admin\extend\Util as Util;
 use Exception;
 use FormBuilder\Exception\FormBuilderException;
 use FormBuilder\Factory\Elm;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
-use think\facade\Route as Url;
 
 /**
  * Class Nav
@@ -60,7 +59,7 @@ class Nav extends AuthController
         $form = array();
         $form[] = Elm::select('pid', '上级导航', (int)$pid)->options(aModel::returnOptions())->col(10);
         $form[] = Elm::input('title', '导航名称')->col(10);
-       // $form[] = Elm::frameInput('icon', '图标', Url::buildUrl('admin/icon/index', array('fodder' => 'icon')))->icon("ios-ionic")->width('96%')->height('390px')->col(10);
+        // $form[] = Elm::frameInput('icon', '图标', Url::buildUrl('admin/icon/index', array('fodder' => 'icon')))->icon("ios-ionic")->width('96%')->height('390px')->col(10);
         $form[] = Elm::input('url', '链接地址')->col(10);
         $form[] = Elm::input('params', '参数')->placeholder("php数组,不懂不要填写")->col(10);
         $form[] = Elm::number('sort', '排序')->col(10);

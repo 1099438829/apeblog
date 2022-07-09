@@ -2,9 +2,8 @@
 
 namespace app\admin\controller;
 
-use app\common\model\SystemConfig as cModel;
-use app\Request;
 use app\admin\extend\Util as Util;
+use app\common\model\SystemConfig as cModel;
 use Exception;
 
 /**

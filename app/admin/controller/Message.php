@@ -2,9 +2,9 @@
 
 namespace app\admin\controller;
 
+use app\admin\extend\Util as Util;
 use app\common\model\MessageForm as aModel;
 use app\Request;
-use app\admin\extend\Util as Util;
 use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;

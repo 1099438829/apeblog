@@ -2,9 +2,9 @@
 
 namespace app\admin\controller;
 
-use app\common\model\Document;
-use app\common\model\Comment as CommentModel;
 use app\admin\extend\Util as Util;
+use app\common\model\Comment as CommentModel;
+use app\common\model\Document;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -84,7 +84,7 @@ class Page extends AuthController
             ['is_recommend', 0],
             ['is_top', 0],
             ['is_hot', 0],
-            ['theme',''],
+            ['theme', ''],
             ['link_str', ''],
             ['cover_path', ''],
             ['display', 1],
@@ -98,8 +98,8 @@ class Page extends AuthController
         if ($data['theme'] == "") return app("json")->fail("文章模板不能为空");
         if ($data['cover_path'] == "") return app("json")->fail("主图不能为空");
         $model = new Document();
-        $res = $model->updateInfo($data,Document::DOCUMENT_TYPE_PAGE);
-        return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败,错误原因：".$model->getError());
+        $res = $model->updateInfo($data, Document::DOCUMENT_TYPE_PAGE);
+        return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败,错误原因：" . $model->getError());
     }
 
 
@@ -151,7 +151,7 @@ class Page extends AuthController
         if ($where['id'] == '') {
             $this->error('数据不存在');
         }
-        $info = (new Document())->getInfo($where["id"],Document::DOCUMENT_TYPE_PAGE);
+        $info = (new Document())->getInfo($where["id"], Document::DOCUMENT_TYPE_PAGE);
         if (empty($info)) {
             $this->error('数据不存在');
         }

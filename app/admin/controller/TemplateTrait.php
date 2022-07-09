@@ -2,8 +2,8 @@
 
 namespace app\admin\controller;
 
-use app\Request;
 use app\admin\extend\Util as Util;
+use app\Request;
 
 /**
  * Trait TemplateTrait

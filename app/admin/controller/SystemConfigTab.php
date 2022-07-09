@@ -3,13 +3,13 @@
 namespace app\admin\controller;
 
 
+use app\admin\extend\FormBuilder as Form;
+use app\admin\extend\Util as Util;
+use app\common\model\SystemConfig as cModel;
+use app\common\model\SystemConfigTab as tModel;
 use app\Request;
 use FormBuilder\Exception\FormBuilderException;
 use FormBuilder\Factory\Elm;
-use app\admin\extend\FormBuilder as Form;
-use app\admin\extend\Util as Util;
-use app\common\model\SystemConfigTab as tModel;
-use app\common\model\SystemConfig as cModel;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;

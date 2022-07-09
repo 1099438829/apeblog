@@ -3,121 +3,77 @@
 <head>
     <title>添加文章 - {:system_config('title')}后台管理系统</title>
     {include file="public/header" /}
-    <!--标签插件-->
-    <link rel="stylesheet" href="/static/admin/js/jquery-tags-input/jquery.tagsinput.min.css">
-    <!--富文本输入框-->
-    <link rel="stylesheet" href="/static/admin/js/summernote/summernote.min.css">
 </head>
 <body>
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
-            <div class="card-body">
-                <ul id="myTabs" class="nav nav-tabs" role="tablist">
-                    <li class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab">基本信息</a></li>
-                    <li><a href="#profile" role="tab" id="profile-tab" data-toggle="tab">SEO设置</a></li>
-                    <li class="tab-right"><a data-toggle="tooltip" data-original-title="返回"
-                                             onclick="history.back(-1);return false;"><i class="mdi mdi-undo"></i></a></li>
+            <div class="card-header">
+                <h4>基本信息</h4>
+                <ul class="card-actions">
+                    <li>
+                        <button type="button" data-toggle="tooltip" title="" data-original-title="返回"
+                                onclick="history.back(-1);return false;"><i class="mdi mdi-undo"></i></button>
+                    </li>
                 </ul>
-                <div id="myTabContent" class="tab-content">
-                    <div class="tab-pane fade active in" id="home">
-                        <form action="#!" method="post" class="row add-form" onsubmit="return false;">
-                            <div class="form-group col-md-12">
-                                <label>分类名称</label>
-                                <input type="text" class="form-control" id="title" name="title" value="{$info.title}"
-                                       placeholder="分类名称"/>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label>别名</label>
-                                <input type="text" class="form-control" id="alias" name="alias"
-                                       value="{$info.alias}" placeholder="别名"/>
-                            </div>
-                            <div class="form-group col-md-12">
+            </div>
+            <div class="card-body">
+                <form action="#!" method="post" class="row add-form" onsubmit="return false;">
+                    <div class="form-group col-md-12">
+                        <label for="title">分类名称</label>
+                        <input type="hidden" name="id" value="{$info.id}">
+                        <input type="text" class="form-control" id="title" name="title" value="{$info.title}" placeholder="分类名称"/>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="row">
+                            <div class="col-xs-3">
                                 <label for="pid">上级分类</label>
                                 <div class="form-controls">
                                     <select name="pid" id="pid" class="form-control">
-                                        <option value="">请选择</option>
                                         <option value="0">顶级分类</option>
                                         {volist name="category" id="vo"}
-                                        <option value="{$vo.id}" {if $vo.id== $info.pid}selected{
-                                        /if}>{$vo.html}{$vo.title}</option>
+                                        <option value="{$vo.id}" {notempty name="pid" }{if $vo.id== $pid}selected{/if}{/notempty}>{$vo.html}{$vo.title}</option>
                                         {/volist}
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group col-md-12">
-                                <label>排序</label>
-                                <input type="text" class="form-control" name="sort" placeholder="请输入排序"
-                                       value="{$info.sort}">
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label>属性</label>
-                                <div class="form-controls">
-                                    <select name="type" id="type" class="form-control">
-                                        <option value="0" {if 0== $info.type}selected{
-                                        /if}>请选择</option>
-                                        <option value="1" {if 1== $info.type}selected{
-                                        /if}>列表</option>
-                                        <option value="2" {if 2== $info.type}selected{
-                                        /if}>单页</option>
-                                        <option value="3" {if 3== $info.type}selected{
-                                        /if}>外联</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label>主题风格</label>
-                                <div class="form-controls">
+                            <div class="col-xs-3">
+                                <label>展示模板</label>
+                                <div class="form-group form-controls">
                                     <select name="template" class="form-control">
                                         {volist name="template_list" id="vo"}
-                                        <option value="{$vo.template}" {notempty name="info.template" }{if
-                                                $vo.template== $info.template}selected{
-                                        /if}{/notempty}>{$vo.name}</option>
+                                        <option value="{$vo.template}" {notempty name="info.template" }{if $vo.template== $info.template}selected{/if}{/notempty}>{$vo.name}</option>
                                         {/volist}
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group col-md-12" id="page-link-str" {if
-                                 3!=$info.type}style="display:none;"{/if}>
-                                <label>外链</label>
-                                <input type="text" class="form-control" name="link_str" placeholder="外链"
-                                       value="{$info.link_str}">
+                            <div class="col-xs-3">
+                                <label for="alias">URL名称</label>
+                                <input class="form-control" id="alias" name="alias" type="text" value="{$info.alias}" placeholder="URL名称">
                             </div>
-                            <div class="form-group col-md-12" id="page-content" {if
-                                 2!=$info.type}style="display:none;"{/if}>
-                                <label>单页内容</label>
-                                <textarea id="content" name="content" data-min-height="480" data-provide="summernote">{$info.content}</textarea>
+                            <div class="col-xs-3">
+                                <label for="sort">排序</label>
+                                <input type="text" class="form-control" id="sort"  name="sort" placeholder="请输入排序" value="{$info.sort}">
                             </div>
-                            <div class="form-group col-md-12">
-                                <button type="submit" class="btn btn-primary ajax-post" target-form="add-form">立即提交
-                                </button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
-                    <div class="tab-pane fade" id="profile">
-                        <form action="#!" method="post" class="row add-form" onsubmit="return false;">
-                            <div class="form-group col-md-12">
-                                <label for="meta_title">seo标题</label>
-                                <input type="text" class="form-control" id="meta_title" name="meta_title"
-                                       placeholder="请输入seo关键字" value="{$info.meta_title}">
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="keywords">seo关键字</label>
-                                <input type="text" class="form-control" id="keywords" name="keywords"
-                                       placeholder="请输入seo关键字" value="{$info.keywords}">
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="description">seo描述</label>
-                                <input type="text" class="form-control" name="description" id="description"
-                                       placeholder="seo描述" value="{$info.description}">
-                            </div>
-                            <div class="form-group col-md-12">
-                                <button type="submit" class="btn btn-primary ajax-post" target-form="add-form">立即提交
-                                </button>
-                            </div>
-                        </form>
+                    <div class="form-group col-md-12">
+                        <label for="meta_title">seo标题</label>
+                        <input type="text" class="form-control" id="meta_title" name="meta_title" placeholder="请输入seo关键字" value="{$info.meta_title}">
                     </div>
-                </div>
+                    <div class="form-group col-md-12">
+                        <label for="keywords">seo关键字</label>
+                        <input type="text" class="form-control" id="keywords" name="keywords" placeholder="请输入seo关键字" value="{$info.keywords}">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="description">seo描述</label>
+                        <input type="text" class="form-control" name="description" id="description" placeholder="seo描述" value="{$info.description}">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <button type="submit" class="btn btn-primary ajax-post" target-form="add-form">立即提交
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -125,104 +81,7 @@
 {include file="public/footer"/}
 <!--select2-->
 <script type="text/javascript" src="/static/admin/js/select2.min.js"></script>
-<!--富文本输入框-->
-<script type="text/javascript" src="/static/admin/js/summernote/summernote.min.js"></script>
-<script type="text/javascript" src="/static/admin/js/summernote/lang/summernote-zh-CN.min.js"></script>
-<!--标签-->
-<script src="/static/admin/js/jquery-tags-input/jquery.tagsinput.min.js"></script>
 <script>
-    $(function () {
-        $('#tag').select2();
-    });
-    $(document).ready(function(){
-        $('[data-provide="summernote"]').each(function() {
-            var options = {
-                dialogsInBody: true,
-                lang: 'zh-CN',
-                dialogsFade: true
-            };
-            var config = {};
-            $.each( $(this).data(), function(key, value){
-                key = key.replace(/-([a-z])/g, function(x){return x[1].toUpperCase();});
-                if ( key == 'provide' ) {
-                    return;
-                }
-                config[key] = value;
-            });
-
-            options = $.extend(options, config);
-            options.toolbar = [
-                // [groupName, [list of button]]
-                ['para_style', ['style']],
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['font', ['strikethrough', 'superscript', 'subscript']],
-                ['fontsize', ['fontname', 'fontsize', 'height']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph', 'hr']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['do', ['undo', 'redo']],
-                ['misc', ['fullscreen', 'codeview']]
-            ];
-            $(this).summernote(options);
-        });
-
-        $(document).on('click', '[data-summernote-edit]', function(){
-            var target = $(this).data('summernote-edit');
-            $(target).summernote({focus: true});
-        });
-
-
-        $(document).on('click', '[data-summernote-save]', function(){
-            var target = $(this).data('summernote-save');
-            var markup = $(target).summernote('code');
-            $(target).summernote('destroy');
-            alert('修改完成');
-        });
-    });
-
-    /**
-     * 选择文件
-     * @param inputName
-     */
-    function btnClick(inputName) {
-        $("#file_" + inputName).click()
-    }
-
-    /**
-     * 异步上传
-     * @param inputName
-     */
-    function upload(inputName) {
-        var formData = new FormData();
-        formData.append("type", 'image');
-        formData.append("file", $("#file_" + inputName)[0].files[0]);
-        $.ajax({
-            type: 'POST',
-            url: '/admin/file/upload',
-            data: formData,
-            cache: false,
-            processData: false,
-            contentType: false,
-            success: function (res) {
-                if (res.code == 200) {
-                    $("#" + inputName).val(res.data.filePath);
-                    let html = ' <figure>\n' +
-                        '         <img src="' + res.data.filePath + '" alt="' + res.data.name + '">\n' +
-                        '         <figcaption>\n' +
-                        '             <a class="btn btn-round btn-square btn-danger btn-image-delete" href="#!"><i class="mdi mdi-delete"></i></a>\n' +
-                        '         </figcaption>\n' +
-                        '       </figure>';
-                    $('#pic-image').html(html);
-                    $('#pic-image').show().next('li').hide();
-                } else {
-                    lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
-                    return false;
-                }
-            }
-        });
-    }
-
     $(".add-form").submit(function () {
         let Arr = $('.add-form').serializeArray();
         let checkResult = true;
@@ -232,6 +91,11 @@
                     case 'title':
                         if (!item.value) {
                             throw "分类名称不能为空";
+                        }
+                        break;
+                    case 'template':
+                        if (!item.value) {
+                            throw "展示模板不能为空";
                         }
                         break;
                 }
@@ -245,45 +109,14 @@
         if (!checkResult) {
             return false;
         }
-        $.post(url = "/admin/category/save?id={$info.id}", $('.add-form').serialize(), function (res) {
+        $.post(url = "/admin/category/save", $('.add-form').serialize(), function (res) {
             if (res.code == 200) {
                 lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                 setTimeout(function () {
-                    parent.location.reload();
+                    location.href = '/admin/category/index';
                 }, 2000)
             } else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
         });
-        return true;
-    })
-
-    //删除事件
-    $('body').on('click', '.btn-image-delete', function () {
-        $('#pic-image').hide().next('li').show();
-        $('#cover_path').val('');
-    })
-
-    // 切换类型选择事件
-    $("body").on("change", "#type", function () {
-        let type = parseInt($(this).val());
-        switch (type) {
-            case 1:
-                //普通
-                $('#page-link-str').hide().children('input').val();
-                $('#page-content').hide().children('textarea').val();
-                break;
-            case 2:
-                $('#page-content').show();
-                $('#page-link-str').hide().children('input').val();
-                break;
-            case 3:
-                //单页
-                //外联
-                $('#page-link-str').show();
-                $('#page-content').hide().children('textarea').val();
-                break;
-            default:
-                break;
-        }
         return true;
     })
 </script>

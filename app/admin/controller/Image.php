@@ -3,13 +3,13 @@
 namespace app\admin\controller;
 
 
+use app\admin\extend\FormBuilder as Form;
+use app\admin\extend\Util as Util;
 use app\common\model\Attachment;
 use app\common\model\AttachmentCategory;
 use Exception;
 use FormBuilder\Exception\FormBuilderException;
 use FormBuilder\Factory\Elm;
-use app\admin\extend\FormBuilder as Form;
-use app\admin\extend\Util as Util;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -184,7 +184,7 @@ class Image extends AuthController
             switch ($image['storage']) {
                 case 1:
                     $filePath = app()->getRootPath() . 'public' . $image['path'];
-                    if (file_exists($filePath)){
+                    if (file_exists($filePath)) {
                         unlink(app()->getRootPath() . 'public' . $image['path']);
                     }
                     break;

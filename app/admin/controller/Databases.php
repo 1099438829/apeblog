@@ -9,6 +9,8 @@
 
 namespace app\admin\controller;
 
+use app\admin\extend\Util as Util;
+use app\common\extend\Database;
 use app\Request;
 use Exception;
 use FilesystemIterator;
@@ -16,8 +18,6 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\facade\Db;
-use app\common\extend\Database;
-use app\admin\extend\Util as Util;
 
 /*
  * 数据库备份还原控制器

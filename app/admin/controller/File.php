@@ -3,9 +3,9 @@
 namespace app\admin\controller;
 
 
-use app\common\model\Attachment;
 use app\admin\extend\storage\QcloudCoService;
 use app\admin\extend\Util as Util;
+use app\common\model\Attachment;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -32,8 +32,8 @@ class File extends AuthController
                 $saveName = Filesystem::putFile($fileType, $file);
                 $filePath = Filesystem::url($saveName);
                 //转换因为win导致的兼容问题
-                if(strtoupper(substr(PHP_OS,0,3))==='WIN'){
-                    $filePath = str_replace( DIRECTORY_SEPARATOR, '/',$filePath);
+                if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                    $filePath = str_replace(DIRECTORY_SEPARATOR, '/', $filePath);
                 }
                 break;
             case 2:
@@ -62,8 +62,8 @@ class File extends AuthController
             if (!file_exists($path)) mkdir($path, 0755, true);
             $saveName = $path . md5(time()) . ".{$type}";
             //转换因为win导致的兼容问题
-            if(strtoupper(substr(PHP_OS,0,3))==='WIN'){
-                $saveName = str_replace( DIRECTORY_SEPARATOR, '/',$saveName);
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                $saveName = str_replace(DIRECTORY_SEPARATOR, '/', $saveName);
             }
             if (file_put_contents($saveName, base64_decode(str_replace($result[1], '', $data['image'])))) return app("json")->success("上传成功", ['src' => "/" . $saveName]);
             else return app("json")->fail("上传失败，写入文件失败！");
@@ -81,7 +81,7 @@ class File extends AuthController
         if ($request->isPost()) {
             // 获取表单上传文件 例如上传了001.jpg
             $file = $this->request->file('file');//根据表单name替换imgFile
-            $fileType = $this->request->post("type")?:'file';
+            $fileType = $this->request->post("type") ?: 'file';
             switch ($fileType) {
                 case 'file':
                     $fileSize = 10 * 1024 * 1024;
@@ -120,8 +120,8 @@ class File extends AuthController
                 $saveName = Filesystem::putFile($fileType, $file);
                 $filePath = Filesystem::url($saveName);
                 //转换因为win导致的兼容问题
-                if(strtoupper(substr(PHP_OS,0,3))==='WIN'){
-                    $filePath = str_replace( DIRECTORY_SEPARATOR, '/',$filePath);
+                if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                    $filePath = str_replace(DIRECTORY_SEPARATOR, '/', $filePath);
                 }
                 return $saveName ? app("json")->code()->success("上传成功", ['filePath' => $filePath, "name" => basename($saveName)]) : app("json")->fail("上传失败");
             } catch (ValidateException $e) {

@@ -7,13 +7,13 @@ use app\common\model\Document;
 use app\common\model\Document as DocumentModel;
 use app\common\model\DocumentCategory;
 use app\common\model\DocumentCategory as DocumentCategoryModel;
+use app\common\model\FriendLink;
 use app\common\model\MessageForm;
+use app\common\model\User;
 use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
-use \app\common\model\User;
-use \app\common\model\FriendLink;
 
 class Index extends AuthController
 {
@@ -87,7 +87,7 @@ class Index extends AuthController
         }
         $str = '';
         if ($page == 1) {
-            if(file_exists('sitemap.xml'))
+            if (file_exists('sitemap.xml'))
                 unlink('sitemap.xml');
             $str .= '<?xml version="1.0"  encoding="utf-8"?>';
             $str .= '<urlset>';
@@ -102,7 +102,7 @@ class Index extends AuthController
         $pagesize = 100;
 
         //获取文章分类url
-        $documentCategoryModel=new DocumentCategoryModel();
+        $documentCategoryModel = new DocumentCategoryModel();
         $categoryInfo = $documentCategoryModel->field('id,title,create_time')
             ->where('display', 1)->where('status', 1)
             ->page($page, $pagesize)
@@ -111,14 +111,14 @@ class Index extends AuthController
         foreach ($categoryInfo as $v) {
             $str .= '<url>';
             $str .= '<loc>' . $domain . url('article/lists?id=' . $v['id']) . '</loc>';
-            $str .= '<lastmod>' . $v['create_time']. '</lastmod>';
+            $str .= '<lastmod>' . $v['create_time'] . '</lastmod>';
             $str .= '<changefreq>always</changefreq>';
             $str .= '<priority>0.8</priority>';
             $str .= '</url>';
         }
         //获取详细页分类url
-        $documentModel=new DocumentModel();
-        $documentInfo =$documentModel->field('id,create_time')
+        $documentModel = new DocumentModel();
+        $documentInfo = $documentModel->field('id,create_time')
             ->where('status', 1)
             ->page($page, $pagesize)
             ->order('id desc')->select();
@@ -136,7 +136,7 @@ class Index extends AuthController
             if (!(file_put_contents('sitemap.xml', $str, FILE_APPEND | LOCK_EX))) {
                 $this->error('站点地图更新失败！');
             } else {
-                $this->success('站点地图全部更新完成！', null,'stop');
+                $this->success('站点地图全部更新完成！', null, 'stop');
             }
         }
         //写入

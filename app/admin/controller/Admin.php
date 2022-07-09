@@ -2,21 +2,21 @@
 
 namespace app\admin\controller;
 
+use app\admin\extend\FormBuilder as Form;
+use app\admin\extend\Util as Util;
 use app\common\model\Admin as aModel;
 use app\common\model\AdminRole as rModel;
 use app\common\model\User as userModel;
 use app\Request;
-use app\admin\extend\Util as Util;
 use FormBuilder\Exception\FormBuilderException;
 use FormBuilder\Factory\Elm;
-use app\admin\extend\FormBuilder as Form;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\Exception;
 use think\facade\Db;
-use think\facade\Route as Url;
 use think\Facade\Log;
+use think\facade\Route as Url;
 
 /**
  * 账号管理
@@ -161,7 +161,7 @@ class Admin extends AuthController
                 aModel::insert($data);
                 //添加前台用户
                 $userId = userModel::addAdminUser($data);
-                $res = aModel::update(['uid'=>$userId], ['id' => $id]);
+                $res = aModel::update(['uid' => $userId], ['id' => $id]);
             } else {
                 $userInfo = aModel::get($id);
                 if ($userInfo['password'] != $data['password']) $data['password'] = md5(md5($data['password']));
@@ -169,12 +169,12 @@ class Admin extends AuthController
                 $data['update_time'] = time();
                 aModel::update($data, ['id' => $id]);
                 //同步更新前台用户
-                $res = userModel::updateAdminUser($userInfo['uid'],$data);
+                $res = userModel::updateAdminUser($userInfo['uid'], $data);
             }
             // 提交事务
             Db::commit();
-        }catch (Exception $exception){
-            Log::error('用户添加失败,失败原因'.$exception->getMessage());
+        } catch (Exception $exception) {
+            Log::error('用户添加失败,失败原因' . $exception->getMessage());
             // 回滚事务
             Db::rollback();
             $res = false;

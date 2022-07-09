@@ -2,11 +2,11 @@
 
 namespace app\admin\controller;
 
+use app\admin\extend\FormBuilder as Form;
+use app\admin\extend\Util as Util;
 use app\common\constant\Data;
 use app\common\model\FriendLink as aModel;
-use app\admin\extend\FormBuilder as Form;
 use app\Request;
-use app\admin\extend\Util as Util;
 use Exception;
 use FormBuilder\Exception\FormBuilderException;
 use FormBuilder\Factory\Elm;

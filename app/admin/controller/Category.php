@@ -2,11 +2,10 @@
 
 namespace app\admin\controller;
 
+use app\admin\extend\Util as Util;
 use app\common\constant\Data;
 use app\common\model\DocumentCategory as aModel;
-use app\common\model\DocumentCategoryContent;
 use app\Request;
-use app\admin\extend\Util as Util;
 use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -54,30 +53,29 @@ class Category extends AuthController
      * @param $id
      * @return
      */
-    public function save($id = "")
+    public function save()
     {
         $data = Util::postMore([
+            ['id', ''],
             ['title', ''],
             ['alias', ''],
-            ['type', ''],
             ['pid', 0],
             ['meta_title', ''],
             ['keywords', ''],
             ['description', ''],
             ['template', ''],
-            ['link_str', ''],
             ['sort', 0],
             ['status', 1]
         ]);
         if ($data['title'] == "") return app("json")->fail("分类名称不能为空");
-        if ($data['type'] == "") return app("json")->fail("类型不能为空");
+        if ($data['template'] == "") return app("json")->fail("模板不能为空");
         //判断是否写了别名，没写则需要生成
         if ($data['alias'] == "") $data['alias'] = get_rand_str(8);
-        if ($id == "") {
+        if ($data['id'] == "") {
             $model = new aModel();
             $res = $model->insert($data);
         } else {
-            $res = aModel::update($data, ['id' => $id]);
+            $res = aModel::update($data, ['id' => $data['id']]);
         }
         cache(Data::DATA_DOCUMENT_CATEGORY_LIST, null);
         return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败");

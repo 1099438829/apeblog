@@ -2,18 +2,13 @@
 
 namespace app\admin\controller;
 
+use app\admin\extend\Util as Util;
+use app\common\model\Comment as CommentModel;
 use app\common\model\Document;
 use app\common\model\DocumentCategory as cModel;
-use app\common\model\Tag as TagModel;
-use app\common\model\DocumentArticle;
-use app\common\model\Comment as CommentModel;
-use app\admin\extend\Util as Util;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
-use think\Exception;
-use think\facade\Db;
-use think\facade\Log;
 
 /**
  * Class Article
@@ -73,7 +68,7 @@ class Article extends AuthController
      * @author 木子的忧伤
      * @date 2021-02-28 22:43
      */
-    public function save($id = "")
+    public function save()
     {
         $data = Util::postMore([
             ['id', ''],
@@ -98,13 +93,12 @@ class Article extends AuthController
             ['author', $this->adminInfo['nickname']],
             ['uid', $this->adminId],
         ]);
-
         if ($data['title'] == "") return app("json")->fail("文章名称不能为空");
         if ($data['category_id'] == "") return app("json")->fail("栏目分类不能为空");
         if ($data['cover_path'] == "") return app("json")->fail("主图不能为空");
         $model = new Document();
-        $res = $model->updateInfo($data,Document::DOCUMENT_TYPE_ARTICLE);
-        return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败,错误原因：".$model->getError());
+        $res = $model->updateInfo($data, Document::DOCUMENT_TYPE_ARTICLE);
+        return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败,错误原因：" . $model->getError());
     }
 
 
@@ -155,14 +149,13 @@ class Article extends AuthController
      */
     public function edit()
     {
-        $where = Util::postMore([
-            ['name', ''],
+        $where = Util::getMore([
             ['id', '']
         ]);
         if ($where['id'] == '') {
             $this->error('参数错误');
         }
-        $info = (new Document())->getInfo($where["id"],Document::DOCUMENT_TYPE_ARTICLE);
+        $info = (new Document())->getInfo($where["id"], Document::DOCUMENT_TYPE_ARTICLE);
         if (empty($info)) {
             $this->error('数据不存在');
         }

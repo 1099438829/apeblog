@@ -59,14 +59,14 @@ class Document extends BaseModel
      * @param string $status
      * @return array
      */
-    public function getInfo($id,$type= self::DOCUMENT_TYPE_ARTICLE,$status = ''): array
+    public function getInfo($id,$type= self::DOCUMENT_TYPE_ARTICLE,$status = 1): array
     {
         if (empty($id)){
             return [];
         }
         $model = self::alias('a')
-            ->leftJoin('document_article p','a.id = p.id')
-            ->where("a.type",Document::DOCUMENT_TYPE_PAGE);
+            ->field("a.*,p.content")
+            ->leftJoin('document_article p','a.id = p.id');
         if (is_numeric($id)){
             $model->where("a.id",$id);
         }else{
@@ -102,6 +102,12 @@ class Document extends BaseModel
             if ($data['is_hot']) $data['is_hot'] = 1;
             if ($data['display']) $data['display'] = 1;
             if ($data['is_top']) $data['is_top'] = 1;
+            //判断是否主键冲突
+            $info = $this->where("alias",$data['alias'])->find();
+            if ($info && (!empty($data['id']) && $info->id != $data['id'] )){
+                self::setErrorInfo("别名已存在,请修改后重试");
+                return false;
+            }
             // 启动事务
             Db::startTrans();
             if (empty($data['id'])) {

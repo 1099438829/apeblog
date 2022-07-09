@@ -3,8 +3,8 @@
 
 namespace app\admin\controller;
 
-use app\common\model\Admin as adminModel;
 use app\admin\extend\Util as Util;
+use app\common\model\Admin as adminModel;
 use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
