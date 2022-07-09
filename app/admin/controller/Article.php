@@ -2,9 +2,9 @@
 
 namespace app\admin\controller;
 
+use app\common\model\Document;
 use app\common\model\Document as aModel;
 use app\common\model\DocumentCategory as cModel;
-use app\common\model\DocumentPage;
 use app\common\model\Tag as TagModel;
 use app\common\model\DocumentArticle;
 use app\common\model\Comment as CommentModel;
@@ -14,6 +14,7 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\Exception;
+use think\facade\Db;
 use think\facade\Log;
 
 /**
@@ -24,6 +25,16 @@ use think\facade\Log;
  */
 class Article extends AuthController
 {
+    /**
+     * 构造方法 初始化一些参数
+     */
+    public function initialize()
+    {
+        parent::initialize();
+        //修正因为修改model名称和原来不能对应导致的model功能异常
+        $this->model = new Document();
+    }
+
     /**
      * 文章管理主页
      * @return string
@@ -53,6 +64,7 @@ class Article extends AuthController
             ['page', 1],
             ['limit', 20],
         ]);
+        $where['type'] = Document::DOCUMENT_TYPE_ARTICLE;
         return app("json")->layui(aModel::systemPage($where));
     }
 
@@ -70,7 +82,7 @@ class Article extends AuthController
             ['author', ''],
             ['title', ''],
             ['alias', ''],
-            ['category_id', ''],
+            ['category_id', 0],
             ['type', 'article'],
             ['abstract', ''],
             ['keywords', ''],
@@ -107,6 +119,8 @@ class Article extends AuthController
             if ($data['is_hot']) $data['is_hot'] = 1;
             if ($data['display']) $data['display'] = 1;
             if ($data['is_top']) $data['is_top'] = 1;
+            // 启动事务
+            Db::startTrans();
             if ($id == "") {
                 $data['uid'] = $this->adminInfo['uid'];
                 $data['author'] = $data['author'] ?: $this->adminInfo['nickname'];
@@ -147,11 +161,15 @@ class Article extends AuthController
                     $tagModel->createTags($data['tags'], $id, $this->adminId);
                 }
             }
+            // 启动事务
+            Db::startTrans();
             $res = true;
         } catch (Exception $e) {
             Log::error('文章修改失败：失败原因：' . $e->getMessage());
             $error = $e->getMessage();
             $res = false;
+            // 回滚事务
+            Db::rollback();
         }
         return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败,错误原因：".$error);
     }

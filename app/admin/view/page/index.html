@@ -202,7 +202,7 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/admin_log/del", data = {id: id}, function (res) {
+                        $.post("/admin/article/del", data = {id: id}, function (res) {
                             if (res.status == 200 || res.code == 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                             location.reload();
@@ -234,7 +234,7 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/admin_log/del", data = {id: checkID}, function (res) {
+                        $.post("/admin/article/del", data = {id: checkID}, function (res) {
                             if (res.status == 200 || res.code == 200) {
                                 lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                                 location.reload();

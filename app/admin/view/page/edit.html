@@ -12,13 +12,16 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
-            <div class="card-body">
-                <ul id="myTabs" class="nav nav-tabs" role="tablist">
-                    <li class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab">基本信息</a></li>
-                    <li class="tab-right"><a data-toggle="tooltip" data-original-title="返回" onclick="history.back(-1);return false;"><i class="mdi mdi-undo"></i></a></li>
+            <div class="card-header">
+                <h4>基本信息</h4>
+                <ul class="card-actions">
+                    <li>
+                        <button type="button" data-toggle="tooltip" title="" data-original-title="返回" onclick="history.back(-1);return false;"><i class="mdi mdi-undo"></i></button>
+                    </li>
                 </ul>
-                <div id="myTabContent" class="tab-content">
-                    <form action="#!" method="post" class="row add-form" onsubmit="return false;">
+            </div>
+            <div class="card-body">
+                <form action="#!" method="post" class="row add-form" onsubmit="return false;">
                         <div class="form-group col-md-12">
                             <label>页面名称</label>
                             <input type="text" class="form-control" id="title" name="title" value="" placeholder="页面名称"/>
@@ -111,7 +114,6 @@
                             </button>
                         </div>
                     </form>
-                </div>
             </div>
         </div>
     </div>
@@ -224,11 +226,6 @@
         $.each(Arr, function (index, item) {
             try {
                 switch (item.name) {
-                    case 'category_id':
-                        if (!item.value) {
-                            throw "栏目分类不能为空";
-                        }
-                        break;
                     case 'title':
                         if (!item.value) {
                             throw "文章名称不能为空";
@@ -250,11 +247,11 @@
         if (!checkResult) {
             return false;
         }
-        $.post(url = "/admin/article/save", $('.add-form').serialize(), function (res) {
+        $.post(url = "/admin/page/save", $('.add-form').serialize(), function (res) {
             if (res.code == 200) {
                 lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                 setTimeout(function () {
-                    location.href = '/admin/article/index';
+                    location.href = '/admin/page/index';
                 }, 2000)
             } else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
         });

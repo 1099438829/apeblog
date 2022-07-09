@@ -2,18 +2,17 @@
 
 namespace app\admin\controller;
 
+use app\common\model\Document;
 use app\common\model\Document as aModel;
-use app\common\model\DocumentCategory as cModel;
 use app\common\model\DocumentPage;
 use app\common\model\Tag as TagModel;
-use app\common\model\DocumentArticle;
 use app\common\model\Comment as CommentModel;
-use app\Request;
 use app\admin\extend\Util as Util;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\Exception;
+use think\facade\Db;
 use think\facade\Log;
 
 /**
@@ -24,6 +23,17 @@ use think\facade\Log;
  */
 class Page extends AuthController
 {
+
+    /**
+     * 构造方法 初始化一些参数
+     */
+    public function initialize()
+    {
+        parent::initialize();
+        //修正因为修改model名称和原来不能对应导致的model功能异常
+        $this->model = new Document();
+    }
+
     /**
      * 文章管理主页
      * @return string
@@ -71,10 +81,10 @@ class Page extends AuthController
             ['author', ''],
             ['title', ''],
             ['alias', ''],
-            ['category_id', ''],
             ['type', 'page'],
             ['abstract', ''],
             ['keywords', ''],
+            ['category_id', 0],
             ['content', ''],
             ['description', ''],
             ['is_recommend', 0],
@@ -89,7 +99,6 @@ class Page extends AuthController
         ]);
 
         if ($data['title'] == "") return app("json")->fail("文章名称不能为空");
-        if ($data['category_id'] == "") return app("json")->fail("栏目分类不能为空");
         if ($data['cover_path'] == "") return app("json")->fail("主图不能为空");
         $error = "";
         try {
@@ -108,6 +117,8 @@ class Page extends AuthController
             if ($data['is_hot']) $data['is_hot'] = 1;
             if ($data['display']) $data['display'] = 1;
             if ($data['is_top']) $data['is_top'] = 1;
+            // 启动事务
+            Db::startTrans();
             if ($id == "") {
                 $data['uid'] = $this->adminInfo['uid'];
                 $data['author'] = $data['author'] ?: $this->adminInfo['nickname'];
@@ -120,7 +131,7 @@ class Page extends AuthController
                         'id' => $id,
                         'content' => $content
                     ];
-                    DocumentArticle::insert($updateData);
+                    DocumentPage::insert($updateData);
                 }
                 if (!empty($data['tags'])) {
                     $tagModel = new TagModel();
@@ -131,16 +142,16 @@ class Page extends AuthController
                 if (!$ainfo) return app("json")->fail("数据不存在");
                 aModel::where('id', $id)->save($data);
                 if (!empty($content)) {
-                    $contentInfo = DocumentArticle::where('id', $id)->find();
+                    $contentInfo = DocumentPage::where('id', $id)->find();
                     if (!$contentInfo) {
                         $updateData = [
                             'id' => $id,
                             'content' => $content
                         ];
-                        DocumentArticle::insert($updateData);
+                        DocumentPage:insert($updateData);
                     } else {
                         //更新文档
-                        DocumentArticle::where('id', $id)->save(['content' => $content]);
+                        DocumentPage::where('id', $id)->save(['content' => $content]);
                     }
                 }
                 if (!empty($data['tags'])) {
@@ -148,11 +159,15 @@ class Page extends AuthController
                     $tagModel->createTags($data['tags'], $id, $this->adminId);
                 }
             }
+            // 启动事务
+            Db::startTrans();
             $res = true;
         } catch (Exception $e) {
             Log::error('文章修改失败：失败原因：' . $e->getMessage());
             $error = $e->getMessage();
             $res = false;
+            // 回滚事务
+            Db::rollback();
         }
         return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败,错误原因：".$error);
     }
