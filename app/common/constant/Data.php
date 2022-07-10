@@ -17,6 +17,7 @@ class Data
     const DATA_SYSTEM_CONFIG = 'data_system_config'; //系统配置
     const DATA_ADVERT = 'data_advert'; //广告
     const DATA_ARCHIVE = "data_archive"; //文章归档
+    const DATA_DOCUMENT_LIST = "data_document_list"; //文章列表
 
     //文档类型
     const DOCUMENT_TYPE_ARTICLE = "article";

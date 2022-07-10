@@ -262,6 +262,9 @@ function getSubs($categorys,$catId=0,$level=1){
     return $subs;
 }
 
+/**
+ * @return array
+ */
 function get_document_category_all()
 {
     $documentCategoryList = get_document_category_list();
@@ -400,7 +403,6 @@ function tpl_get_list($orderBy, int $pageSize, $cid,  $type, $table = 'article',
         'model' => $documentListModel,
         'lists' => $lists
     ];
-    //dd($re);
     return $re;
 }
 
@@ -575,7 +577,7 @@ function tpl_get_friend_link($type, $row)
  */
 function tpl_get_advert($type, $row)
 {
-    $advertList = cache(Data::DATA_ADVERT . '_' . $type);
+    $advertList = cache(Data::DATA_ADVERT . '_' . $type .'_'. $row);
     if ($advertList === null) {
         $advertList = (new Advert())->alias("a")
             ->leftJoin("advert_info i",'a.id = i.advert_id')
@@ -593,7 +595,7 @@ function tpl_get_advert($type, $row)
             }
             $item['cover_path'] = file_cdn($item['cover_path']);
         }
-        cache(Data::DATA_ADVERT . '_' . $type, $advertList);
+        cache(Data::DATA_ADVERT . '_' . $type .'_'. $row, $advertList);
     }
     return $advertList;
 }
