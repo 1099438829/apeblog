@@ -64,9 +64,9 @@ class FriendLink extends AuthController
     public function add()
     {
         $form = array();
-        $form[] = Elm::input('title', '链接名称')->col(10);
-        $form[] = Elm::input('url', '链接地址')->col(10);
-        $form[] = Elm::frameImage('image', '网站图标', Url::buildUrl('admin/image/index', array('fodder' => 'image', 'limit' => 1)))->icon("ios-image")->width('96%')->height('440px')->col(10);
+        $form[] = Elm::input('title', '网站名称')->col(10);
+        $form[] = Elm::input('url', '网站地址')->col(10);
+        $form[] = Elm::frameImage('image', '网站Logo', Url::buildUrl('admin/image/index', array('fodder' => 'image', 'limit' => 1)))->icon("ios-image")->width('96%')->height('440px')->col(10);
         $form[] = Elm::input('sort', '排序')->col(10);
         $form[] = Elm::textarea('description', '描述')->col(10);
         $form[] = Elm::radio('status', '状态', 1)->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(10);
@@ -86,9 +86,9 @@ class FriendLink extends AuthController
         $ainfo = aModel::get($id);
         if (!$ainfo) return app("json")->fail("没有该数据");
         $form = array();
-        $form[] = Elm::input('title', '链接名称', $ainfo['title'])->col(10);
-        $form[] = Elm::input('url', '链接地址', $ainfo['url'])->col(10);
-        $form[] = Elm::frameImage('image', '网站图标', Url::buildUrl('admin/image/index', array('fodder' => 'image', 'limit' => 1)), $ainfo['image'])->icon("ios-image")->width('96%')->height('440px')->col(10);
+        $form[] = Elm::input('title', '网站名称', $ainfo['title'])->col(10);
+        $form[] = Elm::input('url', '网站地址', $ainfo['url'])->col(10);
+        $form[] = Elm::frameImage('image', '网站Logo', Url::buildUrl('admin/image/index', array('fodder' => 'image', 'limit' => 1)), $ainfo['image'])->icon("ios-image")->width('96%')->height('440px')->col(10);
         $form[] = Elm::input('sort', '排序', $ainfo['sort'])->col(10);
         $form[] = Elm::textarea('description', '描述', $ainfo['description'])->col(10);
         $form[] = Elm::radio('status', '状态', $ainfo['status'])->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(10);
@@ -113,14 +113,14 @@ class FriendLink extends AuthController
             ['sort', ''],
             ['status', 1],
         ]);
-        if ($data['title'] == "") return app("json")->fail("链接名称不能为空");
-        if ($data['url'] == "") return app("json")->fail("链接地址不能为空");
+        if ($data['title'] == "") return app("json")->fail("网站名称不能为空");
+        if ($data['url'] == "") return app("json")->fail("网站地址不能为空");
         if (is_array($data['image'])) $data['image'] = $data['avatar'][0];
         if ($id == "") {
             //判断下用户是否存在
             $info = aModel::where('url', $data['url'])->find();
             if ($info) {
-                return app("json")->fail("链接已存在");
+                return app("json")->fail("网站已存在");
             }
             $data['uid'] = $this->adminId;
             $res = aModel::create($data);

@@ -8,7 +8,6 @@ use app\common\model\Comment as commentModel;
 use app\common\model\Document;
 use app\common\model\DocumentCategory;
 use app\common\model\DocumentCategoryContent;
-use app\common\model\Tag as TagModel;
 use app\Request;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -61,28 +60,16 @@ class Article extends Base
             $this->urlrecord($dc['title']);
         }
         //读取列表页模板
-        if ($dc['type'] == 0) {
-            if (empty($dc['template'])) {
-                $this->error('请在栏目分类中，指定当前栏目的列表模板！');
-            }
-        } elseif ($dc['type'] == 1) {
-            if (empty($dc['template'])) {
-                $this->error('请在栏目分类中，指定当前栏目的单篇模板！');
-            }
-            //如果是单篇栏目，加载内容
-            $contentModel = new DocumentCategoryContent();
-            $dcContent = $contentModel->find($id);
-            $dc['content'] = $dcContent['content'];
-        }
-        $listTmp = $dc['template'];
-        if (!is_file(config('view.view_path') . 'category/' . $listTmp)) {
+        $template = Data::DOCUMENT_CATEGORY . '/' . ($dc['template'] ?: 'list_default.html');
+        $templateFile = config('view.view_path') . $template;
+        if (!is_file($templateFile)) {
             $this->error('模板文件不存在！');
         }
-        Log::info('列表页模板路径：' . config('view.view_path') . 'category/' . $listTmp);
+        Log::info('列表页模板路径：' . $templateFile);
         //文章兼容字段
         $dc['category_id'] = $dc['id'];
         //判断seo标题是否存在
-        $dc['meta_title'] = $dc['meta_title'] ? $dc['meta_title'] : $dc['title'];
+        $dc['meta_title'] = $dc['meta_title'] ?: $dc['title'];
         //判断SEO 为空则取系统
         $article['keywords'] = $dc['keywords'] ?: web_config('keywords');
         $article['description'] = $dc['description'] ?: web_config('description');
@@ -96,8 +83,8 @@ class Article extends Base
         //缓存当前页面栏目分类树ids
         cache(Data::CURR_CATEGORY_PATENT_ID, $dc['pid'] ? $dc['pid'] . ',' . $id : $id);
         //去除后缀
-        $listTmp = substr($listTmp, 0, strpos($listTmp, '.'));
-        return $this->fetch('category/' . $listTmp);
+        $template = substr($template, 0, strpos($template, '.'));
+        return $this->fetch($template);
     }
 
     /**
@@ -118,34 +105,21 @@ class Article extends Base
         }
         //获取该文章
         $documentModel = new Document();
-        if (is_numeric($id)){
-            $article = $documentModel->where('status', 1)->where('id', $id)->find();
-        }else{
-            $article = $documentModel->where('status', 1)->where('alias', $id)->find();
-        }
+        $article = $documentModel->getInfo($id, Data::DOCUMENT_TYPE_ARTICLE);
         if (!$article) {
             $this->error('文章不存在或已删除！');
         }
-        $article = $article->toArray();
         //根据分类id找分类信息
         $dc = get_document_category($article['category_id']);
         if (!$dc) {
             $this->error('栏目不存在或已删除！');
         }
-        //获取该文章内容
-        //根据文章类型，加载不同的内容。
-        $articleType = $article['type'] ? $article['type'] : 'article';
-        $articleExt = $documentModel::name('document_' . $articleType)->where('id', $article['id'])->find();
-        if (!$articleExt) {
-            $this->error('文章不存在或已删除！');
-        }
-        $articleExt = $articleExt->toArray();
-        $article = array_merge($article, $articleExt);
         //添加当前页面的位置信息
         $article['position'] = tpl_get_position($dc);
         //更新浏览次数
         $documentModel->where('id', $article['id'])->inc('view')->update();
-        $templateFile = config('view.view_path') . 'article/' . $articleType . '.html';
+        $template = Data::DOCUMENT_TYPE_ARTICLE . '/' . ($article['theme'] ?: 'detail.html');
+        $templateFile = config('view.view_path') . $template;
         if (!is_file($templateFile)) {
             $this->error('模板文件不存在！');
         }
@@ -168,7 +142,9 @@ class Article extends Base
             $this->urlrecord($article['title']);
         }
         Log::info('详情页模板路径：' . $templateFile);
-        return $this->fetch('article/' . $articleType);
+        //去除后缀
+        $template = substr($template, 0, strpos($template, '.'));
+        return $this->fetch($template);
     }
 
     /**
@@ -188,16 +164,16 @@ class Article extends Base
             ['email', ''],
             ['content', ''],
         ]);
-        if (!web_config('comment_close')){
+        if (!web_config('comment_close')) {
             $this->error('非法操作，请检查后重试', null);
         }
-        if (web_config('comment_visitor')){
+        if (web_config('comment_visitor')) {
             if ($data['author'] == "") $this->error("昵称不能为空");
             if ($data['email'] == "") $this->error("邮箱不能为空");
             if ($data['url'] == "") $this->error("url不能为空");
-        }else{
-            $data['author'] = $this->userInfo['nickname']?:$this->userInfo['username'];
-            $data['email'] = $this->userInfo['email']?:'';
+        } else {
+            $data['author'] = $this->userInfo['nickname'] ?: $this->userInfo['username'];
+            $data['email'] = $this->userInfo['email'] ?: '';
             $data['url'] = '';
         }
         if ($data['document_id'] == "") $this->error("文章id不能为空");
@@ -205,9 +181,9 @@ class Article extends Base
         $data['status'] = web_config('comment_review') ? 0 : 1;
         $res = commentModel::create($data);
         if ($res) {
-            cookie(Data::COOKIE_KEY_COMMENT_AUTHOR,$data['author'],Data::COOKIE_KEY_COMMENT_EXPIRE);
-            cookie(Data::COOKIE_KEY_COMMENT_AUTHOR_EMAIL,$data['email'],Data::COOKIE_KEY_COMMENT_EXPIRE);
-            cookie(Data::COOKIE_KEY_COMMENT_AUTHOR_URL,$data['url'],Data::COOKIE_KEY_COMMENT_EXPIRE);
+            cookie(Data::COOKIE_KEY_COMMENT_AUTHOR, $data['author'], Data::COOKIE_KEY_COMMENT_EXPIRE);
+            cookie(Data::COOKIE_KEY_COMMENT_AUTHOR_EMAIL, $data['email'], Data::COOKIE_KEY_COMMENT_EXPIRE);
+            cookie(Data::COOKIE_KEY_COMMENT_AUTHOR_URL, $data['url'], Data::COOKIE_KEY_COMMENT_EXPIRE);
             $this->success('提交成功', url('detail', ['id' => $data['document_id']]));
         } else {
             $this->error('提交失败，请联系站长查看', null);

@@ -8,6 +8,7 @@ use app\common\model\Document;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
+use app\common\constant\Data;
 
 /**
  * Class Page
@@ -57,7 +58,7 @@ class Page extends AuthController
             ['page', 1],
             ['limit', 20],
         ]);
-        $where["type"] = Document::DOCUMENT_TYPE_PAGE;
+        $where["type"] = Data::DOCUMENT_TYPE_PAGE;
         return app("json")->layui(Document::systemPage($where));
     }
 
@@ -98,7 +99,7 @@ class Page extends AuthController
         if ($data['theme'] == "") return app("json")->fail("文章模板不能为空");
         if ($data['cover_path'] == "") return app("json")->fail("主图不能为空");
         $model = new Document();
-        $res = $model->updateInfo($data, Document::DOCUMENT_TYPE_PAGE);
+        $res = $model->updateInfo($data, Data::DOCUMENT_TYPE_PAGE);
         return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败,错误原因：" . $model->getError());
     }
 
@@ -131,7 +132,7 @@ class Page extends AuthController
     {
         // 获取页面模板列表
         $this->getThemeList();
-        $themeList = get_theme_list(Document::DOCUMENT_TYPE_PAGE);
+        $themeList = get_theme_list(Data::DOCUMENT_TYPE_PAGE);
         $this->assign("theme_list", $themeList);
         return $this->fetch();
     }
@@ -151,12 +152,12 @@ class Page extends AuthController
         if ($where['id'] == '') {
             $this->error('数据不存在');
         }
-        $info = (new Document())->getInfo($where["id"], Document::DOCUMENT_TYPE_PAGE);
+        $info = (new Document())->getInfo($where["id"], Data::DOCUMENT_TYPE_PAGE);
         if (empty($info)) {
             $this->error('数据不存在');
         }
         // 获取页面模板列表
-        $themeList = get_theme_list(Document::DOCUMENT_TYPE_PAGE);
+        $themeList = get_theme_list(Data::DOCUMENT_TYPE_PAGE);
         $this->assign("theme_list", $themeList);
         $this->assign("info", $info);
         return $this->fetch();

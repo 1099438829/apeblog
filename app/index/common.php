@@ -5,6 +5,7 @@ use app\common\model\Comment;
 use app\common\model\Document;
 use app\common\model\DocumentCategory;
 use app\common\model\DocumentCategoryContent;
+use app\common\model\Advert;
 use app\common\model\FriendLink;
 use app\common\model\Tag;
 use app\common\model\Nav;
@@ -15,7 +16,6 @@ use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\Exception;
 use think\facade\Db;
-use think\facade\Route as Url;
 
 // 应用公共文件
 /**
@@ -35,23 +35,6 @@ function cn_substr($str, $len)
 function html2text($str)
 {
     return strip_tags($str);
-}
-
-/**
- * 获取文章分类的内容
- * $id=文章id
- * $strip=true过滤html
- */
-function get_type_content($id, $strip = false)
-{
-    $dc = DocumentCategoryContent::find($id);
-    if (!$dc) {
-        return '';
-    }
-    if ($strip) {
-        return html2text($dc['content']);
-    }
-    return $dc['content'];
 }
 
 /**
@@ -322,7 +305,6 @@ function tpl_get_prenext($get, $cid = false, $none)
         $document['url'] = 'javascript:void(0)';
         $document['title'] = $none;
     }
-
     return $document;
 }
 
@@ -333,7 +315,7 @@ function tpl_get_prenext($get, $cid = false, $none)
  * @param $cid int 栏目分类id
  * @param $type string 读取数据的方式（son:'获取栏目下文章以及所有子孙分类文章',self:'获取栏目下文章',search:'获取关键字搜索的文章',where:'根据自定义条件获取文章（where语句）'）
  * @param string $table 文章内容扩展表名，默认article
- * @param bool $where 自定义条件
+ * @param bool|array $where  自定义条件
  * @param int $display
  * @return array
  * @throws Exception
@@ -341,7 +323,7 @@ function tpl_get_prenext($get, $cid = false, $none)
  * @throws DbException
  * @throws ModelNotFoundException
  */
-function tpl_get_list($orderBy, $pageSize, $cid, $type, $table = 'article', $where = false, $display = 1)
+function tpl_get_list($orderBy, int $pageSize, $cid,  $type, $table = 'article', $where, int $display = 1)
 {
     $documentListModel = (new Document())
         ->alias('a')
@@ -441,15 +423,7 @@ function get_route_query()
  */
 function make_category_url($item)
 {
-    if ((int)$item['type'] == 0) {
-        return url('article/lists', ['id'=>$item['id']])->build();
-//        return url('article/lists', ['id'=>$item['alias']?:$item['id']])->build();
-    } elseif ((int)$item['type'] == 1) {
-        return url('article/lists', ['id'=>$item['id']])->build();
-    } elseif ((int)$item['type'] == 2) {
-        return $item['link_str'];
-    }
-    return false;
+    return url('article/detail', ['id'=>$item['alias']?:$item['id']])->build();
 }
 
 /**
@@ -463,7 +437,7 @@ function make_detail_url($item)
     if ($item['link_str']) {
         return $item['link_str'];
     } else {
-        return url('article/detail', ['id'=>$item['alias']?:$item['id']])->build();
+        return url($item['type'].'/detail', ['id'=>$item['alias']?:$item['id']])->build();
     }
 }
 
@@ -603,11 +577,15 @@ function tpl_get_advert($type, $row)
 {
     $advertList = cache(Data::DATA_ADVERT . '_' . $type);
     if ($advertList === null) {
-        if ($type > 0) {
-            $advertList = Db::name('advert')->where('position', $type)->where('status', 1)->order('sort desc')->limit($row)->select();
-        } else {
-            $advertList = Db::name('advert')->where('status', 1)->order('sort desc')->limit($row)->select();
-        }
+        $advertList = (new Advert())->alias("a")
+            ->leftJoin("advert_info i",'a.id = i.advert_id')
+            ->field("i.*")
+            ->where('a.alias', $type)
+            ->where('a.status', 1)
+            ->where('i.status', 1)
+            ->order('sort desc')
+            ->limit($row)
+            ->select();
         //处理文件cdn信息
         foreach ($advertList as $key => &$item) {
             if (empty($item['cover_path'])){

@@ -13,11 +13,10 @@
                 <div class="card-body">
                     <form class="form-inline searchForm" onsubmit="return false;">
                         <div class="form-group">
-                            <label for="title">广告名称</label>
+                            <label for="title">轮播组名称</label>
                             <div class="input-group">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="title" name="title"
-                                           placeholder="请输入广告名称">
+                                    <input type="text" class="form-control" id="title" name="title" placeholder="请输入广告名称">
                                 </div>
                             </div>
                         </div>
@@ -99,33 +98,36 @@
             title: 'ID'
         }, {
             field: 'title',
-            title: '广告名称'
+            title: '标题'
         }, {
-            field: 'cover_path',
-            title: '广告图片',
-            formatter: function (value) {
-                let html = '<img src="' + value + '" alt="" width="50px;">';
-                return html;
-            }
+            field: 'alias',
+            title: '标识',
         }, {
-            field: 'position',
-            title: '广告图片',
-            formatter: function (value) {
-               return nav_list[value]
-            }
+            field: 'description',
+            title: '备注',
         }, {
-            field: 'url',
-            title: '链接地址',
-        }, {
-            field: 'create_time',
-            title: '添加时间',
+            field: 'status',
+            title: '状态',
+            formatter: function (value, row, index) {
+                if (value == 0) {
+                    is_checked = '';
+                } else if (value == 1) {
+                    is_checked = 'checked="checked"';
+                }
+                var field = "display";
+                result = '<label class="lyear-switch switch-primary switch-solid lyear-status"><input type="checkbox" ' + is_checked + '><span  onClick="updateStatus(' + row.id + ', ' + value + ', \'' + field + '\')"></span></label>';
+                return result;
+            },
         }, {
             field: 'operate',
             title: '操作',
             formatter: operateFormatter,
             events: {
                 'click .btn-edit': function (event, value, row, index) {
-                    iframe.createIframe('修改广告', '/admin/advert/edit?id=' + row.id)
+                    iframe.createIframe('编辑', '/admin/advert/edit?id=' + row.id)
+                },
+                'click .btn-list': function (event, value, row, index) {
+                    window.location.href = "/admin/advert/info?id=" + row.id;
                 },
                 'click .btn-del': function (event, value, row, index) {
                     $.alert({
@@ -172,8 +174,28 @@
     function operateFormatter(value, row, index) {
         return [
             '<a type="button" class="btn-edit btn btn-xs btn-default m-r-5" title="修改" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>',
+            '<a type="button" class="btn-list btn btn-xs btn-default m-r-5" title="管理轮播" data-toggle="tooltip"><i class="mdi mdi-file-document"></i></a>',
             '<a type="button" class="btn-del btn btn-xs btn-default" title="删除" data-toggle="tooltip"><i class="mdi mdi-delete"></i></a>'
         ].join('');
+    }
+
+    function updateStatus(id, value, field) {
+        var newstate = (value == 1) ? 0 : 1; // 发送参数值跟当前参数值相反
+        $.ajax({
+            type: "post",
+            url: "/admin/article/field?id=" + id,
+            data: {field: field, value: newstate},
+            dataType: 'json',
+            success: function (res) {
+                if (res.status == 200) {
+                    parent.lightyear.notify('修改成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                    $(".tree-table").bootstrapTable('refresh');
+                } else parent.lightyear.notify('修改失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+            },
+            error: function () {
+                parent.lightyear.notify('修改失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+            }
+        });
     }
 
     function delOne(id) {

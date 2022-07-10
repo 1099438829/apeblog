@@ -18,14 +18,13 @@ class Data
     const DATA_ADVERT = 'data_advert'; //广告
     const DATA_ARCHIVE = "data_archive"; //文章归档
 
-    //广告位
-    const ADVERT_NAV_LIST = [
-        1 => '主页banner',
-        2 => '主页推荐位置',
-        3 => '主页右侧广告位',
-        4 => '文章banner',
-        5 => '文章右侧广告位置',
-    ];
+    //文档类型
+    const DOCUMENT_TYPE_ARTICLE = "article";
+    const DOCUMENT_TYPE_PAGE = "page";
+    const DOCUMENT_TYPE_PRODUCT = "product";
+
+    //文档分类
+    const DOCUMENT_CATEGORY = 'category';
 
     //后台用户sessionKey
     const SESSION_KEY_ADMIN_ID = 'admin_id';

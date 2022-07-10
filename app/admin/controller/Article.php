@@ -9,6 +9,7 @@ use app\common\model\DocumentCategory as cModel;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
+use app\common\constant\Data;
 
 /**
  * Class Article
@@ -57,7 +58,7 @@ class Article extends AuthController
             ['page', 1],
             ['limit', 20],
         ]);
-        $where['type'] = Document::DOCUMENT_TYPE_ARTICLE;
+        $where['type'] = Data::DOCUMENT_TYPE_ARTICLE;
         return app("json")->layui(Document::systemPage($where));
     }
 
@@ -84,6 +85,7 @@ class Article extends AuthController
             ['is_recommend', 0],
             ['is_top', 0],
             ['is_hot', 0],
+            ['theme', 'detail.html'],
             ['link_str', ''],
             ['cover_path', ''],
             ['display', 1],
@@ -97,7 +99,7 @@ class Article extends AuthController
         if ($data['category_id'] == "") return app("json")->fail("栏目分类不能为空");
         if ($data['cover_path'] == "") return app("json")->fail("主图不能为空");
         $model = new Document();
-        $res = $model->updateInfo($data, Document::DOCUMENT_TYPE_ARTICLE);
+        $res = $model->updateInfo($data, Data::DOCUMENT_TYPE_ARTICLE);
         return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败,错误原因：" . $model->getError());
     }
 
@@ -155,7 +157,7 @@ class Article extends AuthController
         if ($where['id'] == '') {
             $this->error('参数错误');
         }
-        $info = (new Document())->getInfo($where["id"], Document::DOCUMENT_TYPE_ARTICLE);
+        $info = (new Document())->getInfo($where["id"], Data::DOCUMENT_TYPE_ARTICLE);
         if (empty($info)) {
             $this->error('数据不存在');
         }

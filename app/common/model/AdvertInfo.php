@@ -8,12 +8,12 @@ use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 
 /**
- * Class Advert
+ * Class AdvertInfo
  * @package app\common\model
  * @author 木子的忧伤
  * @date 2021-07-26 18:38
  */
-class Advert extends BaseModel
+class AdvertInfo extends BaseModel
 {
     /**
      * 列表
@@ -28,7 +28,7 @@ class Advert extends BaseModel
     public static function systemPage($where): array
     {
         $model = new self;
-        if ($where['title'] != '') $model = $model->where("title|alias", "like", "%$where[title]%");
+        if ($where['title'] != '') $model = $model->where("title|url", "like", "%$where[title]%");
         if ($where['start_time'] != '') $model = $model->where("create_time", ">", strtotime($where['start_time'] . " 00:00:00"));
         if ($where['end_time'] != '') $model = $model->where("create_time", "<", strtotime($where['end_time'] . " 23:59:59"));
         if ($where['status'] != '') $model = $model->where("status", $where['status']);

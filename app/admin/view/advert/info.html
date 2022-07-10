@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <title>友情链接管理 - {:system_config('title')}后台管理系统</title>
+    <title>轮播管理 - {:system_config('title')}后台管理系统</title>
     {include file="public/header" /}
 </head>
 <body>
@@ -9,25 +9,25 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
+                <div class="card-header">
+                    <h4>管理轮播</h4>
+                    <ul class="card-actions">
+                        <li>
+                            <button type="button" data-toggle="tooltip" title="" data-original-title="返回" onclick="history.back(-1);return false;"><i class="mdi mdi-undo"></i></button>
+                        </li>
+                    </ul>
+                </div>
                 <div class="card-header"><h4>搜索</h4></div>
                 <div class="card-body">
                     <form class="form-inline searchForm" onsubmit="return false;">
                         <div class="form-group">
-                            <label for="title">网站名称</label>
+                            <label for="title">轮播名称</label>
                             <div class="input-group">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="title" name="title"
-                                           placeholder="请输入网站名称或url">
+                                           placeholder="请输入轮播名称">
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="status">状态</label>
-                            <select name="status" id="status" class="form-control">
-                                <option value="">所有</option>
-                                <option value="1">启用</option>
-                                <option value="0">禁用</option>
-                            </select>
                         </div>
                         <div class="form-group">
                             <label for="start_time">操作时间</label>
@@ -50,9 +50,9 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-toolbar clearfix">
-                    <div class="toolbar-btn-action">
+                    <div id="toolbar" class="toolbar-btn-action">
                         <button id="btn_add" type="button" class="btn btn-primary m-r-5"
-                                onclick="iframe.createIframe('添加友链','/admin/friend_link/add')">
+                                onclick="iframe.createIframe('添加轮播','/admin/advert/addAdvert')">
                             <span class="mdi mdi-plus" aria-hidden="true"></span>新增
                         </button>
                         <a class="btn btn-warning" href="#!" onclick="delSelect()"><i class="mdi mdi-window-close"></i>
@@ -70,7 +70,7 @@
 <script type="text/javascript">
     $('#tb_departments').bootstrapTable({
         classes: 'table table-bordered table-hover table-striped',
-        url: '/admin/friend_link/lst',
+        url: '/admin/advert/infoList',
         method: 'post',
         dataType: 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
         uniqueId: 'id',
@@ -99,71 +99,56 @@
             checkbox: true,    // 是否显示复选框
         }, {
             field: 'id',
-            title: '序号'
+            title: 'ID'
         }, {
             field: 'title',
-            title: '网站名称'
+            title: '轮播名称'
+        }, {
+            field: 'cover_path',
+            title: '轮播图片',
+            formatter: function (value) {
+                let html = '<img src="' + value + '" alt="" width="50px;">';
+                return html;
+            }
         }, {
             field: 'url',
-            title: '网站地址',
-        }, {
-            field: 'sort',
-            title: '排序',
-            editable: {
-                type: 'text',
-                emptytext: '',
-                highlight: false,
-                mode: 'inline'
-            }
+            title: '链接地址',
         }, {
             field: 'create_time',
             title: '添加时间',
         }, {
-            field: 'create_time',
-            title: '更新时间',
-        }, {
-            field: 'status',
-            title: '状态',
-            formatter: function (value, row, index) {
-                if (value == 0) {
-                    is_checked = '';
-                } else if (value == 1) {
-                    is_checked = 'checked="checked"';
-                }
-                var field = "status";
-                result = '<label class="lyear-switch switch-primary switch-solid lyear-status"><input type="checkbox" ' + is_checked + '><span  onClick="updateStatus(' + row.id + ', ' + value + ', \'' + field + '\')"></span></label>';
-                return result;
-            },
-        }, {
             field: 'operate',
             title: '操作',
-            formatter: function (value, row, index) {
-                let html = '<a type="button" class="btn-edit btn btn-xs btn-default m-r-5" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a> \n' +
-                    '<a class="btn btn-xs btn-default btn-del" href="#!" title="删除" data-toggle="tooltip" onclick="delOne(' + row.id + ')"><i class="mdi mdi-window-close"></i></a>';
-                return html;
-            },
+            formatter: operateFormatter,
             events: {
                 'click .btn-edit': function (event, value, row, index) {
-                    iframe.createIframe('修改友链', '/admin/friend_link/edit?id=' + row.id)
+                    iframe.createIframe('修改轮播', '/admin/advert/editAdvert?id=' + row.id)
                 },
+                'click .btn-del': function (event, value, row, index) {
+                    $.alert({
+                        title: '系统提示',
+                        content: '删除提醒',
+                        buttons: {
+                            confirm: {
+                                text: '确认',
+                                btnClass: 'btn-primary',
+                                action: function () {
+                                    $.post(url = "/admin/advert/delAdvert", data = {"id": row.id}, function (res) {
+                                        if (res.status == 200) {
+                                            parent.lightyear.notify('删除成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                                            $("#tb_departments").bootstrapTable('refresh');
+                                        } else parent.lightyear.notify('删除失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                                    });
+                                }
+                            },
+                            cancel: {
+                                text: '取消'
+                            }
+                        }
+                    });
+                }
             }
         }],
-        onEditableSave: function (field, row) {
-            $.ajax({
-                type: "post",
-                url: "/admin/friend_link/save",
-                data: row,
-                success: function (res) {
-                    if (res.code == 200 || res.status == 200) {
-                        parent.lightyear.notify('操作成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
-                    } else {
-                        parent.lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
-                    }
-                },
-                complete: function () {
-                }
-            });
-        },
         onLoadSuccess: function (data) {
             $("[data-toggle='tooltip']").tooltip();
         }
@@ -180,24 +165,12 @@
         $("#tb_departments").bootstrapTable('refresh', {query: {page: 1}, pageNumber: 1});
     });
 
-
-    function updateStatus(id, value, field) {
-        var newstate = (value == 1) ? 0 : 1; // 发送参数值跟当前参数值相反
-        $.ajax({
-            type: "post",
-            url: "/admin/friend_link/field?id=" + id,
-            data: {field: field, value: newstate},
-            dataType: 'json',
-            success: function (res) {
-                if (res.status == 200) {
-                    parent.lightyear.notify('修改成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
-                    $(".tree-table").bootstrapTable('refresh');
-                } else parent.lightyear.notify('修改失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
-            },
-            error: function () {
-                parent.lightyear.notify('修改失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
-            }
-        });
+    // 操作按钮
+    function operateFormatter(value, row, index) {
+        return [
+            '<a type="button" class="btn-edit btn btn-xs btn-default m-r-5" title="修改" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>',
+            '<a type="button" class="btn-del btn btn-xs btn-default" title="删除" data-toggle="tooltip"><i class="mdi mdi-delete"></i></a>'
+        ].join('');
     }
 
     function delOne(id) {
@@ -210,7 +183,7 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/friend_link/del", data = {id: id}, function (res) {
+                        $.post("/admin/advert/delAdvert", data = {id: id}, function (res) {
                             if (res.status == 200 || res.code == 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                             location.reload();
@@ -242,7 +215,7 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/friend_link/del", data = {id: checkID}, function (res) {
+                        $.post("/admin/advert/delAdvert", data = {id: checkID}, function (res) {
                             if (res.status == 200 || res.code == 200) {
                                 lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                                 location.reload();

@@ -123,4 +123,51 @@ class Index extends Base
             return $this->fetch();
         }
     }
+
+    /**
+     * 关于页面
+     * @param Request $request
+     * @author 木子的忧伤
+     * @date 2022-06-21 23:48
+     */
+    public function about(Request $request)
+    {
+        $id = "about";
+        //获取该文章
+        $documentModel = new Document();
+        $article = $documentModel->getInfo($id, Data::DOCUMENT_TYPE_PAGE);
+        if (!$article) {
+            $this->error('文章不存在或已删除！');
+        }
+        //添加当前页面的位置信息
+
+        $article['position'] = '<a href="/">首页</a><span>&gt;</span>';
+        //更新浏览次数
+        $documentModel->where('id', $article['id'])->inc('view')->update();
+        $template = Data::DOCUMENT_TYPE_PAGE . '/' . ($article['theme'] ?: 'detail.html');
+        $templateFile = config('view.view_path') . $template;
+        if (!is_file($templateFile)) {
+            $this->error('模板文件不存在！');
+        }
+        $article['category_title'] = "单页";
+        //判断SEO 为空则取系统
+        $article['keywords'] = $article['keywords'] ?: web_config('keywords');
+        $article['description'] = $article['description'] ?: web_config('description');
+        //输出文章内容
+        $this->assign('apeField', $article);
+        $this->assign('id', $id);
+        //当前页面所属分类id
+        $this->assign('cid', $article['category_id']);
+        //设置文章的url
+        $article['link_str'] = make_detail_url($article);
+        //判断后台统计配置是否开启 1 开启
+        if (web_config("web_statistics") == 1) {
+            //统计url
+            $this->urlrecord($article['title']);
+        }
+        Log::info('详情页模板路径：' . $templateFile);
+        //去除后缀
+        $template = substr($template, 0, strpos($template, '.'));
+        return $this->fetch($template);
+    }
 }

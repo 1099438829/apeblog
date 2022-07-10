@@ -6,6 +6,7 @@ namespace app\common\model;
 use app\common\model\Tag as TagModel;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
+use app\common\constant\Data;
 use think\db\exception\ModelNotFoundException;
 use think\facade\Db;
 use think\facade\Log;
@@ -19,11 +20,6 @@ use think\Model;
  */
 class Document extends BaseModel
 {
-    //文档类型
-    const DOCUMENT_TYPE_ARTICLE = "article";
-    const DOCUMENT_TYPE_PAGE = "page";
-    const DOCUMENT_TYPE_CATEGORY = "product";
-
     /**
      * 列表
      * @param $where
@@ -37,7 +33,7 @@ class Document extends BaseModel
     public static function systemPage($where): array
     {
         $model = new self;
-        $model = $model->where("type", "=",$where['type']??self::DOCUMENT_TYPE_ARTICLE);
+        $model = $model->where("type", "=",$where['type']??Data::DOCUMENT_TYPE_ARTICLE);
         if ($where['title'] != '') $model = $model->where("title", "like", "%$where[title]%");
         if ($where['start_time'] != '') $model = $model->where("create_time", ">", strtotime($where['start_time'] . " 00:00:00"));
         if ($where['end_time'] != '') $model = $model->where("create_time", "<", strtotime($where['end_time'] . " 23:59:59"));
@@ -59,14 +55,12 @@ class Document extends BaseModel
      * @param string $status
      * @return array
      */
-    public function getInfo($id,$type= self::DOCUMENT_TYPE_ARTICLE,$status = 1): array
+    public function getInfo($id, string $type= Data::DOCUMENT_TYPE_ARTICLE, $status = 1): array
     {
         if (empty($id)){
             return [];
         }
-        $model = self::alias('a')
-            ->field("a.*,p.content")
-            ->leftJoin('document_article p','a.id = p.id');
+        $model = self::alias('a')->field("a.*,p.content");
         if (is_numeric($id)){
             $model->where("a.id",$id);
         }else{
@@ -74,6 +68,17 @@ class Document extends BaseModel
         }
         if ($type !=='')  $model->where("a.type",$type);
         if ($status !=='')$model->where("a.status",$status);
+        switch ($type){
+            case Data::DOCUMENT_TYPE_ARTICLE:
+                $model->leftJoin('document_article p','a.id = p.id');
+                break;
+            case Data::DOCUMENT_TYPE_PAGE:
+                $model->leftJoin('document_page p','a.id = p.id');
+                break;
+            case Data::DOCUMENT_TYPE_PRODUCT:
+                $model->leftJoin('document_product p','a.id = p.id');
+                break;
+        }
         $info = $model->find();
         if (!$info){
             return [];
@@ -89,7 +94,7 @@ class Document extends BaseModel
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function updateInfo($data, string $type=self::DOCUMENT_TYPE_ARTICLE)
+    public function updateInfo($data, string $type=Data::DOCUMENT_TYPE_ARTICLE)
     {
         try {
             $content = !empty($data['content'])?$data['content']:'';
@@ -132,7 +137,7 @@ class Document extends BaseModel
                 Document::where('id', $data['id'])->save($data);
                 if (!empty($content)) {
                     switch ($type) {
-                        case self::DOCUMENT_TYPE_ARTICLE:
+                        case Data::DOCUMENT_TYPE_ARTICLE:
                             $updateData = [
                                 'id' => $data['id'],
                                 'content' => $content
@@ -140,7 +145,7 @@ class Document extends BaseModel
                             $model = new DocumentArticle();
                             $model->save($updateData);
                             break;
-                        case self::DOCUMENT_TYPE_PAGE:
+                        case Data::DOCUMENT_TYPE_PAGE:
                             $updateData = [
                                 'id' => $data['id'],
                                 'content' => $content
@@ -148,7 +153,7 @@ class Document extends BaseModel
                             $model = new DocumentPage();
                             $model->save($updateData);
                             break;
-                        case self::DOCUMENT_TYPE_CATEGORY;
+                        case Data::DOCUMENT_TYPE_PRODUCT;
                             break;
                         default:
                             //默认暂时不处理

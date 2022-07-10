@@ -33,24 +33,4 @@ class DocumentCategory extends BaseModel
         $data = $model->select()->toArray();
         return $data ?: [];
     }
-
-    /**
-     * 查询分类选择类型
-     * @param int $type
-     * @param array $ids
-     * @return array
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
-     */
-    public static function selectByType(int $type = 0, array $ids = [])
-    {
-        $model = new self;
-        if (!empty($ids)) $model = $model->where("id", "not in", $ids);
-        if ($type != 0) $model = $model->where("type", $type);
-        $model = $model->where("status", 1);
-        $model = $model->field("id,title");
-        $data = $model->select();
-        return $data ? $data->toArray() : [];
-    }
 }
