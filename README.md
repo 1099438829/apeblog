@@ -5,26 +5,18 @@ ape_blog源码云博客
 
 ## 主要特性
 
-### 开源无加密
-源码开源无加密
-### TP6框架
-使用最新的 ThinkPHP 6.0框架开发
-### 标准接口
-标准接口、优越性能、强大兼容性、二次开发更方便
-### 无缝事件机制
-行为扩展更方便，方便二次开发
-### 后台快速生成表单
-后台应用form-builder 无需写页面快速增删改查
-### 强大的后台权限管理
-后台多种角色、多重身份权限管理，权限可以控制到每一步操作
+✨ 高颜值： 提供高性能模板机制，可以根据不同的情况自由发挥设置数据自己的模板
 
-## 特别感谢
+🔐 权限验证： 可视化的管理权限，然后根据权限动态的注册路由、菜单、页面、按钮(权限节点)，自由分派页面和按钮权限。
 
-[笔下光年 / Light Year Admin   一个基于Bootstrap v3.3.7的后台HTML模板。](https://gitee.com/yinqi/Light-Year-Admin-Template) 
+📝 未来可期： 我们正在持续维护系统，【计划】并着手开发各种oss、云短信等的支持，甚至提供开箱即用的各行业完整应用。
 
-[xaboy / form-builder PHP表单生成器，使用PHP快速生成现代化的form表单。](https://gitee.com/xaboy/form-builder) 
+ :tw-1f680 高效开发：后台应用form-builder 无需写页面快速增删改查、使用最新的 ThinkPHP 6.0框架。
 
-[cfn / PaiAdmin 前后端开发框架](https://gitee.com/leapy/pai) 
+🧱 一举多得： 后台自适应PC、平板、手机等多种场景的支持，轻松应对各种需求。
+
+💖 其他杂项： 强大的后台权限管理 角色组/管理员/管理员日志、系统配置/导航管理等等、更多特性等你探索...
+
 ## 自动安装
 1. 上传文件到网站根目录
 2. 修改目录权限（linux系统）777  
@@ -33,6 +25,7 @@ ape_blog源码云博客
 3. 安装好拓展
 4. 配置好域名，在浏览器里打开域名，根据安装向导进行安装
 5. 后台登录 http://域名/admin
+
 ## 手动安装
 
 1.创建数据库，倒入数据库文件
@@ -72,7 +65,7 @@ redis
 ~~~
 mkdir public/upload 
 mkdir runtime
-chmod -R 777  public/upload
+chmod -R 777  public/storage
 chmod -R 777  runtime
 ~~~
 
@@ -92,15 +85,29 @@ http://域名/admin
 [源码云博客](https://blog.apecloud.cn/)  
 
 ## 联系我
-邮箱：1099438829@qq.com 
-QQ：1099438829  
+
+- 邮箱：1099438829@qq.com 
+- QQ：1099438829  
+
+## 特别鸣谢
+💕 感谢巨人提供肩膀，排名不分先后
+
+[Thinkphp](https://www.thinkphp.cn/)  
+[FormBuilder](http://php.form-create.com/)  
+[Light Year Admin](https://gitee.com/yinqi/Light-Year-Admin-Template)  
+[PaiAdmin](http://demo.kuzuozhou.cn/)  
+[corepress](https://www.lovestu.com/corepress.html)  
+
+还有很多未标注出来的，再次表示深深的感谢
 
 ## 版权信息
-
-Pai-admin遵循Apache2开源协议发布，并提供免费使用。
+🔐 apeblog 遵循Apache2开源协议发布，并提供免费使用。
 
 本项目包含的第三方源码和二进制文件之版权信息另行标注。
 
 版权所有Copyright © 2019-2025 by 木子的忧伤 (https://www.apecloud.cn)
 
 All rights reserved。
+
+## 支持项目
+💕 无需捐赠，如果觉得项目不错，或者已经在使用了，希望你可以去 Github 或者 Gitee 帮我们点个 ⭐ Star，这将是对我们极大的鼓励与支持。
