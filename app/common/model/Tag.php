@@ -36,8 +36,7 @@ class Tag extends BaseModel
         if ($where['end_time'] != '') $model = $model->where("create_time", "<", strtotime($where['end_time'] . " 23:59:59"));
         $count = self::counts($model);
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'], (int)$where['limit']);
-        $data = $model->select()->each(function ($item) {
-        });
+        $data = $model->select();
         if ($data) $data = $data->toArray();
         return compact('data', 'count');
     }
@@ -84,17 +83,18 @@ class Tag extends BaseModel
     public static function getList($where): array
     {
         $list = cache('index:tagList');
+        $list = false;
         if ($list) {
             return json_decode($list, true);
         } else {
-            $tagList = self::systemPage($where);
-            $list = [];
-            foreach ($tagList['data'] as $tag) {
-                $list[] = [
-                    "text" => $tag['name'],
-                    "href" => url("/index/article/tag?t=" . $tag['name'])->build()
-                ];
-            }
+            $model = new self();
+            if ($where['name'] != '') $model = $model->where("title|url", "like", "%$where[name]%");
+            $model = $model->field('distinct name,count(1) as num')->order("num DESC")->group("name");
+            if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'], (int)$where['limit']);
+            $list = $model->select()->each(function (&$tag) {
+                $tag->text = $tag['name'];
+                $tag->href = url("/index/article/tag?t=" . $tag['name'])->build();
+            })->toArray();
             if ($list) {
                 cache('index:tagList', json_encode($list), 24 * 60 * 60);
             }

@@ -7,6 +7,7 @@ use app\common\constant\Data;
 use app\common\model\Document;
 use app\common\model\FriendLink as friendLinkModel;
 use app\common\model\MessageForm as MessageFormModel;
+use app\common\model\Tag as TagModel;
 use app\common\validate\MessageForm as MessageformValidate;
 use app\Request;
 use think\db\exception\DataNotFoundException;
@@ -169,5 +170,21 @@ class Index extends Base
         //去除后缀
         $template = substr($template, 0, strpos($template, '.'));
         return $this->fetch($template);
+    }
+
+    /**
+     * 标签列表
+     * @return mixed
+     * @author 木子的忧伤
+     * @date 2021-11-11 0:27
+     */
+    public function tagList()
+    {
+        $where = Util::postMore([
+            ['name', ''],
+            ['page', 1],
+            ['limit', 10]
+        ]);
+        return app("json")->layui(TagModel::getList($where));
     }
 }

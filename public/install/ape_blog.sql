@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 10/07/2022 22:13:47
+ Date: 14/07/2022 00:12:43
 */
 
 SET NAMES utf8mb4;
@@ -277,7 +277,7 @@ CREATE TABLE `ape_comment`  (
   `author` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '评论者姓名',
   `email` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '评论者邮箱',
   `url` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '评论者网站',
-  `content` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '评论者内容',
+  `content` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '评论者内容',
   `user_id` int(11) NOT NULL DEFAULT 0 COMMENT '评论者ID',
   `cover_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '评论头像地址',
   `pid` int(11) NOT NULL DEFAULT 0 COMMENT '评论谁',
@@ -313,24 +313,25 @@ CREATE TABLE `ape_document`  (
   `display` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '可见性',
   `view` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '浏览量',
   `tags` char(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '标识',
-  `abstract` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '摘要',
-  `keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
-  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '描述',
+  `abstract` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '摘要',
+  `keywords` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '描述',
   `sort` int(10) NOT NULL DEFAULT 0 COMMENT '排序',
   `create_date` date NOT NULL COMMENT '创建日期',
   `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
   `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '数据状态',
-  `password` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '文章密码',
+  `password` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '文章密码',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `alias`(`alias`) USING BTREE,
   INDEX `idx_category_status`(`category_id`, `status`) USING BTREE,
   INDEX `idx_status_type_pid`(`status`, `uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文档模型基础表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文档模型基础表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_document
 -- ----------------------------
+INSERT INTO `ape_document` VALUES (1, 'about', 1, '超级管理员', '关于', 0, '/storage/image/20220710/4f392482c34a194fe8e7fb9b6da95ae9.png', 'page', 'article.html', 0, 0, 0, '', 1, 0, '', '源码云BLOG源码云博客是一款基于ThinkPHP6 + bootstrap+ MySql打造的，简单实用的开源免费的博客系统。各管理模块，操作简单，具有简约，易用，访问统计，内存占用低等特点，系统易', '', '', 99, '2022-07-10', 1657464554, 1657464554, 1, '');
 
 -- ----------------------------
 -- Table structure for ape_document_article
@@ -338,7 +339,7 @@ CREATE TABLE `ape_document`  (
 DROP TABLE IF EXISTS `ape_document_article`;
 CREATE TABLE `ape_document_article`  (
   `id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '文档ID',
-  `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '文章内容',
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '文章内容',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '文档模型文章表' ROW_FORMAT = DYNAMIC;
 
@@ -357,9 +358,9 @@ CREATE TABLE `ape_document_category`  (
   `icon` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '分类图标',
   `pid` int(10) NOT NULL DEFAULT 0 COMMENT '上级分类ID',
   `sort` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '排序（同级有效）',
-  `meta_title` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT 'SEO的网页标题',
-  `keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '关键字',
-  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '描述',
+  `meta_title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'SEO的网页标题',
+  `keywords` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '关键字',
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '描述',
   `status` tinyint(2) NOT NULL DEFAULT 1 COMMENT '是否显示',
   `template` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '分类模板',
   `view` int(10) NOT NULL DEFAULT 0 COMMENT '访问数',
@@ -380,13 +381,14 @@ CREATE TABLE `ape_document_category`  (
 DROP TABLE IF EXISTS `ape_document_page`;
 CREATE TABLE `ape_document_page`  (
   `id` int(11) NOT NULL,
-  `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '分类内容表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_document_page
 -- ----------------------------
+INSERT INTO `ape_document_page` VALUES (1, '<h4 id=\"h4--blog\" style=\"font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; color: rgb(51, 51, 51); margin: 10px 0px 0px; font-size: 14px; letter-spacing: normal; padding: 0px;\">源码云BLOG</h4><h4 id=\"h4--blog\" style=\"font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; color: rgb(51, 51, 51); margin: 10px 0px 0px; font-size: 14px; letter-spacing: normal; padding: 0px;\">源码云博客是一款基于ThinkPHP6 + bootstrap+ MySql打造的，简单实用的开源免费的博客系统。各管理模块，操作简单，具有简约，易用，访问统计，内存占用低等特点，系统易于功能扩展，代码维护，方便二次开发。可以用来做个人博客，工作室官网，自媒体官网等网站，二次开发之后也可以作为资讯、展品展示等门户网站。</h4><h4 id=\"h4--blog-\" style=\"font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; color: rgb(51, 51, 51); margin: 10px 0px 0px; font-size: 14px; letter-spacing: normal; padding: 0px;\"><a name=\"勾股BLOG链接\" class=\"reference-link\" style=\"color: rgb(24, 106, 242); transition-property: all; font-style: italic;\"></a><span class=\"header-link octicon octicon-link\"></span>勾股BLOG链接</h4><ul style=\"margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding: 0px; list-style: none; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 16px;\"><li style=\"padding: 0px; margin: 0px 0px 0px 20px; list-style: initial;\">博客：<a href=\"https://blog.apecloud.cn/\" target=\"_blank\" style=\"transition-property: all;\">https://blog.apecloud.cn</a></li><li style=\"padding: 0px; margin: 0px 0px 0px 20px; list-style: initial;\">gitee：<a href=\"https://gitee.com/muziys/apeblog\" target=\"_blank\" style=\"transition-property: all;\">https://gitee.com/muziys/apeblog</a></li></ul><h4 id=\"h4-u529Fu80FDu77E9u9635\" style=\"font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; color: rgb(51, 51, 51); margin: 10px 0px 0px; font-size: 14px; letter-spacing: normal; padding: 0px;\"><a name=\"功能矩阵\" class=\"reference-link\" style=\"color: rgb(24, 106, 242); transition-property: all; font-style: italic;\"></a><span class=\"header-link octicon octicon-link\"></span>功能矩阵</h4><p style=\"margin-bottom: 0px; padding: 8px 0px; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 16px;\">系统后台集成了主流的通用功能，如：<code style=\"font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 14px; background: rgb(246, 246, 246); border-radius: 2px; margin: 0px 3px; border: 1px solid rgb(238, 238, 238);\">登录验证</code>、<code style=\"font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 14px; background: rgb(246, 246, 246); border-radius: 2px; margin: 0px 3px; border: 1px solid rgb(238, 238, 238);\">系统配置</code>、<code style=\"font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 14px; background: rgb(246, 246, 246); border-radius: 2px; margin: 0px 3px; border: 1px solid rgb(238, 238, 238);\">操作日志管理</code>、<code style=\"font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 14px; background: rgb(246, 246, 246); border-radius: 2px; margin: 0px 3px; border: 1px solid rgb(238, 238, 238);\">用户（组）管理</code>、<code style=\"font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 14px; background: rgb(246, 246, 246); border-radius: 2px; margin: 0px 3px; border: 1px solid rgb(238, 238, 238);\">用户（组）权限</code>、<code style=\"font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 14px; background: rgb(246, 246, 246); border-radius: 2px; margin: 0px 3px; border: 1px solid rgb(238, 238, 238);\">功能管理（后台菜单管理）</code>、<code style=\"font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 14px; background: rgb(246, 246, 246); border-radius: 2px; margin: 0px 3px; border: 1px solid rgb(238, 238, 238);\">导航设置</code>、<code style=\"font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 14px; background: rgb(246, 246, 246); border-radius: 2px; margin: 0px 3px; border: 1px solid rgb(238, 238, 238);\">网站地图</code>、<code style=\"font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 14px; background: rgb(246, 246, 246); border-radius: 2px; margin: 0px 3px; border: 1px solid rgb(238, 238, 238);\">轮播广告</code>、<code style=\"font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 14px; background: rgb(246, 246, 246); border-radius: 2px; margin: 0px 3px; border: 1px solid rgb(238, 238, 238);\">TAG关键字管理</code>、<code style=\"font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 14px; background: rgb(246, 246, 246); border-radius: 2px; margin: 0px 3px; border: 1px solid rgb(238, 238, 238);\">友情链接</code>、<code style=\"font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 14px; background: rgb(246, 246, 246); border-radius: 2px; margin: 0px 3px; border: 1px solid rgb(238, 238, 238);\">文件上传</code>、<code style=\"font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 14px; background: rgb(246, 246, 246); border-radius: 2px; margin: 0px 3px; border: 1px solid rgb(238, 238, 238);\">数据备份/还原</code>、<code style=\"font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 14px; background: rgb(246, 246, 246); border-radius: 2px; margin: 0px 3px; border: 1px solid rgb(238, 238, 238);\">博客文章功能</code>、<code style=\"font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 14px; background: rgb(246, 246, 246); border-radius: 2px; margin: 0px 3px; border: 1px solid rgb(238, 238, 238);\">用户管理</code>、<code style=\"font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 14px; background: rgb(246, 246, 246); border-radius: 2px; margin: 0px 3px; border: 1px solid rgb(238, 238, 238);\">用户操作日志</code>、<code style=\"font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 14px; background: rgb(246, 246, 246); border-radius: 2px; margin: 0px 3px; border: 1px solid rgb(238, 238, 238);\">用户注册/登录</code>、<code style=\"font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 14px; background: rgb(246, 246, 246); border-radius: 2px; margin: 0px 3px; border: 1px solid rgb(238, 238, 238);\">博客归档</code>、<code style=\"font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 14px; background: rgb(246, 246, 246); border-radius: 2px; margin: 0px 3px; border: 1px solid rgb(238, 238, 238);\">访问统计</code></p><p style=\"margin-bottom: 0px; padding: 8px 0px; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, Tahoma, Arial, sans-serif; font-size: 16px;\"><code style=\"font-family: SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace; font-size: 14px; background: rgb(246, 246, 246); border-radius: 2px; margin: 0px 3px; border: 1px solid rgb(238, 238, 238);\">支持模板机制</code>等。更多的个性化功能可以基于当前博客系统便捷做二次开发。</p>');
 
 -- ----------------------------
 -- Table structure for ape_document_product
@@ -395,7 +397,7 @@ DROP TABLE IF EXISTS `ape_document_product`;
 CREATE TABLE `ape_document_product`  (
   `id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '文档ID',
   `piclist` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '产品图片集',
-  `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '文章内容',
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '文章内容',
   `price` decimal(18, 2) NOT NULL DEFAULT 0.00 COMMENT '产品价格',
   `market_price` decimal(18, 2) NOT NULL DEFAULT 0.00 COMMENT '市场价',
   `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
@@ -437,7 +439,7 @@ INSERT INTO `ape_friend_link` VALUES (2, 1, '源码云博客', 'https://blog.ape
 DROP TABLE IF EXISTS `ape_invitation_code`;
 CREATE TABLE `ape_invitation_code`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '邀请码',
+  `code` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '邀请码',
   `status` int(11) NOT NULL DEFAULT 0 COMMENT '状态 0未使用 1 使用',
   `uid` int(11) NOT NULL DEFAULT 0 COMMENT '使用用户',
   `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
@@ -508,11 +510,13 @@ CREATE TABLE `ape_pv_log`  (
   `create_time` int(11) NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` int(11) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'pv记录' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'pv记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_pv_log
 -- ----------------------------
+INSERT INTO `ape_pv_log` VALUES (1, 23, 30, '2022-07-13', 1657727003, 1657727003);
+INSERT INTO `ape_pv_log` VALUES (2, 0, 22, '2022-07-14', 1657728013, 1657728013);
 
 -- ----------------------------
 -- Table structure for ape_system_config
@@ -610,11 +614,14 @@ CREATE TABLE `ape_tag`  (
   `create_time` int(11) NOT NULL DEFAULT 0,
   `update_time` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '标签表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '标签表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_tag
 -- ----------------------------
+INSERT INTO `ape_tag` VALUES (1, '源码云', 1, 1, 1649561233, 1649561233);
+INSERT INTO `ape_tag` VALUES (2, '源码', 1, 1, 1649561233, 1649561233);
+INSERT INTO `ape_tag` VALUES (3, '源码云', 1, 1, 1649561233, 1649561233);
 
 -- ----------------------------
 -- Table structure for ape_url_log
@@ -629,11 +636,13 @@ CREATE TABLE `ape_url_log`  (
   `create_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'pv记录表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'pv记录表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_url_log
 -- ----------------------------
+INSERT INTO `ape_url_log` VALUES (1, 'http://apeblog.io/', 2, '网站首页', '2022-07-13', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `ape_url_log` VALUES (2, 'http://apeblog.io/', 4, '网站首页', '2022-07-14', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- ----------------------------
 -- Table structure for ape_user
@@ -673,10 +682,12 @@ CREATE TABLE `ape_uv_log`  (
   `create_time` int(10) NOT NULL COMMENT '创建时间',
   `update_time` int(10) NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Uv记录表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'Uv记录表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_uv_log
 -- ----------------------------
+INSERT INTO `ape_uv_log` VALUES (1, '127.0.0.1', 23, '2022-07-13', 1657727003, 1657727003);
+INSERT INTO `ape_uv_log` VALUES (2, '127.0.0.1', 0, '2022-07-14', 1657728013, 1657728013);
 
 SET FOREIGN_KEY_CHECKS = 1;

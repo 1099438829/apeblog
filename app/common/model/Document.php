@@ -3,14 +3,13 @@
 
 namespace app\common\model;
 
+use app\common\constant\Data;
 use app\common\model\Tag as TagModel;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
-use app\common\constant\Data;
 use think\db\exception\ModelNotFoundException;
 use think\facade\Db;
 use think\facade\Log;
-use think\Model;
 
 /**
  * Class Document
@@ -33,7 +32,7 @@ class Document extends BaseModel
     public static function systemPage($where): array
     {
         $model = new self;
-        $model = $model->where("type", "=",$where['type']??Data::DOCUMENT_TYPE_ARTICLE);
+        $model = $model->where("type", "=", $where['type'] ?? Data::DOCUMENT_TYPE_ARTICLE);
         if ($where['title'] != '') $model = $model->where("title", "like", "%$where[title]%");
         if ($where['start_time'] != '') $model = $model->where("create_time", ">", strtotime($where['start_time'] . " 00:00:00"));
         if ($where['end_time'] != '') $model = $model->where("create_time", "<", strtotime($where['end_time'] . " 23:59:59"));
@@ -42,8 +41,8 @@ class Document extends BaseModel
         $count = self::counts($model);
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'], (int)$where['limit']);
         $categoryList = DocumentCategory::column('title', 'id');
-        $data = $model->select()->each(function ($item) use($categoryList) {
-            $item->category_title = $categoryList[$item->category_id]??"";
+        $data = $model->select()->each(function ($item) use ($categoryList) {
+            $item->category_title = $categoryList[$item->category_id] ?? "";
         });
         return compact('data', 'count');
     }
@@ -55,32 +54,32 @@ class Document extends BaseModel
      * @param string $status
      * @return array
      */
-    public function getInfo($id, string $type= Data::DOCUMENT_TYPE_ARTICLE, $status = 1): array
+    public function getInfo($id, string $type = Data::DOCUMENT_TYPE_ARTICLE, $status = 1): array
     {
-        if (empty($id)){
+        if (empty($id)) {
             return [];
         }
         $model = self::alias('a')->field("a.*,p.content");
-        if (is_numeric($id)){
-            $model->where("a.id",$id);
-        }else{
-            $model->where("a.alias",$id);
+        if (is_numeric($id)) {
+            $model->where("a.id", $id);
+        } else {
+            $model->where("a.alias", $id);
         }
-        if ($type !=='')  $model->where("a.type",$type);
-        if ($status !=='')$model->where("a.status",$status);
-        switch ($type){
+        if ($type !== '') $model->where("a.type", $type);
+        if ($status !== '') $model->where("a.status", $status);
+        switch ($type) {
             case Data::DOCUMENT_TYPE_ARTICLE:
-                $model->leftJoin('document_article p','a.id = p.id');
+                $model->leftJoin('document_article p', 'a.id = p.id');
                 break;
             case Data::DOCUMENT_TYPE_PAGE:
-                $model->leftJoin('document_page p','a.id = p.id');
+                $model->leftJoin('document_page p', 'a.id = p.id');
                 break;
             case Data::DOCUMENT_TYPE_PRODUCT:
-                $model->leftJoin('document_product p','a.id = p.id');
+                $model->leftJoin('document_product p', 'a.id = p.id');
                 break;
         }
         $info = $model->find();
-        if (!$info){
+        if (!$info) {
             return [];
         }
         return $info->toArray();
@@ -94,10 +93,18 @@ class Document extends BaseModel
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function updateInfo($data, string $type=Data::DOCUMENT_TYPE_ARTICLE)
+    /**
+     * 更新文件信息
+     * @param $dat
+     * @param string $type
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function updateInfo($data, string $type = Data::DOCUMENT_TYPE_ARTICLE)
     {
         try {
-            $content = !empty($data['content'])?$data['content']:'';
+            $content = !empty($data['content']) ? $data['content'] : '';
             //判断摘要是否为空，为空则从内容摘取
             $data['abstract'] = $data['abstract'] ?: mb_substr(strip_tags($content), 0, 100);
             //判断是否写了别名，没写则需要生成
@@ -108,8 +115,8 @@ class Document extends BaseModel
             if ($data['display']) $data['display'] = 1;
             if ($data['is_top']) $data['is_top'] = 1;
             //判断是否主键冲突
-            $info = $this->where("alias",$data['alias'])->find();
-            if ($info && (!empty($data['id']) && $info->id != $data['id'] )){
+            $info = $this->where("alias", $data['alias'])->find();
+            if ($info && (!empty($data['id']) && $info->id != $data['id'])) {
                 self::setErrorInfo("别名已存在,请修改后重试");
                 return false;
             }
@@ -129,12 +136,12 @@ class Document extends BaseModel
                 }
                 if (!empty($data['tags'])) {
                     $tagModel = new TagModel();
-                    $tagModel->createTags($data['tags'], $id,  $data['uid']);
+                    $tagModel->createTags($data['tags'], $id, $data['uid']);
                 }
             } else {
                 $ainfo = Document::get($data['id']);
                 if (!$ainfo) return app("json")->fail("数据不存在");
-                Document::where('id', $data['id'])->save($data);
+                Document::where('id', $data['id'])->update($data);
                 if (!empty($content)) {
                     switch ($type) {
                         case Data::DOCUMENT_TYPE_ARTICLE:
@@ -143,7 +150,6 @@ class Document extends BaseModel
                                 'content' => $content
                             ];
                             $model = new DocumentArticle();
-                            $model->save($updateData);
                             break;
                         case Data::DOCUMENT_TYPE_PAGE:
                             $updateData = [
@@ -151,13 +157,19 @@ class Document extends BaseModel
                                 'content' => $content
                             ];
                             $model = new DocumentPage();
-                            $model->save($updateData);
                             break;
                         case Data::DOCUMENT_TYPE_PRODUCT;
+                            $mode = new DocumentProduct();
                             break;
                         default:
                             //默认暂时不处理
                             break;
+                    }
+                    $info = $model->find($data['id']);
+                    if (!$info) {
+                        $model->insert($updateData);
+                    } else {
+                        $model->update($updateData);
                     }
                 }
                 if (!empty($data['tags'])) {
