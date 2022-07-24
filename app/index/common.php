@@ -626,7 +626,7 @@ function tpl_get_archive_list($type,$format){
                 $dateFormat = "create_date";
                 break;
         }
-        $list =  $documentListModel = (new Document())->group($dateFormat)->column("count(*) as count,create_date");
+        $list = (new Document())->group($dateFormat)->column("count(*) as count,create_date");
         foreach ($list as $key => &$item) {
             $item['create_date'] = date($format,strtotime($item['create_date']));
         }
