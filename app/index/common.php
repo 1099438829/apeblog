@@ -4,7 +4,6 @@ use app\common\constant\Data;
 use app\common\model\Comment;
 use app\common\model\Document;
 use app\common\model\DocumentCategory;
-use app\common\model\DocumentCategoryContent;
 use app\common\model\Advert;
 use app\common\model\FriendLink;
 use app\common\model\Tag;
@@ -1172,7 +1171,7 @@ function get_nav_list()
     //缓存文章菜单
     $navList = cache(Data::DATA_NAV_LIST);
     if ($navList === null) {
-        $list = Nav::where('status', 1)->order('sort asc')->select()->toArray();
+        $list = Nav::where('status', 1)->order('sort desc')->select()->toArray();
         //转换，让id作为数组的键
         $navList = [];
         foreach ($list as $item) {

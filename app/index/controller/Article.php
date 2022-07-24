@@ -7,7 +7,6 @@ use app\common\constant\Data;
 use app\common\model\Comment as commentModel;
 use app\common\model\Document;
 use app\common\model\DocumentCategory;
-use app\common\model\DocumentCategoryContent;
 use app\Request;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;

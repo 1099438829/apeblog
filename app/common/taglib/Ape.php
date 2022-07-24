@@ -28,40 +28,6 @@ class Ape extends TagLib
     ];
 
     /**
-     * 导航列表
-     * type,栏目分类数据读取分类
-     * typeId,导航列表分类，数字，字符串，或者变量
-     */
-    public function tagNav($tag, $content)
-    {
-        $type = $tag['type'] ?? 'son';
-        $typeId = $tag['typeId'] ?? '$cid';
-        $row = $tag['row'] ?? 100;
-        $void = $tag['void'] ?? 'field';
-        $where = $tag['where'] ?? '';
-        $orderBy = $tag['orderBy'] ?? 'sort asc';
-
-        $display = $tag['display'] ?? 1;
-        $display = $display == 1 ? 1 : 0;
-        //3中传参类型
-        //1、栏目id，数字类型
-        //2、多个栏目id，逗号隔开
-        //3、变量
-        //只有当多个栏目id时，才需要单引号加持。保证生成的为字符串
-        if (strpos($typeId, ',')) {
-            $typeId = "'$typeId'";
-        }
-
-        $parse = '<?php ';
-        $parse .= '$__LIST__ = ' . "tpl_get_nav(\"$type\",$typeId,$row,\"$where\",\"$orderBy\",$display);";
-        $parse .= ' ?>';
-        $parse .= '{volist name="__LIST__" id="' . $void . '"}';
-        $parse .= $content;
-        $parse .= '{/volist}';
-        return $parse;
-    }
-
-    /**
      * 栏目列表
      * type,栏目分类数据读取分类
      * typeId,栏目分类，数字，字符串，或者变量
@@ -372,4 +338,37 @@ class Ape extends TagLib
         return $parse;
     }
 
+    /**
+     * 导航列表
+     * type,栏目分类数据读取分类
+     * typeId,导航列表分类，数字，字符串，或者变量
+     */
+    public function tagNav($tag, $content)
+    {
+        $type = $tag['type'] ?? 'son';
+        $typeId = $tag['typeId'] ?? '$cid';
+        $row = $tag['row'] ?? 100;
+        $void = $tag['void'] ?? 'field';
+        $where = $tag['where'] ?? '';
+        $orderBy = $tag['orderBy'] ?? 'sort asc';
+
+        $display = $tag['display'] ?? 1;
+        $display = $display == 1 ? 1 : 0;
+        //3中传参类型
+        //1、栏目id，数字类型
+        //2、多个栏目id，逗号隔开
+        //3、变量
+        //只有当多个栏目id时，才需要单引号加持。保证生成的为字符串
+        if (strpos($typeId, ',')) {
+            $typeId = "'$typeId'";
+        }
+
+        $parse = '<?php ';
+        $parse .= '$__LIST__ = ' . "tpl_get_nav(\"$type\",$typeId,$row,\"$where\",\"$orderBy\",$display);";
+        $parse .= ' ?>';
+        $parse .= '{volist name="__LIST__" id="' . $void . '"}';
+        $parse .= $content;
+        $parse .= '{/volist}';
+        return $parse;
+    }
 }
