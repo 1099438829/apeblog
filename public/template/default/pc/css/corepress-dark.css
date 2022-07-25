@@ -45,6 +45,7 @@
 .hljs-section {
     color: #93ddfd;
 }
+
 /* Tomorrow Purple */
 .hljs-keyword,
 .hljs-selector-tag {
@@ -70,11 +71,10 @@
 
 pre.corepress-code-pre code {
     position: relative;
-    border-radius: 5px;
     max-height: 500px;
     overflow: auto;
     padding: 10px 20px;
-   }
+}
 
 .corepress-code-pre:hover .code-bar {
     visibility: visible;
@@ -94,23 +94,23 @@ pre.corepress-code-pre code {
 .code-bar-btn-copy {
     border: none;
     background: #fff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.05);
     padding: 2px 5px;
     border-radius: 3px;
     cursor: pointer;
 }
+
 .code-bar-btn-copy-fonticon {
     color: #fff;
     cursor: pointer;
 }
+
 pre[class='corepress-code-pre'] {
     position: relative;
     font-size: 14px;
-    border-radius: 4px;
     margin: 0;
     padding: 0;
     max-height: unset;
-    overflow: unset;
 }
 
 
@@ -119,15 +119,16 @@ pre[class='corepress-code-pre'] {
     margin: 0px 0px 0 20px !important;
     padding: 0px;
 }
+
 .hljs ul li {
     list-style: decimal-leading-zero;
     border-left: 1px solid #ddd !important;
-    padding: 5px!important;
+    padding: 5px !important;
     margin: 0 !important;
     line-height: 14px;
     word-break: break-all;
     word-wrap: break-word;
 }
-.hijs-line-number {
-
+.code-expand {
+    color: #fff;
 }

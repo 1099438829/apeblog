@@ -2,11 +2,11 @@ $(document).click(function (e) {
     $('.post-pop-plane').removeClass("post-pop-plane-show");
     e.stopPropagation();
 });
-$(".post-info-switch-sidebar").click(function () {
-    $(".sidebar").toggleClass("sidebar-display");
-    $(".post-main").toggleClass("post-main-full");
-    $(this).toggleClass("post-info-switch-sidebar-show")
-});
+$('.post-info-switch-sidebar').click(function () {
+    $('.sidebar').toggleClass('sidebar-display');
+    $('.post-main').toggleClass('post-main-full');
+    $(this).toggleClass('post-info-switch-sidebar-show');
+})
 $('.clickshow').click(function () {
     $('#share-plane').removeClass("share-plane-show");
     $('#qrcode-plane').removeClass("share-plane-show");

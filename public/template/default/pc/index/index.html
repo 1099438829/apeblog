@@ -247,24 +247,23 @@
                 </div>
             </div>
         </div>
-        <div class="frinds-links">
+        <div class="friend-links">
             <div class="list-plane-title">
-                <div>友情链接 <span class="list-plane-linksdescribe">欢迎添加友情链接</span></div>
-                <div><a href="{:url('applylink')}" class="frinds-links-apply">申请友链</a></div>
+                <div>友情链接 <span class="list-plane-linksdescribe"></span></div>
             </div>
-            <div class="frinds-links-list">
+            <div class="friend-links-list">
                 {ape:flink pagesize="5"}
-                <li>
-                    <a href="{$field['url']}" title="{$field['title']}" target="_blank">
-                        {notempty name="$field['image']"}
-                        <img class="frinds-links-icon img-lazyload" src="{$field['image']}" alt="{$field['title']}" data-original="{$field['image']}"
-                             onerror="this.src='__IMG__/chrome.png'">
-                        {else /}
-                        <img class="frinds-links-icon img-lazyload" src="__IMG__/chrome.png" alt="{$field['title']}" data-original="__IMG__/chrome.png"
-                             onerror="this.src='__IMG__/chrome.png'">
-                        {/notempty} {$field['title']}
-                    </a>
-                </li>
+                <a class="friend-links-item-card" href="{$field['url']}" target="_blank">
+                    {notempty name="$field['image']"}
+                    <div class="friend-links-item-icon">
+                        <img class="img-lazyload" src=" {notempty name="$field['image']"} {$field['title']}{$field['image']}{else /}__IMG__/chrome.png{/notempty}" alt="{$field['title']}" data-original="{$field['image']}" onerror="this.src='__IMG__/chrome.png'">
+                    </div>
+                    {/notempty}
+                    <div class="friend-links-item-main">
+                        <div class="friend-links-item-title">{$field['title']}</div>
+                        <div class="friend-links-item-description">{$field['description']}</div>
+                    </div>
+                </a>
                 {/ape:flink}
             </div>
         </div>
