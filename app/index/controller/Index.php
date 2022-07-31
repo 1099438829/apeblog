@@ -105,6 +105,7 @@ class Index extends Base
                 ['content', ''],
             ]);
             $data['create_time'] = time();
+            $data['reply_content'] = '';
             $messageFormValidate = new MessageFormValidate();
             if (!$messageFormValidate->check($data)) {
                 $this->error($messageFormValidate->getError());
