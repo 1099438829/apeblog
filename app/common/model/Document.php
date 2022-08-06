@@ -114,6 +114,7 @@ class Document extends BaseModel
             if ($data['is_hot']) $data['is_hot'] = 1;
             if ($data['display']) $data['display'] = 1;
             if ($data['is_top']) $data['is_top'] = 1;
+            if ($data['is_jump']) $data['is_jump'] = 1;
             //判断是否主键冲突
             $info = $this->where("alias", $data['alias'])->find();
             if ($info && (!empty($data['id']) && $info->id != $data['id'])) {

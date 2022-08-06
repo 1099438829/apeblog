@@ -435,7 +435,8 @@ function make_category_url($item)
 function make_detail_url($item)
 {
     //根据栏目类型，生成栏目url
-    if ($item['link_str']) {
+    //详情根据是否跳转外链来生成
+    if ($item['link_str'] && $item['is_jump']) {
         return $item['link_str'];
     } else {
         return url($item['type'].'/detail', ['id'=>$item['alias']?:$item['id']])->build();
