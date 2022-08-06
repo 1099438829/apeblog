@@ -120,6 +120,32 @@ class Document extends BaseModel
                 self::setErrorInfo("别名已存在,请修改后重试");
                 return false;
             }
+            switch ($type) {
+                case Data::DOCUMENT_TYPE_ARTICLE:
+                    $contentData = [
+                        'id' => $data['id'],
+                        'content' => $content
+                    ];
+                    $model = new DocumentArticle();
+                    break;
+                case Data::DOCUMENT_TYPE_PAGE:
+                    $contentData = [
+                        'id' => $data['id'],
+                        'content' => $content
+                    ];
+                    $model = new DocumentPage();
+                    break;
+                case Data::DOCUMENT_TYPE_PRODUCT;
+                    $model = new DocumentProduct();
+                    $contentData = [
+                        'id' => $data['id'],
+                        'content' => $content
+                    ];
+                    break;
+                default:
+                    //默认暂时不处理
+                    break;
+            }
             // 启动事务
             Db::startTrans();
             if (empty($data['id'])) {
@@ -128,11 +154,9 @@ class Document extends BaseModel
                 $data['update_time'] = time();
                 $id = Document::insertGetId($data);
                 if (!empty($content)) {
-                    $updateData = [
-                        'id' => $id,
-                        'content' => $content
-                    ];
-                    DocumentPage::insert($updateData);
+                    //更改默认id
+                    $contentData["id"] = $id;
+                    $model::insert($contentData);
                 }
                 if (!empty($data['tags'])) {
                     $tagModel = new TagModel();
@@ -143,33 +167,11 @@ class Document extends BaseModel
                 if (!$ainfo) return app("json")->fail("数据不存在");
                 Document::where('id', $data['id'])->update($data);
                 if (!empty($content)) {
-                    switch ($type) {
-                        case Data::DOCUMENT_TYPE_ARTICLE:
-                            $updateData = [
-                                'id' => $data['id'],
-                                'content' => $content
-                            ];
-                            $model = new DocumentArticle();
-                            break;
-                        case Data::DOCUMENT_TYPE_PAGE:
-                            $updateData = [
-                                'id' => $data['id'],
-                                'content' => $content
-                            ];
-                            $model = new DocumentPage();
-                            break;
-                        case Data::DOCUMENT_TYPE_PRODUCT;
-                            $mode = new DocumentProduct();
-                            break;
-                        default:
-                            //默认暂时不处理
-                            break;
-                    }
                     $info = $model->find($data['id']);
                     if (!$info) {
-                        $model->insert($updateData);
+                        $model->insert($contentData);
                     } else {
-                        $model->update($updateData);
+                        $model->update($contentData);
                     }
                 }
                 if (!empty($data['tags'])) {

@@ -259,6 +259,11 @@
                             throw "文章名称不能为空";
                         }
                         break;
+                    case 'alias':
+                        if (item.value && /^\d+$/.test(item.value)) {
+                            throw "别名不能为纯数字";
+                        }
+                        break;
                     case 'cover_path':
                         if (!item.value) {
                             throw "主图不能为空";
