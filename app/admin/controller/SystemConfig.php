@@ -15,6 +15,7 @@ use Psr\SimpleCache\InvalidArgumentException;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
+use think\facade\Cache;
 
 /**
  * 系统配置
@@ -66,6 +67,7 @@ class SystemConfig extends AuthController
             $commonPath = config("cache.runtime") . "/cache/";
             $indexPath = config("cache.runtime") . "/index/";
             $apiPath = config("cache.runtime") . "/api/";
+            Cache::clear();
             if (remove_cache($adminPath) && remove_cache($indexPath) && remove_cache($apiPath) && remove_cache($commonPath)) return app("json")->success("操作成功");
             return app("json")->error("操作失败");
         }

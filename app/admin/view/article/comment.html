@@ -83,7 +83,7 @@
     var id = GetQueryString("id");
     $('#tb_departments').bootstrapTable({
         classes: 'table table-bordered table-hover table-striped',
-        url: '/admin/article/commentList?id=' + id,
+        url: '/admin/article/commentList?document_id=' + id,
         method: 'post',
         dataType: 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
         uniqueId: 'id',

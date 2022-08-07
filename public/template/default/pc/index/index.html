@@ -34,6 +34,7 @@
                 </div>
                 <script>
                     window.onload = function () {
+                        console.log(2222)
                         var mySwiper = new Swiper('.swiper-container', {
                             loop: true,
                             autoplay: true,
@@ -56,7 +57,7 @@
                 </style>
                 <div class="index-top-postcard-plane">
                     <div class="index-top-postcard-body">
-                        {ape:advert row="4" type="2"}
+                        {ape:advert row="4" type="INDEX_RECOMMEND"}
                         <div class="index-top-postcard-item">
                             <div class="index-top-postcard-main">
                                 <div class="post-item-thumbnail">
@@ -256,7 +257,7 @@
                 <a class="friend-links-item-card" href="{$field['url']}" target="_blank">
                     {notempty name="$field['image']"}
                     <div class="friend-links-item-icon">
-                        <img class="img-lazyload" src=" {notempty name="$field['image']"} {$field['title']}{$field['image']}{else /}__IMG__/chrome.png{/notempty}" alt="{$field['title']}" data-original="{$field['image']}" onerror="this.src='__IMG__/chrome.png'">
+                        <img class="img-lazyload" src=" {notempty name="$field['image']"}{$field['image']}{else /}__IMG__/chrome.png{/notempty}" alt="{$field['title']}" data-original="{$field['image']}" onerror="this.src='__IMG__/chrome.png'">
                     </div>
                     {/notempty}
                     <div class="friend-links-item-main">

@@ -567,7 +567,7 @@ function tpl_get_friend_link($type, $row)
 /**
  * 广告
  * @param $type
- * @param $row
+ * @param int $row
  * @return array|mixed|object|App|Collection|Db[]
  * @throws DataNotFoundException
  * @throws DbException
@@ -575,9 +575,9 @@ function tpl_get_friend_link($type, $row)
  * @author 木子的忧伤
  * @date 2021-07-26 23:24
  */
-function tpl_get_advert($type, $row)
+function tpl_get_advert($type, int $row = 5)
 {
-    $advertList = cache(Data::DATA_ADVERT . '_' . $type .'_'. $row);
+    $advertList = cache(Data::DATA_ADVERT . '_' . $type);
     if ($advertList === null) {
         $advertList = (new Advert())->alias("a")
             ->leftJoin("advert_info i",'a.id = i.advert_id')
@@ -586,8 +586,8 @@ function tpl_get_advert($type, $row)
             ->where('a.status', 1)
             ->where('i.status', 1)
             ->order('sort desc')
-            ->limit($row)
-            ->select();
+            ->select()
+           ->toArray();
         //处理文件cdn信息
         foreach ($advertList as $key => &$item) {
             if (empty($item['cover_path'])){
@@ -595,9 +595,16 @@ function tpl_get_advert($type, $row)
             }
             $item['cover_path'] = file_cdn($item['cover_path']);
         }
-        cache(Data::DATA_ADVERT . '_' . $type .'_'. $row, $advertList);
+        unset($item);
+        if (!empty($advertList)){
+            cache(Data::DATA_ADVERT . '_' . $type, $advertList);
+        }
     }
-    return $advertList;
+    //如果获取行数为空则取默认值
+    if (!$row){
+        $row = 5;
+    }
+    return array_slice($advertList,0,$row);
 }
 
 /**

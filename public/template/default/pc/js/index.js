@@ -153,9 +153,7 @@ $(document).ready(function () {
     }
     //图片延迟加载
     $("img").lazyload({effect: "fadeIn", container: $("html,body,#app")});
-    window.onload = function () {
-        $(window).resize()
-    };
+    $(window).resize()
     if (set.module.imglazyload == 1) {
         endloadhtml();
     }

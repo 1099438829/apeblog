@@ -28,6 +28,7 @@ class AdvertInfo extends BaseModel
     public static function systemPage($where): array
     {
         $model = new self;
+        if ($where['id'] != '') $model = $model->where("advert_id", "=", $where['id']);
         if ($where['title'] != '') $model = $model->where("title|url", "like", "%$where[title]%");
         if ($where['start_time'] != '') $model = $model->where("create_time", ">", strtotime($where['start_time'] . " 00:00:00"));
         if ($where['end_time'] != '') $model = $model->where("create_time", "<", strtotime($where['end_time'] . " 23:59:59"));

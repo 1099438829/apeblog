@@ -155,8 +155,9 @@ class Advert extends AuthController
      * @author 木子的忧伤
      * @date 2021-02-19 11:53
      */
-    public function info()
+    public function info($id = '')
     {
+        if (!$id) return app("json")->fail("参数有误，Id为空！");
         return $this->fetch();
     }
 
@@ -173,6 +174,7 @@ class Advert extends AuthController
     public function infoList(Request $request)
     {
         $where = Util::postMore([
+            ['id', ''],
             ['title', ''],
             ['start_time', ''],
             ['end_time', ''],
@@ -260,12 +262,16 @@ class Advert extends AuthController
         if (is_array($data['cover_path'])) $data['cover_path'] = $data['cover_path'][0];
         $data['user_id'] = $this->adminId;//默认修改你
         if (filter_var($data['url'], FILTER_VALIDATE_URL) === false) return app("json")->fail("链接地址不合法");
+        $info = aModel::find($data['advert_id']);
+        if (!$info){
+            return app("json")->fail("广告组id错误");
+        }
         if ($id == "") {
             $res = tModel::create($data);
         } else {
             $res = tModel::update($data, ['id' => $id]);
         }
-        cache(Data::DATA_ADVERT . '_' . $data['advert_id'], null);//清除缓存
+        cache(Data::DATA_ADVERT . '_' . $info['alias'], null);//清除缓存
         return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败");
     }
 }

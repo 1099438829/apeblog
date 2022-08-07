@@ -68,9 +68,10 @@
 </div>
 {include file="public/footer"/}
 <script type="text/javascript">
+    var id = GetQueryString("id");
     $('#tb_departments').bootstrapTable({
         classes: 'table table-bordered table-hover table-striped',
-        url: '/admin/advert/infoList',
+        url: '/admin/advert/infoList?id=' + id,
         method: 'post',
         dataType: 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
         uniqueId: 'id',
@@ -229,6 +230,12 @@
                 }
             }
         });
+    }
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
     }
 </script>
 </body>
