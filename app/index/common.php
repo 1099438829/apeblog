@@ -604,7 +604,7 @@ function tpl_get_advert($type, int $row = 5)
     if (!$row){
         $row = 5;
     }
-    return array_slice($advertList,0,$row);
+    return !empty($advertList)?array_slice($advertList,0,$row):$advertList;
 }
 
 /**
