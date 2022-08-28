@@ -33,10 +33,10 @@ class Document extends BaseModel
     {
         $model = new self;
         $model = $model->where("type", "=", $where['type'] ?? Data::DOCUMENT_TYPE_ARTICLE);
-        if ($where['title'] != '') $model = $model->where("title", "like", "%$where[title]%");
-        if ($where['start_time'] != '') $model = $model->where("create_time", ">", strtotime($where['start_time'] . " 00:00:00"));
-        if ($where['end_time'] != '') $model = $model->where("create_time", "<", strtotime($where['end_time'] . " 23:59:59"));
-        if ($where['status'] != '') $model = $model->where("status", $where['status']);
+        if (!empty($where['title'])) $model = $model->where("title", "like", "%$where[title]%");
+        if (!empty($where['start_time'])) $model = $model->where("create_time", ">", strtotime($where['start_time'] . " 00:00:00"));
+        if (!empty($where['end_time'])) $model = $model->where("create_time", "<", strtotime($where['end_time'] . " 23:59:59"));
+        if (!empty($where['status'])) $model = $model->where("status", $where['status']);
         $model = $model->order("sort desc")->order("id desc");
         $count = self::counts($model);
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'], (int)$where['limit']);

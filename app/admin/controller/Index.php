@@ -51,6 +51,12 @@ class Index extends AuthController
         $this->assign("friend_link_count", $FriendLinkCount);
         $messageFormCount = MessageForm::counts(new MessageForm());
         $this->assign("message_form_count", $messageFormCount);
+        $data =[
+            "page"=> 0 ,
+            "limit" => 5
+        ];
+        $articleList = Document::systemPage($data)['data'];
+        $this->assign("article_list", $articleList);
         return $this->fetch();
     }
 
