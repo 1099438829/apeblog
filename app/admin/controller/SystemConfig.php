@@ -34,25 +34,23 @@ class SystemConfig extends AuthController
      */
     public function base($tab_id = 1)
     {
-        if ($tab_id < 5) {
-            $system = cModel::getLstByTabId($tab_id);
-            //特殊处理主题信息,这里不允许修改主题信息
-            if ($tab_id == 1) {
-                foreach ($system as $key => &$form) {
-                    if ($form['form_name'] == 'web_template') {
-                        unset($system[$key]);
-                    }
+        $system = cModel::getLstByTabId($tab_id);
+        //特殊处理主题信息,这里不允许修改主题信息
+        if ($tab_id == 1) {
+            foreach ($system as $key => &$form) {
+                if ($form['form_name'] == 'web_template') {
+                    unset($system[$key]);
                 }
             }
-            $where = [
-                'status' => 1
-            ];
-            $tabList = tModel::lst($where);
-            $this->assign("tab_id", $tab_id);
-            $this->assign("tab_list", $tabList['data']);
-            $this->assign("system", $system);
-            return $this->fetch();
         }
+        $where = [
+            'status' => 1
+        ];
+        $tabList = tModel::lst($where);
+        $this->assign("tab_id", $tab_id);
+        $this->assign("tab_list", $tabList['data']);
+        $this->assign("system", $system);
+        return $this->fetch();
     }
 
     /**
