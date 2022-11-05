@@ -2,15 +2,14 @@
 
 namespace app\admin\controller;
 
-
-use app\admin\extend\storage\QcloudCoService;
 use app\admin\extend\Util as Util;
 use app\common\model\Attachment;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\exception\ValidateException;
-use think\facade\Filesystem;
+use think\facade\Config;
+use think\File as Filesystem;
 use think\Request;
 
 class File extends AuthController
@@ -29,21 +28,39 @@ class File extends AuthController
         $storage_type = system_config("storage_type") ?: 1;//默认未本地存储
         switch ($storage_type) {
             case 1:
-                $saveName = Filesystem::putFile($fileType, $file);
-                $filePath = Filesystem::url($saveName);
+                // 获取文件基本信息
+                $fileInfo = pathinfo($file);
+                // 获取文件后缀
+                $extension = strtolower($file->getOriginalExtension());
+                // 获取文件地址和名称
+                $filePath = $fileInfo['dirname'] . '/' . $fileInfo['basename'];
+                // 文件地址转文件类
+                $file = new Filesystem($filePath);
+                // 文件转存目录(按自己喜好定义就行)
+                $savePath = Config::get('filesystem.disks.public.root').DIRECTORY_SEPARATOR.$fileType.DIRECTORY_SEPARATOR.date('Y-m-d').DIRECTORY_SEPARATOR;
+                // 新的文件名(按自己喜好生成就行)
+                $fileName = $file->md5() . '.' . $extension;
+                //获取文件类型
+                $fileMime =  $file->getMime();
+                //获取文件尺寸
+                $fileSize =   $file->getSize();
+                // 转移临时文件到指定目录
+                $file->move( $savePath,$fileName);
+                //获取新文件地址
+                $filePath = Config::get('filesystem.disks.public.url').DIRECTORY_SEPARATOR.$fileType.DIRECTORY_SEPARATOR.date('Y-m-d').DIRECTORY_SEPARATOR.$fileName;
                 //转换因为win导致的兼容问题
                 if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
                     $filePath = str_replace(DIRECTORY_SEPARATOR, '/', $filePath);
                 }
                 break;
             case 2:
-                $saveName = Filesystem::putFile('image', $file);
-                $ext = $file->getOriginalExtension();
-                $key = '/image/' . date('Ymd') . "/" . substr(md5($file->getRealPath()), 0, 5) . date('YmdHis') . rand(0, 9999) . '.' . $ext;
-                $filePath = QcloudCoService::put($key, $file->getRealPath());
+//                $saveName = Filesystem::putFile('image', $file);
+//                $ext = $file->getOriginalExtension();
+//                $key = '/image/' . date('Ymd') . "/" . substr(md5($file->getRealPath()), 0, 5) . date('YmdHis') . rand(0, 9999) . '.' . $ext;
+//                $filePath = QcloudCoService::put($key, $file->getRealPath());
                 break;
         }
-        return Attachment::addAttachment($this->request->param("cid", 0), $saveName, $filePath, 'image', $file->getMime(), $file->getSize(), $storage_type) ? app("json")->code()->success("上传成功", ['filePath' => $filePath, "name" => $saveName]) : app("json")->fail("上传失败");
+        return Attachment::addAttachment($this->request->param("cid", 0), $fileName, $filePath, 'image', $fileMime, $fileSize, $storage_type) ? app("json")->code()->success("上传成功", ['filePath' => file_cdn($filePath), "name" => $fileName]) : app("json")->fail("上传失败");
     }
 
     /**
@@ -117,13 +134,31 @@ class File extends AuthController
                     'fileExt' => $fileExt
                     // 更多规则请看“上传验证”的规则，文档地址https://www.kancloud.cn/manual/thinkphp6_0/1037629#_444
                 ]])->check(['file' => $file]);
-                $saveName = Filesystem::putFile($fileType, $file);
-                $filePath = Filesystem::url($saveName);
+                // 获取文件基本信息
+                $fileInfo = pathinfo($file);
+                // 获取文件后缀
+                $extension = strtolower($file->getOriginalExtension());
+                // 获取文件地址和名称
+                $filePath = $fileInfo['dirname'] . '/' . $fileInfo['basename'];
+                // 文件地址转文件类
+                $file = new Filesystem($filePath);
+                // 文件转存目录(按自己喜好定义就行)
+                $savePath = Config::get('filesystem.disks.public.root').DIRECTORY_SEPARATOR.$fileType.DIRECTORY_SEPARATOR.date('Y-m-d').DIRECTORY_SEPARATOR;
+                // 新的文件名(按自己喜好生成就行)
+                $fileName = $file->md5() . '.' . $extension;
+                //获取文件类型
+                $fileMime =  $file->getMime();
+                //获取文件尺寸
+                $fileSize =   $file->getSize();
+                // 转移临时文件到指定目录
+                $file->move( $savePath,$fileName);
+                //获取新文件地址
+                $filePath = Config::get('filesystem.disks.public.url').DIRECTORY_SEPARATOR.$fileType.DIRECTORY_SEPARATOR.date('Y-m-d').DIRECTORY_SEPARATOR.$fileName;
                 //转换因为win导致的兼容问题
                 if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
                     $filePath = str_replace(DIRECTORY_SEPARATOR, '/', $filePath);
                 }
-                return $saveName ? app("json")->code()->success("上传成功", ['filePath' => $filePath, "name" => basename($saveName)]) : app("json")->fail("上传失败");
+                return Attachment::addAttachment($this->request->param("cid", 0), $fileName, $filePath, $fileType, $fileMime, $fileSize, 1) ? app("json")->code()->success("上传成功", ['filePath' => file_cdn($filePath), "name" => $fileName]) : app("json")->fail("上传失败");
             } catch (ValidateException $e) {
                 return app("json")->fail($e->getMessage());
             }

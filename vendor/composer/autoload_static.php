@@ -47,12 +47,6 @@ class ComposerStaticInit4b57298e8d0e895486f3307a354a7e1a
             'Psr\\Cache\\' => 10,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
-        'L' => 
-        array (
-            'League\\MimeTypeDetection\\' => 25,
-            'League\\Flysystem\\Cached\\' => 24,
-            'League\\Flysystem\\' => 17,
-        ),
         'F' => 
         array (
             'FormBuilder\\' => 12,
@@ -135,18 +129,6 @@ class ComposerStaticInit4b57298e8d0e895486f3307a354a7e1a
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
-        ),
-        'League\\MimeTypeDetection\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/league/mime-type-detection/src',
-        ),
-        'League\\Flysystem\\Cached\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/league/flysystem-cached-adapter/src',
-        ),
-        'League\\Flysystem\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/league/flysystem/src',
         ),
         'FormBuilder\\' => 
         array (
