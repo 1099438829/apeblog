@@ -5,10 +5,11 @@ namespace app\admin\controller;
 use app\common\model\AdminAuth;
 use app\common\model\Document;
 use app\common\model\Document as DocumentModel;
-use app\common\model\DocumentCategory;
-use app\common\model\DocumentCategory as DocumentCategoryModel;
+use app\common\model\Category;
+use app\common\model\Category as DocumentCategoryModel;
 use app\common\model\FriendLink;
 use app\common\model\MessageForm;
+use app\common\model\AdminNotify;
 use app\common\model\User;
 use Exception;
 use think\db\exception\DataNotFoundException;
@@ -31,7 +32,7 @@ class Index extends AuthController
             cache(AdminAuth::getMenuCacheKey($this->adminId), $menuList, 1 * 60 * 60);
         }
         $this->assign("menu", $menuList);
-        $messageList = ['data' => [], 'count' => 0];
+        $messageList = AdminNotify::pageList(5);
         $this->assign("message", $messageList);
         return $this->fetch();
     }

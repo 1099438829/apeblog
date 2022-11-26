@@ -39,7 +39,7 @@ class Image extends AuthController
      */
     public function category()
     {
-        return app("json")->success(AttachmentCategory::buildNodes("image", 0, $this->request->param("title", "")));
+        return app("json")->success(AttachmentCategory::buildNodes($this->type, 0, $this->request->param("title", "")));
     }
 
     /**

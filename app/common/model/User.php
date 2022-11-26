@@ -8,6 +8,7 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\facade\Session;
+use mailer\Mailer;
 
 /**
  * 用户管理
@@ -69,8 +70,16 @@ class User extends BaseModel
             return self::setErrorInfo("账号注册失败，请稍后再试");
         } else {
             //开始发送激活邮件,激活邮件处理
+            //TODO 这里暂时未完成 设计是 支持模板来配置这里的任务 后台可以编辑模板这样子
+            $mailer = new Mailer();
+            $mailer->from('10086@qq.com')
+                ->to('10086@qq.com')
+                ->subject('邮件主题')
+                ->text('邮件内容')
+                ->send();
 
         }
+        return false;
     }
 
 

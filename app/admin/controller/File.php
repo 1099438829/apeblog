@@ -8,8 +8,7 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\exception\ValidateException;
-use think\facade\Config;
-use think\File as Filesystem;
+use think\facade\Filesystem;
 use think\Request;
 
 class File extends AuthController
@@ -28,37 +27,18 @@ class File extends AuthController
         $storage_type = system_config("storage_type") ?: 1;//默认未本地存储
         switch ($storage_type) {
             case 1:
-                // 获取文件基本信息
-                $fileInfo = pathinfo($file);
-                // 获取文件后缀
-                $extension = strtolower($file->getOriginalExtension());
-                // 获取文件地址和名称
-                $filePath = $fileInfo['dirname'] . '/' . $fileInfo['basename'];
-                // 文件地址转文件类
-                $file = new Filesystem($filePath);
-                // 文件转存目录(按自己喜好定义就行)
-                $savePath = Config::get('filesystem.disks.public.root').DIRECTORY_SEPARATOR.$fileType.DIRECTORY_SEPARATOR.date('Y-m-d').DIRECTORY_SEPARATOR;
-                // 新的文件名(按自己喜好生成就行)
-                $fileName = $file->md5() . '.' . $extension;
                 //获取文件类型
                 $fileMime =  $file->getMime();
                 //获取文件尺寸
                 $fileSize =   $file->getSize();
-                // 转移临时文件到指定目录
-                $file->move( $savePath,$fileName);
-                //获取新文件地址
-                $filePath = Config::get('filesystem.disks.public.url').DIRECTORY_SEPARATOR.$fileType.DIRECTORY_SEPARATOR.date('Y-m-d').DIRECTORY_SEPARATOR.$fileName;
+                $fileName = Filesystem::disk('public')->putFile($fileType, $file);
+                $filePath = Filesystem::disk('public')->url($fileName);
                 //转换因为win导致的兼容问题
                 if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
                     $filePath = str_replace(DIRECTORY_SEPARATOR, '/', $filePath);
                 }
                 break;
-            case 2:
-//                $saveName = Filesystem::putFile('image', $file);
-//                $ext = $file->getOriginalExtension();
-//                $key = '/image/' . date('Ymd') . "/" . substr(md5($file->getRealPath()), 0, 5) . date('YmdHis') . rand(0, 9999) . '.' . $ext;
-//                $filePath = QcloudCoService::put($key, $file->getRealPath());
-                break;
+                //其余云oss 自行开发
         }
         return Attachment::addAttachment($this->request->param("cid", 0), $fileName, $filePath, 'image', $fileMime, $fileSize, $storage_type) ? app("json")->code()->success("上传成功", ['filePath' => file_cdn($filePath), "name" => $fileName]) : app("json")->fail("上传失败");
     }
@@ -134,26 +114,12 @@ class File extends AuthController
                     'fileExt' => $fileExt
                     // 更多规则请看“上传验证”的规则，文档地址https://www.kancloud.cn/manual/thinkphp6_0/1037629#_444
                 ]])->check(['file' => $file]);
-                // 获取文件基本信息
-                $fileInfo = pathinfo($file);
-                // 获取文件后缀
-                $extension = strtolower($file->getOriginalExtension());
-                // 获取文件地址和名称
-                $filePath = $fileInfo['dirname'] . '/' . $fileInfo['basename'];
-                // 文件地址转文件类
-                $file = new Filesystem($filePath);
-                // 文件转存目录(按自己喜好定义就行)
-                $savePath = Config::get('filesystem.disks.public.root').DIRECTORY_SEPARATOR.$fileType.DIRECTORY_SEPARATOR.date('Y-m-d').DIRECTORY_SEPARATOR;
-                // 新的文件名(按自己喜好生成就行)
-                $fileName = $file->md5() . '.' . $extension;
                 //获取文件类型
                 $fileMime =  $file->getMime();
                 //获取文件尺寸
                 $fileSize =   $file->getSize();
-                // 转移临时文件到指定目录
-                $file->move( $savePath,$fileName);
-                //获取新文件地址
-                $filePath = Config::get('filesystem.disks.public.url').DIRECTORY_SEPARATOR.$fileType.DIRECTORY_SEPARATOR.date('Y-m-d').DIRECTORY_SEPARATOR.$fileName;
+                $fileName = Filesystem::disk('public')->putFile($fileType, $file);
+                $filePath = Filesystem::disk('public')->url($fileName);
                 //转换因为win导致的兼容问题
                 if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
                     $filePath = str_replace(DIRECTORY_SEPARATOR, '/', $filePath);

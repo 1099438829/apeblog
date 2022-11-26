@@ -5,6 +5,8 @@
 /.env
 /runtime
 /composer.lock
-/public/upload/image
+/public/storage/*
+/public/upload/*
 /public/install/install.lock
 /.constant
+

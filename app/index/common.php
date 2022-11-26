@@ -3,7 +3,7 @@
 use app\common\constant\Data;
 use app\common\model\Comment;
 use app\common\model\Document;
-use app\common\model\DocumentCategory;
+use app\common\model\Category;
 use app\common\model\Advert;
 use app\common\model\FriendLink;
 use app\common\model\Tag;
@@ -44,7 +44,7 @@ function get_document_category_list()
     //缓存文章菜单
     $documentCategory = cache(Data::DATA_DOCUMENT_CATEGORY_LIST);
     if ($documentCategory === null) {
-        $documentCategoryList = DocumentCategory::where('status', 1)->order('sort asc')->select()->toArray();
+        $documentCategoryList = Category::where('status', 1)->order('sort asc')->select()->toArray();
         //转换，让id作为数组的键
         $documentCategory = [];
         foreach ($documentCategoryList as $item) {
@@ -112,7 +112,7 @@ function get_document_category_by_name($name, $field = false)
  * @param int $row
  * @param string $where
  * @param string $orderby
- * @return DocumentCategory[]|array|bool|Collection
+ * @return Category[]|array|bool|Collection
  * @throws Exception
  * @throws DataNotFoundException
  * @throws DbException
@@ -158,7 +158,7 @@ function tpl_get_channel($type, $typeId, $row = 100, $where = '', $orderby = '')
             if (!$dc) {
                 throw new Exception('分类不存在或已删除！');
             }
-            $tempArr = DocumentCategory::where('id', 'in', $dc['child'])->where('status', 1)->limit($row);
+            $tempArr = Category::where('id', 'in', $dc['child'])->where('status', 1)->limit($row);
             $tempArr = $tempArr->select();
             foreach ($tempArr as $key => $item) {
                 //根据栏目类型，生成栏目url
@@ -185,7 +185,7 @@ function tpl_get_channel($type, $typeId, $row = 100, $where = '', $orderby = '')
             $dc = get_document_category($typeId);
             if ($dc['pid'] != 0) {
                 //获取根分类，此操作读取数据库，非缓存！
-                $dc = DocumentCategory::where('pid', 0)->where('status', 1)
+                $dc = Category::where('pid', 0)->where('status', 1)
                     ->where("CONCAT(',',child,',') like '%,$typeId,%'")->limit($row);
                 $dc = $dc->find();
             }
@@ -197,7 +197,7 @@ function tpl_get_channel($type, $typeId, $row = 100, $where = '', $orderby = '')
             break;
         case 'where':
             //根据自定义条件获取分类（where语句），此操作读取数据库，非缓存！
-            $tempArr = DocumentCategory::where('status', 1)->where($where)->order($orderby)->limit($row);
+            $tempArr = Category::where('status', 1)->where($where)->order($orderby)->limit($row);
             $tempArr = $tempArr->select();
             foreach ($tempArr as $key => $item) {
                 //根据栏目类型，生成栏目url
@@ -208,7 +208,7 @@ function tpl_get_channel($type, $typeId, $row = 100, $where = '', $orderby = '')
             break;
         case 'ids':
             //根据多个栏目id，逗号隔开的那种，获得栏目列表
-            $tempArr = DocumentCategory::where('status', 1)->where('id', 'in', $typeId)->order($orderby)->limit($row);
+            $tempArr = Category::where('status', 1)->where('id', 'in', $typeId)->order($orderby)->limit($row);
             $tempArr = $tempArr->select();
             foreach ($tempArr as $key => $item) {
                 //根据栏目类型，生成栏目url
@@ -1038,7 +1038,7 @@ function comment_face($incoming_comment,$path)
  * @param int $row
  * @param string $where
  * @param string $orderby
- * @return DocumentCategory[]|array|bool|Collection
+ * @return Category[]|array|bool|Collection
  * @throws Exception
  * @throws DataNotFoundException
  * @throws DbException

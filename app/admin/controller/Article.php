@@ -5,7 +5,7 @@ namespace app\admin\controller;
 use app\admin\extend\Util as Util;
 use app\common\model\Comment as CommentModel;
 use app\common\model\Document;
-use app\common\model\DocumentCategory as cModel;
+use app\common\model\Category as cModel;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;

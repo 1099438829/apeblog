@@ -4,7 +4,7 @@ namespace app\admin\controller;
 
 use app\admin\extend\Util as Util;
 use app\common\constant\Data;
-use app\common\model\DocumentCategory as aModel;
+use app\common\model\Category as aModel;
 use app\Request;
 use Exception;
 use think\db\exception\DataNotFoundException;

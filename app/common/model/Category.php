@@ -13,7 +13,7 @@ use think\db\exception\ModelNotFoundException;
  * @author 木子的忧伤
  * @date 2021-02-15 23:22
  */
-class DocumentCategory extends BaseModel
+class Category extends BaseModel
 {
     /**
      * 列表
