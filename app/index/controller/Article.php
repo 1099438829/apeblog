@@ -6,7 +6,7 @@ use app\admin\extend\Util as Util;
 use app\common\constant\Data;
 use app\common\model\Comment as commentModel;
 use app\common\model\Document;
-use app\common\model\Category;
+use app\common\model\DocumentCategory;
 use app\Request;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -50,7 +50,7 @@ class Article extends Base
         }
         //赋值分类id，可能是通过栏目分类id获取的栏目分类数据
         $id = $dc['id'];
-        $documentCategoryModel = new Category();
+        $documentCategoryModel = new DocumentCategory();
         //栏目存在  增加访问量
         $documentCategoryModel->where('id|alias', $id)->inc('view')->update();
         //判断后台统计配置是否开启 1 开启

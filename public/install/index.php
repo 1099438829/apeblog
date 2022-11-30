@@ -286,7 +286,7 @@ switch ($step) {
                 , 'ape_document'
                 , 'ape_document_article'
                 , 'ape_document_category'
-                , 'ape_document_category_content'
+                , 'ape_document_page'
                 , 'ape_document_product'
                 , 'ape_friend_link'
                 , 'ape_invitation_code'

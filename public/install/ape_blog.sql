@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 27/11/2022 00:02:52
+ Date: 30/11/2022 11:40:29
 */
 
 SET NAMES utf8mb4;
@@ -128,15 +128,11 @@ CREATE TABLE `ape_admin_log`  (
   `user_agent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT 'User-Agent',
   `create_time` int(10) NOT NULL DEFAULT 0 COMMENT '操作时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_admin_log
 -- ----------------------------
-INSERT INTO `ape_admin_log` VALUES (1, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 Edg/105.0.1343.53', 1669478531);
-INSERT INTO `ape_admin_log` VALUES (2, 1, 'admin', 'admin', 'admin', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 Edg/105.0.1343.53', 1669478536);
-INSERT INTO `ape_admin_log` VALUES (3, 1, 'admin', 'admin', 'admin_auth', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 Edg/105.0.1343.53', 1669478536);
-INSERT INTO `ape_admin_log` VALUES (4, 1, 'admin', 'admin', 'admin_role', 'index', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 Edg/105.0.1343.53', 1669478537);
 
 -- ----------------------------
 -- Table structure for ape_admin_notify
@@ -274,35 +270,6 @@ CREATE TABLE `ape_attachment_category`  (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for ape_category
--- ----------------------------
-DROP TABLE IF EXISTS `ape_category`;
-CREATE TABLE `ape_category`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '标题',
-  `alias` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '标志',
-  `icon` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '分类图标',
-  `pid` int(10) NOT NULL DEFAULT 0 COMMENT '上级分类ID',
-  `sort` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '排序（同级有效）',
-  `meta_title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'SEO的网页标题',
-  `keywords` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '关键字',
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '描述',
-  `status` tinyint(2) NOT NULL DEFAULT 1 COMMENT '是否显示',
-  `template` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '分类模板',
-  `view` int(10) NOT NULL DEFAULT 0 COMMENT '访问数',
-  `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
-  `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `alias`(`alias`) USING BTREE COMMENT '别名URl',
-  INDEX `t_p_s`(`title`, `pid`, `status`) USING BTREE COMMENT '标题'
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '分类表' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of ape_category
--- ----------------------------
-INSERT INTO `ape_category` VALUES (1, '编程资料', '01df859b', '', 0, 99, '编程资料', '关于小站,源码云,源码云博客,关于源码云博客', '讲述的是傲娇天才酒评家陆微寻和元气失味少女何不醉因意外亲吻发生味觉互换，携手寻味觅爱的浪漫爱情故事。画风截然不同的二人因一场意外亲吻交换了味觉，从而开始了啼笑皆非又温馨浪漫的寻味之旅，在这个过程中他们互相了解，彼此影响，最终收获了味觉和爱情。', 1, 'list_default.html', 0, 0, 0);
-
--- ----------------------------
 -- Table structure for ape_comment
 -- ----------------------------
 DROP TABLE IF EXISTS `ape_comment`;
@@ -361,12 +328,11 @@ CREATE TABLE `ape_document`  (
   UNIQUE INDEX `alias`(`alias`) USING BTREE,
   INDEX `idx_category_status`(`category_id`, `status`) USING BTREE,
   INDEX `idx_status_type_pid`(`status`, `uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文档模型基础表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文档模型基础表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ape_document
 -- ----------------------------
-INSERT INTO `ape_document` VALUES (1, 'about', 1, '超级管理员', '关于', 0, '/storage/image/20220710/4f392482c34a194fe8e7fb9b6da95ae9.png', 'page', 'article.html', 0, 0, 0, '', 0, 1, 10, '', '源码云BLOG源码云博客是一款基于ThinkPHP6 + bootstrap+ MySql打造的，简单实用的开源免费的博客系统。各管理模块，操作简单，具有简约，易用，访问统计，内存占用低等特点，系统易', '', '', 99, '2022-07-10', 1657464554, 1657464554, 1, '');
 
 -- ----------------------------
 -- Table structure for ape_document_article
@@ -381,16 +347,35 @@ CREATE TABLE `ape_document_article`  (
 -- ----------------------------
 -- Records of ape_document_article
 -- ----------------------------
-INSERT INTO `ape_document_article` VALUES (0, '<p>阿萨大大大大大大大大大大大大大大大大大</p><p><br></p><p>dasdasdsaa</p><p><br></p><p>asdddddddddddddd</p>');
-INSERT INTO `ape_document_article` VALUES (2, '<p>饿哇日日日日日日日日日日日日日日日</p>');
-INSERT INTO `ape_document_article` VALUES (7, '<p>32423<br></p><p>32</p><p>423</p><p>423</p><p>4</p><p>2</p><p>34</p><p>2</p><p>34</p>');
-INSERT INTO `ape_document_article` VALUES (8, '<p>21321312</p>');
-INSERT INTO `ape_document_article` VALUES (9, '<p>2111111111111111111111</p>');
-INSERT INTO `ape_document_article` VALUES (10, '<p>324324234</p>');
-INSERT INTO `ape_document_article` VALUES (11, '<p>23423</p>');
-INSERT INTO `ape_document_article` VALUES (12, '<p>撒旦撒旦</p>');
-INSERT INTO `ape_document_article` VALUES (16, '<p>认为人</p>');
-INSERT INTO `ape_document_article` VALUES (17, '<p>23123</p>');
+
+-- ----------------------------
+-- Table structure for ape_document_category
+-- ----------------------------
+DROP TABLE IF EXISTS `ape_document_category`;
+CREATE TABLE `ape_document_category`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '标题',
+  `alias` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '标志',
+  `icon` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '分类图标',
+  `pid` int(10) NOT NULL DEFAULT 0 COMMENT '上级分类ID',
+  `sort` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '排序（同级有效）',
+  `meta_title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'SEO的网页标题',
+  `keywords` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '关键字',
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '描述',
+  `status` tinyint(2) NOT NULL DEFAULT 1 COMMENT '是否显示',
+  `template` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '分类模板',
+  `view` int(10) NOT NULL DEFAULT 0 COMMENT '访问数',
+  `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `alias`(`alias`) USING BTREE COMMENT '别名URl',
+  INDEX `t_p_s`(`title`, `pid`, `status`) USING BTREE COMMENT '标题'
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '分类表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of ape_document_category
+-- ----------------------------
+INSERT INTO `ape_document_category` VALUES (1, '编程资料', '01df859b', '', 0, 99, '编程资料', '关于小站,源码云,源码云博客,关于源码云博客', '讲述的是傲娇天才酒评家陆微寻和元气失味少女何不醉因意外亲吻发生味觉互换，携手寻味觅爱的浪漫爱情故事。画风截然不同的二人因一场意外亲吻交换了味觉，从而开始了啼笑皆非又温馨浪漫的寻味之旅，在这个过程中他们互相了解，彼此影响，最终收获了味觉和爱情。', 1, 'list_default.html', 0, 0, 0);
 
 -- ----------------------------
 -- Table structure for ape_document_page
@@ -545,7 +530,7 @@ CREATE TABLE `ape_system_config`  (
   `tag_type` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '标签类型',
   `upload_type` tinyint(1) NOT NULL DEFAULT 0 COMMENT '上传配置',
   `param` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '参数',
-  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '内容',
+  `value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '内容',
   `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '备注',
   `rank` tinyint(2) NOT NULL DEFAULT 0 COMMENT '排序',
   `is_show` tinyint(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '是否显示',
@@ -569,7 +554,7 @@ INSERT INTO `ape_system_config` VALUES (6, 1, '站点logo', 'logo', 'file', 'inp
 INSERT INTO `ape_system_config` VALUES (7, 1, '版权信息', 'copyright', 'text', 'input', 0, '', 'Copyright © 2022 apeBlog Powered by 源码云博客', '', 93, 1, 1, '1', '1', 1582793470, 1582793495);
 INSERT INTO `ape_system_config` VALUES (8, 1, '备案信息', 'icp', 'text', 'textarea', 0, '', '<a href=\"http://beian.miit.gov.cn\">京ICP备19038953号</a> | <a target=\"_blank\" href=\"http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=62062102000138\">甘公网安备62062102000138号</a>', '', 92, 1, 1, '1', '1', 1582793563, 1583375542);
 INSERT INTO `ape_system_config` VALUES (10, 1, '网站域名', 'domain', 'text', 'input', 0, '', 'http://apeblog.io', '', 90, 1, 1, '1', '1', 1588858018, 1582792265);
-INSERT INTO `ape_system_config` VALUES (11, 1, '网站统计代码', 'statistics', 'text', 'textarea', 0, '', '', '', 89, 1, 1, '1', '1', 1582793470, 1582793495);
+INSERT INTO `ape_system_config` VALUES (11, 1, '网站统计代码', 'statistics', 'text', 'textarea', 0, '', '<script>var _hmt = _hmt || [];\r\n(function() {\r\n  var hm = document.createElement(\"script\");\r\n  hm.src = \"https://hm.baidu.com/hm.js?df245a474077d4239ad5932ba71377b9\";\r\n  var s = document.getElementsByTagName(\"script\")[0]; \r\n  s.parentNode.insertBefore(hm, s);\r\n})();</script>', '', 89, 1, 1, '1', '1', 1582793470, 1582793495);
 INSERT INTO `ape_system_config` VALUES (12, 1, '主题信息', 'web_template', 'select', 'input', 0, 'default=>默认\nnew=>新bolg', 'default', '', 88, 1, 1, '1', '1', 1582793563, 1620610858);
 INSERT INTO `ape_system_config` VALUES (13, 1, '关闭网站', 'web_close', 'radio', 'input', 0, '1=>是\n0=>否', '0', '', 87, 1, 1, '1', '1', 1583126643, 1582792265);
 INSERT INTO `ape_system_config` VALUES (14, 1, '网站统计', 'web_statistics', 'radio', 'input', 0, '1=>开启\n0=>关闭', '1', '', 86, 1, 1, '1', '1', 1583126643, 1582792265);

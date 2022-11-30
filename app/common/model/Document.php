@@ -40,7 +40,7 @@ class Document extends BaseModel
         $model = $model->order("sort desc")->order("id desc");
         $count = self::counts($model);
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'], (int)$where['limit']);
-        $categoryList = Category::column('title', 'id');
+        $categoryList = DocumentCategory::column('title', 'id');
         $data = $model->select()->each(function ($item) use ($categoryList) {
             $item->category_title = $categoryList[$item->category_id] ?? "";
         });
