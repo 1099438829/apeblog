@@ -248,19 +248,21 @@ function load_popwindow() {
 
 function loadlazyimg() {
   if (set.module.imglazyload == 1) {
-    if (set.is_single == 1 || set.is_page == 1) {
+      //老版本主题暂时用这个，新版本改进这里
       $("img").lazyload({ effect: "fadeIn", container: $("html,body,#app") });
-    } else {
-      $("img.thumbnail").lazyload({
-        effect: "fadeIn",
-        skip_invisible: false,
-        event: "load",
-        container: $("html,body,#app")
-      });
-      setTimeout(function () {
-        $("img.thumbnail").trigger("load");
-      }, 1e3);
-    }
+    // if (set.is_single == 1 || set.is_page == 1) {
+    //   $("img").lazyload({ effect: "fadeIn", container: $("html,body,#app") });
+    // } else {
+    //   $("img.thumbnail").lazyload({
+    //     effect: "fadeIn",
+    //     skip_invisible: false,
+    //     event: "load",
+    //     container: $("html,body,#app")
+    //   });
+    //   setTimeout(function () {
+    //     $("img.thumbnail").trigger("load");
+    //   }, 1e3);
+    // }
   }
 }
 
