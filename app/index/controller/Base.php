@@ -40,7 +40,7 @@ class Base extends BaseController
             $this->assign('user_id',  $this->userId);
         }
         //判断是否关闭站点。
-        if (web_config('web_close')) {
+        if (web_config('web_close')==1) {
             $this->error('网站暂时关闭！', '', 'stop');
         }
         //判断后台统计配置是否开启  1 开启

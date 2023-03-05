@@ -1,18 +1,9 @@
 <?php
 
-namespace app\index\controller;
+namespace app\api\controller;
 
 use app\admin\controller\AuthController;
-use app\admin\extend\Util as Util;
 use app\common\constant\Data;
-use app\common\model\FriendLink as friendLinkModel;
-use app\common\model\MessageForm as MessageFormModel;
-use app\common\model\Tag as TagModel;
-use app\common\validate\MessageForm as MessageformValidate;
-use app\Request;
-use think\db\exception\DataNotFoundException;
-use think\db\exception\DbException;
-use think\db\exception\ModelNotFoundException;
 
 /**
  * 应用入口

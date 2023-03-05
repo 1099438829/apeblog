@@ -39,15 +39,17 @@ class PvLog extends BaseModel
         $hour = date('H');
         $pvWhere[] = ['date', '=', $date_data];
         $pvWhere[] = ['time', '=', $hour];
+        $pvLogModel = new self;
+        $pvInfo = $pvLogModel->where($pvWhere)->field('id')->find();
 
-        $pvInfo = $this->where($pvWhere)->field('id')->find();
         if ($pvInfo) {
-            $this->where($pvWhere)->inc('view')->update();
+            $pvLogModel->where($pvWhere)->inc('view')->update();
         } else {
-            $pvData['view'] = 1;
-            $pvData['date'] = $date_data;
-            $pvData['time'] = $hour;
-            $this->save($pvData);
+            $pvLogModel = new self;
+            $pvLogModel->view = 1;
+            $pvLogModel->date = $date_data;
+            $pvLogModel->time = $hour;
+            $pvLogModel->save();
         }
         //uv表
         $uvLogModel = new UvLogModel();
@@ -61,12 +63,11 @@ class PvLog extends BaseModel
         $uvInfo = $uvLogModel->where($uvWhere)->field('id')->find();
         //不存在 添加数据
         if (!$uvInfo) {
-            $uvData['ip'] = $ipData;
-            $uvData['time'] = $hour;
-            $uvData['date'] = $date_data;
-            $uvLogModel->save($uvData);
+            $uvInfo =  new UvLogModel();
+            $uvInfo->ip =  $ipData;
+            $uvInfo->time = $hour;
+            $uvInfo->date = $date_data;
+            $uvInfo->save();
         }
     }
-
-
 }
