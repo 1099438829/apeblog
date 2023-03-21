@@ -90,7 +90,7 @@ class File extends AuthController
                     break;
                 case 'document':
                     $fileSize = 5 * 1024 * 1024;
-                    $fileExt = 'pdf,doc,docx';
+                    $fileExt = 'doc,docx,pdf,xls,xlsx,ppt,pptx,txt,wps';
                     break;
                 case 'image':
                     $fileSize = 5 * 1024 * 1024;

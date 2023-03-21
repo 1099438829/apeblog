@@ -9,6 +9,7 @@ use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\facade\Session;
 use mailer\Mailer;
+use think\Model;
 
 /**
  * 用户管理
@@ -81,7 +82,6 @@ class User extends BaseModel
         }
         return false;
     }
-
 
     /**
      * 设置登录信息
@@ -182,5 +182,55 @@ class User extends BaseModel
         $data = $model->select();
         $data = $data ? $data->toArray() : [];
         return compact("data", "count");
+    }
+
+    /**
+     * 密码重置
+     * @param string $userid
+     * @param $password
+     * @return bool|void
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public static function resetPassword(string $userid, $password)
+    {
+        $info = self::where('id', '=', $userid)->find();
+        if (!$info) return self::setErrorInfo("用户不存在");
+        $info['password'] = md5(md5($password));
+        $info['status'] = 2;
+        $info['remark'] = '重置密码成功！';
+        $info['update_time'] = time();
+        $info['create_time'] = time();
+        $info['is_admin'] = Data::USER_IS_ADMIN_NO;
+        $info['update_time'] = time();
+        $info['is_admin'] = Data::USER_IS_ADMIN_NO;
+    }
+
+    /**
+     * 丢失密码
+     * @param $username
+     * @return bool
+     * @author 木子的忧伤
+     * @date 2022-01-03 3:48
+     */
+    public static function lostPassword($username)
+    {
+        $model = new self;
+        $info = self::where('username|email', '=', $username)->find();
+        if ($info) return self::setErrorInfo("账号或邮箱不存在,请检查后重试");
+        //生成密码重置key 设置有效时间 过期无效
+        $key = md5($info->email . rand(1000,99999));
+        cache($key,"----",24*60*60); //缓存1天过后则失效
+       //发送邮箱
+        $content = "您好，您在本网站进行重置密码操作，请点击如下链接进入重置密码页面。【本链接24小时内容有效，如果不是您的操作，请忽略】
+/forget?action=rested&key={$key}&id=20";
+        $mailer = new Mailer();
+        $mailer->from(system_config('title'))
+            ->to($info->email)
+            ->subject(system_config('title').'重置密码验证')
+            ->text($content)
+            ->send();
+        return false;
     }
 }

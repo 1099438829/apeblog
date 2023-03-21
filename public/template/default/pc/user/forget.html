@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <title>{:web_config('title')}-登录页</title>
+    <meta name="keywords" content="{:web_config('keywords')}">
+    <meta name="description" content="{:web_config('description')}">
+    {include file="public/head" /}
+    <link rel="stylesheet" href="__LIB__/swiper/swiper.min.css"/>
+    <script type="text/javascript" src="__LIB__/swiper/swiper.min.js"></script>
+</head>
+<body>
+<link rel="stylesheet" href="__CSS__/login-plane.css">
+<div id="app" class="login-background">
+    {include file="public/header" /}
+    <div class="header-zhanwei" style="min-height: 80px; width: 100%"></div>
+    <style>
+        #app {
+            background-image: url(__IMG__/login_backgroud.jpg);
+        }
+    </style>
+    <main class="container">
+        <div id="login-plane">
+            <div class="login-main" style="width: 100%;">
+                <div id="login-note">
+                    提示
+                </div>
+                <div class="login-form">
+                    <div class="login-title">
+                        <h3>找回密码</h3>
+                    </div>
+                    <i class="fa fa-user ico-login" aria-hidden="true"></i>
+                    <input class="input-login input-pass" name="user" type="text" placeholder="请输入用户名或者邮箱">
+                    <div class="code-plane">
+                        <img class="img-code" src="/index/user/captcha">
+                        <input class="input-login input-code" name="code" type="text" placeholder="验证码">
+                    </div>
+                    <div>
+                        <button class="login-button" id="btn-getlostpass">找回密码</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        $('#btn-getlostpass').click(() =>{
+            getlostpass();
+        })
+
+        $('#btn-resetpwd').click(() =>{
+            let pwd = $('input[name="pwd"]').val();
+            let repwd = $('input[name="repwd"]').val();
+            if (pwd === '' || repwd === '') {
+            addarelt('请输入完整内容', 'erro');
+            return;
+        }
+        if (pwd !== repwd) {
+            addarelt('两次密码不一致', 'erro');
+
+        } else {
+            $('#login-note').css('visibility', 'visible');
+            $('#login-note').text('验证中，请稍后');
+            $.post('/index/user/forget_verify', {
+                    action: "rested",
+                    userid: "",
+                    key: "",
+                    pwd: pwd
+                }, (data) =>{
+                    var obj = JSON.parse(data);
+                        if (obj.code === 1) {
+                        $('#login-note').text(obj.msg);
+                    } else {
+                        $('#login-note').text(obj.msg);
+                    }
+                });
+        }
+        });
+
+
+        function getlostpass() {
+            var user = $('input[name="user"]').val();
+            var key = $('input[name="code"]').val();
+            $('#login-note').text('检测中，请稍后');
+            $('#login-note').css('visibility', 'visible');
+
+            $.post('/index/user/forget_verify', {
+                    action: 'LastPass',
+                    user: user,
+                    key: key
+                },
+                (data) =>{
+                let obj = JSON.parse(data);
+                if (obj) {
+                    if (obj.code === 1) {
+                        $('#login-note').css('visibility', 'visible');
+                        $('#login-note').text(obj.msg);
+                    } else {
+                        $('#login-note').css('visibility', 'visible');
+                        $('#login-note').text(obj.msg);
+                        recodeimg();
+                    }
+                }
+            })
+        }
+
+        $('.img-code').click(() =>{
+            recodeimg();
+        });
+
+        function recodeimg() {
+            $('.img-code').attr('src',"/index/user/captcha?d=" + Math.random());
+        }
+    </script>
+    {include file="public/footer"/}
+</div>
+</body>
+</html>

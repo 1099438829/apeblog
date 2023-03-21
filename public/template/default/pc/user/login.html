@@ -40,7 +40,7 @@
                         <label>
                             <input type="checkbox" id="remember" name="remember" value="true"/>
                             记住我的登录状态</label>
-                        <a href="wp-login-lostpassword.html">忘记密码?</a>
+                        <a href="/index/user/forget">忘记密码?</a>
                     </div>
                     <!--                    <div class="thirdparty-plane">-->
                     <!--                        <span class="login-thirdparty-btn">-->
@@ -100,17 +100,13 @@
                             $("#login-note").text(data.msg);
                             recodeimg();
                         }
-                    } else {
                     }
                 }
             );
         }
 
         function recodeimg() {
-            $(".img-code").attr(
-                "src",
-                "/index/user/captcha?d=" + Math.random()
-            );
+            $('.img-code').attr('src',"/index/user/captcha?d=" + Math.random());
         }
     </script>
     {include file="public/footer"/}

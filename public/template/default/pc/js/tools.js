@@ -1,9 +1,9 @@
 function getQueryVariable(variable) {
-    var query = window.location.search.substring(1);
-    var vars = query.split("&");
-    for (var i = 0; i < vars.length; i++) {
-        var pair = vars[i].split("=");
-        if (pair[0] == variable) {
+    let query = window.location.search.substring(1);
+    let vars = query.split("&");
+    for (let i = 0; i < vars.length; i++) {
+        let pair = vars[i].split("=");
+        if (pair[0] === variable) {
             return pair[1];
         }
     }
@@ -35,13 +35,12 @@ function replaceTag(str) {
 }
 
 function addarelt(msg, type) {
-    var icon = '<i class="fas fa-info-circle" style="color: #515a6e"></i>';
+    let icon = '<i class="fas fa-info-circle" style="color: #515a6e"></i>';
     if (type == 'succ') {
         icon = '<i class="fas fa-check-circle" style="color:#19be6b;"></i>'
     } else if (type == 'erro') {
         icon = '<i class="fas fa-times-circle" style="color:#ed4014;"></i>'
     }
-    var msg_id = '';
     $('body').append('<div class="corepress-alert"><div class="corepress-alert-main">' + icon + msg + '</div></div>');
     setTimeout(function () {
         $('.corepress-alert-main').addClass('corepress-alert-main-show');

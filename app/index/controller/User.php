@@ -7,8 +7,10 @@
 namespace app\index\controller;
 
 use app\admin\extend\Util;
+use app\common\model\Document;
 use app\common\model\User as userModel;
 use Exception;
+use think\App;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -16,6 +18,18 @@ use think\Response;
 
 class User extends Base
 {
+
+    /**
+     * 构造方法 初始化一些参数
+     */
+    public function initialize()
+    {
+        parent::initialize();
+        if (!web_config('is_register')) {
+            $this->error('登录未启用，请联系管理员！');
+        }
+    }
+
     /**
      * 登录
      * @return string
@@ -23,9 +37,6 @@ class User extends Base
      */
     public function login()
     {
-        if (!web_config('is_register')){
-            $this->error('登录未启用，请联系管理员！');
-        }
         return $this->fetch();
     }
 
@@ -38,9 +49,6 @@ class User extends Base
      */
     public function verify()
     {
-        if (!web_config('is_register')){
-            return app("json")->fail('非法操作！');
-        }
         list($username, $password, $captcha) = Util::postMore(['username', 'password', 'captcha'], null, true);
         if (empty($username) || empty($password)) return app("json")->fail("账号、密码和验证码不能为空！");
         // 验证码验证
@@ -57,9 +65,6 @@ class User extends Base
      */
     public function register()
     {
-        if (!web_config('is_register')){
-            $this->error('注册未启用，请联系管理员！');
-        }
         return $this->fetch();
     }
 
@@ -70,21 +75,18 @@ class User extends Base
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function registerVerify()
+    public function register_verify()
     {
-        if (!web_config('is_register')){
-            return app("json")->fail('非法操作！');
-        }
-        list($username, $email,  $password,$captcha) = Util::postMore(['username','email', 'password', 'captcha'], null, true);
+        list($username, $email, $password, $captcha) = Util::postMore(['username', 'email', 'password', 'captcha'], null, true);
         if (empty($username) || empty($email) || empty($password) || empty($captcha)) return app("json")->fail("账号、密码和验证码不能为空！");
         // 验证码验证
         if (!captcha_check($captcha)) return app("json")->fail("验证码不正确！");
         // 验证码验证
-        if (!empty(web_config('register_black_list')) && in_array($username,explode(',',web_config('register_black_list')))){
+        if (!empty(web_config('register_black_list')) && in_array($username, explode(',', web_config('register_black_list')))) {
             return app("json")->fail("账号不合法，请更换后重试");
         }
         // 验证登录
-        if (!userModel::register($username,$email, $password)) return app("json")->fail(userModel::getErrorInfo());
+        if (!userModel::register($username, $email, $password)) return app("json")->fail(userModel::getErrorInfo());
         return app("json")->success("注册成功!我们给您邮箱发送了一封激活邮件，请按照邮件提示激活用户");
     }
 
@@ -96,6 +98,30 @@ class User extends Base
     public function forget()
     {
         return $this->fetch();
+    }
+
+    /**
+     * @throws ModelNotFoundException
+     * @throws DbException
+     * @throws DataNotFoundException
+     */
+    public function forget_verify()
+    {
+        list($action, $username, $key, $password) = Util::postMore(['action', 'username', 'key', 'pwd'], null, true);
+        //做验证
+        switch ($action) {
+            case'rested':
+                //重置密码
+                if (!userModel::resetPassword($username, $password)) return app("json")->fail(userModel::getErrorInfo());
+                return app("json")->success("密码重置成功！");
+            case 'LastPass':
+                // 验证码验证
+                if (!captcha_check($key)) return app("json")->fail("验证码不正确！");
+                //丢失密码 发送邮件
+                if (!userModel::lostPassword($username)) return app("json")->fail(userModel::getErrorInfo());
+                return app("json")->success("发送成功！我们给您邮箱发送了一封激活邮件，请按照邮件提示激活用户");
+        }
+        return app("json")->fail("非法访问！");
     }
 
     /**
