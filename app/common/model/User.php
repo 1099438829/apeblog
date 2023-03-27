@@ -7,6 +7,7 @@ use app\common\constant\Data;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
+use think\facade\Request;
 use think\facade\Session;
 use mailer\Mailer;
 use think\Model;
@@ -70,15 +71,19 @@ class User extends BaseModel
         if (!$res) {
             return self::setErrorInfo("账号注册失败，请稍后再试");
         } else {
-            //开始发送激活邮件,激活邮件处理
+            //生成密码重置key 设置有效时间 过期无效
+            $key = md5($info->email . rand(1000, 99999));
+            cache($key, $res, 24 * 60 * 60); //缓存1天过后则失效根据用户id设置用户激活
+            $host = Request::domain();
             //TODO 这里暂时未完成 设计是 支持模板来配置这里的任务 后台可以编辑模板这样子
+            $content = "您已经成功在蓝米云注册会员，请点击以下链接完成账号激活：{$host}/forget?action=rested&key={$key}&id=20
+            请在24小时内完成激活，24小时后链接地址失效，如果通过点击以上链接无法访问，请将上面的地址复制到您使用的浏览器地址中进入，如果您并没有访问过蓝米云官网，或没有进行上述操作，请忽略这封邮件！此帐号将不会绑定您的邮箱。感谢您的访问，祝您使用愉快！";
             $mailer = new Mailer();
-            $mailer->from('10086@qq.com')
-                ->to('10086@qq.com')
-                ->subject('邮件主题')
-                ->text('邮件内容')
+            $mailer->from(system_config('title'))
+                ->to($info->email)
+                ->subject(system_config('title') . '注册激活邮件')
+                ->text($content)
                 ->send();
-
         }
         return false;
     }
@@ -193,9 +198,13 @@ class User extends BaseModel
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public static function resetPassword(string $userid, $password)
+    public static function resetPassword($key, $password)
     {
-        $info = self::where('id', '=', $userid)->find();
+        $username =  cache($key); //缓存1天过后则失效
+        if (empty($username)){
+            return self::setErrorInfo("链接已失效或者用户不存在");
+        }
+        $info = self::where('username|email', '=', $username)->find();
         if (!$info) return self::setErrorInfo("用户不存在");
         $info['password'] = md5(md5($password));
         $info['status'] = 2;
@@ -216,21 +225,21 @@ class User extends BaseModel
      */
     public static function lostPassword($username)
     {
-        $model = new self;
         $info = self::where('username|email', '=', $username)->find();
         if ($info) return self::setErrorInfo("账号或邮箱不存在,请检查后重试");
         //生成密码重置key 设置有效时间 过期无效
-        $key = md5($info->email . rand(1000,99999));
-        cache($key,"----",24*60*60); //缓存1天过后则失效
-       //发送邮箱
+        $key = md5($info->email . rand(1000, 99999));
+        cache($key, $username, 24 * 60 * 60); //缓存1天过后则失效
+        $host = Request::domain();
+        //发送邮件
         $content = "您好，您在本网站进行重置密码操作，请点击如下链接进入重置密码页面。【本链接24小时内容有效，如果不是您的操作，请忽略】
-/forget?action=rested&key={$key}&id=20";
+{$host}/forget?action=rested&key={$key}&id=20";
         $mailer = new Mailer();
         $mailer->from(system_config('title'))
             ->to($info->email)
-            ->subject(system_config('title').'重置密码验证')
+            ->subject(system_config('title') . '重置密码验证')
             ->text($content)
             ->send();
-        return false;
+        return true;
     }
 }

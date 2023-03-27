@@ -112,7 +112,7 @@ class User extends Base
         switch ($action) {
             case'rested':
                 //重置密码
-                if (!userModel::resetPassword($username, $password)) return app("json")->fail(userModel::getErrorInfo());
+                if (!userModel::resetPassword($key, $password)) return app("json")->fail(userModel::getErrorInfo());
                 return app("json")->success("密码重置成功！");
             case 'LastPass':
                 // 验证码验证

@@ -11,5 +11,4 @@ class UvLog extends BaseModel
 
     //自动时间戳
     protected $autoWriteTimestamp = true;
-
 }
