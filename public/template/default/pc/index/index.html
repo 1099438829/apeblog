@@ -179,6 +179,24 @@
                         {/ape:arclist}
                     </div>
                     <div class="aside-box">
+                        <h2 class="widget-title">最新文章</h2>
+                        {ape:arclist row="6" type="where" orderby="create_time desc"}
+                        <div class="hot-post-widget-item">
+                            <div>
+                                <span class="hot-post-widget-item-title">
+                                    <a href="{$field['url']}">{:cn_substr($field['title'],15)}</a>
+                                </span>
+                            </div>
+                            <div class="hot-post-widget-item-meta">
+                                <div>{$field['create_time']}</div>
+                                <div>
+                                    <a href="{:url('article/lists')}?id={$field['category_id']}">{:cn_substr($field['category_title'],5)}</a>
+                                </div>
+                            </div>
+                        </div>
+                        {/ape:arclist}
+                    </div>
+                    <div class="aside-box">
                         <h2 class="widget-title">标签云</h2>
                         <script src="__JS__/TagCloud.js"></script>
                         <div class="corepress-tag-cloud">
