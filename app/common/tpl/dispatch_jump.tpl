@@ -109,7 +109,7 @@
     </p>
 </div>
 <div class="copyright">
-   {:web_config("copyright")}
+   {:system_config("copyright")}
 </div>
 <script type="text/javascript">
     (function () {

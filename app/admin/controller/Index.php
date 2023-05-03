@@ -111,7 +111,7 @@ class Index extends AuthController
         //获取文章分类url
         $documentCategoryModel = new DocumentCategoryModel();
         $categoryInfo = $documentCategoryModel->field('id,title,create_time')
-            ->where('display', 1)->where('status', 1)
+            ->where('status', 1)->where('status', 1)
             ->page($page, $pagesize)
             ->order('id desc')->select();
 
@@ -126,7 +126,7 @@ class Index extends AuthController
         //获取详细页分类url
         $documentModel = new DocumentModel();
         $documentInfo = $documentModel->field('id,create_time')
-            ->where('status', 1)
+            ->where('display', 1)
             ->page($page, $pagesize)
             ->order('id desc')->select();
 
@@ -141,9 +141,9 @@ class Index extends AuthController
         if (count($categoryInfo) < $pagesize && count($documentInfo) < $pagesize) {
             $str .= '</urlset>';
             if (!(file_put_contents('sitemap.xml', $str, FILE_APPEND | LOCK_EX))) {
-                $this->error('站点地图更新失败！');
+                $this->error('站点地图更新失败!',"/admin/");
             } else {
-                $this->success('站点地图全部更新完成！', null, 'stop');
+                $this->success('站点地图全部更新完成！', "/admin/");
             }
         }
         //写入

@@ -104,7 +104,7 @@ abstract class BaseController
      * 操作成功跳转的快捷方法
      * @access protected
      * @param mixed $msg 提示信息
-     * @param string $url 跳转的URL地址
+     * @param string|null $url 跳转的URL地址
      * @param mixed $data 返回的数据
      * @param integer $wait 跳转等待时间
      * @param array $header 发送的Header信息
@@ -132,7 +132,6 @@ abstract class BaseController
         } else if ($type == 'json') {
             $response = json($result);
         }
-
         throw new HttpResponseException($response);
     }
 
@@ -168,7 +167,6 @@ abstract class BaseController
         } else if ($type == 'json') {
             $response = json($result);
         }
-
         throw new HttpResponseException($response);
     }
 
