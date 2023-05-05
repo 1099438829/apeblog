@@ -116,6 +116,8 @@ abstract class BaseController
             $url = $_SERVER["HTTP_REFERER"];
         } elseif ($url) {
             $url = (strpos($url, '://') || 0 === strpos($url, '/')) ? $url : app('route')->buildUrl($url);
+        }else{
+            $url = app('route')->buildUrl("/");
         }
 
         $result = [
@@ -152,7 +154,6 @@ abstract class BaseController
         } elseif ($url) {
             $url = (strpos($url, '://') || 0 === strpos($url, '/')) ? $url : $this->app->route->buildUrl($url);
         }
-
         $result = [
             'code' => 0,
             'msg' => $msg,
@@ -160,7 +161,6 @@ abstract class BaseController
             'url' => $url,
             'wait' => $wait,
         ];
-
         $type = $this->getResponseType();
         if ($type == 'html') {
             $response = view(config('app.dispatch_success_tmpl'), $result);

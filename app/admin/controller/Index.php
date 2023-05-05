@@ -15,6 +15,7 @@ use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
+use think\facade\Request;
 
 class Index extends AuthController
 {
@@ -82,11 +83,9 @@ class Index extends AuthController
      */
     public function sitemap()
     {
-        //获取协议
-        $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ?
-            "https://" : "http://";
+
         //获取域名
-        $domain = $protocol . $_SERVER['HTTP_HOST'];
+        $domain = Request::domain();
         //获取页码
         $page = input('page/d');
         if (!$page) {
@@ -114,10 +113,9 @@ class Index extends AuthController
             ->where('status', 1)->where('status', 1)
             ->page($page, $pagesize)
             ->order('id desc')->select();
-
         foreach ($categoryInfo as $v) {
             $str .= '<url>';
-            $str .= '<loc>' . $domain . url('article/lists?id=' . $v['id']) . '</loc>';
+            $str .= '<loc>' . url('index/article/lists',["id"=>$v['id']],".html",$domain) . '</loc>';
             $str .= '<lastmod>' . $v['create_time'] . '</lastmod>';
             $str .= '<changefreq>always</changefreq>';
             $str .= '<priority>0.8</priority>';
@@ -132,7 +130,7 @@ class Index extends AuthController
 
         foreach ($documentInfo as $v) {
             $str .= '<url>';
-            $str .= '<loc>' . $domain . url('article/detail?id=' . $v['id']) . $v['id'] . '</loc>';
+            $str .= '<loc>' . url('/index/article/detail',["id"=>$v['id']],".html",$domain) . '</loc>';
             $str .= '<lastmod>' . $v['create_time'] . '</lastmod>';
             $str .= '<changefreq>monthly</changefreq>';
             $str .= '<priority>0.6</priority>';
@@ -140,17 +138,13 @@ class Index extends AuthController
         }
         if (count($categoryInfo) < $pagesize && count($documentInfo) < $pagesize) {
             $str .= '</urlset>';
-            if (!(file_put_contents('sitemap.xml', $str, FILE_APPEND | LOCK_EX))) {
-                $this->error('站点地图更新失败!',"/admin/");
-            } else {
-                $this->success('站点地图全部更新完成！', "/admin/");
-            }
+            return (!(file_put_contents('sitemap.xml', $str, FILE_APPEND | LOCK_EX))) ?
+                $this->failedNotice("站点地图更新失败!", "/admin/") :
+                $this->successfulNotice("站点地图全部更新完成!", "/admin/");
         }
         //写入
-        if (!(file_put_contents('sitemap.xml', $str, FILE_APPEND | LOCK_EX))) {
-            $this->error('站点地图更新失败！');
-        } else {
-            $this->success('站点地图正在生成，请稍后（' . $page . '）...', 'sitemap?page=' . ($page + 1));
-        }
+        return (!(file_put_contents('sitemap.xml', $str, FILE_APPEND | LOCK_EX))) ?
+            $this->failedNotice("站点地图更新失败!", "/admin/") :
+            $this->successfulNotice('站点地图正在生成，请稍后（' . $page . '）...', 'sitemap?page=' . ($page + 1));
     }
 }
