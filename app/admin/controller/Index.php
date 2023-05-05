@@ -109,13 +109,13 @@ class Index extends AuthController
 
         //获取文章分类url
         $documentCategoryModel = new DocumentCategoryModel();
-        $categoryInfo = $documentCategoryModel->field('id,title,create_time')
+        $categoryInfo = $documentCategoryModel->field('id,alias,title,create_time')
             ->where('status', 1)->where('status', 1)
             ->page($page, $pagesize)
             ->order('id desc')->select();
         foreach ($categoryInfo as $v) {
             $str .= '<url>';
-            $str .= '<loc>' . url('index/article/lists',["id"=>$v['id']],".html",$domain) . '</loc>';
+            $str .= '<loc>' . url('index/article/lists',["id"=>$v["alias"]?:$v['id']],".html",$domain) . '</loc>';
             $str .= '<lastmod>' . $v['create_time'] . '</lastmod>';
             $str .= '<changefreq>always</changefreq>';
             $str .= '<priority>0.8</priority>';
@@ -123,14 +123,14 @@ class Index extends AuthController
         }
         //获取详细页分类url
         $documentModel = new DocumentModel();
-        $documentInfo = $documentModel->field('id,create_time')
+        $documentInfo = $documentModel->field('id,alias,create_time')
             ->where('display', 1)
             ->page($page, $pagesize)
             ->order('id desc')->select();
 
         foreach ($documentInfo as $v) {
             $str .= '<url>';
-            $str .= '<loc>' . url('/index/article/detail',["id"=>$v['id']],".html",$domain) . '</loc>';
+            $str .= '<loc>' . url('/index/article/detail',["id"=>$v["alias"]?:$v['id']],".html",$domain) . '</loc>';
             $str .= '<lastmod>' . $v['create_time'] . '</lastmod>';
             $str .= '<changefreq>monthly</changefreq>';
             $str .= '<priority>0.6</priority>';
