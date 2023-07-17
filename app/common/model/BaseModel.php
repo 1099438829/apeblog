@@ -16,6 +16,9 @@ class BaseModel extends Model
     private static $transaction = 0;
     private static $DbInstance = [];
 
+    //自动时间戳
+    protected $autoWriteTimestamp = true;
+
     /**
      * 获取错误信息
      * @param string $defaultMsg

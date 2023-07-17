@@ -95,7 +95,7 @@ class SystemConfigTab extends AuthController
         if ($id == "") {
             $data['create_user'] = $this->adminId;
             $data['create_time'] = time();
-            $res = tModel::insert($data);
+            $res = tModel::create($data);
         } else {
             $data['update_user'] = $this->adminId;
             $data['update_time'] = time();

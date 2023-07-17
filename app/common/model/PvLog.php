@@ -12,10 +12,6 @@ use app\common\model\UvLog as UvLogModel;
  */
 class PvLog extends BaseModel
 {
-
-    //自动时间戳
-    protected $autoWriteTimestamp = true;
-
     public function del_data()
     {
         //获取七天前日期

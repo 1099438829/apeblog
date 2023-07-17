@@ -87,15 +87,7 @@ class Document extends BaseModel
 
     /**
      * 更新文件信息
-     * @param $dat
-     * @param string $type
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
-     */
-    /**
-     * 更新文件信息
-     * @param $dat
+     * @param $date
      * @param string $type
      * @throws DataNotFoundException
      * @throws DbException

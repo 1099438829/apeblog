@@ -117,7 +117,7 @@ class Nav extends AuthController
         if ($data['url'] == "") return app("json")->fail("链接不能为空");
         if ($id == "") {
             $data['create_time'] = time();
-            $res = aModel::insert($data);
+            $res = aModel::create($data);
         } else {
             $data['update_time'] = time();
             $res = aModel::update($data, ['id' => $id]);

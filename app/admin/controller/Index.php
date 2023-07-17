@@ -110,10 +110,13 @@ class Index extends AuthController
         //获取文章分类url
         $documentCategoryModel = new DocumentCategoryModel();
         $categoryInfo = $documentCategoryModel->field('id,alias,title,create_time')
-            ->where('status', 1)->where('status', 1)
+            ->where('status', 1)
             ->page($page, $pagesize)
             ->order('id desc')->select();
         foreach ($categoryInfo as $v) {
+            echo $v['create_time'];
+            echo date("Y-m-d\TH:i:s+00:00",strtotime($v['create_time']));
+            echo strtotime($v['create_time']);die();
             $str .= '<url>';
             $str .= '<loc>' . url('index/article/lists',["id"=>$v["alias"]?:$v['id']],".html",$domain) . '</loc>';
             $str .= '<lastmod>' . date("Y-m-d\TH:i:s+00:00",strtotime($v['create_time'])) . '</lastmod>';
@@ -129,9 +132,11 @@ class Index extends AuthController
             ->order('id desc')->select();
 
         foreach ($documentInfo as $v) {
+            echo date("Y-m-d\TH:i:s+00:00",strtotime($v['create_time']));
+            echo strtotime($v['create_time']);die();
             $str .= '<url>';
             $str .= '<loc>' . url('/index/article/detail',["id"=>$v["alias"]?:$v['id']],".html",$domain) . '</loc>';
-            $str .= '<lastmod>' . date("Y-m-d\TH:i:s+00:00",strtotime($v['create_time'])) . '</lastmod>';
+            $str .= '<lastmod>'.date("Y-m-d\TH:i:s+00:00",strtotime($v['create_time'])) .'</lastmod>';
             $str .= '<changefreq>monthly</changefreq>';
             $str .= '<priority>0.6</priority>';
             $str .= '</url>';

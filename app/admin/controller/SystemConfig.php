@@ -185,7 +185,7 @@ class SystemConfig extends AuthController
         if ($id == "") {
             $data['create_user'] = $this->adminId;
             $data['create_time'] = time();
-            $res = cModel::insert($data);
+            $res = cModel::create($data);
         } else {
             $data['update_user'] = $this->adminId;
             $data['update_time'] = time();

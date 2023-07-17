@@ -107,7 +107,7 @@ class Advert extends AuthController
             $info = aModel::where("alias",$data['alias'])->find($id);
             if ($info) return app("json")->fail("标识已存在，请修改后重试");
             $data['create_time'] = time();
-            $res = aModel::insert($data);
+            $res = aModel::create($data);
         } else {
             $data['update_time'] = time();
             $res = aModel::update($data, ['id' => $id]);

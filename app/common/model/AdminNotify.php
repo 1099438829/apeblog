@@ -43,7 +43,7 @@ class AdminNotify extends BaseModel
      */
     public static function addLog(array $data)
     {
-        return self::insert($data);
+        return self::create($data);
     }
 
     /**

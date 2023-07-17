@@ -409,7 +409,7 @@ CREATE TABLE `ape_document_category` (
 -- Records of ape_document_category
 -- ----------------------------
 BEGIN;
-INSERT INTO `ape_document_category` (`id`, `title`, `alias`, `icon`, `type`, `pid`, `sort`, `meta_title`, `keywords`, `description`, `status`, `template`, `link_str`, `view`, `create_time`, `update_time`) VALUES (1, '关于小站', '', '', 0, 0, 99, '关于小站', '关于小站,源码云,源码云博客,关于源码云博客', '源码云博客,源码云博客网站', 1, 'list_default.html', '', 80, 0, 1642089484);
+INSERT INTO `ape_document_category` (`id`, `title`, `alias`, `icon`, `type`, `pid`, `sort`, `meta_title`, `keywords`, `description`, `status`, `template`, `link_str`, `view`, `create_time`, `update_time`) VALUES (1, '关于小站', '', '', 0, 0, 99, '关于小站', '关于小站,源码云,源码云博客,关于源码云博客', '源码云博客,源码云博客网站', 1, 'list_default.html', '', 80, 1642089484, 1642089484);
 COMMIT;
 
 -- ----------------------------

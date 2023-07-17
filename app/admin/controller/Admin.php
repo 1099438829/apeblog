@@ -158,7 +158,7 @@ class Admin extends AuthController
                 $data['create_user'] = $this->adminId;
                 $data['create_time'] = time();
                 $data['update_time'] = time();
-                aModel::insert($data);
+                aModel::create($data);
                 //添加前台用户
                 $userId = userModel::addAdminUser($data);
                 $res = aModel::update(['uid' => $userId], ['id' => $id]);

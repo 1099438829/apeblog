@@ -73,7 +73,7 @@ class Category extends AuthController
         if ($data['alias'] == "") $data['alias'] = get_rand_str(8);
         if ($data['id'] == "") {
             $model = new aModel();
-            $res = $model->insert($data);
+            $res = $model->create($data);
         } else {
             $res = aModel::update($data, ['id' => $data['id']]);
         }

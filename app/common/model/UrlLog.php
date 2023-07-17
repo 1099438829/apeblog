@@ -8,10 +8,6 @@ namespace app\common\model;
  */
 class UrlLog extends BaseModel
 {
-
-    //自动时间戳
-    protected $autoWriteTimestamp = true;
-
     //更新url_log
     public function set_url($title, $url)
     {
