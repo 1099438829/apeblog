@@ -74,7 +74,7 @@
           <div class="sidebar">
             <div class="sidebar-box-list">
                 <div class="aside-box">
-                  <form class="search-form" action="{:url('/index/article/search')}" method="get" role="search">
+                  <form class="search-form" action="{:url('/article/search')}" method="get" role="search">
                     <div class="search-form-input-plane">
                       <input type="text" class="search-keyword" name="kw" placeholder="搜索内容"/>
                     </div>
@@ -132,7 +132,7 @@
                 }
               </style>
                     <script>
-                        $.get("{:url('/index/article/taglist')}",function(data,status){
+                        $.get("{:url('/article/taglist')}",function(data,status){
                             TagCloud(
                                 ".corepress-tag-container-tag1",
                                 data.data,

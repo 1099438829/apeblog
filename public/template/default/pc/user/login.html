@@ -80,7 +80,7 @@
             $("#login-note").text("登录中，请稍后");
             $("#login-note").css("visibility", "visible");
             $.post(
-                "{:url('/index/user/verify')}",
+                "{:url('/user/verify')}",
                 {
                     action: "login",
                     username: username,

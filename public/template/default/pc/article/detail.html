@@ -108,10 +108,10 @@
                                     <div class="post-turn-page-main">
                                         {ape:prenext get="pre" cid="$apeField['category_id']"}
                                         <div>
-                                            <a href="{:url('/index/article/detail')}?id={$field['id']}">{$field['title']}</a>
+                                            <a href="{:url('/article/detail')}?id={$field['id']}">{$field['title']}</a>
                                         </div>
                                         <div class="post-turn-page-link-pre">
-                                            <a href="{:url('/index/article/detail')}?id={$field['id']}"><<上一篇></上一篇></a>
+                                            <a href="{:url('/article/detail')}?id={$field['id']}"><<上一篇></上一篇></a>
                                         </div>
                                         {/ape:prenext}
                                     </div>
@@ -119,7 +119,7 @@
                                 <div class="post-turn-page post-turn-page-next">
                                     {ape:prenext get="next" cid="$apeField['category_id']"}
                                     <div class="post-turn-page-main">
-                                        <a href="{:url('/index/article/detail')}?id={$field['id']}">{$field['title']}</a>
+                                        <a href="{:url('/article/detail')}?id={$field['id']}">{$field['title']}</a>
                                         <div class="post-turn-page-link-next">
                                             <a href="javascript:">下一篇>></a>
                                         </div>
@@ -148,12 +148,12 @@
                     <div id="respond" class="comment-respond">
                         <h3 id="reply-title" class="comment-reply-title">
                             <small>
-                                <a rel="nofollow" id="cancel-comment-reply-link" href="{:url('/index/article/detail')}?id={$field['id']}#respond" style="display:none;">
+                                <a rel="nofollow" id="cancel-comment-reply-link" href="{:url('/article/detail')}?id={$field['id']}#respond" style="display:none;">
                                     取消回复
                                 </a>
                             </small>
                         </h3>
-                        <form action="{:url('/index/article/create_comment')}" method="post" id="form_comment" class="comment-form">
+                        <form action="{:url('/article/create_comment')}" method="post" id="form_comment" class="comment-form">
                             <div class="comment-user-plane">
                                 <div class="logged-in-as">
                                     <img class="comment-user-avatar" width="48" height="auto" src="__IMG__/avatar.png" alt="comment-user-avatar">

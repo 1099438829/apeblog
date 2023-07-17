@@ -83,7 +83,6 @@ class Tag extends BaseModel
     public static function getList($where): array
     {
         $list = cache('index:tagList');
-        $list = false;
         if ($list) {
             return json_decode($list, true);
         } else {
@@ -93,7 +92,7 @@ class Tag extends BaseModel
             if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'], (int)$where['limit']);
             $list = $model->select()->each(function (&$tag) {
                 $tag->text = $tag['name'];
-                $tag->href = url("/index/article/tag?t=" . $tag['name'])->build();
+                $tag->href = url('/article/tag',["t"=>$tag["name"]],'html')->build();
             })->toArray();
             if ($list) {
                 cache('index:tagList', json_encode($list), 24 * 60 * 60);
