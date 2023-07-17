@@ -10,7 +10,7 @@ return array(
     'think\\composer\\' => array($vendorDir . '/topthink/think-installer/src'),
     'think\\captcha\\' => array($vendorDir . '/topthink/think-captcha/src'),
     'think\\app\\' => array($vendorDir . '/topthink/think-multi-app/src'),
-    'think\\' => array($vendorDir . '/topthink/think-helper/src', $vendorDir . '/topthink/think-orm/src', $vendorDir . '/topthink/framework/src/think', $vendorDir . '/topthink/think-filesystem/src', $vendorDir . '/topthink/think-template/src'),
+    'think\\' => array($vendorDir . '/topthink/think-filesystem/src', $vendorDir . '/topthink/think-helper/src', $vendorDir . '/topthink/think-orm/src', $vendorDir . '/topthink/think-template/src', $vendorDir . '/topthink/framework/src/think'),
     'mailer\\' => array($vendorDir . '/yzh52521/think-mail/src/mailer'),
     'liliuwei\\social\\' => array($vendorDir . '/liliuwei/thinkphp-social/src'),
     'liliuwei\\sitemap\\' => array($vendorDir . '/liliuwei/php-sitemap/src'),

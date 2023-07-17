@@ -87,17 +87,17 @@
         },
         {
             "name": "doctrine/deprecations",
-            "version": "v1.0.0",
-            "version_normalized": "1.0.0.0",
+            "version": "v1.1.0",
+            "version_normalized": "1.1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/deprecations.git",
-                "reference": "0e2a4f1f8cdfc7a92ec3b01c9334898c806b30de"
+                "reference": "8cffffb2218e01f3b370bf763e00e81697725259"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/deprecations/zipball/0e2a4f1f8cdfc7a92ec3b01c9334898c806b30de",
-                "reference": "0e2a4f1f8cdfc7a92ec3b01c9334898c806b30de",
+                "url": "https://api.github.com/repos/doctrine/deprecations/zipball/8cffffb2218e01f3b370bf763e00e81697725259",
+                "reference": "8cffffb2218e01f3b370bf763e00e81697725259",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -117,7 +117,7 @@
             "suggest": {
                 "psr/log": "Allows logging deprecations via PSR-3 logger implementation"
             },
-            "time": "2022-05-02T15:47:09+00:00",
+            "time": "2023-05-29T18:55:17+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -133,7 +133,7 @@
             "homepage": "https://www.doctrine-project.org/",
             "support": {
                 "issues": "https://github.com/doctrine/deprecations/issues",
-                "source": "https://github.com/doctrine/deprecations/tree/v1.0.0"
+                "source": "https://github.com/doctrine/deprecations/tree/v1.1.0"
             },
             "install-path": "../doctrine/deprecations"
         },
@@ -226,17 +226,17 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "3.2.5",
-            "version_normalized": "3.2.5.0",
+            "version": "3.2.6",
+            "version_normalized": "3.2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "b531a2311709443320c786feb4519cfaf94af796"
+                "reference": "e5997fa97e8790cdae03a9cbd5e78e45e3c7bda7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/b531a2311709443320c786feb4519cfaf94af796",
-                "reference": "b531a2311709443320c786feb4519cfaf94af796",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/e5997fa97e8790cdae03a9cbd5e78e45e3c7bda7",
+                "reference": "e5997fa97e8790cdae03a9cbd5e78e45e3c7bda7",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -257,7 +257,7 @@
             "suggest": {
                 "ext-intl": "PHP Internationalization Libraries are required to use the SpoofChecking validation"
             },
-            "time": "2023-01-02T17:26:14+00:00",
+            "time": "2023-06-01T07:04:22+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -290,7 +290,7 @@
             ],
             "support": {
                 "issues": "https://github.com/egulias/EmailValidator/issues",
-                "source": "https://github.com/egulias/EmailValidator/tree/3.2.5"
+                "source": "https://github.com/egulias/EmailValidator/tree/3.2.6"
             },
             "funding": [
                 {
@@ -1361,17 +1361,17 @@
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v5.4.23",
-            "version_normalized": "5.4.23.0",
+            "version": "v5.4.25",
+            "version_normalized": "5.4.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "af9fbb378f5f956c8f29d4886644c84c193780ac"
+                "reference": "f66be2706075c5f6325d2fe2b743a57fb5d23f6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/af9fbb378f5f956c8f29d4886644c84c193780ac",
-                "reference": "af9fbb378f5f956c8f29d4886644c84c193780ac",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/f66be2706075c5f6325d2fe2b743a57fb5d23f6b",
+                "reference": "f66be2706075c5f6325d2fe2b743a57fb5d23f6b",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1398,7 +1398,7 @@
             "suggest": {
                 "symfony/mime": "To use the file extension guesser"
             },
-            "time": "2023-04-18T06:30:11+00:00",
+            "time": "2023-06-22T08:06:06+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1426,7 +1426,7 @@
             "description": "Defines an object-oriented layer for the HTTP specification",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/http-foundation/tree/v5.4.23"
+                "source": "https://github.com/symfony/http-foundation/tree/v5.4.25"
             },
             "funding": [
                 {
@@ -2272,17 +2272,17 @@
         },
         {
             "name": "topthink/framework",
-            "version": "v6.1.2",
-            "version_normalized": "6.1.2.0",
+            "version": "v6.1.4",
+            "version_normalized": "6.1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/framework.git",
-                "reference": "67235be5b919aaaf1de5aed9839f65d8e766aca3"
+                "reference": "66eb9cf4d627df12911344cd328faf9bb596bf2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/framework/zipball/67235be5b919aaaf1de5aed9839f65d8e766aca3",
-                "reference": "67235be5b919aaaf1de5aed9839f65d8e766aca3",
+                "url": "https://api.github.com/repos/top-think/framework/zipball/66eb9cf4d627df12911344cd328faf9bb596bf2c",
+                "reference": "66eb9cf4d627df12911344cd328faf9bb596bf2c",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -2308,7 +2308,7 @@
                 "mockery/mockery": "^1.2",
                 "phpunit/phpunit": "^7.0"
             },
-            "time": "2023-02-08T02:24:01+00:00",
+            "time": "2023-07-11T15:16:03+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -2340,7 +2340,7 @@
             ],
             "support": {
                 "issues": "https://github.com/top-think/framework/issues",
-                "source": "https://github.com/top-think/framework/tree/v6.1.2"
+                "source": "https://github.com/top-think/framework/tree/v6.1.4"
             },
             "install-path": "../topthink/framework"
         },
@@ -2572,17 +2572,17 @@
         },
         {
             "name": "topthink/think-multi-app",
-            "version": "v1.0.16",
-            "version_normalized": "1.0.16.0",
+            "version": "v1.0.17",
+            "version_normalized": "1.0.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-multi-app.git",
-                "reference": "07b9183855150455e1f76f8cbe9d77d6d1bc399f"
+                "reference": "4055a6187296ac16c0bc7bbab4ed5d92f82f791c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/top-think/think-multi-app/zipball/07b9183855150455e1f76f8cbe9d77d6d1bc399f",
-                "reference": "07b9183855150455e1f76f8cbe9d77d6d1bc399f",
+                "url": "https://api.github.com/repos/top-think/think-multi-app/zipball/4055a6187296ac16c0bc7bbab4ed5d92f82f791c",
+                "reference": "4055a6187296ac16c0bc7bbab4ed5d92f82f791c",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -2595,7 +2595,7 @@
                 "php": ">=7.1.0",
                 "topthink/framework": "^6.0|^8.0"
             },
-            "time": "2023-02-07T08:40:09+00:00",
+            "time": "2023-03-29T02:04:29+00:00",
             "type": "library",
             "extra": {
                 "think": {
@@ -2620,10 +2620,10 @@
                     "email": "liu21st@gmail.com"
                 }
             ],
-            "description": "thinkphp6 multi app support",
+            "description": "thinkphp multi app support",
             "support": {
                 "issues": "https://github.com/top-think/think-multi-app/issues",
-                "source": "https://github.com/top-think/think-multi-app/tree/v1.0.16"
+                "source": "https://github.com/top-think/think-multi-app/tree/v1.0.17"
             },
             "install-path": "../topthink/think-multi-app"
         },

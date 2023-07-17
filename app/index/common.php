@@ -106,6 +106,27 @@ function get_document_category_by_name($name, $field = false)
 }
 
 /**
+ * 获取一个文章分类
+ */
+function get_document_category_by($x, $field = false)
+{
+    if (!$x) {
+        throw new Exception('请指定要获取的栏目分类id！');
+    }
+    //获取缓存的文章菜单
+    $documentCategoryList = get_document_category_list();
+    if (!isset($documentCategoryList[$x])) {
+        return false;
+    }
+    if ($field) {
+        return $documentCategoryList[$x][$field];
+    } else {
+        $documentCategoryList[$x]['child'] = implode(",",array_column(getSubs($documentCategoryList,$x),"id"));
+        return $documentCategoryList[$x];
+    }
+}
+
+/**
  * 模板-获取文章分类
  * @param $type
  * @param $typeId
