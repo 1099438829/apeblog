@@ -5,11 +5,13 @@ namespace app\admin\controller;
 use app\common\model\AdminAuth;
 use app\common\model\Document;
 use app\common\model\Document as DocumentModel;
+use app\common\model\Tag as TagModel;
 use app\common\model\DocumentCategory;
 use app\common\model\DocumentCategory as DocumentCategoryModel;
 use app\common\model\FriendLink;
 use app\common\model\MessageForm;
 use app\common\model\AdminNotify;
+use app\common\model\Tag;
 use app\common\model\User;
 use Exception;
 use think\db\exception\DataNotFoundException;
@@ -87,11 +89,9 @@ class Index extends AuthController
         //获取域名
         $domain = Request::domain();
         //获取页码
-        $page = input('page/d');
-        if (!$page) {
-            $page = 1;
-        }
+        $page = input('page/d')?:1;
         $str = '';
+        $pagesize = 100;
         if ($page == 1) {
             if (file_exists('sitemap.xml'))
                 unlink('sitemap.xml');
@@ -104,27 +104,23 @@ class Index extends AuthController
             $str .= '<changefreq>daily</changefreq>';
             $str .= '<priority>1.0</priority>';
             $str .= '</url>';
-        }
-        $pagesize = 100;
 
-        //获取文章分类url
-        $documentCategoryModel = new DocumentCategoryModel();
-        $categoryInfo = $documentCategoryModel->field('id,alias,title,create_time')
-            ->where('status', 1)
-            ->page($page, $pagesize)
-            ->order('id desc')->select();
-        foreach ($categoryInfo as $v) {
-            echo $v['create_time'];
-            echo date("Y-m-d\TH:i:s+00:00",strtotime($v['create_time']));
-            echo strtotime($v['create_time']);die();
-            $str .= '<url>';
-            $str .= '<loc>' . url('index/article/lists',["id"=>$v["alias"]?:$v['id']],".html",$domain) . '</loc>';
-            $str .= '<lastmod>' . date("Y-m-d\TH:i:s+00:00",strtotime($v['create_time'])) . '</lastmod>';
-            $str .= '<changefreq>always</changefreq>';
-            $str .= '<priority>0.8</priority>';
-            $str .= '</url>';
+            //获取文章分类url
+            $documentCategoryModel = new DocumentCategoryModel();
+            $categoryInfo = $documentCategoryModel->field('id,alias,title,create_time')
+                ->where('status', 1)
+                ->page($page, $pagesize)
+                ->order('id desc')->select();
+            foreach ($categoryInfo as $v) {
+                $str .= '<url>';
+                $str .= '<loc>' . url('index/article/lists',["id"=>$v['id']],".html",$domain) . '</loc>';
+                $str .= '<lastmod>' . date("Y-m-d\TH:i:s+00:00",strtotime($v['create_time'])) . '</lastmod>';
+                $str .= '<changefreq>always</changefreq>';
+                $str .= '<priority>0.8</priority>';
+                $str .= '</url>';
+            }
         }
-        //获取详细页分类url
+        //获取文章URL
         $documentModel = new DocumentModel();
         $documentInfo = $documentModel->field('id,alias,create_time')
             ->where('display', 1)
@@ -132,16 +128,31 @@ class Index extends AuthController
             ->order('id desc')->select();
 
         foreach ($documentInfo as $v) {
-            echo date("Y-m-d\TH:i:s+00:00",strtotime($v['create_time']));
-            echo strtotime($v['create_time']);die();
             $str .= '<url>';
-            $str .= '<loc>' . url('/index/article/detail',["id"=>$v["alias"]?:$v['id']],".html",$domain) . '</loc>';
+            $str .= '<loc>' . url('/article/detail',["id"=>$v["alias"]?:$v['id']],".html",$domain) . '</loc>';
             $str .= '<lastmod>'.date("Y-m-d\TH:i:s+00:00",strtotime($v['create_time'])) .'</lastmod>';
             $str .= '<changefreq>monthly</changefreq>';
             $str .= '<priority>0.6</priority>';
             $str .= '</url>';
         }
-        if (count($categoryInfo) < $pagesize && count($documentInfo) < $pagesize) {
+
+        //获取文章标签页url
+        $documentModel = new TagModel();
+        $documentInfo = $documentModel->field('name,create_time')
+            ->page($page, $pagesize)
+            ->group('name')
+            ->order('name desc')->select();
+
+        foreach ($documentInfo as $v) {
+            $str .= '<url>';
+            $str .= '<loc>' . url('/article/tag',["t"=>$v["name"]],".html",$domain) . '</loc>';
+            $str .= '<lastmod>'.date("Y-m-d\TH:i:s+00:00",strtotime($v['create_time'])) .'</lastmod>';
+            $str .= '<changefreq>monthly</changefreq>';
+            $str .= '<priority>0.6</priority>';
+            $str .= '</url>';
+        }
+
+        if (count($documentInfo) < $pagesize) {
             $str .= '</urlset>';
             return (!(file_put_contents('sitemap.xml', $str, FILE_APPEND | LOCK_EX))) ?
                 $this->failedNotice("站点地图更新失败!", "/admin/") :
