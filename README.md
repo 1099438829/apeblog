@@ -23,56 +23,47 @@ ape_blog源码云博客
    /public  
    /runtime
 3. 安装好拓展
-4. 配置好域名，在浏览器里打开域名，根据安装向导进行安装
-5. 后台登录 http://域名/admin
+4. 设置伪静态
+5. 配置好域名，在浏览器里打开域名，根据安装向导进行安装
+6. 后台登录 http://域名/admin
 
-## 手动安装
+## 设置伪静态
 
-1.创建数据库，倒入数据库文件
+```ngnixconf
 
-数据库文件目录/public/install/learn.sql
+location /admin/ {
+    index  index.php index.html index.htm;
+     if (!-e $request_filename){
+        #后台文件更名了需要在这里修改
+        rewrite ^/admin/(.*)$ /admin.php?s=$1;
+     }
+}
 
-2.修改数据库连接文件
-配置文件路径/.env
+ location /api/ {
+      index  index.php index.html index.htm;
+       if (!-e $request_filename){
+          rewrite ^/api/(.*)$ /api.php?s=$1;
+       }
+}
 
-~~~
-APP_DEBUG = true
+location / {
+  index  index.php index.html index.htm;
+   #如果请求既不是一个文件，也不是一个目录，则执行一下重写规则
+  if (!-e $request_filename){
+      #地址作为将参数rewrite到index.php上。
+      rewrite ^/(.*)$ /index.php?s=$1 last;
+      #若是子目录则使用下面这句，将subdir改成目录名称即可。
+      #rewrite ^/subdir/(.*)$ /subdir/index.php?s=$1;
+  }    
+}
 
-[APP]
-DEFAULT_TIMEZONE = Asia/Shanghai
+```
 
-[DATABASE]
-TYPE = mysql
-HOSTNAME = 127.0.0.1 #数据库连接地址
-DATABASE = test #数据库名称
-USERNAME = username #数据库登录账号
-PASSWORD = password #数据库登录密码
-HOSTPORT = 3306 #数据库端口
-CHARSET = utf8
-DEBUG = true
-
-[LANG]
-default_lang = zh-cn
-~~~
-3.安装php拓展
-
-~~~
-redis 
-~~~
-
-4.创建目录并修改目录权限（linux系统）777
-
-~~~
-mkdir public/upload 
-mkdir runtime
-chmod -R 777  public/storage
-chmod -R 777  runtime
-~~~
-
-5.后台登录：
-http://域名/admin
-
-默认账号：admin 密码：123456
+```apacheconf
+RewriteRule '^/admin/(.*)$$' /admin.php?s=$1; [L] 
+RewriteRule '^/api/(.*)$$' /api.php?s=$1; [L] 
+RewriteRule '^/(.*)$$' /index.php?s=$1 [L] 
+```
 
 ## 文档
 
