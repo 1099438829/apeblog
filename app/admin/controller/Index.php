@@ -100,7 +100,7 @@ class Index extends AuthController
             //首页
             $str .= '<url>';
             $str .= '<loc>' . $domain . '</loc>';
-            $str .= '<lastmod>' . date('Y-m-d', time()) . '</lastmod>';
+            $str .= '<lastmod>' . date("Y-m-d\TH:i:s+00:00",time()). '</lastmod>';
             $str .= '<changefreq>daily</changefreq>';
             $str .= '<priority>1.0</priority>';
             $str .= '</url>';
@@ -116,7 +116,7 @@ class Index extends AuthController
         foreach ($categoryInfo as $v) {
             $str .= '<url>';
             $str .= '<loc>' . url('index/article/lists',["id"=>$v["alias"]?:$v['id']],".html",$domain) . '</loc>';
-            $str .= '<lastmod>' . date("Y-M-DTH:i:s+00:00",strtotime($v['create_time'])) . '</lastmod>';
+            $str .= '<lastmod>' . date("Y-m-d\TH:i:s+00:00",strtotime($v['create_time'])) . '</lastmod>';
             $str .= '<changefreq>always</changefreq>';
             $str .= '<priority>0.8</priority>';
             $str .= '</url>';
@@ -131,7 +131,7 @@ class Index extends AuthController
         foreach ($documentInfo as $v) {
             $str .= '<url>';
             $str .= '<loc>' . url('/index/article/detail',["id"=>$v["alias"]?:$v['id']],".html",$domain) . '</loc>';
-            $str .= '<lastmod>' . date("Y-M-DTH:i:s+00:00",strtotime($v['create_time'])) . '</lastmod>';
+            $str .= '<lastmod>' . date("Y-m-d\TH:i:s+00:00",strtotime($v['create_time'])) . '</lastmod>';
             $str .= '<changefreq>monthly</changefreq>';
             $str .= '<priority>0.6</priority>';
             $str .= '</url>';
