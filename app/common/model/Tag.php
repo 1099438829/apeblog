@@ -17,6 +17,8 @@ use think\db\exception\ModelNotFoundException;
  */
 class Tag extends BaseModel
 {
+
+    protected static $cache_key = 'index:tagList';
     /**
      * 列表
      * @param $where
@@ -66,9 +68,16 @@ class Tag extends BaseModel
                 'user_id' => $user_id,
             ];
         }
+        $this->clearCache();
         return $this->saveAll($saveAll);
     }
 
+    /**
+     * 清除缓存
+     */
+    public function clearCache(){
+        cache()->delete(self::$cache_key);
+    }
 
     /**
      * 列表
@@ -82,7 +91,7 @@ class Tag extends BaseModel
      */
     public static function getList($where): array
     {
-        $list = cache('index:tagList');
+        $list = cache(self::$cache_key);
         if ($list) {
             return json_decode($list, true);
         } else {
@@ -95,7 +104,7 @@ class Tag extends BaseModel
                 $tag->href = url('/article/tag',["t"=>$tag["name"]],'html')->build();
             })->toArray();
             if ($list) {
-                cache('index:tagList', json_encode($list), 24 * 60 * 60);
+                cache(self::$cache_key, json_encode($list), 24 * 60 * 60);
             }
         }
         return $list;

@@ -73,7 +73,7 @@ function get_document_category($x, $field = false)
     if ($field) {
         return $documentCategoryList[$x][$field];
     } else {
-        $documentCategoryList[$x]['child'] = implode(",",array_column(getSubs($documentCategoryList,$x),"id"));
+        $documentCategoryList[$x]['child'] = implode(",", array_column(getSubs($documentCategoryList, $x), "id"));
         return $documentCategoryList[$x];
     }
 }
@@ -121,7 +121,7 @@ function get_document_category_by($x, $field = false)
     if ($field) {
         return $documentCategoryList[$x][$field];
     } else {
-        $documentCategoryList[$x]['child'] = implode(",",array_column(getSubs($documentCategoryList,$x),"id"));
+        $documentCategoryList[$x]['child'] = implode(",", array_column(getSubs($documentCategoryList, $x), "id"));
         return $documentCategoryList[$x];
     }
 }
@@ -270,13 +270,14 @@ function get_document_category_by_parent($pid, $row)
 /*
  * 获取所有子集元素
  */
-function getSubs($categorys,$catId=0,$level=1){
-    $subs=array();
-    foreach($categorys as $item){
-        if($item['pid']==$catId){
-            $item['level']=$level;
-            $subs[]=$item;
-            $subs=array_merge($subs,getSubs($categorys,$item['id'],$level+1));
+function getSubs($categorys, $catId = 0, $level = 1)
+{
+    $subs = array();
+    foreach ($categorys as $item) {
+        if ($item['pid'] == $catId) {
+            $item['level'] = $level;
+            $subs[] = $item;
+            $subs = array_merge($subs, getSubs($categorys, $item['id'], $level + 1));
         }
     }
     return $subs;
@@ -308,7 +309,7 @@ function get_document_category_all()
 function tpl_get_prenext($get, $cid = false, $none)
 {
     //文档id
-    $id = input('id');
+    $id = request()->param('id');
     if (!$get) {
         $get = 'next';
     }
@@ -322,7 +323,7 @@ function tpl_get_prenext($get, $cid = false, $none)
     $document = $document->field('id,title')->order($get == 'pre' ? 'id desc' : 'id asc')->find();
 
     if ($document) {
-        $document['url'] = url('article/detail?id=' . $document['id'])->build();
+        $document['url'] = url('/article/detail?id=' . $document['id'])->build();
     } else {
         $document['id'] = false;
         $document['url'] = 'javascript:void(0)';
@@ -338,7 +339,7 @@ function tpl_get_prenext($get, $cid = false, $none)
  * @param $cid int 栏目分类id
  * @param $type string 读取数据的方式（son:'获取栏目下文章以及所有子孙分类文章',self:'获取栏目下文章',search:'获取关键字搜索的文章',where:'根据自定义条件获取文章（where语句）'）
  * @param string $table 文章内容扩展表名，默认article
- * @param bool|array $where  自定义条件
+ * @param bool|array $where 自定义条件
  * @param int $display
  * @return array
  * @throws Exception
@@ -346,7 +347,7 @@ function tpl_get_prenext($get, $cid = false, $none)
  * @throws DbException
  * @throws ModelNotFoundException
  */
-function tpl_get_list($orderBy, int $pageSize, $cid,  $type, $table = 'article', $where, int $display = 1)
+function tpl_get_list($orderBy, int $pageSize, $cid, $type, $table = 'article', $where, int $display = 1)
 {
     $documentListModel = (new Document())
         ->alias('a')
@@ -380,8 +381,8 @@ function tpl_get_list($orderBy, int $pageSize, $cid,  $type, $table = 'article',
             break;
         case 'search':
             //获取关键字搜索的文章
-            $kw = input('kw'); //搜索关键词
-            $tid = input('cid');//文章分类Id
+            $kw = request()->param('kw'); //搜索关键词
+            $tid = request()->param('cid');//文章分类Id
             if ($kw) {
                 $documentListModel = $documentListModel->where('a.title', 'like', "%$kw%");
             }
@@ -395,7 +396,7 @@ function tpl_get_list($orderBy, int $pageSize, $cid,  $type, $table = 'article',
             break;
         case 'tag':
             //读取指定tag的文章
-            $tag = substr(input('t'), 0, strpos(input('t'), '.')); //搜索关键词
+            $tag = request()->param('t'); //标签
             $tagModel = new Tag();
             $tagList = $tagModel->where('name', $tag)->select()->toArray();
             $documentListModel = $documentListModel->where('a.id', 'in', array_column($tagList, 'document_id'));
@@ -406,7 +407,7 @@ function tpl_get_list($orderBy, int $pageSize, $cid,  $type, $table = 'article',
     $query = request()->query();
     if ($query) {
         $documentListModel = $documentListModel->paginate([
-            'list_rows'=> $pageSize,
+            'list_rows' => $pageSize,
             'var_page' => 'page',
             'query' => get_route_query()
         ]);
@@ -445,7 +446,7 @@ function get_route_query()
  */
 function make_category_url($item)
 {
-    return url('article/detail', ['id'=>$item['alias']?:$item['id']])->build();
+    return url('/article/detail', ['id' => $item['alias'] ?: $item['id']])->build();
 }
 
 /**
@@ -460,7 +461,7 @@ function make_detail_url($item)
     if ($item['link_str'] && $item['is_jump']) {
         return $item['link_str'];
     } else {
-        return url($item['type'].'/detail', ['id'=>$item['alias']?:$item['id']])->build();
+        return url($item['type'] . '/detail', ['id' => $item['alias'] ?: $item['id']])->build();
     }
 }
 
@@ -601,31 +602,31 @@ function tpl_get_advert($type, int $row = 5)
     $advertList = cache(Data::DATA_ADVERT . '_' . $type);
     if ($advertList === null) {
         $advertList = (new Advert())->alias("a")
-            ->leftJoin("advert_info i",'a.id = i.advert_id')
+            ->leftJoin("advert_info i", 'a.id = i.advert_id')
             ->field("i.*")
             ->where('a.alias', $type)
             ->where('a.status', 1)
             ->where('i.status', 1)
             ->order('sort desc')
             ->select()
-           ->toArray();
+            ->toArray();
         //处理文件cdn信息
         foreach ($advertList as $key => &$item) {
-            if (empty($item['cover_path'])){
+            if (empty($item['cover_path'])) {
                 unset($advertList[$key]);
             }
             $item['cover_path'] = file_cdn($item['cover_path']);
         }
         unset($item);
-        if (!empty($advertList)){
+        if (!empty($advertList)) {
             cache(Data::DATA_ADVERT . '_' . $type, $advertList);
         }
     }
     //如果获取行数为空则取默认值
-    if (!$row){
+    if (!$row) {
         $row = 5;
     }
-    return !empty($advertList)?array_slice($advertList,0,$row):$advertList;
+    return !empty($advertList) ? array_slice($advertList, 0, $row) : $advertList;
 }
 
 /**
@@ -637,16 +638,14 @@ function tpl_get_advert($type, int $row = 5)
  * @author 木子的忧伤
  * @date 2022-06-01 10:06
  */
-function tpl_get_archive_list($type,$format){
+function tpl_get_archive_list($type, $format)
+{
     $list = cache(Data::DATA_ARCHIVE . '_' . $type);
     $list = null;
     if ($list === null) {
-        switch ($type){
+        switch ($type) {
             case "month":
                 $dateFormat = "LEFT(create_date,7)";
-                break;
-            case "day":
-                $dateFormat = "create_date";
                 break;
             case "year":
                 $dateFormat = "LEFT(create_date,4)";
@@ -657,7 +656,7 @@ function tpl_get_archive_list($type,$format){
         }
         $list = (new Document())->group($dateFormat)->column("count(*) as count,create_date");
         foreach ($list as $key => &$item) {
-            $item['create_date'] = date($format,strtotime($item['create_date']));
+            $item['create_date'] = date($format, strtotime($item['create_date']));
         }
         cache(Data::DATA_ADVERT . '_' . $type, $list);
     }
@@ -700,7 +699,7 @@ if (!function_exists('tpl_get_tags_list')) {
         $tagTemp = [];
         foreach ($tagArr as $item) {
             $data['title'] = $item;
-            $data['url'] = url('article/tag?t=' . urlencode($item));
+            $data['url'] = url('/article/tag', ["t" => $item])->build();
             array_push($tagTemp, $data);
         }
         return $tagTemp;
@@ -739,7 +738,7 @@ function get_comment_children($parentIds)
         return $list;
     }
     foreach ($list as &$item) {
-        $item['reply_url'] = url('article/create_comment?pid=' . $item['id'])->build();
+        $item['reply_url'] = url('/article/create_comment', ["pid" => $item['id']])->build();
     }
     unset($item);
     return array_merge($list, get_comment_children(array_column($list, 'id')));
@@ -781,7 +780,7 @@ function tpl_get_comment_list($id, $type, $pageSize, $orderBy)
     }
     $lists = [];
     foreach ($commentModel as $key => $item) {
-        $item['reply_url'] = url('article/create_comment?pid=' . $item['id'])->build();
+        $item['reply_url'] = url('/article/create_comment', ["id" => $item['id']])->build();
         $lists[$key] = $item;
     }
     return [
@@ -829,11 +828,9 @@ function get_comment_count($documentId, $type = 'top')
  */
 function tpl_get_relevant_list($documentId, $row, $table = 'article')
 {
-    $count = Document::where('type', $table)
-        ->where('status', 1)->count();    //获取总记录数
+    $count = Document::where('type', $table)->where('status', 1)->count();    //获取总记录数
     $id = (new Document())->getPK();
-    $min = Document::where('type', $table)
-        ->where('status', 1)->min($id);    //统计某个字段最小数据
+    $min = Document::where('type', $table)->where('status', 1)->min($id);    //统计某个字段最小数据
     if ($count < $row) {
         $row = $count;
     }
@@ -850,8 +847,8 @@ function tpl_get_relevant_list($documentId, $row, $table = 'article')
             } else {
                 $i--;
             }
-            $i++;
         }
+        $i++;
     }
     $relevantList = Document::where('type', $table)
         ->where('status', 1)
@@ -870,7 +867,7 @@ function tpl_get_relevant_list($documentId, $row, $table = 'article')
 //获取顶级栏目名
 function GetTopTypename($id = false)
 {
-    $id = $id ? $id : input('id');
+    $id = $id ?: request()->param('id');
     $dc = get_document_category($id);
     if ((int)$dc['pid'] === 0) {
         return $dc['title'];
@@ -882,7 +879,7 @@ function GetTopTypename($id = false)
 //获取顶级id
 function GetToptypeId($id = false)
 {
-    $id = $id ? $id : input('id');
+    $id = $id ?: request()->param('id');
     $dc = get_document_category($id);
     if ((int)$dc['pid'] === 0) {
         return $dc['id'];
@@ -894,7 +891,7 @@ function GetToptypeId($id = false)
 //获取顶级栏目图片
 function GetTopTypeimg($id = false)
 {
-    $id = $id ? $id : input('id');
+    $id = $id ?: request()->param('id');
     $dc = get_document_category($id);
     if ((int)$dc['pid'] === 0) {
         return $dc['icon'];
@@ -905,7 +902,7 @@ function GetTopTypeimg($id = false)
 //获取顶级栏目描述
 function GetTopDescription($id = false)
 {
-    $id = $id ? $id : input('id');
+    $id = $id ?: request()->param('id');
     $dc = get_document_category($id);
     if ((int)$dc['pid'] === 0) {
         return $dc['description'];
@@ -917,7 +914,7 @@ function GetTopDescription($id = false)
 //获取顶级英文名称
 function GetTopTypenameen($id = false)
 {
-    $id = $id ? $id : input('id');
+    $id = $id ?: request()->param('id');
     $dc = get_document_category($id);
     if ((int)$dc['pid'] === 0) {
         return $dc['name'];
@@ -1036,7 +1033,7 @@ function file_load_face($path)
 }
 
 
-function comment_face($incoming_comment,$path)
+function comment_face($incoming_comment, $path)
 {
     $pattern = '/\[f=(.*?)\]/';
     $isMatched = preg_match_all($pattern, $incoming_comment, $match);
@@ -1044,7 +1041,7 @@ function comment_face($incoming_comment,$path)
         return $incoming_comment;
     }
     foreach ($match[1] as $facename) {
-        if (file_exists( public_path() . $path . $facename . '.gif')) {
+        if (file_exists(public_path() . $path . $facename . '.gif')) {
             $incoming_comment = str_replace("[f={$facename}]", '<img src="' . $path . $facename . '.gif" width="24">', $incoming_comment);
         }
     }

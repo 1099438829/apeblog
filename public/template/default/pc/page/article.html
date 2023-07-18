@@ -40,7 +40,7 @@
                         <div class="post-info">
                             <div class="post-info-left">
                                 <a class="nickname url fn j-user-card" data-user="1"
-                                   href="{:url('article/user')}?author={$apeField['author']}"><i class="fa fa-user" aria-hidden="true"></i>{$apeField['author']}
+                                   href="{:url('/article/user')}?author={$apeField['author']}"><i class="fa fa-user" aria-hidden="true"></i>{$apeField['author']}
                                 </a>
                                 <span class="dot">•</span>
                                 <time class="entry-date published" datetime="{$apeField['create_time']}" pubdate=""><i
@@ -279,7 +279,7 @@
                         <div class="hot-post-widget-item-meta">
                             <div>{$field['create_time']}</div>
                             <div>
-                                <a href="{:url('article/lists')}?id={$field['category_id']}">{:cn_substr($field['category_title'],5)}</a>
+                                <a href="{:url('/article/lists')}?id={$field['category_id']}">{:cn_substr($field['category_title'],5)}</a>
                             </div>
                         </div>
                     </div>

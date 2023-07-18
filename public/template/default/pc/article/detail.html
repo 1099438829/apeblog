@@ -40,7 +40,7 @@
                         <div class="post-info">
                             <div class="post-info-left">
                                 <a class="nickname url fn j-user-card" data-user="1"
-                                   href="{:url('article/user')}?author={$apeField['author']}"><i class="fa fa-user" aria-hidden="true"></i>{$apeField['author']}
+                                   href="{:url('/article/user')}?author={$apeField['author']}"><i class="fa fa-user" aria-hidden="true"></i>{$apeField['author']}
                                 </a>
                                 <span class="dot">•</span>
                                 <time class="entry-date published" datetime="{$apeField['create_time']}" pubdate=""><i
@@ -48,7 +48,7 @@
                                     {$apeField['create_time']}
                                 </time>
                                 <span class="dot">•</span><i class="fas fa-folder"></i>
-                                <a href="{:url('article/lists')}?id={$apeField['category_id']}" rel="category tag"> {$apeField['category_title']}</a>
+                                <a href="{:url('/article/lists')}?id={$apeField['category_id']}" rel="category tag"> {$apeField['category_title']}</a>
                                 <span class="dot">•</span>
                                 <span><i class="fa fa-eye" aria-hidden="true"></i>{$apeField['view']} 阅读</span>
                             </div>
@@ -305,7 +305,7 @@
                             <div class="hot-post-widget-item-meta">
                                 <div>{$field['create_time']}</div>
                                 <div>
-                                    <a href="{:url('article/lists')}?id={$field['category_id']}">{:cn_substr($field['category_title'],5)}</a>
+                                    <a href="{:url('/article/lists')}?id={$field['category_id']}">{:cn_substr($field['category_title'],5)}</a>
                                 </div>
                             </div>
                         </div>

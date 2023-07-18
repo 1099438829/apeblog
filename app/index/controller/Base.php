@@ -30,7 +30,6 @@ class Base extends BaseController
     protected function initialize()
     {
         parent::initialize();
-
         $this->userInfo = Session::get(Data::SESSION_KEY_USER_INFO);
         $this->userId = Session::get(Data::SESSION_KEY_USER_ID);
 
