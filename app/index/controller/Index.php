@@ -5,6 +5,8 @@ namespace app\index\controller;
 use app\admin\extend\Util as Util;
 use app\common\constant\Data;
 use app\common\model\Document;
+use app\common\model\Document as DocumentModel;
+use app\common\model\DocumentCategory as DocumentCategoryModel;
 use app\common\model\FriendLink as friendLinkModel;
 use app\common\model\MessageForm as MessageFormModel;
 use app\common\model\Tag as TagModel;
@@ -13,6 +15,7 @@ use app\Request;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
+use think\facade\Filesystem;
 use think\facade\Log;
 
 /**
@@ -187,5 +190,79 @@ class Index extends Base
             ['limit', 10]
         ]);
         return app("json")->layui(TagModel::getList($where));
+    }
+
+    /**
+     * 生成sitemap.xml
+     * @return \think\Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function sitemap(): \think\Response
+    {
+        //获取域名
+        $domain = request()->domain();
+        $cache_key = "sitemap.xml";
+        //先获取缓存是否存在
+        if ($content = cache($cache_key)){
+            return response($content)->header(['Content-Type'=>'application/xml']);
+        }
+        // 通过输出缓冲区内容，生成XML
+        $str = '<?xml version="1.0" encoding="UTF-8"?>';
+        $str.= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">';
+        //首页
+        $str .= '<url>';
+        $str .= '<loc>' . $domain . '</loc>';
+        $str .= '<lastmod>' . date("Y-m-d\TH:i:s+00:00",time()). '</lastmod>';
+        $str .= '<changefreq>daily</changefreq>';
+        $str .= '<priority>1.0</priority>';
+        $str .= '</url>';
+        //获取文章分类url
+        $documentCategoryModel = new DocumentCategoryModel();
+        $categoryInfo = $documentCategoryModel->field('id,alias,title,create_time')
+            ->where('status', 1)
+            ->order('id desc')->select();
+        foreach ($categoryInfo as $v) {
+            $str .= '<url>';
+            $str .= '<loc>' . url('index/article/lists',["id"=>$v['id']],".html",$domain) . '</loc>';
+            $str .= '<lastmod>' . date("Y-m-d\TH:i:s+00:00",strtotime($v['create_time'])) . '</lastmod>';
+            $str .= '<changefreq>always</changefreq>';
+            $str .= '<priority>0.8</priority>';
+            $str .= '</url>';
+        }
+        //获取文章URL
+        $documentModel = new DocumentModel();
+        $documentInfo = $documentModel->field('id,alias,create_time')
+            ->where('display', 1)
+            ->order('id desc')->select();
+
+        foreach ($documentInfo as $v) {
+            $str .= '<url>';
+            $str .= '<loc>' . url('/article/detail',["id"=>$v["alias"]?:$v['id']],".html",$domain) . '</loc>';
+            $str .= '<lastmod>'.date("Y-m-d\TH:i:s+00:00",strtotime($v['create_time'])) .'</lastmod>';
+            $str .= '<changefreq>monthly</changefreq>';
+            $str .= '<priority>0.6</priority>';
+            $str .= '</url>';
+        }
+
+        //获取文章标签页url
+        $documentModel = new TagModel();
+        $documentInfo = $documentModel->field('name,create_time')
+            ->group('name')
+            ->order('name desc')->select();
+
+        foreach ($documentInfo as $v) {
+            $str .= '<url>';
+            $str .= '<loc>' . url('/article/tag',["t"=>$v["name"]],".html",$domain) . '</loc>';
+            $str .= '<lastmod>'.date("Y-m-d\TH:i:s+00:00",strtotime($v['create_time'])) .'</lastmod>';
+            $str .= '<changefreq>monthly</changefreq>';
+            $str .= '<priority>0.6</priority>';
+            $str .= '</url>';
+        }
+        $str .= '</urlset>';
+        cache($cache_key,$str,24*60*60);//每日更新
+        // 将内容输出到浏览器
+        return  response($str)->header(['Content-Type'=>'application/xml']);
     }
 }

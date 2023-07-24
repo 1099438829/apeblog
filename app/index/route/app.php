@@ -15,3 +15,4 @@ Route::get('think', function () {
 });
 
 Route::get('hello/:name', 'index/hello');
+Route::rule('/sitemap.xml', 'index/sitemap');
