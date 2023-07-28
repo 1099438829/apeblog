@@ -67,7 +67,7 @@
             <td class="td1">&nbsp;</td>
           </tr>
           <tr>
-            <td class="tar">管理员帐号：</td>
+            <td class="tar">管理员账号：</td>
             <td><input type="text" name="manager" id="manager" value="admin" class="input"></td>
             <td><div id="J_install_tip_manager"></div></td>
           </tr>

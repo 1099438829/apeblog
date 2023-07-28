@@ -90,7 +90,7 @@
             <td class="td1">&nbsp;</td>
           </tr>
           <tr>
-            <td class="tar">管理员帐号：</td>
+            <td class="tar">管理员账号：</td>
             <td><input type="text" name="manager" value="admin" class="input"></td>
             <td><div id="J_install_tip_manager"></div></td>
           </tr>
@@ -164,7 +164,7 @@ $(function(){
 		dbpw : '',
 		dbname : '',
 		dbprefix : '建议使用默认，同一数据库安装多个时需修改',
-		manager : '创始人帐号，拥有站点后台所有管理权限',
+		manager : '创始人账号，拥有站点后台所有管理权限',
 		manager_pwd : '',
 		manager_ckpwd : '',
 		sitename : '',
@@ -279,7 +279,7 @@ $(function(){
 				required	: '数据库表前缀不能为空'
 			},
 			manager: {
-				required	: '管理员帐号不能为空'
+				required	: '管理员账号不能为空'
 			},
 			manager_pwd: {
 				required	: '密码不能为空'
