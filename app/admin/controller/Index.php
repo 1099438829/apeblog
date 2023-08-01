@@ -2,22 +2,9 @@
 
 namespace app\admin\controller;
 
-use app\common\model\AdminAuth;
-use app\common\model\Document;
-use app\common\model\Document as DocumentModel;
-use app\common\model\Tag as TagModel;
-use app\common\model\DocumentCategory;
-use app\common\model\DocumentCategory as DocumentCategoryModel;
-use app\common\model\FriendLink;
-use app\common\model\MessageForm;
-use app\common\model\AdminNotify;
-use app\common\model\Tag;
-use app\common\model\User;
+use app\common\model\{AdminAuth, Document, FriendLink, MessageForm, AdminNotify, User};
 use Exception;
-use think\db\exception\DataNotFoundException;
-use think\db\exception\DbException;
-use think\db\exception\ModelNotFoundException;
-use think\facade\Request;
+use think\db\exception\{DataNotFoundException, DbException, ModelNotFoundException};
 
 class Index extends AuthController
 {
@@ -29,14 +16,8 @@ class Index extends AuthController
     public function index()
     {
         $this->assign("adminInfo", $this->adminInfo);
-        $menuList = cache(AdminAuth::getMenuCacheKey($this->adminId));
-        if ($menuList === null) {
-            $menuList = AdminAuth::getMenu(0, $this->auth);
-            cache(AdminAuth::getMenuCacheKey($this->adminId), $menuList, 1 * 60 * 60);
-        }
-        $this->assign("menu", $menuList);
-        $messageList = AdminNotify::pageList(5);
-        $this->assign("message", $messageList);
+        $this->assign("menu", AdminAuth::getAuthList($this->adminId,$this->auth));
+        $this->assign("message", AdminNotify::pageList(5));
         return $this->fetch();
     }
 
@@ -47,20 +28,11 @@ class Index extends AuthController
      */
     public function main()
     {
-        $documentCount = Document::counts(new Document());
-        $this->assign("document_count", $documentCount);
-        $userCount = User::counts(new User());
-        $this->assign("user_count", $userCount);
-        $FriendLinkCount = FriendLink::counts(new FriendLink());
-        $this->assign("friend_link_count", $FriendLinkCount);
-        $messageFormCount = MessageForm::counts(new MessageForm());
-        $this->assign("message_form_count", $messageFormCount);
-        $data =[
-            "page"=> 0 ,
-            "limit" => 5
-        ];
-        $articleList = Document::systemPage($data)['data'];
-        $this->assign("article_list", $articleList);
+        $this->assign("document_count", Document::counts());
+        $this->assign("user_count", User::counts(new User()));
+        $this->assign("friend_link_count", FriendLink::counts(new FriendLink()));
+        $this->assign("message_form_count", MessageForm::counts(new MessageForm()));
+        $this->assign("article_list", Document::systemPage(["page"=> 0 ,"limit" => 5])['data']);
         return $this->fetch();
     }
 
@@ -72,11 +44,6 @@ class Index extends AuthController
      */
     public function menu()
     {
-        $menuList = cache(AdminAuth::getMenuCacheKey($this->adminId));
-        if ($menuList === null) {
-            $menuList = AdminAuth::getMenu(0, $this->auth);
-            cache(AdminAuth::getMenuCacheKey($this->adminId), $menuList, 1 * 60 * 60);
-        }
-        return app("json")->success($menuList);
+        return app("json")->success(AdminAuth::getAuthList($this->adminId,$this->auth));
     }
 }

@@ -41,6 +41,24 @@ class AdminAuth extends BaseModel
     }
 
     /**
+     * 获取用户权限列表
+     * @param $admin_id
+     * @param $auth
+     * @return array|mixed|object|\think\App
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public static function getAuthList($admin_id,$auth){
+        $menuList = cache(self::getMenuCacheKey($admin_id));
+        if ($menuList === null) {
+            $menuList = self::getMenu(0, $auth);
+            cache(AdminAuth::getMenuCacheKey($admin_id), $menuList, 1 * 60 * 60);
+        }
+        return $menuList;
+    }
+
+    /**
      * 获取菜单
      * @param int $pid
      * @param array $auth
