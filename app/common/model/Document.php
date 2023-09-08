@@ -38,7 +38,7 @@ class Document extends BaseModel
         if (!empty($where['end_time'])) $model = $model->where("create_time", "<", strtotime($where['end_time'] . " 23:59:59"));
         if (!empty($where['status'])) $model = $model->where("status", $where['status']);
         $model = $model->order("sort desc")->order("id desc");
-        $count = self::counts($model);
+        $count = self::count();
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'], (int)$where['limit']);
         $categoryList = DocumentCategory::column('title', 'id');
         $data = $model->select()->each(function ($item) use ($categoryList) {

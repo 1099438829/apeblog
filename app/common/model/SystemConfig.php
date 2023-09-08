@@ -27,7 +27,7 @@ class SystemConfig extends BaseModel
     {
         $model = new self;
         if ($where['tab_id']) $model = $model->where('tab_id', $where['tab_id']);
-        $count = self::counts($model);
+        $count = self::count();
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'], (int)$where['limit']);
         $data = $model->select();
         if ($data) $data = $data->toArray();

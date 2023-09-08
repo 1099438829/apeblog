@@ -58,7 +58,7 @@ class AdminNotify extends BaseModel
     {
         $model = new self;
         $model = $model->where("is_read", 0);
-        $count = self::counts($model);
+        $count = self::count();
         $model = $model->order("create_time desc");
         $model = $model->page(1, $num);
         $data = $model->select();

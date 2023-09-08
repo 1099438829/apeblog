@@ -50,7 +50,7 @@ class AdminLog extends BaseModel
         if ($where['ip'] != '') $model = $model->where('ip', "like", "%$where[ip]%");
         if ($where['start_time'] != '') $model = $model->where('create_time', '>', strtotime($where['start_time'] . " 00:00:00"));
         if ($where['end_time'] != '') $model = $model->where('create_time', '<', strtotime($where['end_time'] . " 23:59:59"));
-        $count = self::counts($model);
+        $count = self::count();
         if (!empty($where['page']) && !empty($where['limit'])) $model = $model->page((int)$where['page'], (int)$where['limit']);
         $data = $model->select()->each(function ($item) {
             $item['name'] = AdminAuth::getNameByAction($item['module'], $item['controller'], $item['action']);

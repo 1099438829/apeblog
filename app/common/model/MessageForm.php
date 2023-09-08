@@ -34,7 +34,7 @@ class MessageForm extends BaseModel
         if (isset($where['tel']) && $where['tel'] !== '') $model->where('tel', "like", "%$where[tel]%");
         if (isset($where['start_time']) && $where['start_time'] != '') $model = $model->where("m.created_at", ">", strtotime($where['start_time'] . " 00:00:00"));
         if (isset($where['end_time']) && $where['end_time'] != '') $model = $model->where("m.created_at", "<", strtotime($where['end_time'] . " 23:59:59"));
-        $count = self::counts($model);
+        $count = self::count();
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'], (int)$where['limit']);
         $data = $model->select();
         if ($data) $data = $data->toArray();

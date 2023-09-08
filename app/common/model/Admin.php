@@ -78,7 +78,7 @@ class Admin extends BaseModel
         if ($where['tel'] != '') $model = $model->where("tel|mail", "like", "%$where[tel]%");
         if ($where['status'] != '') $model = $model->where("status", $where['status']);
         if ($where['role_id'] != '') $model = $model->where("role_id", $where['role_id']);
-        $count = self::counts($model);
+        $count = self::count();
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'], (int)$where['limit']);
         $data = $model->select()->each(function ($item) {
             unset($item['password']);

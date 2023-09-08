@@ -43,7 +43,7 @@ class Attachment extends BaseModel
     {
         $model = self::where("type", $where['type']);
         if ($where['cid'] != "") $model = $model->where("cid", $where['cid']);
-        $count = self::counts($model);
+        $count = self::count();
         $model = $model->order("id desc");
         $model = $model->field("id,path");
         $data = $model->page((int)$where['page'], (int)$where['limit'])->select();

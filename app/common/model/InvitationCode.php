@@ -31,7 +31,7 @@ class InvitationCode extends BaseModel
         $model = new self;
         $model = $model->order('id', 'desc');
         if (isset($where['code']) && $where['code'] !== '') $model->where('code', "like", "%$where[code]%");
-        $count = self::counts($model);
+        $count = self::count();
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'], (int)$where['limit']);
         $data = $model->select();
         if ($data) $data = $data->toArray();

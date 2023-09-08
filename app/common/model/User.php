@@ -182,7 +182,7 @@ class User extends BaseModel
         if ($where['tel'] != '') $model = $model->where("tel|email", "like", "%$where[tel]%");
         if ($where['status'] != '') $model = $model->where("status", $where['status']);
         if ($where['is_admin'] != '') $model = $model->where("is_admin", $where['is_admin']);
-        $count = self::counts($model);
+        $count = self::count();
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'], (int)$where['limit']);
         $data = $model->select();
         $data = $data ? $data->toArray() : [];

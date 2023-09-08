@@ -4,6 +4,9 @@
 namespace app\common\model;
 
 
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\db\Raw;
 use think\Model;
 
@@ -25,18 +28,28 @@ trait ModelTrait
         return $this->error;
     }
 
+    /**
+     * @throws DataNotFoundException
+     * @throws ModelNotFoundException
+     * @throws DbException
+     */
     public static function get($where)
     {
         if (!is_array($where)) {
-            return self::find($where);
+            return (new BaseModel)->find($where);
         } else {
-            return self::where($where)->find();
+            return (new BaseModel)->where($where)->find();
         }
     }
 
+    /**
+     * @throws ModelNotFoundException
+     * @throws DataNotFoundException
+     * @throws DbException
+     */
     public static function all($function)
     {
-        $query = self::newQuery();
+        $query = (new BaseModel)->newQuery();
         $function($query);
         return $query->select();
     }
@@ -45,11 +58,11 @@ trait ModelTrait
      * 添加多条数据
      * @param $group
      * @param bool $replace
-     * @return mixed
+     * @return int
      */
-    public static function setAll($group, $replace = false)
+    public static function setAll($group, bool $replace = false)
     {
-        return self::insertAll($group, $replace);
+        return (new BaseModel)->insertAll($group, $replace);
     }
 
     /**
@@ -59,7 +72,7 @@ trait ModelTrait
      * @param $field
      * @return bool $type 返回成功失败
      */
-    public static function edit($data, $id, $field = null)
+    public static function edit($data, $id, $field = null): bool
     {
         $model = new self;
         if (!$field) $field = $model->getPk();
@@ -80,8 +93,9 @@ trait ModelTrait
      * @param $map
      * @param string $field
      * @return bool 是否存在
+     * @throws DbException
      */
-    public static function be($map, $field = '')
+    public static function isExist($map, $field = ''): bool
     {
         $model = (new self);
         if (!is_array($map) && empty($field)) $field = $model->getPk();
@@ -106,9 +120,9 @@ trait ModelTrait
      * @param null $eachFn 处理结果函数
      * @param array $params 分页参数
      * @param int $limit 分页数
-     * @return array
+     * @return ModelTrait
      */
-    public static function page($model = null, $eachFn = null, $params = [], $limit = 20)
+    public static function page($model = null, $eachFn = null, $params = [], $limit = 20): ModelTrait
     {
         if (is_numeric($eachFn) && is_numeric($model)) {
             return parent::page($model, $eachFn);
@@ -178,12 +192,12 @@ trait ModelTrait
         if (!empty($fieldOr) && is_array($fieldOr) && isset($fieldOr[0])) {
             if (($count = strpos($fieldOr[0], '.')) === false) {
                 if (isset($where[$fieldOr[0]]) && $where[$fieldOr[0]] != '') {
-                    $model = $model->where(self::get_field($fieldOr), $like, "%" . $where[$fieldOr[0]] . "%");
+                    $model = $model->where(self::getField($fieldOr), $like, "%" . $where[$fieldOr[0]] . "%");
                 }
             } else {
                 $item_l = substr($fieldOr[0], $count + 1);
                 if (isset($where[$item_l]) && $where[$item_l] != '') {
-                    $model = $model->where(self::get_field($fieldOr), $like, "%" . $where[$item_l] . "%");
+                    $model = $model->where(self::getField($fieldOr), $like, "%" . $where[$item_l] . "%");
                 }
             }
         }
@@ -197,7 +211,7 @@ trait ModelTrait
      * @param string $str
      * @return string
      */
-    private static function get_field($id, $str = '|')
+    private static function getField($id, $str = '|')
     {
         if (is_array($id)) {
             $sql = "";
@@ -282,14 +296,14 @@ trait ModelTrait
      * 截取中文指定字节
      * @param string $str
      * @param int $utf8len
-     * @param string $chaet
+     * @param string $charset
      * @param string $file
      * @return string
      */
-    public static function getSubstrUTf8($str, $utf8len = 100, $chaet = 'UTF-8', $file = '....')
+    public static function getSubstrUTf8($str, int $utf8len = 100, string $charset = 'UTF-8', string $file = '....'): string
     {
-        if (mb_strlen($str, $chaet) > $utf8len) {
-            $str = mb_substr($str, 0, $utf8len, $chaet) . $file;
+        if (mb_strlen($str, $charset) > $utf8len) {
+            $str = mb_substr($str, 0, $utf8len, $charset) . $file;
         }
         return $str;
     }
@@ -300,7 +314,7 @@ trait ModelTrait
      * @param string $ceil
      * @return array
      */
-    public static function getMonth($time = '', $ceil = 0)
+    public static function getMonth($time = '', $ceil = 0): array
     {
         if ($ceil != 0)
             $season = ceil(date('n') / 3) - $ceil;
@@ -309,68 +323,6 @@ trait ModelTrait
         $firstday = date('Y-m-01', mktime(0, 0, 0, ($season - 1) * 3 + 1, 1, date('Y')));
         $lastday = date('Y-m-t', mktime(0, 0, 0, $season * 3, 1, date('Y')));
         return array($firstday, $lastday);
-    }
-
-    /**
-     * 高精度 加法
-     * @param int|string $uid id
-     * @param string $decField 相加的字段
-     * @param float|int $dec 加的值
-     * @param string $keyField id的字段
-     * @param int $acc 精度
-     * @return bool
-     */
-    public static function bcInc($key, $incField, $inc, $keyField = null, $acc = 2)
-    {
-        if (!is_numeric($inc)) return false;
-        $model = new self();
-        if ($keyField === null) $keyField = $model->getPk();
-        $result = self::where($keyField, $key)->find();
-        if (!$result) return false;
-        $new = bcadd($result[$incField], $inc, $acc);
-        return false !== $model->where($keyField, $key)->update([$incField => $new]);
-    }
-
-
-    /**
-     * 高精度 减法
-     * @param int|string $uid id
-     * @param string $decField 相减的字段
-     * @param float|int $dec 减的值
-     * @param string $keyField id的字段
-     * @param bool $minus 是否可以为负数
-     * @param int $acc 精度
-     * @return bool
-     */
-    public static function bcDec($key, $decField, $dec, $keyField = null, $minus = false, $acc = 2)
-    {
-        if (!is_numeric($dec)) return false;
-        $model = new self();
-        if ($keyField === null) $keyField = $model->getPk();
-        $result = self::where($keyField, $key)->find();
-        if (!$result) return false;
-        if (!$minus && $result[$decField] < $dec) return false;
-        $new = bcsub($result[$decField], $dec, $acc);
-        return false !== $model->where($keyField, $key)->update([$decField => $new]);
-    }
-
-    /**
-     * @param null $model
-     * @return Model
-     */
-    protected static function getSelfModel($model = null)
-    {
-        return $model == null ? (new self()) : $model;
-    }
-
-    /**
-     * 数据个数
-     * @param string|Raw $model
-     * @return int
-     */
-    public static function counts($model): int
-    {
-        return $model->count();
     }
 
     /**

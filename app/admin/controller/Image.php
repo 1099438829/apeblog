@@ -122,8 +122,8 @@ class Image extends AuthController
     public function delCategory($id)
     {
         if ($id == 0) return app("json")->fail("未选择分类");
-        if (Attachment::be($id, "cid")) return app("json")->fail("该分类下有图片不能删除");
-        if (AttachmentCategory::be($id, "pid")) return app("json")->fail("该分类下有子分类不能删除");
+        if (Attachment::isExist($id, "cid")) return app("json")->fail("该分类下有图片不能删除");
+        if (AttachmentCategory::isExist($id, "pid")) return app("json")->fail("该分类下有子分类不能删除");
         return AttachmentCategory::del($id) ? app("json")->success("删除成功") : app("json")->fail("删除失败");
     }
 

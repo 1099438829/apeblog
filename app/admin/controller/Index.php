@@ -28,10 +28,10 @@ class Index extends AuthController
      */
     public function main()
     {
-        $this->assign("document_count", Document::counts());
-        $this->assign("user_count", User::counts(new User()));
-        $this->assign("friend_link_count", FriendLink::counts(new FriendLink()));
-        $this->assign("message_form_count", MessageForm::counts(new MessageForm()));
+        $this->assign("document_count", (new Document)->count());
+        $this->assign("user_count", (new User())->count());
+        $this->assign("friend_link_count",(new FriendLink())->count());
+        $this->assign("message_form_count", (new MessageForm())->count());
         $this->assign("article_list", Document::systemPage(["page"=> 0 ,"limit" => 5])['data']);
         return $this->fetch();
     }

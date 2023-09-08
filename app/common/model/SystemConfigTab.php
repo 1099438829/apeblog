@@ -25,7 +25,7 @@ class SystemConfigTab extends BaseModel
         $model = new self;
         if ($where['status'] != "") $model = $model->where("status", $where['status']);
         if (!empty($where['name'])) $model = $model->where("name", "like", "%$where[name]%");
-        $count = self::counts($model);
+        $count = self::count();
         if (isset($where['page']) && isset($where['limit'])) $model = $model->page((int)$where['page'], (int)$where['limit']);
         $data = $model->select();
         if ($data) $data = $data->toArray();

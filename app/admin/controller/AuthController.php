@@ -135,7 +135,7 @@ abstract class AuthController extends SystemBasic
      * 记录日志
      * @return bool
      */
-    protected function createLog()
+    protected function createLog(): bool
     {
         // 不需要登录不能记录日志
         if (in_array($this->action, $this->noNeedLogin) || $this->noNeedLogin == ['*'] || $this->noNeedLogin == "*") return true;

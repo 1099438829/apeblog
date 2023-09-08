@@ -29,7 +29,7 @@ class DocumentProduct extends BaseModel
     public static function systemPage($where): array
     {
         $model = new self;
-        $count = self::counts($model);
+        $count = self::count();
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'], (int)$where['limit']);
         $data = $model->select();
         if ($data) $data = $data->toArray();
