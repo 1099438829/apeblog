@@ -4,8 +4,8 @@ namespace app\admin\controller;
 
 use app\admin\extend\FormBuilder as Form;
 use app\admin\extend\Util as Util;
-use app\common\model\Admin as aModel;
-use app\common\model\AdminRole as rModel;
+use app\admin\model\Admin as aModel;
+use app\admin\model\AdminRole as rModel;
 use app\common\model\User as userModel;
 use app\Request;
 use FormBuilder\Exception\FormBuilderException;

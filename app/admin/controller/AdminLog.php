@@ -3,7 +3,7 @@
 namespace app\admin\controller;
 
 use app\admin\extend\Util as Util;
-use app\common\model\AdminLog as lModel;
+use app\admin\model\AdminLog as lModel;
 use app\Request;
 use Exception;
 use think\db\exception\DataNotFoundException;

@@ -6,11 +6,13 @@ use app\admin\extend\Util as Util;
 use app\common\constant\Data;
 use app\common\model\Comment as commentModel;
 use app\common\model\Document;
+use app\index\validate\Comment;
 use app\Request;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\Exception;
+use think\exception\ValidateException;
 use think\facade\Log;
 
 /**
@@ -66,7 +68,7 @@ class Page extends Base
         //判断后台统计配置是否开启 1 开启
         if (web_config("web_statistics") == 1) {
             //统计url
-            $this->urlrecord($article['title']);
+            $this->urlRecord($article['title']);
         }
         Log::info('详情页模板路径：' . $templateFile);
         //去除后缀
@@ -95,10 +97,13 @@ class Page extends Base
             $this->error('非法操作，请检查后重试', null);
         }
         if (web_config('comment_visitor')){
-            if ($data['author'] == "") $this->error("昵称不能为空");
-            if ($data['email'] == "") $this->error("邮箱不能为空");
-            if ($data['url'] == "") $this->error("url不能为空");
-        }else{
+            try {
+                validate(Comment::class)->check($data);
+            } catch (ValidateException $e) {
+                // 验证失败 输出错误信息
+                $this->error($e->getError(), null);
+            }
+        }elseif(web_config('is_register')){
             $data['author'] = $this->userInfo['nickname']?:$this->userInfo['username'];
             $data['email'] = $this->userInfo['email']?:'';
             $data['url'] = '';

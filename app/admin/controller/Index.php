@@ -2,7 +2,9 @@
 
 namespace app\admin\controller;
 
-use app\common\model\{AdminAuth, Document, FriendLink, MessageForm, AdminNotify, User};
+use app\admin\model\AdminAuth;
+use app\admin\model\AdminNotify;
+use app\common\model\{Document, FriendLink, MessageForm, User};
 use Exception;
 use think\db\exception\{DataNotFoundException, DbException, ModelNotFoundException};
 

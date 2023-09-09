@@ -10,7 +10,8 @@ use app\common\model\DocumentCategory as DocumentCategoryModel;
 use app\common\model\FriendLink as friendLinkModel;
 use app\common\model\MessageForm as MessageFormModel;
 use app\common\model\Tag as TagModel;
-use app\common\validate\MessageForm as MessageformValidate;
+use app\index\validate\Msg as MsgValidate;
+use app\index\validate\FriendLink as FriendLinkValidate;
 use app\Request;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -33,7 +34,7 @@ class Index extends Base
         //判断后台统计配置是否开启 1 开启
         if (web_config("web_statistics") == 1) {
             //统计url
-            $this->urlrecord('网站首页');
+            $this->urlRecord('网站首页');
         }
         //清除可能存在的栏目分类树id
         cache(Data::CURR_CATEGORY_PATENT_ID, false);
@@ -64,8 +65,10 @@ class Index extends Base
                 ['description', ''],
 
             ]);
-            if ($data['title'] == "") $this->error("链接名称不能为空");
-            if ($data['url'] == "") $this->error("链接地址不能为空");
+            $friendLinkValidate = new FriendLinkValidate();
+            if (!$friendLinkValidate->check($data)) {
+                $this->error($friendLinkValidate->getError());
+            }
             //判断下用户是否存在
             $info = friendLinkModel::where('url', $data['url'])->find();
             if ($info) {
@@ -109,7 +112,7 @@ class Index extends Base
             ]);
             $data['create_time'] = time();
             $data['reply_content'] = '';
-            $messageFormValidate = new MessageFormValidate();
+            $messageFormValidate = new MsgValidate();
             if (!$messageFormValidate->check($data)) {
                 $this->error($messageFormValidate->getError());
             }
@@ -168,7 +171,7 @@ class Index extends Base
         //判断后台统计配置是否开启 1 开启
         if (web_config("web_statistics") == 1) {
             //统计url
-            $this->urlrecord($article['title']);
+            $this->urlRecord($article['title']);
         }
         Log::info('详情页模板路径：' . $templateFile);
         //去除后缀

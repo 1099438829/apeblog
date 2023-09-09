@@ -2,8 +2,8 @@
 
 namespace app\admin\controller;
 
+use app\admin\model\AdminAuth;
 use app\common\constant\Data;
-use app\common\model\AdminAuth;
 use think\facade\App;
 use think\facade\Lang;
 use think\facade\Session;

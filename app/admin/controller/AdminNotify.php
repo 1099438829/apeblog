@@ -3,7 +3,7 @@
 namespace app\admin\controller;
 
 use app\admin\extend\Util as Util;
-use app\common\model\AdminNotify as nModel;
+use app\admin\model\AdminNotify as nModel;
 use Exception;
 
 /**

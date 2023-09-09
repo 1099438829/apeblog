@@ -3,7 +3,7 @@
 
 namespace app\admin\subscribes;
 
-use app\common\model\AdminLog;
+use app\admin\model\AdminLog;
 
 /**
  * 操作员日志记录
