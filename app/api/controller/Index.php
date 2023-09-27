@@ -10,7 +10,7 @@ use app\common\constant\Data;
  * Class Index
  * @package app\index\controller
  */
-class Index extends AuthController
+class Index extends Base
 {
     /**
      * 入口跳转链接
