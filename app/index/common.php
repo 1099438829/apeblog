@@ -306,28 +306,34 @@ function get_document_category_all()
  * $get=上一篇|下一篇
  * $cid=栏目分类id
  */
-function tpl_get_prenext($get, $cid = false, $none)
+function tpl_get_prenext($get, $cid = "",$type ="article")
 {
     //文档id
     $id = request()->param('id');
     if (!$get) {
         $get = 'next';
     }
-    $document = Document::where('display', 1)->where('status', 1);
+    $document = Document::where('display', 1)->where('status', 1)->where('type',$type);
     $document = $get == 'pre' ? $document->where("id", '<', $id) : $document->where("id", '>', $id);
 
+    $document_tmp = clone $document;
     //如果表明在同一分类下查询
     if ($cid) {
         $document = $document->where("category_id", $cid);
     }
     $document = $document->field('id,title')->order($get == 'pre' ? 'id desc' : 'id asc')->find();
-
     if ($document) {
-        $document['url'] = url('/article/detail?id=' . $document['id'])->build();
+        $document['url'] = make_detail_url($document);
     } else {
-        $document['id'] = false;
-        $document['url'] = 'javascript:void(0)';
-        $document['title'] = $none;
+        //如果执行的cid没有数据则重新请求
+        $document = $document_tmp->orderRaw('rand()')->find();
+        if ($document) {
+            $document['url'] = make_detail_url($document);
+        }else{
+            $document['id'] = false;
+            $document['url'] = 'javascript:void(0)';
+            $document['title'] = "暂无";
+        }
     }
     return $document;
 }

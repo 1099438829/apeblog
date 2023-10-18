@@ -160,10 +160,10 @@ class Ape extends TagLib
         $get = $tag['get'] ?? 'pre';
         $cid = $tag['cid'] ?? '$cid';
         $void = $tag['void'] ?? 'field';
-        $none = $tag['none'] ?? '没有了';
+        $type = $tag['type'] ?? 'article';
         $parse = '<?php ';
 
-        $parse .= '$__LIST__ =[];array_push($__LIST__,' . "tpl_get_prenext(\"$get\",$cid,\"$none\"));";
+        $parse .= '$__LIST__ =[];array_push($__LIST__,' . "tpl_get_prenext(\"$get\",$cid,\"$type\"));";
         $parse .= ' ?>';
         $parse .= '{volist name="__LIST__" id="' . $void . '"}';
         $parse .= $content;
