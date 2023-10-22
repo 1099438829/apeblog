@@ -937,14 +937,13 @@ function GetTopTypenameen($id = false)
  */
 function is_active_nav($currCid = false, $cid = false)
 {
-    if (request()->action() == 'search') {
+    if (in_array(request()->action(),['search','tag','about']) ) {
         return false;
     }
     //首页
     if (!$currCid && !$cid) {
         return true;
     }
-
     //一般在首页中，要比对的栏目id会为false
     if ($cid == false) {
         return false;
