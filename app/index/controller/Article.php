@@ -61,7 +61,7 @@ class Article extends Base
             $this->urlRecord($dc['title']);
         }
         //读取列表页模板
-        $template = Data::DOCUMENT_CATEGORY . '/' . ($dc['template'] ?: 'list_default.html');
+        $template = Data::DOCUMENT_CATEGORY . '/' . ($dc['template'] ?: 'index.html');
         $templateFile = config('view.view_path') . $template;
         if (!is_file($templateFile)) {
             $this->error('模板文件不存在！');

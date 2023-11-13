@@ -32,7 +32,7 @@ class Page extends Base
      * @author 木子的忧伤
      * @date 2021-10-29 0:17
      */
-    public function detail()
+    public function index()
     {
         $id = input('id');
         if (!$id) {
@@ -49,7 +49,7 @@ class Page extends Base
         $article['position'] = '<a href="/">首页</a><span>&gt;</span>';
         //更新浏览次数
         $documentModel->where('id', $article['id'])->inc('view')->update();
-        $template = Data::DOCUMENT_TYPE_PAGE . '/' . ($article['theme'] ?: 'detail.html');
+        $template = Data::DOCUMENT_TYPE_PAGE . '/' . ($article['theme'] ?: 'index.html');
         $templateFile = config('view.view_path') . $template;
         if (!is_file($templateFile)) {
             $this->error('模板文件不存在！');
