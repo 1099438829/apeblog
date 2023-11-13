@@ -30,12 +30,10 @@ class Base extends BaseController
     protected function initialize()
     {
         parent::initialize();
-        $this->userInfo = Session::get(Data::SESSION_KEY_USER_INFO);
         $this->userId = Session::get(Data::SESSION_KEY_USER_ID);
-
-        if ($this->userId){
+        if (!empty($this->userId)){
             //模板兼容性标签
-            $this->assign('user_info', $this->userInfo);
+            $this->assign('user_info', Session::get(Data::SESSION_KEY_USER_INFO));
             $this->assign('user_id',  $this->userId);
         }
         //判断是否关闭站点。

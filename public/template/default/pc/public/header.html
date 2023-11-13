@@ -44,7 +44,7 @@
 					<div class="menu-mobile">
 						<ul class="menu-mobile-header-list">
 							{ape:nav type="all"}
-							<li id="menu-item-{$field.id}" class="menu-item {notempty name="field['child']"}menu-item-has-children{/notempty} {:is_active_nav($cid,$field['id'])?'current-menu-item current_page_item':''} menu-item-{$field['id']}">
+							<li id="menu-item-{$field.id}" class="menu-item {notempty name="field['child']"}menu-item-has-children  {:is_active_nav($cid,$field['pid'])?'current-menu-item current_page_item':''} {else} {:is_active_nav($cid,$field['id'])?'current-menu-item current_page_item':''} {/notempty} menu-item-{$field['id']}">
 							{notempty name="field['child']"}
 								<a href="#" aria-current="page">{$field['title']}</a>
 							{else /}

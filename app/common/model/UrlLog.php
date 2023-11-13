@@ -20,11 +20,12 @@ class UrlLog extends BaseModel
         if ($url_data) {
             $this->where($urlWhere)->inc('pv')->update();
         } else {
-            $dataUrl['url'] = $url;
-            $dataUrl['pv'] = 1;
-            $dataUrl['title'] = $title;
-            $dataUrl['date'] = $date_data;
-            $this->insertGetId($dataUrl);
+            $model = new self();
+            $model->url = $url;
+            $model->pv = 1;
+            $model->title = $title;
+            $model->date = $date_data;
+            $model->save();
         }
     }
 
