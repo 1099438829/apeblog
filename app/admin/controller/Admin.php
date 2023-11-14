@@ -39,7 +39,7 @@ class Admin extends AuthController
     /**
      * 账号列表
      * @param Request $request
-     * @return
+     * @return mixed
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
@@ -65,7 +65,7 @@ class Admin extends AuthController
      * @return string
      * @throws FormBuilderException
      */
-    public function add(Request $request)
+    public function add(Request $request): string
     {
         $form = array();
         $form[] = Elm::input('username', '登录账号')->col(10);
@@ -91,13 +91,17 @@ class Admin extends AuthController
 
     /**
      * 修改账号
+     * @param string $id
      * @return string
+     * @throws DataNotFoundException
+     * @throws DbException
      * @throws FormBuilderException
+     * @throws ModelNotFoundException
      */
-    public function edit($id = "")
+    public function edit($id = ""): string
     {
         if (!$id) return app("json")->fail("账号id不能为空");
-        $ainfo = aModel::get($id);
+        $ainfo = aModel::find($id);
         if (!$ainfo) return app("json")->fail("没有该账号");
         $form = array();
         $form[] = Elm::input('username', '登录账号', $ainfo['username'])->col(10);
@@ -126,7 +130,7 @@ class Admin extends AuthController
      * @param string $id
      * @return mixed
      */
-    public function save($id = "")
+    public function save(string $id = ""): mixed
     {
         $data = Util::postMore([
             ['username', ''],
@@ -163,7 +167,7 @@ class Admin extends AuthController
                 $userId = userModel::addAdminUser($data);
                 $res = aModel::update(['uid' => $userId], ['id' => $id]);
             } else {
-                $userInfo = aModel::get($id);
+                $userInfo = aModel::find($id);
                 if ($userInfo['password'] != $data['password']) $data['password'] = md5(md5($data['password']));
                 $data['update_user'] = $this->adminId;
                 $data['update_time'] = time();
@@ -188,7 +192,7 @@ class Admin extends AuthController
      * @return string
      * @throws \Exception
      */
-    public function pwd(Request $request)
+    public function pwd(Request $request): string
     {
         return $this->fetch();
     }
@@ -198,14 +202,14 @@ class Admin extends AuthController
      * @param Request $request
      * @return mixed
      */
-    public function changePwd(Request $request)
+    public function changePwd(Request $request): mixed
     {
         $data = Util::postMore([
             ['oldpwd', ''],
             ['newpwd', '']
         ]);
         if ($data['oldpwd'] == '' || $data['newpwd'] == '') return app("json")->fail("参数有误，新旧密码为空！");
-        $adminInfo = aModel::get($this->adminId);
+        $adminInfo = aModel::find($this->adminId);
         if ($adminInfo['password'] == md5(md5($data['oldpwd']))) return aModel::update(['password' => md5(md5($data['newpwd']))], ['id' => $this->adminId]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
         return app("json")->fail("密码不正确！");
     }
@@ -217,7 +221,7 @@ class Admin extends AuthController
      */
     public function profile()
     {
-        $this->assign("info", aModel::get($this->adminId));
+        $this->assign("info", aModel::find($this->adminId));
         return $this->fetch();
     }
 

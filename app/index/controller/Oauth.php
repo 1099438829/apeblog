@@ -7,7 +7,7 @@ class Oauth extends BaseController
 {
 
     //登录地址
-    public function login($type = null)
+    public function login($type = null): void
     {
         if ($type == null) {
             $this->error('参数错误');
@@ -34,7 +34,7 @@ class Oauth extends BaseController
     }
 
     //授权回调地址
-    public function callback($type = null, $code = null)
+    public function callback($type = null, $code = null): void
     {
         if ($type == null || $code == null) {
             $this->error('参数错误');

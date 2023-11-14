@@ -34,12 +34,12 @@ class AdminAuth extends AuthController
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function lst(Request $request)
+    public function lst(Request $request): array
     {
         $where = Util::postMore([
             ['name', ''],
             ['status', '']
-        ]);
+        ],$request);
         return app("json")->layui(aModel::systemPage($where));
     }
 
@@ -53,7 +53,7 @@ class AdminAuth extends AuthController
      * @throws ModelNotFoundException
      * @throws Exception
      */
-    public function add($pid = 0)
+    public function add(int $pid = 0)
     {
         $form = array();
         $form[] = Elm::select('pid', '上级权限', (int)$pid)->options(aModel::returnOptions())->col(10);
@@ -79,23 +79,24 @@ class AdminAuth extends AuthController
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
+     * @throws Exception
      */
-    public function edit($id = 0)
+    public function edit($id = 0): string
     {
         if (!$id) return app("json")->fail("权限id不能为空");
-        $ainfo = aModel::get($id);
-        if (!$ainfo) return app("json")->fail("没有该权限");
+        $info = (new \app\admin\model\AdminAuth)->find($id);
+        if (!$info) return app("json")->fail("没有该权限");
         $form = array();
-        $form[] = Elm::select('pid', '上级权限', $ainfo['pid'])->options(aModel::returnOptions())->col(10);
-        $form[] = Elm::input('name', '权限名称', $ainfo['name'])->col(10);
-        $form[] = Elm::frameInput('icon', '图标', Url::buildUrl('admin/widget.icon/index', array('fodder' => 'icon')), $ainfo['icon'])->icon("ios-ionic")->width('96%')->height('390px')->col(10);
-        $form[] = Elm::input('module', '模块名', $ainfo['module'])->col(10);
-        $form[] = Elm::input('controller', '控制器名', $ainfo['controller'])->col(10);
-        $form[] = Elm::input('action', '方法名', $ainfo['action'])->col(10);
-        $form[] = Elm::input('params', '参数', $ainfo['params'])->placeholder("php数组,不懂不要填写")->col(10);
-        $form[] = Elm::number('rank', '排序', $ainfo['rank'])->col(10);
-        $form[] = Elm::radio('is_menu', '是否菜单', $ainfo['is_menu'])->options([['label' => '是', 'value' => 1], ['label' => '否', 'value' => 0]])->col(10);
-        $form[] = Elm::radio('status', '状态', $ainfo['status'])->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(10);
+        $form[] = Elm::select('pid', '上级权限', $info['pid'])->options(aModel::returnOptions())->col(10);
+        $form[] = Elm::input('name', '权限名称', $info['name'])->col(10);
+        $form[] = Elm::frameInput('icon', '图标', Url::buildUrl('admin/widget.icon/index', array('fodder' => 'icon')), $info['icon'])->icon("ios-ionic")->width('96%')->height('390px')->col(10);
+        $form[] = Elm::input('module', '模块名', $info['module'])->col(10);
+        $form[] = Elm::input('controller', '控制器名', $info['controller'])->col(10);
+        $form[] = Elm::input('action', '方法名', $info['action'])->col(10);
+        $form[] = Elm::input('params', '参数', $info['params'])->placeholder("php数组,不懂不要填写")->col(10);
+        $form[] = Elm::number('rank', '排序', $info['rank'])->col(10);
+        $form[] = Elm::radio('is_menu', '是否菜单', $info['is_menu'])->options([['label' => '是', 'value' => 1], ['label' => '否', 'value' => 0]])->col(10);
+        $form[] = Elm::radio('status', '状态', $info['status'])->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(10);
         $form = Form::make_post_form($form, url('save', ['id' => $id])->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");

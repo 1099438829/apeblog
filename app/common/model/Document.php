@@ -113,6 +113,7 @@ class Document extends BaseModel
                 self::setErrorInfo("别名已存在,请修改后重试");
                 return false;
             }
+            $model = null;
             switch ($type) {
                 case Data::DOCUMENT_TYPE_ARTICLE:
                     $contentData = [
@@ -156,7 +157,7 @@ class Document extends BaseModel
                     $tagModel->createTags($data['tags'], $id, $data['uid']);
                 }
             } else {
-                $ainfo = Document::get($data['id']);
+                $ainfo = Document::find($data['id']);
                 if (!$ainfo) return app("json")->fail("数据不存在");
                 Document::where('id', $data['id'])->update($data);
                 if (!empty($content)) {

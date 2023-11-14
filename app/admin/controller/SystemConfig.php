@@ -98,7 +98,7 @@ class SystemConfig extends AuthController
      */
     public function index($tab_id = 0)
     {
-        $this->assign("tab", tModel::get($tab_id));
+        $this->assign("tab", tModel::find($tab_id));
         return $this->fetch("list");
     }
 
@@ -137,7 +137,7 @@ class SystemConfig extends AuthController
     public function edit($id = '')
     {
         if (!$id) return app("json")->fail("项目id不能为空");
-        $info = cModel::get($id);
+        $info = cModel::find($id);
         if (!$info) return app("json")->fail("没有该项目");
         $form = array();
         $form[] = Elm::hidden('tab_id', $info['tab_id'])->col(10);

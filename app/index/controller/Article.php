@@ -33,7 +33,7 @@ class Article extends Base
      * @author 木子的忧伤
      * @date 2021-10-29 0:17
      */
-    public function lists()
+    public function lists(): string
     {
         $dc = false;
         //栏目分类id
@@ -64,7 +64,12 @@ class Article extends Base
         $template = Data::DOCUMENT_CATEGORY . '/' . ($dc['template'] ?: 'index.html');
         $templateFile = config('view.view_path') . $template;
         if (!is_file($templateFile)) {
-            $this->error('模板文件不存在！');
+            //配置的模版文件不存在则走默认模版
+            $template =  Data::DOCUMENT_CATEGORY . '/' . 'index.html';
+            $templateFile = config('view.view_path') . $template;
+            if (!is_file($templateFile)){
+                $this->error('模板文件不存在！');
+            }
         }
         Log::info('列表页模板路径：' . $templateFile);
         //文章兼容字段
@@ -95,6 +100,7 @@ class Article extends Base
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
+     * @throws \Exception
      * @author 木子的忧伤
      * @date 2021-10-29 0:17
      */
@@ -119,10 +125,16 @@ class Article extends Base
         $article['position'] = tpl_get_position($dc);
         //更新浏览次数
         $documentModel->where('id', $article['id'])->inc('view')->update();
+        //读取模板文件
         $template = Data::DOCUMENT_TYPE_ARTICLE . '/' . ($article['theme'] ?: 'detail.html');
         $templateFile = config('view.view_path') . $template;
         if (!is_file($templateFile)) {
-            $this->error('模板文件不存在！');
+            //配置的模版文件不存在则走默认模版
+            $template =  Data::DOCUMENT_CATEGORY . '/' . 'detail.html';
+            $templateFile = config('view.view_path') . $template;
+            if (!is_file($templateFile)){
+                $this->error('模板文件不存在！');
+            }
         }
         $article['category_title'] = $dc['title'];
         //判断SEO 为空则取系统
@@ -197,9 +209,7 @@ class Article extends Base
     /**
      * 文章标签页面
      * @return string
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
+     * @throws ModelNotFoundException|\Exception
      * @author 木子的忧伤
      * @date 2021-10-29 0:19
      */
@@ -226,7 +236,7 @@ class Article extends Base
         //模板兼容性标签
         $this->assign('id', false);
         $this->assign('cid', false);
-        $templateFile = config('view.view_path') . 'article/tag.html';
+        $templateFile = config('view.view_path') . Data::DOCUMENT_TYPE_ARTICLE . DIRECTORY_SEPARATOR.'tag.html';
         if (!is_file($templateFile)) {
             $this->error('模板文件不存在！');
         }
@@ -264,7 +274,7 @@ class Article extends Base
         //模板兼容性标签
         $this->assign('id', false);
         $this->assign('cid', false);
-        $templateFile = config('view.view_path') . 'article/search.html';
+        $templateFile = config('view.view_path') . Data::DOCUMENT_TYPE_ARTICLE . DIRECTORY_SEPARATOR.'search.html';
         if (!is_file($templateFile)) {
             $this->error('模板文件不存在！');
         }
@@ -301,7 +311,7 @@ class Article extends Base
         //模板兼容性标签
         $this->assign('id', false);
         $this->assign('cid', false);
-        $templateFile = config('view.view_path') . 'article/user.html';
+        $templateFile = config('view.view_path') . Data::DOCUMENT_TYPE_ARTICLE . DIRECTORY_SEPARATOR.'user.html';
         if (!is_file($templateFile)) {
             $this->error('模板文件不存在！');
         }

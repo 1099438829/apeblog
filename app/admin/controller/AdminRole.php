@@ -28,7 +28,7 @@ class AdminRole extends AuthController
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function lst(Request $request)
+    public function lst(Request $request): array
     {
         return app("json")->layui(rModel::systemPage());
     }
@@ -47,7 +47,7 @@ class AdminRole extends AuthController
         $form = array();
         $form[] = Elm::select('pid', '所属上级', (int)$pid)->options(rModel::returnOptions())->filterable(true)->col(18);
         $form[] = Elm::input('name', '角色名称')->col(18);
-        $form[] = Elm::treeChecked('tree_data', '选择权限')->data(aModel::selectAndBuildTree(0, $pid != 0 ? explode(",", rModel::get($pid)['auth']) : ($this->adminId == 1 ? aModel::getIds() : $this->auth)))->col(18);
+        $form[] = Elm::treeChecked('tree_data', '选择权限')->data(aModel::selectAndBuildTree(0, $pid != 0 ? explode(",", rModel::find($pid)['auth']) : ($this->adminId == 1 ? aModel::getIds() : $this->auth)))->col(18);
         $form[] = Elm::number('rank', '排序')->col(18);
         $form[] = Elm::radio('status', '状态', 1)->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(18);
         $form = Form::make_post_form($form, url('save')->build());
@@ -67,12 +67,12 @@ class AdminRole extends AuthController
     public function edit($id = 0)
     {
         if (!$id) return app("json")->fail("权限id不能为空");
-        $rinfo = rModel::get($id);
+        $rinfo = rModel::find($id);
         if (!$rinfo) return app("json")->fail("没有该权限");
         $form = array();
         $form[] = Elm::select('pid', '所属上级', $rinfo['pid'])->options(rModel::returnOptions())->filterable(true)->col(18);
         $form[] = Elm::input('name', '角色名称', $rinfo['name'])->col(18);
-        $form[] = Elm::treeChecked('tree_data', '选择权限', to_int_array(explode(",", $rinfo['tree_data'])))->data(aModel::selectAndBuildTree(0, $rinfo['pid'] == 0 ? aModel::getIds() : explode(",", rModel::get($rinfo['pid'])['auth'])))->col(18);
+        $form[] = Elm::treeChecked('tree_data', '选择权限', to_int_array(explode(",", $rinfo['tree_data'])))->data(aModel::selectAndBuildTree(0, $rinfo['pid'] == 0 ? aModel::getIds() : explode(",", rModel::find($rinfo['pid'])['auth'])))->col(18);
         $form[] = Elm::number('rank', '排序', $rinfo['rank'])->col(18);
         $form[] = Elm::radio('status', '状态', $rinfo['status'])->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(18);
         $form = Form::make_post_form($form, url('save', ['id' => $id])->build());

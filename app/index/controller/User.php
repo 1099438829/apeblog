@@ -51,7 +51,7 @@ class User extends Base
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function verify()
+    public function verify(): mixed
     {
         $data = Util::postMore(['username', 'password', 'captcha'], null, true);
         try {
@@ -72,7 +72,7 @@ class User extends Base
      * @return string
      * @throws Exception
      */
-    public function register()
+    public function register(): string
     {
         return $this->fetch();
     }
@@ -84,7 +84,7 @@ class User extends Base
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function register_verify()
+    public function register_verify(): mixed
     {
         $data = Util::postMore(['username', 'email', 'password', 'captcha'], null, true);
         try {
@@ -109,7 +109,7 @@ class User extends Base
      * @return string
      * @throws Exception
      */
-    public function forget()
+    public function forget(): string
     {
         return $this->fetch();
     }
@@ -143,9 +143,13 @@ class User extends Base
      * @return mixed
      * @throws Exception
      */
-    public function logout()
+    public function logout(): mixed
     {
-        return userModel::clearLoginInfo() ? $this->success("操作成功", "/index/index/index") : $this->error("操作失败", "/index/index/index");
+        if (userModel::clearLoginInfo()) {
+            return $this->success("操作成功", "/index/index/index");
+        } else {
+            return $this->error("操作失败", "/index/index/index");
+        }
     }
 
     /**
@@ -165,7 +169,7 @@ class User extends Base
      * 验证码
      * @return Response
      */
-    public function captcha()
+    public function captcha(): Response
     {
         ob_clean();
         return captcha();

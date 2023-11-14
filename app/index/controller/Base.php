@@ -68,7 +68,7 @@ class Base extends BaseController
      * @author 木子的忧伤
      * @date 2021-05-09 23:44
      */
-    protected function urlRecord($title)
+    protected function urlRecord($title): void
     {
         $urlLogModel = new UrlLog();
         //获取url

@@ -37,7 +37,7 @@ class AdminLog extends AuthController
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function lst(Request $request)
+    public function lst(Request $request): array
     {
         $where = Util::postMore([
             ['name', ''],
@@ -46,18 +46,17 @@ class AdminLog extends AuthController
             ['end_time', ''],
             ['page', 1],
             ['limit', 20],
-        ]);
+        ],$request);
         return app("json")->layui(lModel::systemPage($where));
     }
 
     /**
      * 清空日志
-     * @param Request $request
      * @throws Exception
      */
-    public function empty(Request $request)
+    public function empty()
     {
-        $res = lModel::where("1=1")->delete();
+        $res = (new \app\admin\model\AdminLog)->where("1=1")->delete();
         return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败");
     }
 }

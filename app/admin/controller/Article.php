@@ -6,6 +6,7 @@ use app\admin\extend\Util as Util;
 use app\common\model\Comment as CommentModel;
 use app\common\model\Document;
 use app\common\model\DocumentCategory as cModel;
+use app\Request;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -64,8 +65,10 @@ class Article extends AuthController
 
     /**
      * 保存
-     * @param string $id
      * @return mixed
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 木子的忧伤
      * @date 2021-02-28 22:43
      */
@@ -181,6 +184,7 @@ class Article extends AuthController
 
     /**
      * 文章评论列表
+     * @param Request $request
      * @return mixed
      * @throws DataNotFoundException
      * @throws DbException
@@ -188,7 +192,7 @@ class Article extends AuthController
      * @author 木子的忧伤
      * @date 2021-11-03 23:28
      */
-    public function commentList()
+    public function commentList(Request $request): mixed
     {
         $where = Util::postMore([
             ['document_id', ''],
@@ -199,7 +203,7 @@ class Article extends AuthController
             ['end_time', ''],
             ['page', 1],
             ['limit', 20],
-        ]);
+        ],$request);
         if ($where['document_id'] == "") return app("json")->fail("参数错误");
         return app("json")->layui(CommentModel::systemPage($where));
     }
@@ -212,7 +216,7 @@ class Article extends AuthController
      * @author 木子的忧伤
      * @date 2021-02-16 23:12
      */
-    public function commentField($id)
+    public function commentField($id): mixed
     {
         if (!$id) return app("json")->fail("参数有误，Id为空！");
         $where = Util::postMore([['field', ''], ['value', '']]);

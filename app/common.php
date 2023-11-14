@@ -24,17 +24,18 @@ if (!function_exists('param_to_array')) {
     }
 }
 
-if (!function_exists('get_File_type')) {
+if (!function_exists('get_file_type')) {
     /**
      * 获取文件类型
      * @param string $mime
      * @return string
      */
-    function get_File_type(string $mime): string
+    function get_file_type(string $mime): string
     {
         if (stristr($mime, 'image')) return 'image';
         elseif (stristr($mime, 'video')) return 'video';
         elseif (stristr($mime, 'audio')) return 'audio';
+        else return 'file';
     }
 }
 
@@ -126,7 +127,7 @@ function server_url()
     }
 
     $host = $_SERVER['HTTP_HOST'];
-    $res  = $http . $host;
+    $res = $http . $host;
 
     return $res;
 }
@@ -152,15 +153,15 @@ if (!function_exists('file_cdn')) {
         $path = str_replace(public_path(), '', $path);
 
         //转换因为win导致的兼容问题
-        if(strtoupper(substr(PHP_OS,0,3))==='WIN'){
-            $path = str_replace( DIRECTORY_SEPARATOR, '/',$path);
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
         }
 
         if (!(substr($path, 0, 1) == '/')) {
             //统一路径
             $path = '/' . $path;
         }
-        return (config("app.cdn_url")?:$server_url = server_url()) . $path;
+        return (config("app.cdn_url") ?: $server_url = server_url()) . $path;
     }
 }
 
@@ -172,13 +173,13 @@ if (!function_exists('get_rand_str')) {
      * @author 木子的忧伤
      * @date 2022-04-11 18:26
      */
-    function get_rand_str($length){
+    function get_rand_str($length)
+    {
         //字符组合
         $str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
         $randStr = str_shuffle($str);//打乱字符串
-        $randstr= substr($randStr,0,$length);//substr(string,start,length);返回字符串的一部分
-        $randstr = md5($randstr.time());
-        $randstr = substr($randstr,5,$length);
-        return $randstr;
+        $randStr = substr($randStr, 0, $length);//substr(string,start,length);返回字符串的一部分
+        $randStr = md5($randStr . time());
+        return substr($randStr, 5, $length);
     }
 }

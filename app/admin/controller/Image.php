@@ -124,7 +124,7 @@ class Image extends AuthController
         if ($id == 0) return app("json")->fail("未选择分类");
         if (Attachment::isExist($id, "cid")) return app("json")->fail("该分类下有图片不能删除");
         if (AttachmentCategory::isExist($id, "pid")) return app("json")->fail("该分类下有子分类不能删除");
-        return AttachmentCategory::del($id) ? app("json")->success("删除成功") : app("json")->fail("删除失败");
+        return AttachmentCategory::delete($id) ? app("json")->success("删除成功") : app("json")->fail("删除失败");
     }
 
     /**
@@ -152,7 +152,7 @@ class Image extends AuthController
     public function editImage($id)
     {
         if ($id == 0) return app("json")->fail("没有选中图片");
-        $image = Attachment::get($id);
+        $image = Attachment::find($id);
         $form = array();
         $form[] = Elm::select('cid', '选中分类', (int)$image['cid'])->options(AttachmentCategory::returnOptions())->col(18);
         $form[] = Elm::hidden('type', $this->type)->col(18);
@@ -179,7 +179,7 @@ class Image extends AuthController
     public function delImage($id)
     {
         if ($id == 0) return app("json")->fail("未选择图片");
-        $image = Attachment::get($id);
+        $image = Attachment::find($id);
         try {
             switch ($image['storage']) {
                 case 1:
@@ -192,7 +192,7 @@ class Image extends AuthController
                     QcloudCoService::del(str_replace(system_config("storage_domain"), "", $image['path']));
                     break;
             }
-            return Attachment::del($id) ? app("json")->success("删除成功") : app("json")->fail("删除失败");
+            return Attachment::delete($id) ? app("json")->success("删除成功") : app("json")->fail("删除失败");
         } catch (Exception $e) {
             return app("json")->fail("删除失败" . $e);
         }

@@ -81,7 +81,7 @@ abstract class AuthController extends SystemBasic
     /**
      * 初始化
      */
-    protected function initialize()
+    protected function initialize(): void
     {
         parent::initialize();
         $this->adminInfo = Session::get(Data::SESSION_KEY_ADMIN_INFO);
@@ -117,7 +117,7 @@ abstract class AuthController extends SystemBasic
     /**
      * 加载语言文件
      */
-    protected function loadLang()
+    protected function loadLang(): void
     {
         Lang::load(App::getRootPath() . 'app/' . $this->module . '/lang/' . Lang::getLangSet() . '/' . $this->controller . '.php');
     }
@@ -126,7 +126,7 @@ abstract class AuthController extends SystemBasic
      * 验证登录
      * @return bool
      */
-    protected static function isActive()
+    protected static function isActive(): bool
     {
         return Session::has(Data::SESSION_KEY_ADMIN_ID) && Session::has(Data::SESSION_KEY_ADMIN_INFO);
     }

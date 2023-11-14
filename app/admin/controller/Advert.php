@@ -76,7 +76,7 @@ class Advert extends AuthController
     public function edit($id = '')
     {
         if (!$id) return app("json")->fail("项目id不能为空");
-        $info = aModel::get($id);
+        $info = (new \app\common\model\Advert)->find($id);
         if (!$info) return app("json")->fail("轮播组不存在");
         $form = array();
         $form[] = Elm::input('title', '轮播组名称', $info['title'])->col(10);
@@ -93,7 +93,7 @@ class Advert extends AuthController
      * @param string $id
      * @return mixed
      */
-    public function save($id = "")
+    public function save($id = ""): mixed
     {
         $data = Util::postMore([
             ['title', ''],
@@ -124,7 +124,7 @@ class Advert extends AuthController
      * @author 木子的忧伤
      * @date 2021-02-16 23:12
      */
-    public function field($id)
+    public function field($id): mixed
     {
         if (!$id) return app("json")->fail("参数有误，Id为空！");
         $where = Util::postMore([['field', ''], ['value', '']]);
@@ -145,7 +145,7 @@ class Advert extends AuthController
         $ids = $request->param("id", 0);
         if ($ids == 0) return app("json")->fail("参数有误，Id为空！");
         if (!is_array($ids)) $ids = array_filter(explode(",", $ids));
-        if (tModel::where("tab_id", "in", $ids)->count() > 0) return app("json")->fail("该配置项下有配置数据，不能删除！");
+        if ((new \app\common\model\AdvertInfo)->where("tab_id", "in", $ids)->count() > 0) return app("json")->fail("该配置项下有配置数据，不能删除！");
         return parent::del($request);
     }
 
@@ -156,7 +156,7 @@ class Advert extends AuthController
      * @author 木子的忧伤
      * @date 2021-02-19 11:53
      */
-    public function info($id = '')
+    public function info($id = ''): string
     {
         if (!$id) return app("json")->fail("参数有误，Id为空！");
         return $this->fetch();
@@ -172,7 +172,7 @@ class Advert extends AuthController
      * @author 木子的忧伤
      * @date 2021-02-15 23:26
      */
-    public function infoList(Request $request)
+    public function infoList(Request $request): mixed
     {
         $where = Util::postMore([
             ['id', ''],
@@ -182,7 +182,7 @@ class Advert extends AuthController
             ['status', ''],
             ['page', 1],
             ['limit', 20],
-        ]);
+        ],$request);
         return app("json")->layui(tModel::systemPage($where));
     }
 
@@ -192,7 +192,7 @@ class Advert extends AuthController
      * @return string
      * @throws FormBuilderException
      */
-    public function addAdvert(Request $request)
+    public function addAdvert(Request $request): string
     {
         $form = array();
         $form[] = Elm::input('title', '广告名称')->col(10);
@@ -215,13 +215,17 @@ class Advert extends AuthController
 
     /**
      * 修改banner
+     * @param string $id
      * @return string
+     * @throws DataNotFoundException
+     * @throws DbException
      * @throws FormBuilderException
+     * @throws ModelNotFoundException
      */
-    public function editAdvert($id = "")
+    public function editAdvert($id = ""): string
     {
         if (!$id) return app("json")->fail("数据id不能为空");
-        $info = tModel::get($id);
+        $info = (new \app\common\model\AdvertInfo)->find($id);
         if (!$info) return app("json")->fail("没有该数据");
         $form = array();
         $form[] = Elm::input('title', '广告名称', $info['title'])->col(10);
@@ -247,7 +251,7 @@ class Advert extends AuthController
      * @param string $id
      * @return mixed
      */
-    public function saveAdvert($id = "")
+    public function saveAdvert($id = ""): mixed
     {
         $data = Util::postMore([
             ['id', ''],

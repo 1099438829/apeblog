@@ -49,10 +49,15 @@ class Page extends Base
         $article['position'] = '<a href="/">首页</a><span>&gt;</span>';
         //更新浏览次数
         $documentModel->where('id', $article['id'])->inc('view')->update();
-        $template = Data::DOCUMENT_TYPE_PAGE . '/' . ($article['theme'] ?: 'index.html');
+        $template = Data::DOCUMENT_TYPE_PAGE . '/' . ($article['template'] ?: 'index.html');
         $templateFile = config('view.view_path') . $template;
         if (!is_file($templateFile)) {
-            $this->error('模板文件不存在！');
+            //配置的模版文件不存在则走默认模版
+            $template =  Data::DOCUMENT_TYPE_PAGE . '/' . 'index.html';
+            $templateFile = config('view.view_path') . $template;
+            if (!is_file($templateFile)){
+                $this->error('模板文件不存在！');
+            }
         }
         $article['category_title'] = "单页";
         //判断SEO 为空则取系统
@@ -83,7 +88,7 @@ class Page extends Base
      * @author 木子的忧伤
      * @date 2021-10-17 19:13
      */
-    public function create_comment(Request $request)
+    public function create_comment(Request $request): mixed
     {
         $data = Util::postMore([
             ['document_id', ''],
@@ -92,7 +97,7 @@ class Page extends Base
             ['url', ''],
             ['email', ''],
             ['content', ''],
-        ]);
+        ],$request);
         if (!web_config('comment_close')){
             $this->error('非法操作，请检查后重试', null);
         }

@@ -68,7 +68,7 @@ class SystemConfigTab extends AuthController
     public function edit($id = '')
     {
         if (!$id) return app("json")->fail("项目id不能为空");
-        $info = tModel::get($id);
+        $info = tModel::find($id);
         if (!$info) return app("json")->fail("没有该项目");
         $form = array();
         $form[] = Elm::input('name', '分类名称', $info['name'])->col(10);

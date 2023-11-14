@@ -26,7 +26,7 @@ class Databases extends AuthController
      * @author 木子的忧伤
      * @date 2021-10-30 12:45
      */
-    public function index($type = null)
+    public function index($type = null): string
     {
         if (!$type) {
             $type = 'export';

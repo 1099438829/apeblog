@@ -86,7 +86,7 @@ class User extends AuthController
     public function edit($id = "")
     {
         if (!$id) return app("json")->fail("账号id不能为空");
-        $ainfo = aModel::get($id);
+        $ainfo = aModel::find($id);
         if (!$ainfo) return app("json")->fail("没有该账号");
         $form = array();
         $form[] = Elm::input('username', '登录账号', $ainfo['username'])->col(10);
@@ -135,7 +135,7 @@ class User extends AuthController
             $data['create_user'] = $this->adminId;
             $res = aModel::create($data);
         } else {
-            $ainfo = aModel::get($id);
+            $ainfo = aModel::find($id);
             if ($ainfo['password'] != $data['password']) $data['password'] = md5(md5($data['password']));
             $data['update_user'] = $this->adminId;
             $res = aModel::update($data, ['id' => $id]);

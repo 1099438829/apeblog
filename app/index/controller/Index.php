@@ -134,10 +134,12 @@ class Index extends Base
     /**
      * 关于页面
      * @param Request $request
+     * @return string
+     * @throws \Exception
      * @author 木子的忧伤
      * @date 2022-06-21 23:48
      */
-    public function about(Request $request)
+    public function about(Request $request): string
     {
         $id = "about";
         //获取该文章

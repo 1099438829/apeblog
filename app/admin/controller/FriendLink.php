@@ -83,7 +83,7 @@ class FriendLink extends AuthController
     public function edit($id = "")
     {
         if (!$id) return app("json")->fail("数据id不能为空");
-        $ainfo = aModel::get($id);
+        $ainfo = aModel::find($id);
         if (!$ainfo) return app("json")->fail("没有该数据");
         $form = array();
         $form[] = Elm::input('title', '网站名称', $ainfo['title'])->col(10);

@@ -39,7 +39,7 @@ class Category extends AuthController
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function lst(Request $request)
+    public function lst(Request $request): array
     {
         $where = Util::postMore([
             ['name', ''],
@@ -86,7 +86,7 @@ class Category extends AuthController
      * @param $id
      * @return aModel
      */
-    public function field($id)
+    public function field($id): aModel
     {
         if (!$id) return app("json")->fail("参数有误，Id为空！");
         $where = Util::postMore([['field', ''], ['value', '']]);
@@ -97,10 +97,13 @@ class Category extends AuthController
 
     /**
      * 新增页
+     * @param string $pid
      * @return string
-     * @throws Exception
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
-    public function add($pid = '')
+    public function add($pid = ''): string
     {
         $templatePath = system_config('web_template');
         $themeInfoFile = public_path('template' . DIRECTORY_SEPARATOR . $templatePath) . 'info.json';
@@ -145,7 +148,7 @@ class Category extends AuthController
         ]);
         $category = aModel::systemPage($where);
         $category = get_tree_list($category);
-        $info = aModel::get($request->param(['id']));
+        $info = aModel::find($request->param(['id']));
         $this->assign("category", $category);
         $this->assign("info", $info);
         $this->assign("template_list", $themeList);

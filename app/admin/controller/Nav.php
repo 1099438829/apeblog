@@ -81,7 +81,7 @@ class Nav extends AuthController
     public function edit($id = 0)
     {
         if (!$id) return app("json")->fail("导航id不能为空");
-        $ainfo = aModel::get($id);
+        $ainfo = aModel::find($id);
         if (!$ainfo) return app("json")->fail("没有该导航");
         $form = array();
         $form[] = Elm::select('pid', '上级导航', $ainfo['pid'])->options(aModel::returnOptions())->col(10);

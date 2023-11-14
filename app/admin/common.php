@@ -30,7 +30,7 @@ if (!function_exists('auth_is_exit')) {
 
 if (!function_exists('remove_cache')) {
     /**
-     * 判断授权信息是否存在
+     * 删除缓存
      * @return bool
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
@@ -145,10 +145,10 @@ if (!function_exists('get_tree_list')) {
 }
 
 if (!function_exists('get_theme_list')) {
-    function get_theme_list($type = ''):array
+    function get_theme_list($type = ''): array
     {
         $themeList = [];
-        $themeDir = public_path('template') . system_config('web_template') . '/pc/' .$type;
+        $themeDir = public_path('template') . system_config('web_template') . '/pc/' . $type;
         if ($dh = opendir($themeDir)) {
             while (($file = readdir($dh)) !== false) {
 
@@ -158,6 +158,74 @@ if (!function_exists('get_theme_list')) {
             }
             closedir($dh);
         }
-        return   $themeList;
+        return $themeList;
+    }
+}
+
+
+/**
+ * 获取去除html去除空格去除软回车,软换行,转换过后的字符串
+ * @param string $str
+ * @return string
+ */
+if (!function_exists('html2mb_str')) {
+    function html2mb_str($str): string
+    {
+        return trim(strip_tags(str_replace(["\n", "\t", "\r", " ", "&nbsp;"], '', htmlspecialchars_decode($str))));
+    }
+}
+
+/**
+ * 截取中文指定字节
+ * @param string $str
+ * @param int $utf8len
+ * @param string $charset
+ * @param string $file
+ * @return string
+ */
+
+if (!function_exists('substr_utf8')) {
+    function substr_utf8($str, int $utf8len = 100, string $charset = 'UTF-8', string $file = '....'): string
+    {
+        if (mb_strlen($str, $charset) > $utf8len) {
+            $str = mb_substr($str, 0, $utf8len, $charset) . $file;
+        }
+        return $str;
+    }
+}
+
+/**
+ * 获取本季度 time
+ * @param int|string $time
+ * @param string $ceil
+ * @return array
+ */
+if (!function_exists('get_quarter')) {
+    function get_quarter($time = '', $ceil = 0): array
+    {
+        if ($ceil != 0)
+            $season = ceil(date('n') / 3) - $ceil;
+        else
+            $season = ceil(date('n') / 3);
+        $firstDay = date('Y-m-01', mktime(0, 0, 0, ($season - 1) * 3 + 1, 1, date('Y')));
+        $lastDay = date('Y-m-t', mktime(0, 0, 0, $season * 3, 1, date('Y')));
+        return array($firstDay, $lastDay);
+    }
+}
+
+/**
+ * 横线
+ * @param int $num
+ * @return string
+ */
+if (!function_exists('cross')) {
+    function cross(int $num = 0): string
+    {
+        $str = "";
+        if ($num == 1) $str .= "|--";
+        elseif ($num > 1) for ($i = 0; $i < $num; $i++)
+            if ($i == 0) $str .= "|--";
+            else $str .= "--";
+        return $str . " ";
     }
 }
