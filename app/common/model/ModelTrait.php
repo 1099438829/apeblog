@@ -121,9 +121,9 @@ trait ModelTrait
      * @param null $eachFn 处理结果函数
      * @param array $params 分页参数
      * @param int $limit 分页数
-     * @return array
+     * @return BaseQuery
      */
-    public static function page($model = null, $eachFn = null, $params = [], $limit = 20): array
+    public static function page($model = null, $eachFn = null, $params = [], $limit = 20): BaseQuery|array|null
     {
         if (is_numeric($eachFn) && is_numeric($model)) {
             return parent::page($model, $eachFn);

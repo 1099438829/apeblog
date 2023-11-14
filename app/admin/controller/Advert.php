@@ -53,6 +53,7 @@ class Advert extends AuthController
      * @param Request $request
      * @return string
      * @throws FormBuilderException
+     * @throws Exception
      */
     public function add(Request $request)
     {
