@@ -116,20 +116,22 @@ if (!function_exists('unicode_decode')) {
  *
  * @return string
  */
-function server_url()
-{
-    if (isset($_SERVER['HTTPS']) && ('1' == $_SERVER['HTTPS'] || 'on' == strtolower($_SERVER['HTTPS']))) {
-        $http = 'https://';
-    } elseif (isset($_SERVER['SERVER_PORT']) && ('443' == $_SERVER['SERVER_PORT'])) {
-        $http = 'https://';
-    } else {
-        $http = 'http://';
+if (!function_exists('file_cdn')) {
+    function server_url(): string
+    {
+        if (isset($_SERVER['HTTPS']) && ('1' == $_SERVER['HTTPS'] || 'on' == strtolower($_SERVER['HTTPS']))) {
+            $http = 'https://';
+        } elseif (isset($_SERVER['SERVER_PORT']) && ('443' == $_SERVER['SERVER_PORT'])) {
+            $http = 'https://';
+        } else {
+            $http = 'http://';
+        }
+
+        $host = $_SERVER['HTTP_HOST'];
+        $res = $http . $host;
+
+        return $res;
     }
-
-    $host = $_SERVER['HTTP_HOST'];
-    $res = $http . $host;
-
-    return $res;
 }
 
 if (!function_exists('file_cdn')) {
@@ -140,7 +142,7 @@ if (!function_exists('file_cdn')) {
      * @author 木子的忧伤
      * @date 2021-02-17 23:32
      */
-    function file_cdn($path)
+    function file_cdn($path): string
     {
         if (empty($path)) {
             return '';
@@ -173,7 +175,7 @@ if (!function_exists('get_rand_str')) {
      * @author 木子的忧伤
      * @date 2022-04-11 18:26
      */
-    function get_rand_str($length)
+    function get_rand_str($length): string
     {
         //字符组合
         $str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';

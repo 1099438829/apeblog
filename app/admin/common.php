@@ -1,8 +1,5 @@
 <?php
 
-use think\facade\Cache;
-
-
 if (!function_exists('un_camelize')) {
     /**
      * 驼峰法转下划线
@@ -10,7 +7,7 @@ if (!function_exists('un_camelize')) {
      * @param string $separator
      * @return string
      */
-    function un_camelize($camelCaps, $separator = '_')
+    function un_camelize($camelCaps, $separator = '_'): string
     {
         return strtolower(preg_replace('/([a-z])([A-Z])/', "$1" . $separator . "$2", $camelCaps));
     }
@@ -19,18 +16,19 @@ if (!function_exists('un_camelize')) {
 if (!function_exists('auth_is_exit')) {
     /**
      * 判断授权信息是否存在
+     * @param int $adminId
      * @return bool
-     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     function auth_is_exit(int $adminId): bool
     {
-        return Cache::store('redis')->has('store_' . $adminId);
+        return cache('store_' . $adminId);
     }
 }
 
 if (!function_exists('remove_cache')) {
     /**
      * 删除缓存
+     * @param string $path
      * @return bool
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
@@ -53,9 +51,11 @@ if (!function_exists('remove_cache')) {
     }
 }
 
+
 if (!function_exists('to_int_array')) {
     /**
      * 字符串数组转int数组
+     * @param array $str
      * @return array
      */
     function to_int_array(array $str): array
@@ -79,9 +79,10 @@ if (!function_exists('tag_options')) {
     }
 }
 
+
 if (!function_exists('type_options')) {
     /**
-     * 获取form标签
+     * 获取form type类型
      * @return array
      */
     function type_options(): array
@@ -100,6 +101,7 @@ if (!function_exists('type_options')) {
     }
 }
 
+
 if (!function_exists('get_dir')) {
     /**
      * 获取文件目录列表,该方法返回数组
@@ -107,7 +109,7 @@ if (!function_exists('get_dir')) {
      * @return mixed
      * @date 2021-02-17 21:27
      */
-    function get_dir($dir)
+    function get_dir($dir): mixed
     {
         $dirArray[] = NULL;
         if (false != ($handle = opendir($dir))) {
@@ -127,8 +129,15 @@ if (!function_exists('get_dir')) {
 }
 
 if (!function_exists('get_tree_list')) {
-    /*无限分类*/
-    function get_tree_list(&$list, $pid = 0, $level = 0, $html = '|—')
+    /**
+     * 无限分类
+     * @param $list
+     * @param $pid
+     * @param $level
+     * @param $html
+     * @return array
+     */
+    function get_tree_list(&$list, $pid = 0, $level = 0, $html = '|—'): array
     {
         static $tree = array();
         foreach ($list as $v) {
@@ -172,25 +181,6 @@ if (!function_exists('html2mb_str')) {
     function html2mb_str($str): string
     {
         return trim(strip_tags(str_replace(["\n", "\t", "\r", " ", "&nbsp;"], '', htmlspecialchars_decode($str))));
-    }
-}
-
-/**
- * 截取中文指定字节
- * @param string $str
- * @param int $utf8len
- * @param string $charset
- * @param string $file
- * @return string
- */
-
-if (!function_exists('substr_utf8')) {
-    function substr_utf8($str, int $utf8len = 100, string $charset = 'UTF-8', string $file = '....'): string
-    {
-        if (mb_strlen($str, $charset) > $utf8len) {
-            $str = mb_substr($str, 0, $utf8len, $charset) . $file;
-        }
-        return $str;
     }
 }
 

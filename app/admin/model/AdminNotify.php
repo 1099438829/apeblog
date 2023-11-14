@@ -42,7 +42,7 @@ class AdminNotify extends BaseModel
      * @param array $data
      * @return int|string
      */
-    public static function addLog(array $data)
+    public static function addLog(array $data): int|string
     {
         return self::create($data);
     }
@@ -55,7 +55,7 @@ class AdminNotify extends BaseModel
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public static function pageList(int $num)
+    public static function pageList(int $num): array
     {
         $model = new self;
         $model = $model->where("is_read", 0);
