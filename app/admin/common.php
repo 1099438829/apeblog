@@ -27,14 +27,14 @@ if (!function_exists('auth_is_exit')) {
 
 if (!function_exists('remove_cache')) {
     /**
-     * 删除缓存
+     * 删除缓存文件
      * @param string $path
      * @return bool
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     function remove_cache(string $path): bool
     {
-        $res = true;
+        $res = false;
         if (is_dir($path)) {
             if ($handle = opendir($path)) {
                 while (false !== ($item = readdir($handle))) {
@@ -50,7 +50,6 @@ if (!function_exists('remove_cache')) {
         return $res;
     }
 }
-
 
 if (!function_exists('to_int_array')) {
     /**
@@ -112,7 +111,7 @@ if (!function_exists('get_dir')) {
     function get_dir($dir): mixed
     {
         $dirArray[] = NULL;
-        if (false != ($handle = opendir($dir))) {
+        if (($handle = opendir($dir))) {
             $i = 0;
             while (false !== ($file = readdir($handle))) {
                 //去掉"“.”、“..”以及带“.xxx”后缀的文件

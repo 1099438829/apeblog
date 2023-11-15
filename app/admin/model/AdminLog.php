@@ -25,7 +25,7 @@ class AdminLog extends BaseModel
      */
     public static function saveLog(array $adminInfo, string $module, string $controller, string $action): bool
     {
-        return self::create([
+        return (bool)self::create([
             'admin_id' => $adminInfo['id'],
             'admin_name' => $adminInfo['username'],
             'module' => $module,
@@ -34,7 +34,7 @@ class AdminLog extends BaseModel
             'ip' => request()->ip(),
             'create_time' => time(),
             'user_agent' => substr(request()->server('HTTP_USER_AGENT'), 0, 255),
-        ]) ? true : false;
+        ]);
     }
 
     /**
@@ -43,7 +43,7 @@ class AdminLog extends BaseModel
      * @return array
      * @throws DbException
      */
-    public static function systemPage($where)
+    public static function systemPage($where): array
     {
         $model = new self;
         $model = $model->order("id desc");

@@ -55,17 +55,19 @@ class Admin extends AuthController
             ['status', ''],
             ['page', 1],
             ['limit', 20],
-        ]);
+        ],$request);
         return app("json")->layui(aModel::systemPage($where));
     }
 
     /**
      * 添加账号
-     * @param Request $request
      * @return string
+     * @throws DataNotFoundException
+     * @throws DbException
      * @throws FormBuilderException
+     * @throws ModelNotFoundException
      */
-    public function add(Request $request): string
+    public function add(): string
     {
         $form = array();
         $form[] = Elm::input('username', '登录账号')->col(10);
@@ -188,11 +190,10 @@ class Admin extends AuthController
 
     /**
      * 修改密码
-     * @param Request $request
      * @return string
      * @throws \Exception
      */
-    public function pwd(Request $request): string
+    public function pwd(): string
     {
         return $this->fetch();
     }
@@ -207,7 +208,7 @@ class Admin extends AuthController
         $data = Util::postMore([
             ['oldpwd', ''],
             ['newpwd', '']
-        ]);
+        ],$request);
         if ($data['oldpwd'] == '' || $data['newpwd'] == '') return app("json")->fail("参数有误，新旧密码为空！");
         $adminInfo = aModel::find($this->adminId);
         if ($adminInfo['password'] == md5(md5($data['oldpwd']))) return aModel::update(['password' => md5(md5($data['newpwd']))], ['id' => $this->adminId]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
@@ -230,7 +231,7 @@ class Admin extends AuthController
      * @param Request $request
      * @return mixed
      */
-    public function changProfile(Request $request)
+    public function changProfile(Request $request): mixed
     {
         $data = Util::postMore([
             ['nickname', ''],

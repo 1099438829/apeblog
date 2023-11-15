@@ -164,7 +164,7 @@ class AdminAuth extends BaseModel
     public static function myOptions(array $data, &$list, $num = 0, $clear = true)
     {
         foreach ($data as $k => $v) {
-            $list[] = ['value' => $v['id'], 'label' => self::cross($num) . $v['name']];
+            $list[] = ['value' => $v['id'], 'label' => cross($num) . $v['name']];
             if (is_array($v['children']) && !empty($v['children'])) {
                 self::myOptions($v['children'], $list, $num + 1, false);
             }
@@ -184,21 +184,6 @@ class AdminAuth extends BaseModel
         $list[] = ['value' => 0, 'label' => '总后台'];
         self::myOptions(self::lst(), $list, 1, true);
         return $list;
-    }
-
-    /**
-     * 横线
-     * @param int $num
-     * @return string
-     */
-    public static function cross(int $num = 0): string
-    {
-        $str = "";
-        if ($num == 1) $str .= "|--";
-        elseif ($num > 1) for ($i = 0; $i < $num; $i++)
-            if ($i == 0) $str .= "|--";
-            else $str .= "--";
-        return $str . " ";
     }
 
     /**

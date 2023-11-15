@@ -23,7 +23,7 @@ use think\facade\Db;
  * @param $len
  * @return string
  */
-function cn_substr($str, $len)
+function cn_substr($str, $len): string
 {
     return mb_substr($str, 0, $len, 'utf-8');
 }
@@ -31,7 +31,7 @@ function cn_substr($str, $len)
 /**
  * 过滤html标签
  */
-function html2text($str)
+function html2text($str): string
 {
     return strip_tags($str);
 }
@@ -1180,7 +1180,7 @@ function tpl_get_nav($type, $typeId, $row = 100, $where = '', $orderby = '')
 function get_nav($x, $field = false)
 {
     if (!$x) {
-        throw new Exception('请指定要获取的栏目导航id！');
+        return false;
     }
     //获取缓存的文章菜单
     $list = get_nav_list();
@@ -1213,7 +1213,7 @@ function get_nav_list()
     return $navList;
 }
 
-function get_nav_all()
+function get_nav_all(): array
 {
     $list = get_nav_list();
     $tempArr = array();
@@ -1232,7 +1232,7 @@ function get_nav_all()
  * $pid=父级id
  * $row=获取多少数目
  */
-function get_nav_by_parent($pid, $row)
+function get_nav_by_parent($pid, $row): array
 {
     $list = get_nav_list();
     $x = 1;
