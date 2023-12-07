@@ -286,7 +286,7 @@ function getSubs($categorys, $catId = 0, $level = 1)
 /**
  * @return array
  */
-function get_document_category_all()
+function get_document_category_all(): array
 {
     $documentCategoryList = get_document_category_list();
     $tempArr = array();

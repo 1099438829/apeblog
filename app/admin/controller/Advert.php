@@ -15,6 +15,7 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\facade\Route as Url;
+use think\Response;
 
 /**
  * Class Advert
@@ -25,7 +26,7 @@ use think\facade\Route as Url;
 class Advert extends AuthController
 {
 
-    public function index()
+    public function index() : string
     {
         return $this->fetch();
     }
@@ -33,9 +34,12 @@ class Advert extends AuthController
     /**
      * 列表
      * @param Request $request
-     * @return
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
-    public function lst(Request $request)
+    public function lst(Request $request): Response
     {
         $where = Util::postMore([
             ['title', ''],
@@ -62,7 +66,7 @@ class Advert extends AuthController
         $form[] = Elm::input('alias', '标识')->col(10);
         $form[] = Elm::input('description', '描述')->col(20);
         $form[] = Elm::radio('status', '状态', 1)->options([['label' => '禁用', 'value' => 0], ['label' => '启用', 'value' => 1]])->col(24);
-        $form = Form::make_post_form($form, url('save')->build());
+        $form = Form::make_post_form($form, url('/admin/advert/save')->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
@@ -83,7 +87,7 @@ class Advert extends AuthController
         $form[] = Elm::input('alias', '标识', $info['alias'])->col(10);
         $form[] = Elm::input('description', '描述', $info['description'])->col(20);
         $form[] = Elm::radio('status', '状态', $info['status'])->options([['label' => '禁用', 'value' => 0], ['label' => '启用', 'value' => 1]])->col(24);
-        $form = Form::make_post_form($form, url('save', ["id" => $id])->build());
+        $form = Form::make_post_form($form, url('/admin/advert/save', ["id" => $id])->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
@@ -93,7 +97,7 @@ class Advert extends AuthController
      * @param string $id
      * @return mixed
      */
-    public function save($id = ""): mixed
+    public function save($id = "")
     {
         $data = Util::postMore([
             ['title', ''],
@@ -124,7 +128,7 @@ class Advert extends AuthController
      * @author 木子的忧伤
      * @date 2021-02-16 23:12
      */
-    public function field($id): mixed
+    public function field($id)
     {
         if (!$id) return app("json")->fail("参数有误，Id为空！");
         $where = Util::postMore([['field', ''], ['value', '']]);
@@ -172,7 +176,7 @@ class Advert extends AuthController
      * @author 木子的忧伤
      * @date 2021-02-15 23:26
      */
-    public function infoList(Request $request): mixed
+    public function infoList(Request $request)
     {
         $where = Util::postMore([
             ['id', ''],
@@ -208,7 +212,7 @@ class Advert extends AuthController
             return $options;
         })->col(10);
         $form[] = Elm::radio('status', '状态', 1)->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(10);
-        $form = Form::make_post_form($form, url('saveAdvert')->build());
+        $form = Form::make_post_form($form, url('/admin/advert/saveAdvert')->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
@@ -241,7 +245,7 @@ class Advert extends AuthController
             return $options;
         })->col(10);
         $form[] = Elm::radio('status', '状态', $info['status'])->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(10);
-        $form = Form::make_post_form($form, url('saveAdvert', ['id' => $id])->build());
+        $form = Form::make_post_form($form, url('/admin/advert/saveAdvert', ['id' => $id])->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
@@ -251,7 +255,7 @@ class Advert extends AuthController
      * @param string $id
      * @return mixed
      */
-    public function saveAdvert($id = ""): mixed
+    public function saveAdvert($id = "")
     {
         $data = Util::postMore([
             ['id', ''],

@@ -7,7 +7,7 @@ if (!function_exists('un_camelize')) {
      * @param string $separator
      * @return string
      */
-    function un_camelize($camelCaps, $separator = '_'): string
+    function un_camelize($camelCaps, string $separator = '_'): string
     {
         return strtolower(preg_replace('/([a-z])([A-Z])/', "$1" . $separator . "$2", $camelCaps));
     }
@@ -108,7 +108,7 @@ if (!function_exists('get_dir')) {
      * @return mixed
      * @date 2021-02-17 21:27
      */
-    function get_dir($dir): mixed
+    function get_dir($dir)
     {
         $dirArray[] = NULL;
         if (($handle = opendir($dir))) {

@@ -16,6 +16,7 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\facade\Cache;
+use think\Response;
 
 /**
  * 系统配置
@@ -32,7 +33,7 @@ class SystemConfig extends AuthController
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function base($tab_id = 1)
+    public function base($tab_id = 1): string
     {
         $system = cModel::getLstByTabId($tab_id);
         //特殊处理主题信息,这里不允许修改主题信息
@@ -55,38 +56,42 @@ class SystemConfig extends AuthController
 
     /**
      * @param Request $request
-     * @return
+     * @return string
      * @throws InvalidArgumentException
+     * @throws Exception
      */
     public function clearCache(Request $request)
     {
         if ($request->isPost()) {
-            $adminPath = config("cache.runtime") . "/admin/";
+//            $adminPath = config("cache.runtime") . "/admin/";
             $commonPath = config("cache.runtime") . "/cache/";
-            $indexPath = config("cache.runtime") . "/index/";
-            $apiPath = config("cache.runtime") . "/api/";
+//            $indexPath = config("cache.runtime") . "/index/";
+//            $apiPath = config("cache.runtime") . "/api/";
             Cache::clear();
-            if (remove_cache($adminPath) && remove_cache($indexPath) && remove_cache($apiPath) && remove_cache($commonPath)) return app("json")->success("操作成功");
-            return app("json")->error("操作失败");
+//            remove_cache($adminPath);
+//            remove_cache($indexPath);
+//            remove_cache($apiPath);
+            remove_cache($commonPath);
+            return app("json")->success("操作成功");
         }
         return $this->fetch();
     }
 
     /**
      * 列表
-     * @param int $tab_id
+     * @param Request $request
      * @return string
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function lst(Request $request)
+    public function lst(Request $request): Response
     {
         $where = Util::postMore([
             ['page', 1],
             ['limit', 20],
             ['tab_id', 0]
-        ]);
+        ],$request);
         return app("json")->layui(cModel::lst($where));
     }
 
@@ -96,7 +101,7 @@ class SystemConfig extends AuthController
      * @return string
      * @throws Exception
      */
-    public function index($tab_id = 0)
+    public function index(int $tab_id = 0): string
     {
         $this->assign("tab", tModel::find($tab_id));
         return $this->fetch("list");
@@ -108,7 +113,7 @@ class SystemConfig extends AuthController
      * @return string
      * @throws FormBuilderException
      */
-    public function add(Request $request)
+    public function add(Request $request): string
     {
         $form = array();
         $form[] = Elm::hidden('tab_id', $request->param("tab_id"))->col(10);
@@ -123,21 +128,24 @@ class SystemConfig extends AuthController
         $form[] = Elm::radio('is_show', '是否显示', 1)->options([['label' => '隐藏', 'value' => 0], ['label' => '显示', 'value' => 1]])->col(10);
         $form[] = Elm::radio('upload_type', '上传配置', 0)->options([['label' => '单选', 'value' => 0], ['label' => '多选', 'value' => 1]])->col(10);
         $form[] = Elm::radio('status', '状态', 1)->options([['label' => '禁用', 'value' => 0], ['label' => '启用', 'value' => 1]])->col(10);
-        $form = Form::make_post_form($form, url('save')->build());
+        $form = Form::make_post_form($form, url('/admin/system_config/save')->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
 
     /**
      * 修改
-     * @param Request $request
+     * @param string $id
      * @return string
+     * @throws DataNotFoundException
+     * @throws DbException
      * @throws FormBuilderException
+     * @throws ModelNotFoundException
      */
-    public function edit($id = '')
+    public function edit(string $id = ''): string
     {
         if (!$id) return app("json")->fail("项目id不能为空");
-        $info = cModel::find($id);
+        $info = (new \app\common\model\SystemConfig)->find($id);
         if (!$info) return app("json")->fail("没有该项目");
         $form = array();
         $form[] = Elm::hidden('tab_id', $info['tab_id'])->col(10);
@@ -152,7 +160,7 @@ class SystemConfig extends AuthController
         $form[] = Elm::radio('is_show', '是否显示', $info['is_show'])->options([['label' => '隐藏', 'value' => 0], ['label' => '显示', 'value' => 1]])->col(10);
         $form[] = Elm::radio('upload_type', '上传配置', $info['upload_type'])->options([['label' => '单选', 'value' => 0], ['label' => '多选', 'value' => 1]])->col(10);
         $form[] = Elm::radio('status', '状态', $info['status'])->options([['label' => '禁用', 'value' => 0], ['label' => '启用', 'value' => 1]])->col(10);
-        $form = Form::make_post_form($form, url('save', ["id" => $id])->build());
+        $form = Form::make_post_form($form, url('/admin/system_config/save', ["id" => $id])->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
@@ -162,7 +170,7 @@ class SystemConfig extends AuthController
      * @param string $id
      * @return mixed
      */
-    public function save($id = "")
+    public function save(string $id = "")
     {
         $data = Util::postMore([
             ['name', ''],
@@ -199,7 +207,7 @@ class SystemConfig extends AuthController
     /**
      * 提交修改
      * @param Request $request
-     * @return
+     * @return mixed
      */
     public function ajaxSave(Request $request)
     {

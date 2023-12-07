@@ -9,6 +9,7 @@ use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
+use think\Response;
 
 /**
  * 日志
@@ -24,7 +25,7 @@ class AdminLog extends AuthController
      * @return string
      * @throws Exception
      */
-    public function index()
+    public function index(): string
     {
         return $this->fetch();
     }
@@ -32,12 +33,10 @@ class AdminLog extends AuthController
     /**
      * 权限列表
      * @param Request $request
-     * @return array
-     * @throws DataNotFoundException
+     * @return Response
      * @throws DbException
-     * @throws ModelNotFoundException
      */
-    public function lst(Request $request): array
+    public function lst(Request $request): Response
     {
         $where = Util::postMore([
             ['name', ''],

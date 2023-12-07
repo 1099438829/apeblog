@@ -20,7 +20,7 @@ class SystemConfigTab extends BaseModel
      * @author 木子的忧伤
      * @date 2022-02-28 9:19
      */
-    public static function lst($where)
+    public static function lst($where): array
     {
         $model = new self;
         if ($where['status'] != "") $model = $model->where("status", $where['status']);

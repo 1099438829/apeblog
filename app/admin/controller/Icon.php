@@ -9,7 +9,10 @@ namespace app\admin\controller;
  */
 class Icon extends AuthController
 {
-    public function index()
+    /**
+     * @throws \Exception
+     */
+    public function index(): string
     {
         return $this->fetch();
     }

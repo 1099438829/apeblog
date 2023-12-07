@@ -15,7 +15,7 @@ class Index extends AuthController
      * @return string
      * @throws Exception
      */
-    public function index()
+    public function index(): string
     {
         $this->assign("adminInfo", $this->adminInfo);
         $this->assign("menu", AdminAuth::getAuthList($this->adminId,$this->auth));
@@ -28,7 +28,7 @@ class Index extends AuthController
      * @return string
      * @throws Exception
      */
-    public function main()
+    public function main(): string
     {
         $this->assign("document_count", (new Document)->count());
         $this->assign("user_count", (new User())->count());

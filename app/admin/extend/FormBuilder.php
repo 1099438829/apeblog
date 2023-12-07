@@ -17,10 +17,10 @@ class FormBuilder
      * 生成表单
      * @param $rule
      * @param $url
-     * @return string|IviewForm
+     * @return IviewForm
      * @throws FormBuilderException
      */
-    public static function make_post_form($rule, $url): string|IviewForm
+    public static function make_post_form($rule, $url): IviewForm
     {
         $form = new IviewForm($url);
         $form->setMethod('POST');

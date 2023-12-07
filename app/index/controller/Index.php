@@ -27,8 +27,9 @@ class Index extends Base
 {
     /**
      * 入口跳转链接
+     * @throws \Exception
      */
-    public function index()
+    public function index(): string
     {
         //判断后台统计配置是否开启 1 开启
         if (web_config("web_statistics") == 1) {
@@ -50,10 +51,11 @@ class Index extends Base
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
+     * @throws \Exception
      * @author 木子的忧伤
      * @date 2021-10-17 1:03
      */
-    public function applylink(Request $request)
+    public function applyLink(Request $request): string
     {
         if (request()->isPost()) {
             $data = Util::postMore([
@@ -94,13 +96,11 @@ class Index extends Base
      * 留言页面
      * @param Request $request
      * @return string
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
+     * @throws \Exception
      * @author 木子的忧伤
      * @date 2021-10-17 1:03
      */
-    public function msg(Request $request)
+    public function msg(Request $request): string
     {
         if (request()->isPost()) {
             $data = Util::postMore([

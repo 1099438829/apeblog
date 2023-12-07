@@ -52,7 +52,7 @@ class Login extends AuthController
      * @return string
      * @throws Exception
      */
-    public function register()
+    public function register(): string
     {
         return $this->fetch();
     }
@@ -62,7 +62,7 @@ class Login extends AuthController
      * @return string
      * @throws Exception
      */
-    public function forget()
+    public function forget(): string
     {
         return $this->fetch();
     }
@@ -81,7 +81,7 @@ class Login extends AuthController
      * 验证码
      * @return Response
      */
-    public function captcha()
+    public function captcha(): Response
     {
         ob_clean();
         return captcha();

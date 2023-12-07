@@ -19,8 +19,8 @@ class Admin extends BaseModel
 {
     /**
      * 登录
-     * @param $username
-     * @param $pwd
+     * @param string $username
+     * @param string $pwd
      * @return bool
      * @throws DataNotFoundException
      * @throws DbException
@@ -28,7 +28,7 @@ class Admin extends BaseModel
      */
     public static function login(string $username, string $pwd): bool
     {
-        $info = self::where("username|tel", "=", $username)->find();
+        $info = (new Admin)->where("username|tel", "=", $username)->find();
         if (empty($info)) return self::setErrorInfo("登录账号不存在");
         if ($info['password'] != md5(md5($pwd))) return self::setErrorInfo("密码不正确！");
         if ($info['status'] != 1) return self::setErrorInfo("账号已被冻结！");
@@ -41,7 +41,7 @@ class Admin extends BaseModel
      * @param $info
      * @return bool
      */
-    public static function setLoginInfo($info)
+    public static function setLoginInfo($info): bool
     {
         unset($info->password);//去除密码字段
         $info->role_auth = AdminRole::getAuth($info['role_id'] ?? 0);//提前缓存auth字段避免频繁查询
@@ -54,7 +54,7 @@ class Admin extends BaseModel
     /**
      * 退出登录
      */
-    public static function clearLoginInfo()
+    public static function clearLoginInfo(): bool
     {
         Session::delete(Data::SESSION_KEY_ADMIN_ID);
         Session::delete(Data::SESSION_KEY_ADMIN_INFO);

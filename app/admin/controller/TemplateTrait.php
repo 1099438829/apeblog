@@ -11,7 +11,10 @@ use app\Request;
  */
 trait TemplateTrait
 {
-    public function index()
+    /**
+     * @throws \Exception
+     */
+    public function index(): string
     {
         return $this->fetch();
     }

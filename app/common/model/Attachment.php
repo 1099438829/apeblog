@@ -4,6 +4,10 @@
 namespace app\common\model;
 
 
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
+
 /**
  * Class attachment
  * @package app\admin\model\widget
@@ -38,12 +42,15 @@ class Attachment extends BaseModel
      * 分页显示
      * @param array $where
      * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
-    public static function pagination(array $where)
+    public static function pagination(array $where): array
     {
-        $model = self::where("type", $where['type']);
+        $model = (new Attachment)->where("type", $where['type']);
         if ($where['cid'] != "") $model = $model->where("cid", $where['cid']);
-        $count = self::count();
+        $count = (new Attachment)->count();
         $model = $model->order("id desc");
         $model = $model->field("id,path");
         $data = $model->page((int)$where['page'], (int)$where['limit'])->select();

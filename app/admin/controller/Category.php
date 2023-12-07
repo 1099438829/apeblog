@@ -10,6 +10,7 @@ use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
+use think\Response;
 
 /**
  * Class Article
@@ -26,7 +27,7 @@ class Category extends AuthController
      * @author 木子的忧伤
      * @date 2021-02-17 11:40
      */
-    public function index()
+    public function index(): string
     {
         return $this->fetch();
     }
@@ -34,12 +35,12 @@ class Category extends AuthController
     /**
      * 权限列表
      * @param Request $request
-     * @return array
+     * @return Response
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function lst(Request $request): array
+    public function lst(Request $request): Response
     {
         $where = Util::postMore([
             ['name', ''],
@@ -50,8 +51,7 @@ class Category extends AuthController
 
     /**
      * 保存
-     * @param $id
-     * @return
+     * @return mixed
      */
     public function save()
     {
@@ -103,7 +103,7 @@ class Category extends AuthController
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function add($pid = ''): string
+    public function add(string $pid = ''): string
     {
         $templatePath = system_config('web_template');
         $themeInfoFile = public_path('template' . DIRECTORY_SEPARATOR . $templatePath) . 'info.json';
@@ -132,7 +132,7 @@ class Category extends AuthController
      * @author 木子的忧伤
      * @date 2021-02-20 17:00
      */
-    public function edit(Request $request)
+    public function edit(Request $request): string
     {
         $templatePath = system_config('web_template');
         $themeInfoFile = public_path('template' . DIRECTORY_SEPARATOR . $templatePath) . 'info.json';

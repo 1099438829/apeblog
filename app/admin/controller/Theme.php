@@ -3,6 +3,7 @@
 namespace app\admin\controller;
 
 use app\admin\extend\Util as Util;
+use app\common\constant\Data;
 use app\common\model\SystemConfig as cModel;
 use Exception;
 
@@ -21,7 +22,7 @@ class Theme extends AuthController
      * @author 木子的忧伤
      * @date 2021-02-17 11:40
      */
-    public function index()
+    public function index() : string
     {
         $themeList = [];
         // 寻找有多少主题
@@ -57,14 +58,14 @@ class Theme extends AuthController
      * @author 木子的忧伤
      * @date 2021-02-17 11:40
      */
-    public function change_theme()
+    public function change_theme(): string
     {
         $data = Util::postMore([
             ['value', ''],
         ]);
         if ($data['value'] == "") return app("json")->fail("主题不能为空");
         $res = cModel::update($data, ['form_name' => 'web_template']);
-        cache(Config::DATA_SYSTEM_CONFIG, null);//清除缓存
+        cache(Data::DATA_SYSTEM_CONFIG, null);//清除缓存
         return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败");
     }
 }

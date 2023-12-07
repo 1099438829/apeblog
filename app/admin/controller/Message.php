@@ -9,6 +9,7 @@ use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
+use think\Response;
 
 /**
  * Class Message
@@ -21,7 +22,7 @@ class Message extends AuthController
     /**
      * 构造方法 初始化一些参数
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
         //修正因为修改model名称和原来不能对应导致的model功能异常
@@ -35,7 +36,7 @@ class Message extends AuthController
      * @author 木子的忧伤
      * @date 2021-02-19 11:53
      */
-    public function index()
+    public function index(): string
     {
         return $this->fetch();
     }
@@ -50,7 +51,7 @@ class Message extends AuthController
      * @author 木子的忧伤
      * @date 2021-02-19 11:54
      */
-    public function lst(Request $request)
+    public function lst(Request $request): Response
     {
         $where = Util::postMore([
             ['author', ''],

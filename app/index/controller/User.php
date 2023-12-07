@@ -51,7 +51,7 @@ class User extends Base
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function verify(): mixed
+    public function verify()
     {
         $data = Util::postMore(['username', 'password', 'captcha'], null, true);
         try {
@@ -84,7 +84,7 @@ class User extends Base
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function register_verify(): mixed
+    public function register_verify()
     {
         $data = Util::postMore(['username', 'email', 'password', 'captcha'], null, true);
         try {
@@ -143,7 +143,7 @@ class User extends Base
      * @return mixed
      * @throws Exception
      */
-    public function logout(): mixed
+    public function logout()
     {
         if (userModel::clearLoginInfo()) {
             return $this->success("操作成功", "/index/index/index");

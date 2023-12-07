@@ -13,6 +13,7 @@ use FormBuilder\Factory\Elm;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
+use think\Response;
 
 /**
  * 管理员配置
@@ -21,7 +22,10 @@ use think\db\exception\ModelNotFoundException;
  */
 class SystemConfigTab extends AuthController
 {
-    public function index()
+    /**
+     * @throws \Exception
+     */
+    public function index(): string
     {
         return $this->fetch();
     }
@@ -29,9 +33,12 @@ class SystemConfigTab extends AuthController
     /**
      * 列表
      * @param Request $request
-     * @return
+     * @return Response
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
-    public function lst(Request $request)
+    public function lst(Request $request): Response
     {
         $where = Util::postMore([
             ['page', 1],
@@ -47,25 +54,29 @@ class SystemConfigTab extends AuthController
      * @param Request $request
      * @return string
      * @throws FormBuilderException
+     * @throws \Exception
      */
-    public function add(Request $request)
+    public function add(Request $request): string
     {
         $form = array();
         $form[] = Elm::input('name', '分类名称')->col(10);
         $form[] = Elm::number('rank', '排序', 0)->col(24);
         $form[] = Elm::radio('status', '状态', 1)->options([['label' => '禁用', 'value' => 0], ['label' => '启用', 'value' => 1]])->col(24);
-        $form = Form::make_post_form($form, url('save')->build());
+        $form = Form::make_post_form($form, url('/admin/system_config_tab/save')->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
 
     /**
      * 修改
-     * @param Request $request
+     * @param string $id
      * @return string
+     * @throws DataNotFoundException
+     * @throws DbException
      * @throws FormBuilderException
+     * @throws ModelNotFoundException
      */
-    public function edit($id = '')
+    public function edit($id = ''): string
     {
         if (!$id) return app("json")->fail("项目id不能为空");
         $info = tModel::find($id);
@@ -74,7 +85,7 @@ class SystemConfigTab extends AuthController
         $form[] = Elm::input('name', '分类名称', $info['name'])->col(10);
         $form[] = Elm::number('rank', '排序', $info['rank'])->col(24);
         $form[] = Elm::radio('status', '状态', $info['status'])->options([['label' => '禁用', 'value' => 0], ['label' => '启用', 'value' => 1]])->col(24);
-        $form = Form::make_post_form($form, url('save', ["id" => $id])->build());
+        $form = Form::make_post_form($form, url('/admin/system_config_tab/save', ["id" => $id])->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
@@ -84,7 +95,7 @@ class SystemConfigTab extends AuthController
      * @param string $id
      * @return mixed
      */
-    public function save($id = "")
+    public function save(string $id = "")
     {
         $data = Util::postMore([
             ['name', ''],

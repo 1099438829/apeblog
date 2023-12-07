@@ -13,6 +13,7 @@ use FormBuilder\Factory\Elm;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
+use think\Response;
 
 /**
  * Class Nav
@@ -22,7 +23,10 @@ use think\db\exception\ModelNotFoundException;
  */
 class Nav extends AuthController
 {
-    public function index()
+    /**
+     * @throws Exception
+     */
+    public function index() : string
     {
         return $this->fetch();
     }
@@ -35,7 +39,7 @@ class Nav extends AuthController
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function lst(Request $request)
+    public function lst(Request $request): Response
     {
         $where = Util::postMore([
             ['title', ''],
@@ -54,7 +58,7 @@ class Nav extends AuthController
      * @throws ModelNotFoundException
      * @throws Exception
      */
-    public function add($pid = 0)
+    public function add(int $pid = 0)
     {
         $form = array();
         $form[] = Elm::select('pid', '上级导航', (int)$pid)->options(aModel::returnOptions())->col(10);
@@ -64,7 +68,7 @@ class Nav extends AuthController
         $form[] = Elm::input('params', '参数')->placeholder("php数组,不懂不要填写")->col(10);
         $form[] = Elm::number('sort', '排序')->col(10);
         $form[] = Elm::radio('status', '状态', 1)->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(10);
-        $form = Form::make_post_form($form, url('save')->build());
+        $form = Form::make_post_form($form, url('/admin/nav/save')->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
@@ -78,20 +82,20 @@ class Nav extends AuthController
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function edit($id = 0)
+    public function edit(int $id = 0)
     {
         if (!$id) return app("json")->fail("导航id不能为空");
-        $ainfo = aModel::find($id);
-        if (!$ainfo) return app("json")->fail("没有该导航");
+        $info = aModel::find($id);
+        if (!$info) return app("json")->fail("没有该导航");
         $form = array();
-        $form[] = Elm::select('pid', '上级导航', $ainfo['pid'])->options(aModel::returnOptions())->col(10);
-        $form[] = Elm::input('title', '导航名称', $ainfo['title'])->col(10);
+        $form[] = Elm::select('pid', '上级导航', $info['pid'])->options(aModel::returnOptions())->col(10);
+        $form[] = Elm::input('title', '导航名称', $info['title'])->col(10);
         //$form[] = Elm::frameInput('icon', '图标', Url::buildUrl('admin/widget.icon/index', array('fodder' => 'icon')), $ainfo['icon'])->icon("ios-ionic")->width('96%')->height('390px')->col(10);
-        $form[] = Elm::input('url', '链接地址', $ainfo['url'])->col(10);
-        $form[] = Elm::input('params', '参数', $ainfo['params'])->placeholder("php数组,不懂不要填写")->col(10);
-        $form[] = Elm::number('sort', '排序', $ainfo['sort'])->col(10);
-        $form[] = Elm::radio('status', '状态', $ainfo['status'])->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(10);
-        $form = Form::make_post_form($form, url('save', ['id' => $id])->build());
+        $form[] = Elm::input('url', '链接地址', $info['url'])->col(10);
+        $form[] = Elm::input('params', '参数', $info['params'])->placeholder("php数组,不懂不要填写")->col(10);
+        $form[] = Elm::number('sort', '排序', $info['sort'])->col(10);
+        $form[] = Elm::radio('status', '状态', $info['status'])->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(10);
+        $form = Form::make_post_form($form, url('/admin/nav/save', ['id' => $id])->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }

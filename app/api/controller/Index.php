@@ -15,7 +15,7 @@ class Index extends Base
     /**
      * 入口跳转链接
      */
-    public function index()
+    public function index() : string
     {
         return  app("json")->success("获取成功", 'code');
     }

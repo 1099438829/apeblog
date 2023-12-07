@@ -9,6 +9,7 @@ use Exception;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
+use think\Response;
 
 /**
  * Class Invitation
@@ -21,7 +22,7 @@ class Invitation extends AuthController
     /**
      * 构造方法 初始化一些参数
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
         //修正因为修改model名称和原来不能对应导致的model功能异常
@@ -35,7 +36,7 @@ class Invitation extends AuthController
      * @author 木子的忧伤
      * @date 2021-02-16 13:15
      */
-    public function index()
+    public function index(): string
     {
         return $this->fetch();
     }
@@ -50,7 +51,7 @@ class Invitation extends AuthController
      * @author 木子的忧伤
      * @date 2021-02-15 23:26
      */
-    public function lst(Request $request)
+    public function lst(Request $request): Response
     {
         $where = Util::postMore([
             ['code', ''],
@@ -70,7 +71,7 @@ class Invitation extends AuthController
      * @author 木子的忧伤
      * @date 2021-02-20 14:32
      */
-    public function save($id = "")
+    public function save(string $id = "")
     {
         $data = Util::postMore([
             ['code', ''],
@@ -102,21 +103,23 @@ class Invitation extends AuthController
      * @author 木子的忧伤
      * @date 2021-02-20 14:35
      */
-    public function addMultiple($id = "")
+    public function addMultiple(string $id = "")
     {
         $data = Util::postMore([
             ['name', ''],
             ['number', 1],
         ]);
+
         if ($data['name'] == "") return app("json")->fail("邀请码前缀不能为空");
         if ($data['number'] == "") return app("json")->fail("数量不是数字或者小于1");
         $count = intval($data['number']);
+        $res = false;
         for ($i = 0; $i < $count; $i++) {
             $code['code'] = ($data['name'] . substr(time(), -6) . rand(0, 9999));
             $code['status'] = 0;
             $code['user'] = $this->adminId;
-            $check = aModel::where('code')->find();
-            if ($check == null || $check == false) {
+            $check = (new \app\common\model\InvitationCode)->where('code')->find();
+            if (!$check) {
                 $res = aModel::create($code);
             } else {
                 continue;

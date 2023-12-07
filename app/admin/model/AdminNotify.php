@@ -42,9 +42,13 @@ class AdminNotify extends BaseModel
      * @param array $data
      * @return int|string
      */
-    public static function addLog(array $data): int|string
+    public static function addLog(array $data): bool
     {
-        return self::create($data);
+        if (self::create($data)){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /**

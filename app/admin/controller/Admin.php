@@ -17,6 +17,7 @@ use think\Exception;
 use think\facade\Db;
 use think\Facade\Log;
 use think\facade\Route as Url;
+use think\Response;
 
 /**
  * 账号管理
@@ -30,7 +31,7 @@ class Admin extends AuthController
      * @return string
      * @throws \Exception
      */
-    public function index()
+    public function index(): string
     {
         $this->assign("auths", rModel::getAuthLst());
         return $this->fetch();
@@ -44,7 +45,7 @@ class Admin extends AuthController
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function lst(Request $request)
+    public function lst(Request $request): Response
     {
         $where = Util::postMore([
             ['username', ''],
@@ -66,6 +67,7 @@ class Admin extends AuthController
      * @throws DbException
      * @throws FormBuilderException
      * @throws ModelNotFoundException
+     * @throws \Exception
      */
     public function add(): string
     {
@@ -86,7 +88,7 @@ class Admin extends AuthController
         $form[] = Elm::input('tel', '电话')->col(10);
         $form[] = Elm::email('email', '邮箱')->col(10);
         $form[] = Elm::radio('status', '状态', 1)->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(10);
-        $form = Form::make_post_form($form, url('save')->build());
+        $form = Form::make_post_form($form, url('/admin/admin/save')->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
@@ -99,19 +101,20 @@ class Admin extends AuthController
      * @throws DbException
      * @throws FormBuilderException
      * @throws ModelNotFoundException
+     * @throws \Exception
      */
-    public function edit($id = ""): string
+    public function edit(string $id = ""): string
     {
         if (!$id) return app("json")->fail("账号id不能为空");
-        $ainfo = aModel::find($id);
-        if (!$ainfo) return app("json")->fail("没有该账号");
+        $info = (new \app\admin\model\Admin)->find($id);
+        if (!$info) return app("json")->fail("没有该账号");
         $form = array();
-        $form[] = Elm::input('username', '登录账号', $ainfo['username'])->col(10);
-        $form[] = Elm::input('nickname', '昵称', $ainfo['nickname'])->col(10);
-        $form[] = Elm::frameImage('avatar', '头像', Url::buildUrl('admin/image/index', array('fodder' => 'avatar', 'limit' => 1)), $ainfo['avatar'])->icon("ios-image")->width('96%')->height('440px')->col(10);
-        $form[] = Elm::password('password', '密码', $ainfo['password'])->col(10);
-        $form[] = Elm::input('realname', '真实姓名', $ainfo['realname'])->col(10);
-        $form[] = Elm::select('role_id', '角色', $ainfo['role_id'])->options(function () {
+        $form[] = Elm::input('username', '登录账号', $info['username'])->col(10);
+        $form[] = Elm::input('nickname', '昵称', $info['nickname'])->col(10);
+        $form[] = Elm::frameImage('avatar', '头像', Url::buildUrl('admin/image/index', array('fodder' => 'avatar', 'limit' => 1)), $info['avatar'])->icon("ios-image")->width('96%')->height('440px')->col(10);
+        $form[] = Elm::password('password', '密码', $info['password'])->col(10);
+        $form[] = Elm::input('realname', '真实姓名', $info['realname'])->col(10);
+        $form[] = Elm::select('role_id', '角色', $info['role_id'])->options(function () {
             $list = rModel::getAuthLst();
             $menus = [];
             foreach ($list as $menu) {
@@ -119,10 +122,10 @@ class Admin extends AuthController
             }
             return $menus;
         })->col(10);
-        $form[] = Elm::input('tel', '电话', $ainfo['tel'])->col(10);
-        $form[] = Elm::email('email', '邮箱', $ainfo['email'])->col(10);
-        $form[] = Elm::radio('status', '状态', $ainfo['status'])->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(10);
-        $form = Form::make_post_form($form, url('save', ['id' => $id])->build());
+        $form[] = Elm::input('tel', '电话', $info['tel'])->col(10);
+        $form[] = Elm::email('email', '邮箱', $info['email'])->col(10);
+        $form[] = Elm::radio('status', '状态', $info['status'])->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(10);
+        $form = Form::make_post_form($form, url('/admin/admin/save', ['id' => $id])->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
@@ -132,7 +135,7 @@ class Admin extends AuthController
      * @param string $id
      * @return mixed
      */
-    public function save(string $id = ""): mixed
+    public function save(string $id = "")
     {
         $data = Util::postMore([
             ['username', ''],
@@ -203,14 +206,14 @@ class Admin extends AuthController
      * @param Request $request
      * @return mixed
      */
-    public function changePwd(Request $request): mixed
+    public function changePwd(Request $request)
     {
         $data = Util::postMore([
             ['oldpwd', ''],
             ['newpwd', '']
         ],$request);
         if ($data['oldpwd'] == '' || $data['newpwd'] == '') return app("json")->fail("参数有误，新旧密码为空！");
-        $adminInfo = aModel::find($this->adminId);
+        $adminInfo = (new \app\admin\model\Admin)->find($this->adminId);
         if ($adminInfo['password'] == md5(md5($data['oldpwd']))) return aModel::update(['password' => md5(md5($data['newpwd']))], ['id' => $this->adminId]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
         return app("json")->fail("密码不正确！");
     }
@@ -220,7 +223,7 @@ class Admin extends AuthController
      * @return string
      * @throws \Exception
      */
-    public function profile()
+    public function profile(): string
     {
         $this->assign("info", aModel::find($this->adminId));
         return $this->fetch();
@@ -231,7 +234,7 @@ class Admin extends AuthController
      * @param Request $request
      * @return mixed
      */
-    public function changProfile(Request $request): mixed
+    public function changProfile(Request $request): Response
     {
         $data = Util::postMore([
             ['nickname', ''],

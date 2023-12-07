@@ -70,7 +70,7 @@ class File extends AuthController
 
     /**
      * @单文件上传
-     * @param string $type 类型  files image documents banners
+     * @param Request $request
      * @return mixed
      */
     public function upload(Request $request)

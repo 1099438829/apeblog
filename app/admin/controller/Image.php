@@ -26,7 +26,10 @@ class Image extends AuthController
      */
     private $type = "image";
 
-    public function index()
+    /**
+     * @throws Exception
+     */
+    public function index() : string
     {
         return $this->fetch();
     }
@@ -37,7 +40,7 @@ class Image extends AuthController
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function category()
+    public function category(): array
     {
         return app("json")->success(AttachmentCategory::buildNodes($this->type, 0, $this->request->param("title", "")));
     }
@@ -48,8 +51,9 @@ class Image extends AuthController
      * @param int $pid
      * @return string
      * @throws FormBuilderException
+     * @throws Exception
      */
-    public function addCategory($id = 0, $pid = 0)
+    public function addCategory($id = 0, $pid = 0): string
     {
         $form = array();
         $form[] = Elm::select('pid', '上级分类', (int)$pid ?: (int)$id)->options(function () {
@@ -61,19 +65,23 @@ class Image extends AuthController
         })->col(18);
         $form[] = Elm::input('name', '分类名称')->col(18);
         $form[] = Elm::hidden('type', $this->type)->col(18);
-        $form = Form::make_post_form($form, url('saveCategory')->build());
+        $form = Form::make_post_form($form, url('admin/image/saveCategory')->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
 
     /**
      * 目录的修改
-     * @param $id
+     * @param int $id
+     * @param int $pid
      * @return string
+     * @throws DataNotFoundException
+     * @throws DbException
      * @throws FormBuilderException
+     * @throws ModelNotFoundException
      * @throws Exception
      */
-    public function editCategory($id = 0, $pid = 0)
+    public function editCategory(int $id = 0, int $pid = 0): string
     {
         if ($id == 0) return app("json")->fail("没有选中分类");
         $form = array();
@@ -86,7 +94,7 @@ class Image extends AuthController
         })->col(18);
         $form[] = Elm::input('name', '分类名称', AttachmentCategory::getNameById($id))->col(18);
         $form[] = Elm::hidden('type', $this->type)->col(18);
-        $form = Form::make_post_form($form, Url('saveCategory', ['id' => $id])->build());
+        $form = Form::make_post_form($form, Url('admin/image/saveCategory', ['id' => $id])->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
@@ -96,7 +104,7 @@ class Image extends AuthController
      * @param string $id
      * @return mixed
      */
-    public function saveCategory($id = "")
+    public function saveCategory(string $id = "")
     {
         $data = Util::postMore([
             ['pid', 0],
@@ -117,7 +125,8 @@ class Image extends AuthController
     /**
      * 删除目录
      * @param $id
-     * @return
+     * @return mixed
+     * @throws DbException
      */
     public function delCategory($id)
     {
@@ -149,7 +158,7 @@ class Image extends AuthController
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function editImage($id)
+    public function editImage($id): string
     {
         if ($id == 0) return app("json")->fail("没有选中图片");
         $image = Attachment::find($id);

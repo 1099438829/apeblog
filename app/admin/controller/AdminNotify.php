@@ -18,7 +18,7 @@ class AdminNotify extends AuthController
      * @return mixed
      * @throws Exception
      */
-    public function index()
+    public function index() : string
     {
         $where = Util::postMore([
             ['title', ''],

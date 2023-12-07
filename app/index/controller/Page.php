@@ -32,7 +32,7 @@ class Page extends Base
      * @author 木子的忧伤
      * @date 2021-10-29 0:17
      */
-    public function index()
+    public function index() : string
     {
         $id = input('id');
         if (!$id) {
@@ -88,7 +88,7 @@ class Page extends Base
      * @author 木子的忧伤
      * @date 2021-10-17 19:13
      */
-    public function create_comment(Request $request): mixed
+    public function create_comment(Request $request)
     {
         $data = Util::postMore([
             ['document_id', ''],

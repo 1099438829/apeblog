@@ -116,7 +116,7 @@ class Json
     /**
      * layui返回
      * @param array|string $msg
-     * @param array $data
+     * @param array|null $data
      * @return Response
      */
     public function layui($msg = '', ?array $data = []): Response

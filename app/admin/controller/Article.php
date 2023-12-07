@@ -23,7 +23,7 @@ class Article extends AuthController
     /**
      * 构造方法 初始化一些参数
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
         //修正因为修改model名称和原来不能对应导致的model功能异常
@@ -35,7 +35,7 @@ class Article extends AuthController
      * @return string
      * @throws \Exception
      */
-    public function index()
+    public function index(): string
     {
         return $this->fetch();
     }
@@ -125,15 +125,16 @@ class Article extends AuthController
 
     /**
      * 新增文章
-     * @param $category_id
+     * @param string $category_id
      * @return string
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
+     * @throws \Exception
      * @author 木子的忧伤
      * @date 2021-03-10 14:46
      */
-    public function add($category_id = '')
+    public function add(string $category_id = '')
     {
         $where = [
             'name' => '',
@@ -177,7 +178,7 @@ class Article extends AuthController
      * @return string
      * @throws \Exception
      */
-    public function comment()
+    public function comment(): string
     {
         return $this->fetch();
     }
@@ -192,7 +193,7 @@ class Article extends AuthController
      * @author 木子的忧伤
      * @date 2021-11-03 23:28
      */
-    public function commentList(Request $request): mixed
+    public function commentList(Request $request)
     {
         $where = Util::postMore([
             ['document_id', ''],
@@ -216,7 +217,7 @@ class Article extends AuthController
      * @author 木子的忧伤
      * @date 2021-02-16 23:12
      */
-    public function commentField($id): mixed
+    public function commentField($id)
     {
         if (!$id) return app("json")->fail("参数有误，Id为空！");
         $where = Util::postMore([['field', ''], ['value', '']]);

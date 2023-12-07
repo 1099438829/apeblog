@@ -36,7 +36,7 @@ class Layer extends Paginator
      * @param string $text
      * @return string
      */
-    protected function getPreviousButton($text = "上一页")
+    protected function getPreviousButton($text = "上一页"): string
     {
 
         if ($this->currentPage() <= 1) {
@@ -56,7 +56,7 @@ class Layer extends Paginator
      * @param string $text
      * @return string
      */
-    protected function getDisabledTextWrapper($text)
+    protected function getDisabledTextWrapper($text): string
     {
         return '<a class="layui-laypage-prev layui-disabled">' . $text . '</a>';
     }
@@ -83,7 +83,7 @@ class Layer extends Paginator
      * @param string $text
      * @return string
      */
-    protected function getActivePageWrapper($text)
+    protected function getActivePageWrapper($text): string
     {
         return '<span class="layui-laypage-curr"><em class="layui-laypage-em"></em><em>' . $text . '</em></span>';
     }
@@ -95,7 +95,7 @@ class Layer extends Paginator
      * @param int $page
      * @return string
      */
-    protected function getAvailablePageWrapper($url, $page)
+    protected function getAvailablePageWrapper($url, $page): string
     {
         return '<a href="' . htmlentities($url) . '">' . $page . '</a>';
     }
@@ -105,7 +105,7 @@ class Layer extends Paginator
      * @param string $text
      * @return string
      */
-    protected function getNextButton($text = '下一页')
+    protected function getNextButton($text = '下一页'): string
     {
         if (!$this->hasMore) {
             return $this->getDisabledTextWrapper($text);
@@ -120,7 +120,7 @@ class Layer extends Paginator
      * 页码按钮
      * @return string
      */
-    protected function getLinks()
+    protected function getLinks(): string
     {
         if ($this->simple)
             return '';
@@ -173,7 +173,7 @@ class Layer extends Paginator
      * @param array $urls
      * @return string
      */
-    protected function getUrlLinks(array $urls)
+    protected function getUrlLinks(array $urls): string
     {
         $html = '';
 
@@ -189,7 +189,7 @@ class Layer extends Paginator
      *
      * @return string
      */
-    protected function getDots()
+    protected function getDots(): string
     {
         return $this->getDisabledTextWrapper('...');
     }

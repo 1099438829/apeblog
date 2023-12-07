@@ -154,7 +154,13 @@ abstract class AuthController extends SystemBasic
     {
         $path = explode(".", $this->request->controller());
         $modelPath = "app\\common\\model"; //全部为common
-        foreach ($path as $v) $modelPath .= "\\" . $v;
+        foreach ($path as $v) {
+            if (substr($v,0,5) == "Admin"){
+                //后台用户相关的需要特殊处理
+                $modelPath = "app\\admin\\model"; //全部为common
+            }
+            $modelPath .= "\\" . $v;
+        }
         if (class_exists($modelPath)) return app($modelPath);
         return null;
     }

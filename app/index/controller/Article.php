@@ -104,7 +104,7 @@ class Article extends Base
      * @author 木子的忧伤
      * @date 2021-10-29 0:17
      */
-    public function detail()
+    public function detail(): string
     {
         $id = input('id');
         if (!$id) {
@@ -209,11 +209,11 @@ class Article extends Base
     /**
      * 文章标签页面
      * @return string
-     * @throws ModelNotFoundException|\Exception
+     * @throws \Exception
      * @author 木子的忧伤
      * @date 2021-10-29 0:19
      */
-    public function tag()
+    public function tag(): string
     {
         $tag = input('t');
         if (!trim($tag)) {
@@ -246,13 +246,11 @@ class Article extends Base
     /**
      * 搜索页面
      * @return string
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
+     * @throws \Exception
      * @author 木子的忧伤
      * @date 2021-10-29 0:18
      */
-    public function search()
+    public function search(): string
     {
         $kw = input('kw');
         if (!trim($kw)) {
@@ -284,7 +282,7 @@ class Article extends Base
     /**
      * 用户首页
      * @return string
-     * @throws Exception
+     * @throws \Exception
      * @author 木子的忧伤
      * @date 2022-01-24 1:23
      */

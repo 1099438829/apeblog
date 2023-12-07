@@ -15,17 +15,17 @@ class PvLog extends BaseModel
     public function del_data()
     {
         //获取七天前日期
-        $dateinfo = date('Y-m-d', strtotime('-7 days'));
+        $date_info = date('Y-m-d', strtotime('-7 days'));
         //转换为时间戳
-        $shijianchuo = strtotime($dateinfo);
+        $start_time = strtotime($date_info);
         //删除pv
-        $this->where('create_time', '<', $shijianchuo)->delete();
+        $this->where('create_time', '<', $start_time)->delete();
         //删除url
         $urlLogModel = new UrlLogModel();
-        $urlLogModel->where('create_time', '<', $shijianchuo)->delete();
+        $urlLogModel->where('create_time', '<', $start_time)->delete();
         //删除uv
         $uvLogModel = new UvLogModel();
-        $uvLogModel->where('create_time', '<', $shijianchuo)->delete();
+        $uvLogModel->where('create_time', '<', $start_time)->delete();
     }
 
     public function set_view()

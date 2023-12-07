@@ -14,6 +14,7 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\facade\Route as Url;
+use think\Response;
 
 /**
  * Class Message
@@ -28,7 +29,7 @@ class FriendLink extends AuthController
      * @return string
      * @throws Exception
      */
-    public function index()
+    public function index() : string
     {
         return $this->fetch();
     }
@@ -43,7 +44,7 @@ class FriendLink extends AuthController
      * @author 木子的忧伤
      * @date 2021-02-15 23:26
      */
-    public function lst(Request $request)
+    public function lst(Request $request): Response
     {
         $where = Util::postMore([
             ['title', ''],
@@ -70,7 +71,7 @@ class FriendLink extends AuthController
         $form[] = Elm::input('sort', '排序')->col(10);
         $form[] = Elm::textarea('description', '描述')->col(10);
         $form[] = Elm::radio('status', '状态', 1)->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(10);
-        $form = Form::make_post_form($form, url('save')->build());
+        $form = Form::make_post_form($form, url('/admin/friend_link/save')->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
@@ -92,7 +93,7 @@ class FriendLink extends AuthController
         $form[] = Elm::input('sort', '排序', $ainfo['sort'])->col(10);
         $form[] = Elm::textarea('description', '描述', $ainfo['description'])->col(10);
         $form[] = Elm::radio('status', '状态', $ainfo['status'])->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(10);
-        $form = Form::make_post_form($form, url('save', ['id' => $id])->build());
+        $form = Form::make_post_form($form, url('/admin/friend_link/save', ['id' => $id])->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
@@ -102,7 +103,7 @@ class FriendLink extends AuthController
      * @param string $id
      * @return mixed
      */
-    public function save($id = "")
+    public function save(string $id = "")
     {
         $data = Util::postMore([
             ['id', ''],

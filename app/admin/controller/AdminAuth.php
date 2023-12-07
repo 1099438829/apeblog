@@ -13,6 +13,7 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\facade\Route as Url;
+use think\Response;
 
 /**
  * 权限管理
@@ -21,7 +22,10 @@ use think\facade\Route as Url;
  */
 class AdminAuth extends AuthController
 {
-    public function index()
+    /**
+     * @throws Exception
+     */
+    public function index(): string
     {
         return $this->fetch();
     }
@@ -29,12 +33,12 @@ class AdminAuth extends AuthController
     /**
      * 权限列表
      * @param Request $request
-     * @return array
+     * @return Response
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function lst(Request $request): array
+    public function lst(Request $request): Response
     {
         $where = Util::postMore([
             ['name', ''],
@@ -53,7 +57,7 @@ class AdminAuth extends AuthController
      * @throws ModelNotFoundException
      * @throws Exception
      */
-    public function add(int $pid = 0)
+    public function add(int $pid = 0): string
     {
         $form = array();
         $form[] = Elm::select('pid', '上级权限', (int)$pid)->options(aModel::returnOptions())->col(10);
@@ -66,7 +70,7 @@ class AdminAuth extends AuthController
         $form[] = Elm::number('rank', '排序')->col(10);
         $form[] = Elm::radio('is_menu', '是否菜单', 1)->options([['label' => '是', 'value' => 1], ['label' => '否', 'value' => 0]])->col(10);
         $form[] = Elm::radio('status', '状态', 1)->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(10);
-        $form = Form::make_post_form($form, url('save')->build());
+        $form = Form::make_post_form($form, url('/admin/admin_auth/save')->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
@@ -81,7 +85,7 @@ class AdminAuth extends AuthController
      * @throws ModelNotFoundException
      * @throws Exception
      */
-    public function edit($id = 0): string
+    public function edit(int $id = 0): string
     {
         if (!$id) return app("json")->fail("权限id不能为空");
         $info = (new \app\admin\model\AdminAuth)->find($id);
@@ -97,17 +101,17 @@ class AdminAuth extends AuthController
         $form[] = Elm::number('rank', '排序', $info['rank'])->col(10);
         $form[] = Elm::radio('is_menu', '是否菜单', $info['is_menu'])->options([['label' => '是', 'value' => 1], ['label' => '否', 'value' => 0]])->col(10);
         $form[] = Elm::radio('status', '状态', $info['status'])->options([['label' => '启用', 'value' => 1], ['label' => '冻结', 'value' => 0]])->col(10);
-        $form = Form::make_post_form($form, url('save', ['id' => $id])->build());
+        $form = Form::make_post_form($form, url('/admin/admin_auth/save', ['id' => $id])->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
 
     /**
      * 保存
-     * @param $id
-     * @return
+     * @param string $id
+     * @return mixed
      */
-    public function save($id = "")
+    public function save(string $id = "")
     {
         $data = Util::postMore([
             ['name', ''],
@@ -144,9 +148,9 @@ class AdminAuth extends AuthController
     /**
      * 修改字段
      * @param $id
-     * @return aModel
+     * @return Response
      */
-    public function field($id)
+    public function field($id): Response
     {
         if (!$id) return app("json")->fail("参数有误，Id为空！");
         $where = Util::postMore([['field', ''], ['value', '']]);

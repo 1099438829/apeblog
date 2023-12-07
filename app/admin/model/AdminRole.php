@@ -128,7 +128,7 @@ class AdminRole extends BaseModel
      * @param array $children
      * @return array
      */
-    public static function buildTreeData($id, $title, $children = []): array
+    public static function buildTreeData($id, $title, array $children = []): array
     {
         $tree = Elm::TreeData($id, $title);
         if (!empty($children)) $tree = $tree->children($children);

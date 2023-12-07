@@ -22,7 +22,7 @@ class Page extends AuthController
     /**
      * 构造方法 初始化一些参数
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
         //修正因为修改model名称和原来不能对应导致的model功能异常
@@ -34,7 +34,7 @@ class Page extends AuthController
      * @return string
      * @throws \Exception
      */
-    public function index()
+    public function index(): string
     {
         return $this->fetch();
     }
@@ -64,8 +64,10 @@ class Page extends AuthController
 
     /**
      * 保存
-     * @param string $id
      * @return mixed
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      * @author 木子的忧伤
      * @date 2021-02-28 22:43
      */
@@ -124,7 +126,7 @@ class Page extends AuthController
      * @return string
      * @throws DataNotFoundException
      * @throws DbException
-     * @throws ModelNotFoundException
+     * @throws ModelNotFoundException|\Exception
      * @author 木子的忧伤
      * @date 2021-03-10 14:46
      */

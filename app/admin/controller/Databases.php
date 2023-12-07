@@ -11,6 +11,7 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\facade\Db;
+use think\Response;
 
 /*
  * 数据库备份还原控制器
@@ -57,7 +58,7 @@ class Databases extends AuthController
      * @author 木子的忧伤
      * @date 2021-10-31 0:12
      */
-    public function lst(Request $request)
+    public function lst(Request $request): Response
     {
         $data = Util::postMore([
             ['type', 'export'],

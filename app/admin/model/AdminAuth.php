@@ -133,7 +133,7 @@ class AdminAuth extends BaseModel
      * @author 木子的忧伤
      * @date 2021-06-09 17:24
      */
-    public static function getMenuCacheKey($adminId)
+    public static function getMenuCacheKey($adminId): string
     {
         return 'menu:List:' . $adminId;
     }
@@ -143,7 +143,7 @@ class AdminAuth extends BaseModel
      * @author 木子的忧伤
      * @date 2021-06-15 11:11
      */
-    public static function getAuthCacheKey()
+    public static function getAuthCacheKey(): string
     {
         return 'auth:key:list';
     }
@@ -161,7 +161,7 @@ class AdminAuth extends BaseModel
      * @param int $num
      * @param bool $clear
      */
-    public static function myOptions(array $data, &$list, $num = 0, $clear = true)
+    public static function myOptions(array $data, &$list, $num = 0, bool $clear = true)
     {
         foreach ($data as $k => $v) {
             $list[] = ['value' => $v['id'], 'label' => cross($num) . $v['name']];
@@ -218,8 +218,8 @@ class AdminAuth extends BaseModel
      */
     public static function getIds(array $ids = []): array
     {
-        if (empty($ids)) return self::where("status", 1)->column("id");
-        $pids = self::where("id", "in", $ids)->column("pid");
+        if (empty($ids)) return (new AdminAuth)->where("status", 1)->column("id");
+        $pids = (new AdminAuth)->where("id", "in", $ids)->column("pid");
         return array_merge($ids, $pids) ?: [];
     }
 
@@ -230,7 +230,7 @@ class AdminAuth extends BaseModel
      * @param string $action
      * @return string
      */
-    public static function getNameByAction(string $module, string $controller, string $action)
+    public static function getNameByAction(string $module, string $controller, string $action): string
     {
         return self::where("module", $module)->where("controller", $controller)->where("action", $action)->value("name") ?: '未知操作';
     }
