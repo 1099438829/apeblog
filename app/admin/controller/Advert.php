@@ -201,7 +201,7 @@ class Advert extends AuthController
         $form = array();
         $form[] = Elm::input('title', '广告名称')->col(10);
         $form[] = Elm::input('url', '链接地址')->col(10);
-        $form[] = Elm::frameImage('cover_path', '广告图片', Url::buildUrl('admin/image/index', array('fodder' => 'cover_path', 'limit' => 1)))->icon("ios-image")->width('96%')->height('440px')->col(10);
+        $form[] = Elm::frameImage('cover_path', '广告图片', Url::buildUrl('/admin/image/index', array('fodder' => 'cover_path', 'limit' => 1)))->icon("ios-image")->width('96%')->height('440px')->col(10);
         $form[] = Elm::number('sort', '排序')->col(10);
         $form[] = Elm::select('advert_id', '位置')->options(function () {
             $options = [];
@@ -234,7 +234,7 @@ class Advert extends AuthController
         $form = array();
         $form[] = Elm::input('title', '广告名称', $info['title'])->col(10);
         $form[] = Elm::input('url', '链接地址', $info['url'])->col(10);
-        $form[] = Elm::frameImage('cover_path', '广告图片', Url::buildUrl('admin/image/index', array('fodder' => 'cover_path', 'limit' => 1)), $info['cover_path'])->icon("ios-image")->width('96%')->height('440px')->col(10);
+        $form[] = Elm::frameImage('cover_path', '广告图片', Url::buildUrl('/admin/image/index', array('fodder' => 'cover_path', 'limit' => 1)), $info['cover_path'])->icon("ios-image")->width('96%')->height('440px')->col(10);
         $form[] = Elm::number('sort', '排序', $info['sort'])->col(10);
         $form[] = Elm::select('advert_id', '位置', $info['advert_id'])->options(function () {
             $options = [];

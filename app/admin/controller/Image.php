@@ -65,7 +65,7 @@ class Image extends AuthController
         })->col(18);
         $form[] = Elm::input('name', '分类名称')->col(18);
         $form[] = Elm::hidden('type', $this->type)->col(18);
-        $form = Form::make_post_form($form, url('admin/image/saveCategory')->build());
+        $form = Form::make_post_form($form, url('/admin/image/saveCategory')->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
@@ -94,7 +94,7 @@ class Image extends AuthController
         })->col(18);
         $form[] = Elm::input('name', '分类名称', AttachmentCategory::getNameById($id))->col(18);
         $form[] = Elm::hidden('type', $this->type)->col(18);
-        $form = Form::make_post_form($form, Url('admin/image/saveCategory', ['id' => $id])->build());
+        $form = Form::make_post_form($form, Url('/admin/image/saveCategory', ['id' => $id])->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }

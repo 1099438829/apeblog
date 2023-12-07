@@ -69,7 +69,7 @@ class User extends AuthController
         $form = array();
         $form[] = Elm::input('username', '登录账号')->col(10);
         $form[] = Elm::input('nickname', '昵称')->col(10);
-        $form[] = Elm::frameImage('avatar', '头像', Url::buildUrl('admin/image/index', array('fodder' => 'avatar', 'limit' => 1)))->icon("ios-image")->width('96%')->height('440px')->col(10);
+        $form[] = Elm::frameImage('avatar', '头像', Url::buildUrl('/admin/image/index', array('fodder' => 'avatar', 'limit' => 1)))->icon("ios-image")->width('96%')->height('440px')->col(10);
         $form[] = Elm::password('password', '密码')->col(10);
         $form[] = Elm::input('tel', '电话')->col(10);
         $form[] = Elm::email('email', '邮箱')->col(10);
@@ -97,7 +97,7 @@ class User extends AuthController
         $form = array();
         $form[] = Elm::input('username', '登录账号', $info['username'])->col(10);
         $form[] = Elm::input('nickname', '昵称', $info['nickname'])->col(10);
-        $form[] = Elm::frameImage('avatar', '头像', Url::buildUrl('admin/image/index', array('fodder' => 'avatar', 'limit' => 1)), $info['avatar'])->icon("ios-image")->width('96%')->height('440px')->col(10);
+        $form[] = Elm::frameImage('avatar', '头像', Url::buildUrl('/admin/image/index', array('fodder' => 'avatar', 'limit' => 1)), $info['avatar'])->icon("ios-image")->width('96%')->height('440px')->col(10);
         $form[] = Elm::password('password', '密码', $info['password'])->col(10);
         $form[] = Elm::input('tel', '电话', $info['tel'])->col(10);
         $form[] = Elm::email('email', '邮箱', $info['email'])->col(10);

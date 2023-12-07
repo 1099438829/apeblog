@@ -62,7 +62,7 @@ class AdminAuth extends AuthController
         $form = array();
         $form[] = Elm::select('pid', '上级权限', (int)$pid)->options(aModel::returnOptions())->col(10);
         $form[] = Elm::input('name', '权限名称')->col(10);
-        $form[] = Elm::frameInput('icon', '图标', Url::buildUrl('admin/icon/index', array('fodder' => 'icon')))->icon("ios-ionic")->width('96%')->height('390px')->col(10);
+        $form[] = Elm::frameInput('icon', '图标', Url::buildUrl('/admin/icon/index', array('fodder' => 'icon')))->icon("ios-ionic")->width('96%')->height('390px')->col(10);
         $form[] = Elm::input('module', '模块名')->col(10);
         $form[] = Elm::input('controller', '控制器名')->col(10);
         $form[] = Elm::input('action', '方法名')->col(10);
@@ -93,7 +93,7 @@ class AdminAuth extends AuthController
         $form = array();
         $form[] = Elm::select('pid', '上级权限', $info['pid'])->options(aModel::returnOptions())->col(10);
         $form[] = Elm::input('name', '权限名称', $info['name'])->col(10);
-        $form[] = Elm::frameInput('icon', '图标', Url::buildUrl('admin/widget.icon/index', array('fodder' => 'icon')), $info['icon'])->icon("ios-ionic")->width('96%')->height('390px')->col(10);
+        $form[] = Elm::frameInput('icon', '图标', Url::buildUrl('/admin/widget.icon/index', array('fodder' => 'icon')), $info['icon'])->icon("ios-ionic")->width('96%')->height('390px')->col(10);
         $form[] = Elm::input('module', '模块名', $info['module'])->col(10);
         $form[] = Elm::input('controller', '控制器名', $info['controller'])->col(10);
         $form[] = Elm::input('action', '方法名', $info['action'])->col(10);
