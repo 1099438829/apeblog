@@ -334,7 +334,7 @@ CREATE TABLE `ape_document` (
   `category_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '所属分类',
   `cover_path` varchar(255) NOT NULL DEFAULT '' COMMENT '封面',
   `type` varchar(50) NOT NULL DEFAULT 'article' COMMENT '内容类型',
-  `theme` varchar(40) NOT NULL DEFAULT '' COMMENT '主题模板',
+  `template` varchar(40) NOT NULL DEFAULT '' COMMENT '主题模板',
   `is_recommend` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否推荐',
   `is_top` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否置顶',
   `is_hot` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否热门',
@@ -362,7 +362,7 @@ CREATE TABLE `ape_document` (
 -- Records of ape_document
 -- ----------------------------
 BEGIN;
-INSERT INTO `ape_document` (`id`, `alias`, `uid`, `author`, `title`, `category_id`, `cover_path`, `type`, `theme`, `is_recommend`, `is_top`, `is_hot`, `link_str`, `is_jump`, `display`, `view`, `tags`, `abstract`, `keywords`, `description`, `sort`, `create_date`, `create_time`, `update_time`, `status`, `password`) VALUES (1, 'about', 1, '超级管理员', '关于博客', 0, '/storage/image/20220710/a5059baa808c46f83674cb5dbcae8dc5.png', 'page', 'article.html', 0, 0, 0, '', 0, 1, 570, '源码云', '关于源码云博客', '关于小站,源码云,源码云博客,关于源码云博客', '关于源码云博客', 99, '2022-07-10', 1657464428, 1657464428, 1, '');
+INSERT INTO `ape_document` (`id`, `alias`, `uid`, `author`, `title`, `category_id`, `cover_path`, `type`, `template`, `is_recommend`, `is_top`, `is_hot`, `link_str`, `is_jump`, `display`, `view`, `tags`, `abstract`, `keywords`, `description`, `sort`, `create_date`, `create_time`, `update_time`, `status`, `password`) VALUES (1, 'about', 1, '超级管理员', '关于博客', 0, '/storage/image/20220710/a5059baa808c46f83674cb5dbcae8dc5.png', 'page', 'article.html', 0, 0, 0, '', 0, 1, 570, '源码云', '关于源码云博客', '关于小站,源码云,源码云博客,关于源码云博客', '关于源码云博客', 99, '2022-07-10', 1657464428, 1657464428, 1, '');
 COMMIT;
 
 -- ----------------------------

@@ -152,8 +152,8 @@ if (!function_exists('get_tree_list')) {
 
 }
 
-if (!function_exists('get_theme_list')) {
-    function get_theme_list($type = ''): array
+if (!function_exists('get_template_list')) {
+    function get_template_list($type = ''): array
     {
         $themeList = [];
         $themeDir = public_path('template') . system_config('web_template') . '/pc/' . $type;

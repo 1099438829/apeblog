@@ -16,3 +16,5 @@ Route::get('think', function () {
 
 Route::get('hello/:name', 'index/hello');
 Route::rule('/sitemap.xml', 'index/sitemap');
+//单页面访问
+Route::get('page/:id', 'page/index');

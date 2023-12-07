@@ -87,7 +87,7 @@ class Page extends AuthController
             ['is_recommend', 0],
             ['is_top', 0],
             ['is_hot', 0],
-            ['theme', ''],
+            ['template', ''],
             ['link_str', ''],
             ['cover_path', ''],
             ['display', 1],
@@ -98,7 +98,7 @@ class Page extends AuthController
             ['uid', $this->adminId],
         ]);
         if ($data['title'] == "") return app("json")->fail("文章名称不能为空");
-        if ($data['theme'] == "") return app("json")->fail("文章模板不能为空");
+        if ($data['template'] == "") return app("json")->fail("文章模板不能为空");
         if ($data['cover_path'] == "") return app("json")->fail("主图不能为空");
         $model = new Document();
         $res = $model->updateInfo($data, Data::DOCUMENT_TYPE_PAGE);
@@ -130,21 +130,18 @@ class Page extends AuthController
      * @author 木子的忧伤
      * @date 2021-03-10 14:46
      */
-    public function add()
+    public function add(): string
     {
         // 获取页面模板列表
-        $this->getThemeList();
-        $themeList = get_theme_list(Data::DOCUMENT_TYPE_PAGE);
-        $this->assign("theme_list", $themeList);
+        $templateList = get_template_list(Data::DOCUMENT_TYPE_PAGE);
+        $this->assign("template_list", $templateList);
         return $this->fetch();
     }
 
     /**
      * 编辑页
      * @return string|void
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
+     * @throws \Exception
      */
     public function edit()
     {
@@ -159,8 +156,8 @@ class Page extends AuthController
             $this->error('数据不存在');
         }
         // 获取页面模板列表
-        $themeList = get_theme_list(Data::DOCUMENT_TYPE_PAGE);
-        $this->assign("theme_list", $themeList);
+        $templateList = get_template_list(Data::DOCUMENT_TYPE_PAGE);
+        $this->assign("template_list", $templateList);
         $this->assign("info", $info);
         return $this->fetch();
     }

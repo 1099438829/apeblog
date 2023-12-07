@@ -153,10 +153,15 @@ class Index extends Base
         $article['position'] = '<a href="/">首页</a><span>&gt;</span>';
         //更新浏览次数
         $documentModel->where('id', $article['id'])->inc('view')->update();
-        $template = Data::DOCUMENT_TYPE_PAGE . '/' . ($article['theme'] ?: 'detail.html');
+        $template = Data::DOCUMENT_TYPE_PAGE . '/' . ($article['template'] ?: 'index.html');
         $templateFile = config('view.view_path') . $template;
         if (!is_file($templateFile)) {
-            $this->error('模板文件不存在！');
+            //配置的模版文件不存在则走默认模版
+            $template =  Data::DOCUMENT_TYPE_PAGE . '/' . 'index.html';
+            $templateFile = config('view.view_path') . $template;
+            if (!is_file($templateFile)){
+                $this->error('模板文件不存在！');
+            }
         }
         $article['category_title'] = "单页";
         //判断SEO 为空则取系统
