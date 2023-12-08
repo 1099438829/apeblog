@@ -254,6 +254,9 @@ class Advert extends AuthController
      * 保存修改
      * @param string $id
      * @return mixed
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function saveAdvert($id = "")
     {
@@ -282,5 +285,19 @@ class Advert extends AuthController
         }
         cache(Data::DATA_ADVERT . '_' . $info['alias'], null);//清除缓存
         return $res ? app("json")->success("操作成功", 'code') : app("json")->fail("操作失败");
+    }
+
+    /**
+     * 删除广告
+     * @param Request $request
+     * @return mixed
+     */
+    public function delAdvert(Request $request)
+    {
+        $where = Util::postMore([
+            ['id', ''],
+        ],$request);
+        if (empty($where['id'])) return app("json")->fail("参数错误,请刷新后重试");
+        return (new \app\common\model\AdvertInfo)->where('id',$where['id'])->delete() ? app("json")->success("删除成功") : app("json")->fail("删除失败");
     }
 }

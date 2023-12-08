@@ -40,7 +40,7 @@ class Image extends AuthController
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function category(): array
+    public function category()
     {
         return app("json")->success(AttachmentCategory::buildNodes($this->type, 0, $this->request->param("title", "")));
     }

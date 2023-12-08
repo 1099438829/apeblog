@@ -4,6 +4,7 @@ namespace app\admin\controller;
 
 use app\admin\extend\Util as Util;
 use app\admin\model\AdminLog as lModel;
+use app\common\model\AdvertInfo;
 use app\Request;
 use Exception;
 use think\db\exception\DataNotFoundException;
