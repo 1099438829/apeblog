@@ -88,7 +88,7 @@ class Article extends AuthController
             ['is_recommend', 0],
             ['is_top', 0],
             ['is_hot', 0],
-            ['theme', 'detail.html'],
+            ['template', 'detail.html'],
             ['link_str', ''],
             ['is_jump', 0],
             ['cover_path', ''],

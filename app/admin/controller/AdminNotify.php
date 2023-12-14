@@ -25,7 +25,7 @@ class AdminNotify extends AuthController
             ['start_time', ''],
             ['end_time', ''],
             ['is_read', ''],
-            ['aid', $this->adminId],
+            ['uid', $this->adminId],
         ]);
         $this->assign("where", $where);
         $this->assign("list", nModel::systemPage($where));

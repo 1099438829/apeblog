@@ -19,7 +19,7 @@ class Index extends AuthController
     {
         $this->assign("adminInfo", $this->adminInfo);
         $this->assign("menu", AdminAuth::getAuthList($this->adminId,$this->auth));
-        $this->assign("message", AdminNotify::pageList(5));
+        $this->assign("message", AdminNotify::pageList($this->adminId,5));
         return $this->fetch();
     }
 

@@ -143,17 +143,17 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `ape_admin_notify`;
 CREATE TABLE `ape_admin_notify` (
-  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '消息ID',
-  `aid` int(10) NOT NULL DEFAULT '0' COMMENT '管理员ID',
-  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
-  `content` mediumtext NOT NULL COMMENT '内容',
-  `from` varchar(10) NOT NULL DEFAULT '' COMMENT '消息来源 谁发的',
-  `type` varchar(10) NOT NULL DEFAULT 'system' COMMENT '消息类型 timer:定时器 system:系统',
-  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '跳转路径 不填写时自动判断',
-  `is_read` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否已读',
-  `create_time` int(10) NOT NULL DEFAULT '0' COMMENT '添加时间',
-  `update_time` int(10) NOT NULL DEFAULT '0' COMMENT '更新时间',
-  PRIMARY KEY (`id`) USING BTREE
+    `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '消息ID',
+    `aid` int(10) NOT NULL DEFAULT '0' COMMENT '管理员ID',
+    `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
+    `content` mediumtext NOT NULL COMMENT '内容',
+    `from` varchar(10) NOT NULL DEFAULT '' COMMENT '消息来源 谁发的',
+    `type` varchar(10) NOT NULL DEFAULT 'system' COMMENT '消息类型 timer:定时器 system:系统',
+    `url` varchar(255) NOT NULL DEFAULT '' COMMENT '跳转路径 不填写时自动判断',
+    `is_read` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否已读',
+    `create_time` int(10) NOT NULL DEFAULT '0' COMMENT '添加时间',
+    `update_time` int(10) NOT NULL DEFAULT '0' COMMENT '更新时间',
+    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='后台信息表';
 
 -- ----------------------------
@@ -700,6 +700,30 @@ CREATE TABLE `ape_url_log` (
 
 -- ----------------------------
 -- Records of ape_url_log
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
+-- Table structure for ape_message
+-- ----------------------------
+DROP TABLE IF EXISTS `ape_message`;
+CREATE TABLE `ape_message` (
+   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '消息ID',
+   `uid` int(10) NOT NULL DEFAULT '0' COMMENT '用户id包含管理员',
+   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
+   `content` mediumtext NOT NULL COMMENT '内容',
+   `from` varchar(10) NOT NULL DEFAULT '' COMMENT '消息来源 谁发的',
+   `type` varchar(10) NOT NULL DEFAULT 'system' COMMENT '消息类型 公告、通知、私信等',
+   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '跳转路径 不填写时自动判断',
+   `is_read` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否已读',
+   `create_time` int(10) NOT NULL DEFAULT '0' COMMENT '添加时间',
+   `update_time` int(10) NOT NULL DEFAULT '0' COMMENT '更新时间',
+   PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='消息通知表';
+
+-- ----------------------------
+-- Records of ape_message
 -- ----------------------------
 BEGIN;
 COMMIT;

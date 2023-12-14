@@ -1,10 +1,9 @@
 <?php
 
 
-namespace app\admin\model;
+namespace app\common\model;
 
 
-use app\common\model\BaseModel;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -15,7 +14,7 @@ use think\Paginator;
  * Class AdminNotify
  * @package app\admin\model\admin
  */
-class AdminNotify extends BaseModel
+class Message extends BaseModel
 {
     /**
      * 系统分页
@@ -31,7 +30,7 @@ class AdminNotify extends BaseModel
         }
         if ($where['title'] != '') $model = $model->where("title|content", "like", "%$where[title]%");
         if ($where['is_read'] != '') $model = $model->where("is_read", $where['is_read']);
-        if ($where['uid'] != '') $model = $model->where("uid", $where['uid']);
+        if ($where['uid'] != '') $model = $model->where("aid", $where['aid']);
         $model = $model->order("is_read");
         $model = $model->order("create_time desc");
         return $model->paginate(10)->appends($where);
@@ -53,17 +52,16 @@ class AdminNotify extends BaseModel
 
     /**
      * 后台首页获取通知信息
-     * @param $uid
      * @param int $num
      * @return array
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public static function pageList($uid,int $num): array
+    public static function pageList(int $num): array
     {
         $model = new self;
-        $model = $model->where("is_read", 0)->where("uid",$uid);
+        $model = $model->where("is_read", 0);
         $count = self::count();
         $model = $model->order("create_time desc");
         $model = $model->page(1, $num);

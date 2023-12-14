@@ -87,11 +87,9 @@ class Document extends BaseModel
 
     /**
      * 更新文件信息
-     * @param $date
+     * @param $data
      * @param string $type
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
+     * @return bool
      */
     public function updateInfo($data, string $type = Data::DOCUMENT_TYPE_ARTICLE)
     {

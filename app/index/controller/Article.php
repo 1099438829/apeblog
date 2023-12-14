@@ -126,7 +126,7 @@ class Article extends Base
         //更新浏览次数
         $documentModel->where('id', $article['id'])->inc('view')->update();
         //读取模板文件
-        $template = Data::DOCUMENT_TYPE_ARTICLE . '/' . ($article['theme'] ?: 'detail.html');
+        $template = Data::DOCUMENT_TYPE_ARTICLE . '/' . ($article['template'] ?: 'detail.html');
         $templateFile = config('view.view_path') . $template;
         if (!is_file($templateFile)) {
             //配置的模版文件不存在则走默认模版
