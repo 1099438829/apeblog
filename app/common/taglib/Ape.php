@@ -25,6 +25,7 @@ class Ape extends TagLib
         'tags' => ['attr' => 'tags,void', 'close' => 1],
         'archive' => ['attr' => 'type,format,void', 'close' => 1],
         'nav' => ['attr' => 'type,typeId,row,void,where,orderBy,display', 'close' => 1],
+        'table' => ['attr' => 'name,where,orderby,row,pagesize,void', 'close' => 1]
     ];
 
     /**
@@ -129,7 +130,7 @@ class Ape extends TagLib
      * @param $content
      * @return string
      */
-    public function tagList($tag, $content): string
+    public function tagList($tag, $content)
     {
         $orderBy = $tag['orderBy'] ?? 'sort desc,create_time desc';
         $pageSize = $tag['pageSize'] ?? 15;
@@ -188,6 +189,24 @@ class Ape extends TagLib
         $parse .= '$__LIST__ =' . "tpl_get_friend_link($type,$row);";
         $parse .= ' ?>';
         $parse .= '{volist name="__LIST__" id="' . $void . '"}';
+        $parse .= $content;
+        $parse .= '{/volist}';
+        return $parse;
+    }
+
+    /**
+     * 执行SQL
+     */
+    public function tagSql($tag,$content)
+    {
+        if(!isset($tag['sql'])){
+            return '';
+        }
+        $sql=$tag['sql'];
+        $parse = '<?php ';
+        $parse .= '$__LIST__ ='."db()->query(\"$sql\");";
+        $parse .= ' ?>';
+        $parse .= '{volist name="__LIST__" id="field"}';
         $parse .= $content;
         $parse .= '{/volist}';
         return $parse;
@@ -371,4 +390,35 @@ class Ape extends TagLib
         $parse .= '{/volist}';
         return $parse;
     }
+
+    /**
+     * 表数据读取
+     */
+    public function tagTable($tag, $content)
+    {
+        $name = isset($tag['name']) ? $tag['name'] : false;
+        if (!$name) {
+            return '';
+        }
+        $orderby = isset($tag['orderby']) ? $tag['orderby'] : '';
+        $pagesize = isset($tag['pagesize']) ? $tag['pagesize'] : '';
+        $void = isset($tag['void']) ? $tag['void'] : 'field';
+        $where = isset($tag['where']) ? $tag['where'] : '';
+        $row = isset($tag['row']) ? $tag['row'] : '100';
+
+        $parse = '<?php ';
+        $parse .= '$__FUN__ =' . "tpl_get_table_list(\"$orderby\",\"$pagesize\",\"$name\",\"$where\",$row);";
+        if ($pagesize) {
+            $parse .= '$__LIST__ =$__FUN__["lists"];$pager = $__FUN__["model"]->render();';
+        } else {
+            $parse .= '$__LIST__ =$__FUN__;';
+        }
+
+        $parse .= ' ?>';
+        $parse .= '{volist name="__LIST__" id="' . $void . '"}';
+        $parse .= $content;
+        $parse .= '{/volist}';
+        return $parse;
+    }
+
 }
