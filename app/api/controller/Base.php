@@ -27,8 +27,4 @@ class Base extends BaseController
     protected $userId;
 
     // 初始化
-    protected function initialize()
-    {
-        parent::initialize();
-    }
 }

@@ -4,6 +4,7 @@
 namespace app\common\model;
 
 
+use think\db\exception\DbException;
 use think\facade\Db;
 use think\Model;
 
@@ -15,6 +16,22 @@ class BaseModel extends Model
     private static $errorMsg;
     private static $transaction = 0;
     private static $DbInstance = [];
+
+    /**
+     * 错误信息,解决调用无法明确错误的问题
+     * @var mixed
+     */
+    protected $error;
+
+    /**
+     * 获取错误信息
+     * @access public
+     * @return mixed
+     */
+    public function getError()
+    {
+        return $this->error;
+    }
 
     //自动时间戳
     protected $autoWriteTimestamp = true;
@@ -30,53 +47,18 @@ class BaseModel extends Model
     }
 
     /**
-     * 开启事务
+     * 查询一条数据是否存在
+     * @param $map
+     * @param string $field
+     * @return bool 是否存在
+     * @throws DbException
      */
-    public static function beginTrans()
+    public static function isExist($map, $field = ''): bool
     {
-        Db::startTrans();
-    }
-
-    /**
-     * 根据结果提交滚回事务
-     * @param $res
-     */
-    public static function checkTrans($res)
-    {
-        if ($res) {
-            self::commitTrans();
-        } else {
-            self::rollbackTrans();
-        }
-    }
-
-    /**
-     * 提交事务
-     */
-    public static function commitTrans()
-    {
-        Db::commit();
-    }
-
-    /**
-     * 设置错误信息
-     * @param string $errorMsg
-     * @param bool $rollback
-     * @return bool
-     */
-    protected static function setErrorInfo($errorMsg = self::DEFAULT_ERROR_MSG, $rollback = false)
-    {
-        if ($rollback) self::rollbackTrans();
-        self::$errorMsg = $errorMsg;
-        return false;
-    }
-
-    /**
-     * 关闭事务
-     */
-    public static function rollbackTrans()
-    {
-        Db::rollback();
+        $model = (new self);
+        if (!is_array($map) && empty($field)) $field = $model->getPk();
+        $map = !is_array($map) ? [$field => $map] : $map;
+        return 0 < $model->where($map)->count();
     }
 
 }

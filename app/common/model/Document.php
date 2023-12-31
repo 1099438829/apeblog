@@ -51,8 +51,11 @@ class Document extends BaseModel
      * 获取文章信息
      * @param $id
      * @param string $type
-     * @param string $status
+     * @param int $status
      * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function getInfo($id, string $type = Data::DOCUMENT_TYPE_ARTICLE, $status = 1): array
     {
@@ -182,5 +185,51 @@ class Document extends BaseModel
             Db::rollback();
         }
         return $res;
+    }
+
+    /**
+     * 获取文章信息
+     * @param $id
+     * @param string $type
+     * @param int $status
+     * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getFullInfo($id, string $type = Data::DOCUMENT_TYPE_ARTICLE, $status = 1): array
+    {
+        if (empty($id)) {
+            return [];
+        }
+        $model = new Document();
+        $model = $model->alias('a')
+            ->leftJoin('document_category c', 'c.id = a.category_id')
+            ->leftJoin('user u', 'u.id = a.uid')
+            ->field("a.*,p.content,c.title,c.alias,u.nickname,u.avatar,u.remark")
+        ;
+        if (is_numeric($id)) {
+            $model->where("a.id", $id);
+        } else {
+            $model->where("a.alias", $id);
+        }
+        if ($type !== '') $model->where("a.type", $type);
+        if ($status !== '') $model->where("a.status", $status);
+        switch ($type) {
+            case Data::DOCUMENT_TYPE_ARTICLE:
+                $model->leftJoin('document_article p', 'a.id = p.id');
+                break;
+            case Data::DOCUMENT_TYPE_PAGE:
+                $model->leftJoin('document_page p', 'a.id = p.id');
+                break;
+            case Data::DOCUMENT_TYPE_PRODUCT:
+                $model->leftJoin('document_product p', 'a.id = p.id');
+                break;
+        }
+        $info = $model->find();
+        if (!$info) {
+            return [];
+        }
+        return $info->toArray();
     }
 }
