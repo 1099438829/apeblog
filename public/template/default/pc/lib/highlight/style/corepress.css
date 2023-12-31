@@ -52,7 +52,7 @@
 }
 
 
-pre.corepress-code-pre code {
+pre.ape-code-pre code {
     position: relative;
     border-radius: 5px;
     background: #fafafa;
@@ -62,7 +62,7 @@ pre.corepress-code-pre code {
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, sans-serif;
 }
 
-.corepress-code-pre:hover .code-bar {
+.ape-code-pre:hover .code-bar {
     visibility: visible;
     opacity: 1;
 }
@@ -88,7 +88,7 @@ pre.corepress-code-pre code {
 .code-bar-btn-copy-fonticon {
     cursor: pointer;
 }
-pre[class='corepress-code-pre'] {
+pre[class='ape-code-pre'] {
     position: relative;
     font-size: 14px;
     border-radius: 4px;

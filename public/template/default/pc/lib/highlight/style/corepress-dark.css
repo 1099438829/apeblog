@@ -68,7 +68,7 @@
 }
 
 
-pre.corepress-code-pre code {
+pre.ape-code-pre code {
     position: relative;
     border-radius: 5px;
     max-height: 500px;
@@ -76,7 +76,7 @@ pre.corepress-code-pre code {
     padding: 10px 20px;
    }
 
-.corepress-code-pre:hover .code-bar {
+.ape-code-pre:hover .code-bar {
     visibility: visible;
     opacity: 1;
 }
@@ -103,7 +103,7 @@ pre.corepress-code-pre code {
     color: #fff;
     cursor: pointer;
 }
-pre[class='corepress-code-pre'] {
+pre[class='ape-code-pre'] {
     position: relative;
     font-size: 14px;
     border-radius: 4px;

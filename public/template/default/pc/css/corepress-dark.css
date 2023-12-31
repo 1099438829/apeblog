@@ -69,14 +69,14 @@
 }
 
 
-pre.corepress-code-pre code {
+pre.ape-code-pre code {
     position: relative;
     max-height: 500px;
     overflow: auto;
     padding: 10px 20px;
 }
 
-.corepress-code-pre:hover .code-bar {
+.ape-code-pre:hover .code-bar {
     visibility: visible;
     opacity: 1;
 }
@@ -105,7 +105,7 @@ pre.corepress-code-pre code {
     cursor: pointer;
 }
 
-pre[class='corepress-code-pre'] {
+pre[class='ape-code-pre'] {
     position: relative;
     font-size: 14px;
     margin: 0;

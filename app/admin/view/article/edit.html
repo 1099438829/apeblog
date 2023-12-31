@@ -6,7 +6,7 @@
     <!--标签插件-->
     <link rel="stylesheet" href="/static/admin/js/jquery-tags-input/jquery.tagsinput.min.css">
     <!--富文本输入框-->
-    <link rel="stylesheet" href="/static/admin/js/summernote/summernote.min.css">
+    <link href="https://cdn.staticfile.org/wangeditor5/5.1.23/css/style.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="row">
@@ -93,8 +93,12 @@
                                        placeholder="请输入标签" value="{$info.tags}">
                             </div>
                             <div class="form-group col-md-12">
-                                <label for="content">文章内容</label>
-                                <textarea id="content" name="content" data-provide="summernote" data-toolbar="full">{$info.content}</textarea>
+                                <label for="editor-text-area">文章内容</label>
+                                <div style="border: 1px solid #ccc;">
+                                    <div id="editor-toolbar" style="border-bottom: 1px solid #ccc;"></div>
+                                    <div id="editor-text-area" style="height: 500px"></div>
+                                </div>
+                                <textarea id="content" name="content" style="display: none;">{$info.content}</textarea>
                             </div>
                             <div class="form-group col-md-12">
                                 <button type="submit" class="btn btn-primary ajax-post" target-form="add-form">立即提交
@@ -175,8 +179,7 @@
 <!--select2-->
 <script type="text/javascript" src="/static/admin/js/select2.min.js"></script>
 <!--富文本输入框-->
-<script type="text/javascript" src="/static/admin/js/summernote/summernote.min.js"></script>
-<script type="text/javascript" src="/static/admin/js/summernote/lang/summernote-zh-CN.min.js"></script>
+<script src="https://cdn.staticfile.org/wangeditor5/5.1.23/index.js"></script>
 <!--标签-->
 <script src="/static/admin/js/jquery-tags-input/jquery.tagsinput.min.js"></script>
 <script>
@@ -184,51 +187,37 @@
         $('#tag').select2();
     });
     $(document).ready(function(){
-        $('[data-provide="summernote"]').each(function() {
-            var options = {
-                dialogsInBody: true,
-                lang: 'zh-CN',
-                dialogsFade: true,
-                height:400
-            };
-            var config = {};
-            $.each( $(this).data(), function(key, value){
-                key = key.replace(/-([a-z])/g, function(x){return x[1].toUpperCase();});
-                if ( key == 'provide' ) {
-                    return;
+        var E = window.wangEditor
+        // 切换语言
+        var LANG = location.href.indexOf('lang=en') > 0 ? 'en' : 'zh-CN'
+        E.i18nChangeLanguage(LANG)
+        //需要判断是否含有html标签
+        window.editor = E.createEditor({
+            selector: '#editor-text-area',
+            html: $('#content').val(), // 从 editor.getHtml() 获取的 html 内容
+            config: {
+                placeholder: '请输入...',
+                MENU_CONF: {
+                    uploadImage: {
+                        fieldName: 'your-fileName',
+                        base64LimitSize: 10 * 1024 * 1024 // 10M 以下插入 base64
+                    }
+                },
+                onChange(editor) {
+                    let content = editor.getHtml()
+                    console.log('editor content', content)
+                    // 也可以同步到 <textarea>
+                    $("#content").val(content)
                 }
-                config[key] = value;
-            });
+            }
+        })
 
-            options = $.extend(options, config);
-            options.toolbar = [
-                // [groupName, [list of button]]
-                ['para_style', ['style']],
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['font', ['strikethrough', 'superscript', 'subscript']],
-                ['fontsize', ['fontname', 'fontsize', 'height']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph', 'hr']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['do', ['undo', 'redo']],
-                ['misc', ['fullscreen', 'codeview', 'help']]
-            ];
-            $(this).summernote(options);
-        });
+        window.toolbar = E.createToolbar({
+            editor,
+            selector: '#editor-toolbar',
+            config: {}
+        })
 
-        $(document).on('click', '[data-summernote-edit]', function(){
-            var target = $(this).data('summernote-edit');
-            $(target).summernote({focus: true});
-        });
-
-
-        $(document).on('click', '[data-summernote-save]', function(){
-            var target = $(this).data('summernote-save');
-            var markup = $(target).summernote('code');
-            $(target).summernote('destroy');
-            alert('修改完成');
-        });
     });
 
     /**
