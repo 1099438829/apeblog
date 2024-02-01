@@ -1,11 +1,14 @@
 {
     "name": "yzh52521/think-mail",
-    "description": "A powerful and beautiful php mailer for All of ThinkPHP and Other PHP Frameworks based symfony",
+    "description": "A powerful and beautiful php mailer for All of ThinkPHP and Other PHP Frameworks based SwiftMailer",
     "keywords": [
-        "think-mail",
+        "think-mailer",
         "mailer",
-        "symfony",
+        "phpmailer",
+        "swiftmailer",
         "mail",
+        "thinkphp",
+        "thinkphp5",
         "thinkphp6"
     ],
     "type": "library",
@@ -17,12 +20,8 @@
         }
     ],
     "require": {
-        "php": ">=7.4",
-        "symfony/mailer": "^5.3|^6.0",
-        "ext-fileinfo": "*"
-    },
-    "require-dev": {
-        "topthink/framework": "^6.0"
+        "php": ">=5.4",
+        "swiftmailer/swiftmailer": "^5.0"
     },
     "autoload": {
         "psr-4": {
@@ -34,6 +33,9 @@
             "config": {
                 "mailer": "src/config/config.php"
             }
+        },
+        "think-config": {
+            "mailer": "src/config/config.php"
         }
     }
 }
