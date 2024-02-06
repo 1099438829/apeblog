@@ -5,9 +5,10 @@
 //第一步判断选择的模板
 $theme = system_config('web_template');
 //检查主题目录是否存在，不存在则更新为默认目录
-if (file_exists(public_path("template/{$theme}"))) {
+if (!file_exists(public_path("template/{$theme}"))) {
     $theme = 'default';
 }
+
 //检查是否切换模板
 if (is_mobile() == "wap" && file_exists(public_path("template/{$theme}/mobile"))) {
     $mode = "mobile";

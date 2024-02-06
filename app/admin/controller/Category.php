@@ -105,14 +105,6 @@ class Category extends AuthController
      */
     public function add(string $pid = ''): string
     {
-        $templatePath = system_config('web_template');
-        $themeInfoFile = public_path('template' . DIRECTORY_SEPARATOR . $templatePath) . 'info.json';
-        if (file_exists($themeInfoFile)) {
-            $themeInfo = json_decode(file_get_contents($themeInfoFile), true);
-            $themeList = $themeInfo['category_list'];
-        } else {
-            $themeList = [];
-        }
         $where = Util::postMore([
             'name' => '',
             'status' => '',
@@ -121,6 +113,10 @@ class Category extends AuthController
         $category = get_tree_list($category);
         $this->assign("category", $category);
         $this->assign("pid", $pid);
+        $themeList = get_template_list(Data::DOCUMENT_CATEGORY);
+        if (empty($themeList)){
+            $this->error("模板文件不存在,请检查主题目录或主题配置");
+        }
         $this->assign("template_list", $themeList);
         return $this->fetch();
     }
@@ -134,14 +130,6 @@ class Category extends AuthController
      */
     public function edit(Request $request): string
     {
-        $templatePath = system_config('web_template');
-        $themeInfoFile = public_path('template' . DIRECTORY_SEPARATOR . $templatePath) . 'info.json';
-        if (file_exists($themeInfoFile)) {
-            $themeInfo = json_decode(file_get_contents($themeInfoFile), true);
-            $themeList = $themeInfo['category_list'];
-        } else {
-            $themeList = [];
-        }
         $where = Util::postMore([
             'name' => '',
             'status' => '',
@@ -151,6 +139,10 @@ class Category extends AuthController
         $info = aModel::find($request->param(['id']));
         $this->assign("category", $category);
         $this->assign("info", $info);
+        $themeList = get_template_list(Data::DOCUMENT_CATEGORY);
+        if (empty($themeList)){
+            $this->error("模板文件不存在,请检查主题目录或主题配置");
+        }
         $this->assign("template_list", $themeList);
         return $this->fetch();
     }

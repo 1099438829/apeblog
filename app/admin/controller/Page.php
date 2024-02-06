@@ -134,6 +134,9 @@ class Page extends AuthController
     {
         // 获取页面模板列表
         $templateList = get_template_list(Data::DOCUMENT_TYPE_PAGE);
+        if (empty($themeList)){
+            $this->error("模板文件不存在,请检查主题目录或主题配置");
+        }
         $this->assign("template_list", $templateList);
         return $this->fetch();
     }
@@ -157,6 +160,9 @@ class Page extends AuthController
         }
         // 获取页面模板列表
         $templateList = get_template_list(Data::DOCUMENT_TYPE_PAGE);
+        if (empty($themeList)){
+            $this->error("模板文件不存在,请检查主题目录或主题配置");
+        }
         $this->assign("template_list", $templateList);
         $this->assign("info", $info);
         return $this->fetch();

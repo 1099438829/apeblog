@@ -38,9 +38,9 @@ class Theme extends AuthController
                     }
                     $info = json_decode(file_get_contents($themeInfoFile), true);
                     unset($themeInfoFile);
-                    $info['root_dir'] = $themeDir . "/" . $file . '/';
+                    $info['root_dir'] = $themeDir . "/" . $file ;
                     $info['dir_name'] = $file;
-                    $info['preview_file'] = file_cdn($themeDir . "/" . $file . '/' . $info['preview_file']);
+                    $info['preview_file'] = file_cdn($themeDir ."/". $file . '/' . $info['preview_file']);
                     $info['is_default'] = $file == $defaultTheme ? 1 : 0;//检查是不是默认主题
                     $themeList[] = $info;
                 }
@@ -58,7 +58,7 @@ class Theme extends AuthController
      * @author 木子的忧伤
      * @date 2021-02-17 11:40
      */
-    public function change_theme(): string
+    public function change_theme()
     {
         $data = Util::postMore([
             ['value', ''],

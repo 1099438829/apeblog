@@ -22,7 +22,7 @@ class Ape extends TagLib
         'article' => ['attr' => 'id,void,model', 'close' => 1],
         'comment' => ['attr' => 'typeId,void,type,pageSize,orderBy', 'close' => 1],
         'relevant' => ['attr' => 'id,model,void,row', 'close' => 1],
-        'tags' => ['attr' => 'tags,void', 'close' => 1],
+        'tags' => ['attr' => 'tags,void,row', 'close' => 1],
         'archive' => ['attr' => 'type,format,void', 'close' => 1],
         'nav' => ['attr' => 'type,typeId,row,void,where,orderBy,display', 'close' => 1],
         'table' => ['attr' => 'name,where,orderby,row,pagesize,void', 'close' => 1]
@@ -265,14 +265,12 @@ class Ape extends TagLib
      */
     public function tagTags($tag, $content)
     {
-        if (!isset($tag['tags'])) {
-            return false;
-        }
-        $tags = $tag['tags'];
+        $row = $tag['row'] ?? 10;
+        $tags = $tag['tags']??"";
         $void = $tag['void'] ?? 'field';
 
         $parse = '<?php ';
-        $parse .= '$__LIST__ =' . "tpl_get_tags_list($tags);";
+        $parse .= '$__LIST__ =' . "tpl_get_tags_list(\"$tags\",$row);";
         $parse .= ' ?>';
         $parse .= '{volist name="$__LIST__" id="' . $void . '"}';
         $parse .= $content;

@@ -42,7 +42,7 @@
                                 <div class="form-group form-controls">
                                     <select name="template" class="form-control">
                                         {volist name="template_list" id="vo"}
-                                        <option value="{$vo.template}" {notempty name="info.template" }{if $vo.template== $info.template}selected{/if}{/notempty}>{$vo.name}</option>
+                                        <option value="{$vo}" {notempty name="info.template" }{if $vo == $info.template}selected{/if}{/notempty}>{$vo}</option>
                                         {/volist}
                                     </select>
                                 </div>

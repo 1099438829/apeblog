@@ -63,14 +63,14 @@ class SystemConfig extends AuthController
     public function clearCache(Request $request)
     {
         if ($request->isPost()) {
-//            $adminPath = config("cache.runtime") . "/admin/";
+            $adminPath = config("cache.runtime") . "/admin/temp";
             $commonPath = config("cache.runtime") . "/cache/";
-//            $indexPath = config("cache.runtime") . "/index/";
-//            $apiPath = config("cache.runtime") . "/api/";
+            $indexPath = config("cache.runtime") . "/index/temp";
+            $apiPath = config("cache.runtime") . "/api/temp";
             Cache::clear();
-//            remove_cache($adminPath);
-//            remove_cache($indexPath);
-//            remove_cache($apiPath);
+            remove_cache($adminPath);
+            remove_cache($indexPath);
+            remove_cache($apiPath);
             remove_cache($commonPath);
             return app("json")->success("操作成功");
         }

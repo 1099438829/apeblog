@@ -157,6 +157,9 @@ if (!function_exists('get_template_list')) {
     {
         $themeList = [];
         $themeDir = public_path('template') . system_config('web_template') . '/pc/' . $type;
+        if (!file_exists($themeDir)){
+            return [];
+        }
         if ($dh = opendir($themeDir)) {
             while (($file = readdir($dh)) !== false) {
 

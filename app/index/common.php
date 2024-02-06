@@ -8,6 +8,7 @@ use app\common\model\Advert;
 use app\common\model\FriendLink;
 use app\common\model\Tag;
 use app\common\model\Nav;
+use app\common\model\Tag as TagModel;
 use think\App;
 use think\Collection;
 use think\db\exception\DataNotFoundException;
@@ -43,18 +44,53 @@ function get_document_category_list()
 {
     //缓存文章菜单
     $documentCategory = cache(Data::DATA_DOCUMENT_CATEGORY_LIST);
+    $documentCategory = null;
+
     if ($documentCategory === null) {
-        $documentCategoryList = DocumentCategory::where('status', 1)->order('sort asc')->select()->toArray();
-        //转换，让id作为数组的键
-        $documentCategory = [];
-        foreach ($documentCategoryList as $item) {
+        $documentCategory = DocumentCategory::where('status', 1)->order('sort asc')->select()->toArray();
+        $documentList = Document::where('display', 1)
+            ->where('status', 1)
+            ->where("category_id","in",array_column($documentCategory,"id"))
+            ->group("category_id")
+            ->column('count(*) as count', 'category_id');
+        //TODO 需要实现包含下级分类所有数据的逻辑 使用下面两个函数实现,暂未完成
+        ///转换，让id作为数组的键
+        foreach ($documentCategory as &$item) {
             //根据栏目类型，生成栏目url
             $item['url'] = make_category_url($item);
-            $documentCategory[$item['id']] = $item;
+            $item['dc_count'] = $documentList[$item['id']] ?? 0;
         }
         cache(Data::DATA_DOCUMENT_CATEGORY_LIST, $documentCategory);
     }
+
     return $documentCategory;
+}
+
+// 构建树形结构的函数
+function buildTree($list, $pid = 0) {
+    $tree = [];
+    foreach ($list as $item) {
+        if ($item['pid'] == $pid) {
+            $children = buildTree($list, $item['id']);
+            if ($children) {
+                $item['children'] = $children;
+            }
+            $item['count'] += array_sum(array_column($children,"count"));
+            $tree[] = $item;
+        }
+    }
+    return $tree;
+}
+
+// 生成映射数据的函数
+function generateMap($tree, &$map = []) {
+    foreach ($tree as $item) {
+        $map[$item['id']] = $item;
+        if (isset($item['children'])) {
+            generateMap($item['children'], $map);
+        }
+    }
+    return $map;
 }
 
 /**
@@ -146,7 +182,7 @@ function tpl_get_channel($type, $typeId, $row = 100, $where = '', $orderby = '')
 {
     switch ($type) {
         case "all":
-            //获取顶级分类
+            //获取所有
             return get_document_category_all();
             break;
         case 'top':
@@ -421,10 +457,18 @@ function tpl_get_list($orderBy, int $pageSize, $cid, $type, $table = 'article', 
     } else {
         $documentListModel = $documentListModel->paginate($pageSize);
     }
+    //获取评论数 跟在文章后面
+    if (!empty($item)){
+        $commentModel = (new Comment())->field('document_id as id,count(*) as comment')
+            ->where("id","in" ,array_column($documentListModel->toArray(),'id'))
+            ->group('id')
+            ->select();
+    }
     $lists = [];
     foreach ($documentListModel as $key => $item) {
         //生成文章url
         $item['url'] = make_detail_url($item);
+        $item['comment'] = $commentModel[$item['id']]['comment'] ?? 0;
         $lists[$key] = $item;
     }
     $re = [
@@ -548,10 +592,18 @@ function tpl_get_article_list($cid, $row, $orderby, $table = 'article', $type = 
     }
 
     $documentListModel = $documentListModel->order($orderby)->select();
+    //获取评论数 跟在文章后面
+    if (!empty($item)){
+        $commentModel = (new Comment())->field('document_id as id,count(*) as comment')
+            ->where("id","in" ,array_column($documentListModel->toArray(),'id'))
+            ->group('id')
+            ->select();
+    }
     $lists = [];
     foreach ($documentListModel as $key => $item) {
         //生成文章url
         $item['url'] = make_detail_url($item);
+        $item['comment'] = $commentModel[$item['id']]['comment'] ?? 0;
         $lists[$key] = $item;
     }
     return $lists;
@@ -697,19 +749,18 @@ if (!function_exists('web_config')) {
  * @date 2021-11-12 0:34
  */
 if (!function_exists('tpl_get_tags_list')) {
-    function tpl_get_tags_list($tags)
+    function tpl_get_tags_list($tag ='',  $limit = 10)
     {
-        if (!$tags) {
-            return false;
+        $where =[
+            'name'=> $tag,
+            'page'=> 1,
+            'limit'=> $limit
+        ];
+        try {
+            return TagModel::getList($where);
+        } catch (DbException $e) {
+            return [];
         }
-        $tagArr = explode(',', $tags);
-        $tagTemp = [];
-        foreach ($tagArr as $item) {
-            $data['title'] = $item;
-            $data['url'] = url('/article/tag', ["t" => $item])->build();
-            array_push($tagTemp, $data);
-        }
-        return $tagTemp;
     }
 }
 
@@ -1193,6 +1244,21 @@ function get_nav($x, $field = false)
     } else {
         return $list[$x];
     }
+}
+
+function tpl_get_admin($id,$field=""){
+        $info = cache("admin_{$id}");
+        if (is_null($info)){
+            try {
+                //TODO 这里考虑是否会泄露用户信息问题,并且是否会影响性能,后续需要完善发帖数量等等
+                $info = \app\common\model\User::where('id', $id)->field('nickname,avatar,email,ip,remark')->find();
+            }  catch (DbException $e) {
+                return "";
+            }
+            cache("admin_{$id}", $info, 1*60*60);
+        }
+        return $info[$field] ?? '';
+
 }
 
 /**
