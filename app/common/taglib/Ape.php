@@ -142,7 +142,7 @@ class Ape extends TagLib
         $display = $tag['display'] ?? 1;
         $display = $display == 1 ? 1 : 0;
         $parse = '<?php ';
-        $parse .= '$__FUN__ =' . "tpl_get_list(\"$orderBy\",$pageSize,\"$typeId\",\"$type\",\"$model\",\"$where\",$display);";
+        $parse .= '$__FUN__ =' . "tpl_get_list(\"$type\",\"$typeId\",\"$where\",\"$model\",\"$orderBy\",$pageSize,$display);";
         $parse .= '$__LIST__ = $__FUN__["lists"];$pager = $__FUN__["model"]->render();';
         $parse .= ' ?>';
         $parse .= '{volist name="__LIST__" id="' . $void . '" key="i"}';

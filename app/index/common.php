@@ -44,9 +44,7 @@ function get_document_category_list()
 {
     //缓存文章菜单
     $documentCategory = cache(Data::DATA_DOCUMENT_CATEGORY_LIST);
-    $documentCategory = null;
-
-    if ($documentCategory === null) {
+    if (is_null($documentCategory)) {
         $documentCategory = DocumentCategory::where('status', 1)->order('sort asc')->select()->toArray();
         $documentList = Document::where('display', 1)
             ->where('status', 1)
@@ -55,14 +53,17 @@ function get_document_category_list()
             ->column('count(*) as count', 'category_id');
         //TODO 需要实现包含下级分类所有数据的逻辑 使用下面两个函数实现,暂未完成
         ///转换，让id作为数组的键
-        foreach ($documentCategory as &$item) {
+        $tempList = [];
+        foreach ($documentCategory as $item) {
             //根据栏目类型，生成栏目url
             $item['url'] = make_category_url($item);
             $item['dc_count'] = $documentList[$item['id']] ?? 0;
+            $tempList[$item['id']] = $item;
         }
+        $documentCategory = $tempList;
+        unset($item,$tempList,$documentList);
         cache(Data::DATA_DOCUMENT_CATEGORY_LIST, $documentCategory);
     }
-
     return $documentCategory;
 }
 
@@ -390,7 +391,7 @@ function tpl_get_prenext($get, $cid = "",$type ="article")
  * @throws DbException
  * @throws ModelNotFoundException
  */
-function tpl_get_list($orderBy, int $pageSize, $cid, $type, $table = 'article', $where, int $display = 1)
+function tpl_get_list($type, $cid, $where, string $table = 'article', string $orderBy = '', int $pageSize = 10, int $display = 1)
 {
     $documentListModel = (new Document())
         ->alias('a')
@@ -460,7 +461,7 @@ function tpl_get_list($orderBy, int $pageSize, $cid, $type, $table = 'article', 
     //获取评论数 跟在文章后面
     if (!empty($item)){
         $commentModel = (new Comment())->field('document_id as id,count(*) as comment')
-            ->where("id","in" ,array_column($documentListModel->toArray(),'id'))
+            ->where("document_id","in" ,array_column($documentListModel->toArray(),'id'))
             ->group('id')
             ->select();
     }
@@ -497,7 +498,8 @@ function get_route_query()
  */
 function make_category_url($item)
 {
-    return url('/article/detail', ['id' => $item['alias'] ?: $item['id']])->build();
+//    return url('/article/lists', ['id' => $item['alias'] ?: $item['id']])->build();
+    return url('/article/lists', ['id' => $item['id']])->build();
 }
 
 /**
@@ -595,7 +597,7 @@ function tpl_get_article_list($cid, $row, $orderby, $table = 'article', $type = 
     //获取评论数 跟在文章后面
     if (!empty($item)){
         $commentModel = (new Comment())->field('document_id as id,count(*) as comment')
-            ->where("id","in" ,array_column($documentListModel->toArray(),'id'))
+            ->where("document_id","in" ,array_column($documentListModel->toArray(),'id'))
             ->group('id')
             ->select();
     }
@@ -775,7 +777,7 @@ if (!function_exists('tpl_get_tags_list')) {
  */
 function tpl_get_position($dc, $positionList = array())
 {
-    array_push($positionList, $dc);
+    $positionList[] = $dc;
     if ($dc['pid'] == 0) {
         $htmlStr = '<a href="/">首页</a>';
         $positionListCount = count($positionList);

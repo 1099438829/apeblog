@@ -77,8 +77,8 @@ class Article extends Base
         //判断seo标题是否存在
         $dc['meta_title'] = $dc['meta_title'] ?: $dc['title'];
         //判断SEO 为空则取系统
-        $article['keywords'] = $dc['keywords'] ?: web_config('keywords');
-        $article['description'] = $dc['description'] ?: web_config('description');
+        $dc['keywords'] = $dc['keywords'] ?: web_config('keywords');
+        $dc['description'] = $dc['description'] ?: web_config('description');
         //添加当前页面的位置信息
         $dc['position'] = tpl_get_position($dc);
         //输出文章分类
@@ -138,6 +138,7 @@ class Article extends Base
         }
         $article['category_title'] = $dc['title'];
         //判断SEO 为空则取系统
+        $article['meta_title'] = $article['title'];
         $article['keywords'] = $article['keywords'] ?: web_config('keywords');
         $article['description'] = $article['description'] ?: web_config('description');
         //输出文章内容
@@ -170,6 +171,7 @@ class Article extends Base
     public function create_comment(Request $request)
     {
         $data = Util::postMore([
+            ['captcha',''],
             ['document_id', ''],
             ['pid', ''],
             ['author', ''],
@@ -191,6 +193,11 @@ class Article extends Base
             $data['author'] = $this->userInfo['nickname']?:$this->userInfo['username'];
             $data['email'] = $this->userInfo['email']?:'';
             $data['url'] = '';
+        }
+        //开始判断留言是否显示验证码,显示则需要判断验证码
+        if ($data['captcha'] != "" && !captcha_check($data['captcha'])){
+            // 验证码验证
+            $this->error('验证码不正确', null);
         }
         if ($data['document_id'] == "") $this->error("文章id不能为空");
         if ($data['content'] == "") $this->error("内容能为空");

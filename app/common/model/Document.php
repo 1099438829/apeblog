@@ -85,6 +85,7 @@ class Document extends BaseModel
         if (!$info) {
             return [];
         }
+        $info->comment = (new Comment())->where('document_id', $id)->count();
         return $info->toArray();
     }
 
