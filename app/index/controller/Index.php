@@ -104,11 +104,17 @@ class Index extends Base
     {
         if (request()->isPost()) {
             $data = Util::postMore([
+                ['captcha',''],
                 ['author', ''],
                 ['tel', ''],
                 ['email', ''],
                 ['content', ''],
             ]);
+            //开始判断留言是否显示验证码,显示则需要判断验证码
+            if ($data['captcha'] != "" && !captcha_check($data['captcha'])){
+                // 验证码验证
+                $this->error('验证码不正确', null);
+            }
             $data['create_time'] = time();
             $data['reply_content'] = '';
             $messageFormValidate = new MsgValidate();
@@ -165,6 +171,7 @@ class Index extends Base
         }
         $article['category_title'] = "单页";
         //判断SEO 为空则取系统
+        $article['meta_title'] = $article['title'];
         $article['keywords'] = $article['keywords'] ?: web_config('keywords');
         $article['description'] = $article['description'] ?: web_config('description');
         //输出文章内容

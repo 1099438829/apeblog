@@ -61,6 +61,7 @@ class Page extends Base
         }
         $article['category_title'] = "单页";
         //判断SEO 为空则取系统
+        $article['meta_title'] = $article['title'];
         $article['keywords'] = $article['keywords'] ?: web_config('keywords');
         $article['description'] = $article['description'] ?: web_config('description');
         //输出文章内容
