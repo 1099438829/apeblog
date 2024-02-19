@@ -7,11 +7,11 @@ class Comment extends Validate
 {
     protected $rule = [
         'document_id'  =>  'require',
-        'pid' =>  '',
+        'pid' =>  'number',
         'author'=> 'require',
-        'url' => 'require',
+        'url' => 'require|url',
         'email' => 'require|email',
-        'content' => 'require|content',
+        'content' => 'require',
     ];
 
     protected $message  =   [
